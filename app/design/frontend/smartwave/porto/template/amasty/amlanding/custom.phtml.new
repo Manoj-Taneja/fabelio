@@ -1,0 +1,277 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Xlanding
+ */
+?>
+<?php
+$_page = $this->_getPage();
+$file = $_page->getLayoutFile();
+$fileMobile = $_page->getLayoutFileMobile();
+
+$date = $_page->getCampaignTimer() ? date_create($_page->getCampaignTimer()) : null;
+$campaignExpiry = $date ? date_format($date,"Y/m/d H:i:s") : null;
+
+$defaultFile = $file?$file:$fileMobile;
+$contentLayout = $_page->getContentUpdateTemplate();
+
+$uspDetails = array(
+  'warranty-365' => array(
+    'icon'=>'lp-icon-365days.png',
+    'label'=>'Garansi 365 Hari'
+  ),
+  'free-delivery' => array(
+    'icon'=>'lp-icon-freedelivery.png',
+    'label'=>'Pengiriman Gratis'
+  ),
+  'return-14' => array(
+    'icon'=>'lp-icon-return14.png',
+    'label'=>'14 Hari Pengembalian'
+  ),
+  'cod' => array(
+    'icon'=>'lp-icon-cod.png',
+    'label'=>'Pembayaran di Tempat'
+  ),
+  'installment-0' => array(
+    'icon'=>'lp-icon-cicilan0.png',
+    'label'=>'Cicilan 0%'
+  ),
+  'free-installation' => array(
+    'icon'=>'lp-icon-installation.png',
+    'label'=>'Gratis Instalasi Oleh Tim Kami'
+  ),
+  'call-us' => array(
+    'icon'=>'lp-icon-call.png',
+    'label'=>'Hubungi Kami 021-9603-0665',
+    'link' => 'tel:02196030665'
+  ),
+);
+$landingUsps = $_page->getLandingUsps();
+?>
+
+<div class="amlanding-content-block">
+  <div class="row">
+  <?php if($contentLayout == 'fabelio-looks'): ?>
+
+    <?php if ($file) {?>
+    <div class="col-sm-6 pull-right">
+      <p class="category-image">
+        <picture>
+          <?php if($fileMobile){ ?>
+          <source srcset="<?php echo $this->getFileMobile();?>" media="(max-width: 768px)">
+          <?php } ?>
+          <source srcset="<?php echo $this->getFile();?>">
+          <img src="<?php echo $this->getFile();?>" alt="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" title="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" />
+        </picture>
+      </p>
+    </div>
+    <?php }?>
+    
+    <div class="col-sm-6 pull-left">
+
+      <?php if ($this->getHeading()) {?>
+      <div class="page-title category-title">
+          <h1><?php echo $this->htmlEscape($_page->getLayoutHeading()) ?></h1>
+      </div>
+      <?php }?>
+
+      <?php if($campaignExpiry) {?>
+      <div class="campaign-countdown">
+        <div class="countdown-wrap">
+          <div id="defaultCountdown"></div>
+        </div>
+      </div>
+      <?php }?>
+
+      <?php if ($this->getDescription()) {?>
+      <div class="category-description std">
+        <?php echo Mage::helper('cms')->getPageTemplateProcessor()->filter($this->getDescription()); ?>
+      </div>
+      <?php }?>
+
+    </div>
+
+  <?php else: ?>
+
+    <?php if ($file) {?>
+    </div></div></div></div>
+    <style>
+    .main.container:first-child {
+      display: none;
+    }
+    .main-container {
+      padding-top: 0;
+    }
+    </style>
+    <p class="category-image">
+        <picture>
+          <?php if($fileMobile){ ?>
+          <source srcset="<?php echo $this->getFileMobile();?>" media="(max-width: 768px)">
+          <?php } ?>
+          <source srcset="<?php echo $this->getFile();?>">
+          <img src="<?php echo $this->getFile();?>" alt="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" title="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" />
+        </picture>
+    </p>
+    <div class="main container"> <div class="col-main"> <div class="amlanding-content-block"> <div class="row">
+    <?php }?>
+
+    <?php if ($this->getHeading()) {?>
+    <div class="page-title category-title">
+        <h1><?php echo $this->htmlEscape($_page->getLayoutHeading()) ?></h1>
+    </div>
+    <?php }?>
+
+    <?php if ($campaignExpiry) {?>
+    <div class="campaign-countdown">
+      <div class="countdown-wrap">
+        <div id="defaultCountdown"></div>
+      </div>
+    </div>
+    <?php }?>
+    
+    <?php if ($this->getDescription()) {?>
+    <div class="category-description std">
+        <?php echo Mage::helper('cms')->getPageTemplateProcessor()->filter($this->getDescription()); ?>
+    </div>
+    <?php }?>
+
+  <?php
+  endif;
+  ?>
+  </div>
+
+  <?php
+  $totalUsps = count($landingUsps);
+  if ($landingUsps && $totalUsps>0) {
+    $iconWidth = 12/$totalUsps;
+  ?>
+  <div class="row landing-usps">
+  <?php
+  $counter = 1;
+  foreach($landingUsps as $usp){
+    $usp = $uspDetails[$usp];
+  ?>
+    <div class="col-xs-3 col-sm-<?php echo $iconWidth; ?> <?php echo $counter > 4 ? 'hidden-xs':''; ?>">
+      <?php if($usp['link']) { ?>
+      <a href="<?php echo $usp['link']; ?>">
+      <?php } ?>
+      <div class="icon">
+        <img src="/media/icons/<?php echo $usp['icon']; ?>" alt="">
+      </div>
+      <h4><?php echo $usp['label']; ?></h4>
+      <?php if($usp['link']) { ?>
+      </a>
+      <?php } ?>
+    </div>
+  <?php
+    $counter++;
+  }
+  ?>
+  </div>
+  <?php }?>
+
+</div>
+
+
+<script src="/js/amasty/amlanding/jquery.plugin.js"></script>
+<script src="/js/amasty/amlanding/jquery.countdown.js"></script>
+<script>
+jQuery(document).ready(function($){
+  var newYear = new Date('<?php echo $campaignExpiry; ?>'); 
+  //console.log('newYear', newYear);
+  $('#defaultCountdown').countdown({
+    until: newYear,
+    timezone: +7,
+    format: 'DHMS',
+    padZeroes: true
+  }); 
+});
+</script>
+
+
+
+<style>
+.countdown-wrap {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.is-countdown {
+  background-color: rgba(0,0,0,.75);
+  color: #fff;
+  padding: 30px 0px 20px 0;
+  box-shadow: 0 0 15px #ccc;
+}
+.countdown-rtl {
+  direction: rtl;
+}
+.countdown-holding span {
+  color: #888;
+}
+.countdown-row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.countdown-show1 .countdown-section {
+  width: 100%;
+}
+.countdown-show2 .countdown-section {
+  width: 50%;
+}
+.countdown-show3 .countdown-section {
+  width: 33.333%;
+}
+.countdown-show4 .countdown-section {
+  width: 25%;
+}
+.countdown-show5 .countdown-section {
+  width: 20%;
+}
+.countdown-show6 .countdown-section {
+  width: 16.666%;
+}
+.countdown-show7 .countdown-section {
+  width: 14.285%;
+}
+.countdown-section {
+  display: block;
+  float: left;
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+}
+.countdown-amount {
+  font-size: 72px;
+  font-weight: 300;
+  display: block;
+  line-height: 1;
+}
+.countdown-amount:after {
+  content: ':';
+  display: block;
+  float: right;
+  position: absolute;
+  top: 0%;
+  right: 0;
+}
+.countdown-section:last-child .countdown-amount:after {
+  display: none;
+}
+@media (max-width:768px){
+  .countdown-amount {
+    font-size: 42px;
+  }
+}
+.countdown-period {
+  display: block;
+  font-style: italic;
+}
+.countdown-descr {
+  display: block;
+  width: 100%;
+}
+</style>
+
+<h1 class="filter-title"><strong> <?php echo $_page->getFilterTitle();?> </strong></h1>
+

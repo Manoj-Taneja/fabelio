@@ -1,0 +1,31 @@
+#aw-storecredit-balance-box {
+    display: inline-block;
+}
+
+.aw-storecredit-cms-help {
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+.aw-storecredit-cms-help img {
+    height: 25px;
+    width: 25px;
+}
+
+.aw-storecredit-cms-help a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.aw-storecredit-btn-remove img{
+    display: inline;
+}
+
+.aw-storecredit-btn-remove {
+    color: transparent;
+}
+
+#aw-onestepcheckout-review-cart .aw-storecredit-btn-remove {
+    display: none;
+}

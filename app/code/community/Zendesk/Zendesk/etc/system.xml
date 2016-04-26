@@ -1,0 +1,502 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2012 Zendesk.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<config>
+    <tabs>
+        <zendesk_extensions>
+            <label>Zendesk</label>
+            <sort_order>1000</sort_order>
+        </zendesk_extensions>
+    </tabs>
+    <sections>
+        <zendesk translate="label" module="zendesk">
+            <label>Zendesk</label>
+            <class>zendesk-section</class>
+            <header_css>zendesk-header</header_css>
+            <tab>zendesk_extensions</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>999999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                    <general translate="label comment">
+                    <expanded>1</expanded>
+                    <label>General</label>
+                    <comment>General settings that are required to connect Zendesk and Magento.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <domain translate="label comment">
+                            <label>Zendesk Domain</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<i>yourdomain</i>.zendesk.com]]></comment>
+                        </domain>
+                        <email translate="label">
+                            <label>Agent Email Address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>
+                        <password translate="label comment">
+                            <label>Agent Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[To generate a token, log in to Zendesk then select Manage > Channels > API > Token]]></comment>
+                        </password>
+                        <test translate="button_label">
+                            <label></label>
+                            <button_label>Test Connection</button_label>
+                            <frontend_model>zendesk/adminhtml_config_buttons_zendeskTest</frontend_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </test>
+                        <use_external_id translate="label comment">
+                            <label>Use External ID</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Depending on your Zendesk configuration under "Settings / Security / JSON Web Token / Update of external IDs?" ]]></comment>
+                        </use_external_id>
+                        <customer_sync translate="label comment">
+                            <label>Synchronize Customers</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Synchronize magento customer accounts with zendesk end-users? ]]></comment>
+                        </customer_sync>
+                        <sync_now translate="button_label comment">
+                            <label></label>
+                            <button_label>Sync All Customers And Create User Fields</button_label>
+                            <frontend_model>zendesk/adminhtml_config_buttons_sync</frontend_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Only if customers synchronization is enabled ]]></comment>
+                        </sync_now>
+                    </fields>
+                </general>
+                <sso translate="label comment">
+                    <expanded>1</expanded>
+                    <label>Single Sign-on - Admins and Agents</label>
+                    <comment>Use Magento to manage admin and agent authentication.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Single Sign-on Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <token translate="label">
+                            <label>Remote Authentication Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <validate>validate-zendesk-sso-token</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </token>
+                    </fields>
+                </sso>
+                <sso_frontend translate="label comment">
+                    <expanded>1</expanded>
+                    <label>Single Sign-on - End-users</label>
+                    <comment>Use Magento to manage end-user authentication.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Single Sign-on Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <token translate="label">
+                            <label>Remote Authentication Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <validate>validate-zendesk-sso-frontend-token</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </token>
+                        <new translate="label comment">
+                            <label>New Ticket Link</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[ https://yourdomain.zendesk.com/requests/new will be used by default]]></comment>
+                        </new>
+                    </fields>
+                </sso_frontend>
+                <frontend_features translate="label comment">
+                    <expanded>1</expanded>
+                    <label>Customer Frontend</label>
+                    <comment>Decide which features you would like turned on in your Magento store.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields> 
+                        <contact_us translate="label">
+                            <label>Create tickets from Contact Us form</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </contact_us>
+                        <feedback_tab_code_active translate="label">
+                            <label>Code to display Feedback Tab</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </feedback_tab_code_active>
+                        <feedback_tab_code>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <feedback_tab_code_active>1</feedback_tab_code_active>
+                            </depends>
+                        </feedback_tab_code>
+                        <feedback_tab_customise translate="label value">
+                            <label></label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[account/dropboxes/new]]></destination>
+                            <value>Customize Feedback Tab</value>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <feedback_tab_code_active>1</feedback_tab_code_active>
+                            </depends>
+                        </feedback_tab_customise>
+                        <footer_link_enabled translate="label">
+                            <label>Display link to Zendesk in Magento footer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </footer_link_enabled>
+                        <customer_tickets translate="label comment">
+                            <label>Show Tickets in Customer Accounts</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Display Customer's tickets in My Account]]></comment>
+                        </customer_tickets>
+                        <order_field_id translate="label comment">
+                            <label>Zendesk Order Number field ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Used to link order in Magento with tickets in Zendesk]]></comment>
+                        </order_field_id>
+                    </fields>
+                </frontend_features>
+                <backend_features translate="label comment">
+                    <expanded>1</expanded>
+                    <label>Admin Backend</label>
+                    <comment>Decide which features you would like turned on in your admin panel.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>35</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <show_on_order translate="label">
+                            <label>Show support tickets on order view</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_on_order>   
+                        <show_on_dashboard translate="label">
+                            <label>Show support tickets on admin dashboard</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_on_dashboard>
+                        <show_all translate="label">
+                            <label>Show "All" tab on dashboard</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_all> 
+                        <default_sort translate="label">
+                            <label>Default Sort Order</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>zendesk/source_sortorder</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_sort>
+                        <default_sort_dir translate="label">
+                            <label>Default Sort Direction</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>zendesk/source_sortdir</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_sort_dir>
+                        <show_views translate="label">
+                            <label>Views to show on dashboards</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>zendesk/source_views</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </show_views>
+                        <show_on_customer translate="label">
+                            <label>Show support tickets on customer view</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_on_customer>
+                    </fields>
+                </backend_features>
+                <api translate="label comment">
+                    <label>API Details</label>
+                    <comment>Required for Magento App inside Zendesk to work.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>API Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <token translate="label">
+                            <label>API Token</label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </token>
+                        <sign_up translate="button_label">
+                            <label></label>
+                            <button_label>Generate New Token</button_label>
+                            <frontend_model>zendesk/adminhtml_config_buttons_generate</frontend_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sign_up>
+                        <test translate="button_label">
+                            <label></label>
+                            <button_label>Test Connection</button_label>
+                            <frontend_model>zendesk/adminhtml_config_buttons_magentoTest</frontend_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </test>
+                    </fields>
+                </api>
+                <support_channels translate="label comment">
+                    <label>Support Channels</label>
+                    <comment>Zendesk allows your customers to contact you using the methods they prefer. Use the links below to configure the channels you would like to use.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <email translate="label value">
+                            <label>Email</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[settings/email]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>
+                        <web_portal translate="label value">
+                            <label>Web Portal</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[settings/portal]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </web_portal>
+                        <twitter translate="label value">
+                            <label>Twitter</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[twitter/settings#general_settings]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </twitter>
+                        <chat translate="label value">
+                            <label>Chat</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[settings/chat]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </chat>
+                        <facebook translate="label value">
+                            <label>Facebook</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[facebook/settings]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </facebook>
+                        <voice translate="label value">
+                            <label>Voice</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[voice/settings#general_settings]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </voice>
+                        <feedback_tab translate="label value">
+                            <label>Feedback Tab</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[account/dropboxes/new]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </feedback_tab>
+                        <api translate="label value">
+                            <label>API</label>
+                            <frontend_model>zendesk/adminhtml_config_link</frontend_model>
+                            <destination><![CDATA[settings/api]]></destination>
+                            <value>Configure</value>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </api>
+                    </fields>
+                </support_channels>
+                <setup translate="label comment">
+                    <expanded>1</expanded>
+                    <label>Setup</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[Haven't setup Zendesk yet? Follow our easy setup guide to start using Zendesk to support your customers.]]></comment>
+                    <fields>
+                        <sign_up translate="button_label">
+                            <label></label>
+                            <button_label>Setup Guide</button_label>
+                            <frontend_model>zendesk/adminhtml_config_buttons_signup</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sign_up>
+                    </fields>
+                </setup>
+        	</groups>
+        </zendesk>
+    </sections>
+</config>

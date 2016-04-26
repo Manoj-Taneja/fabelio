@@ -1,0 +1,10 @@
+.page {
+	width:980px;
+	margin:0 auto;
+}
+
+.header {
+	width:980px;
+	height:120px;
+	border:1px solid #DDDDDD;
+}

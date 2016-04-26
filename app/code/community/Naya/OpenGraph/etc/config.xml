@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Naya_OpenGraph>
+            <version>1.0.0</version>
+        </Naya_OpenGraph>
+    </modules>
+    
+    <global>
+        <blocks>
+            <naya_opengraph>
+                <class>Naya_OpenGraph_Block</class>
+            </naya_opengraph>
+        </blocks>
+        <helpers>
+            <naya_opengraph>
+                <class>Naya_OpenGraph_Helper</class>
+            </naya_opengraph>
+        </helpers>
+    </global>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <Naya_OpenGraph>
+                    <files>
+                        <default>Naya_OpenGraph.csv</default>
+                    </files>
+                </Naya_OpenGraph>
+            </modules>
+        </translate>
+    </adminhtml>
+    
+    <frontend>
+        <layout>
+            <updates>
+                <naya_opengraph>
+                    <file>naya_opengraph.xml</file>
+                </naya_opengraph>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Naya_OpenGraph>
+                    <files>
+                        <default>Naya_OpenGraph.csv</default>
+                    </files>
+                </Naya_OpenGraph>
+            </modules>
+        </translate>
+    </frontend>
+</config>

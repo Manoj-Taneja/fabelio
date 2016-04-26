@@ -1,0 +1,144 @@
+<?php if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $customerData = Mage::getModel('customer/customer')->load(Mage::getSingleton('customer/session')->getId());
+} else {
+    $customerData = new Varien_Object();
+}
+?>
+<?php $customFields = $this->getCustomFields(); ?>
+<?php $customFieldsValues = unserialize($customerData->getCustomFieldsValues()); ?>
+<div class="container main-container vendor-container">
+    <h1 class="text-center"><?php echo Mage::helper('marketplace')->__('Manage Profile Info'); ?></h1>
+            <form name="settings_supplier_profile" id="settings_supplier_profile" action="<?php echo Mage::getUrl('marketplace/settings/profileSave') ?>" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-12 form-container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="cont">
+                                        <div class="row">
+                                            <div class="col-md-3 label-container">
+                                                <label for="name" class="required">
+                                                    <?php echo $this->__('Name'); ?> <em>*</em>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5 input-container">
+                                                <input type="text" id="name" name="name" class="input-text required-entry form-control validate-length maximum-length-60" value="<?php echo $customerData->getSupplierName(); ?>" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="cont">
+                                <div class="row">
+                                    <div class="col-md-3 label-container">
+                                        <label label-default="label-default" for="description" class="required"><?php echo $this->__('Description'); ?> <em>*</em>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 input-container">
+                                        <textarea name="description" id="description" rows="14" class="input-text form-control wysiwyg"><?php echo $customerData->getSupplierDescription(); ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php if($customFields): ?>
+                    <?php foreach($customFields AS $field): ?>
+                        <div class="span6">
+                            <div class="container form-group">
+                                <div class="cont">
+                                    <div class="span3 label-container">
+                                        <label for="<?php echo $this->escapeHtml($field->getName()); ?>" <?php echo $field->getIsRequired() ? 'class="required"' : ''; ?>>
+                                            <?php echo $this->escapeHtml($field->getLabel()); ?>
+                                            <em><?php echo $field->getIsRequired() ? '*' : ''; ?></em>
+                                        </label>
+                                    </div>
+                                    <div class="span8 input-container">
+                                        <?php echo $this->getCustomField($field, $customFieldsValues); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <div class="col-md-12">
+                    <form class="form-inline">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="profile_enabled" <?php echo $customerData->getSupplierProfileVisible() ? ' checked="checked"' : ''; ?>/> <?php echo $this->__('Profile Page Enabled'); ?> </label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4">
+                            <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save') ?>"/>
+                        </div>
+                    </div>
+                </div>
+
+                <?php if($customerData->getSupplierNameNew() || $customerData->getNewCustomFieldsValues()) : ?>
+                    <hr/>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="text-center"><?php echo $this->__('Waiting for review by admin'); ?></h3>
+                            </div>
+                        </div>
+                        <?php if($customerData->getSupplierNameNew()): ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5><b><?php echo $this->__("Title"); ?> :</b></h5>
+                                    <p><?php echo $this->escapeHtml($customerData->getSupplierNameNew()); ?></p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($customerData->getSupplierDescriptionNew()): ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5><b><?php echo $this->__("Description"); ?> :</b></h5>
+                                    <p><?php echo $this->escapeHtml($customerData->getSupplierDescriptionNew()); ?></p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if(!is_array($customFieldsValues)) $customFieldsValues = array(); ?>
+                        <?php foreach($customFieldsValues AS $customValue) : ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5><?php echo $this->escapeHtml($customValue['name']); ?> :</h5>
+                                    <p><?php echo $this->escapeHtml($customValue['value']); ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4">
+                        <input type="submit" name="clear" class="btn btn-warning" value="<?php echo $this->__('Clear text') ?>"/>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </form>
+        </div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('settings_supplier_profile');
+    //]]>
+
+    jQuery(document).ready(function(){
+        jQuery('.datepicker').datepicker();
+        jQuery('.wysiwyg').wysihtml5({
+            color: true,
+            html: true,
+            image: false
+        });
+    });
+</script>

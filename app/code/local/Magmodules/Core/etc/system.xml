@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magmodules.eu
+ * Http://www.magmodules.eu
+ * ========================
+ * @category    Magmodules
+ * @package     Magmodules_Core
+ * @author      Magmodules <info@magmodules.eu)
+ * @copyright   Copyright (c) 2013 (http://www.magmodules.eu)
+ * @license     http://www.magmodules.eu/license-agreement/  [ Single domain license ]
+ */
+ -->
+<config>
+	<tabs>
+		<magmodules>
+			<label>Magmodules</label>
+			<sort_order>200</sort_order>
+		</magmodules>
+	</tabs>
+</config>

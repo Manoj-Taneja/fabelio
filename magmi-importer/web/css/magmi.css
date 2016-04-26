@@ -1,0 +1,1441 @@
+@CHARSET "UTF-8";
+
+body
+{
+ behavior:url("csshover3.htc");
+}
+.datasource_plugin_config,.itemprocessor_plugin_config,.general_plugin_config
+{
+	clear:both;
+}
+
+
+ul.formline
+{
+	width:100%;
+	padding-left:0px;
+	clear:both;
+	height:24px;
+}
+
+ul.formline li
+{
+	padding-left:0px;
+	margin-left:0px;
+	float:left;
+	list-style: none;
+	
+}
+ul.formline li.label
+{
+	text-align: left;
+	width:200px;
+	padding-top:4px;
+}
+
+ul.formline li.value
+{
+	float:left;
+}
+
+.col
+{
+	border:1px solid #cccccc;
+	font-size: small;
+	margin-top:3px;
+	margin-bottom:5px;
+}
+
+.col h3
+{
+	background-color: #cccccc;
+	line-height: 1.3em;
+}
+
+.fieldinfo
+{
+	font-size:x-small;
+	color:#0000cc;
+}
+
+input[type=text]
+{
+	border:1px solid #888888;
+}
+
+input[type=password]
+{
+	border:1px solid #888888;
+}
+
+body
+{
+	font-family: sans-serif;
+}
+
+div.title
+{
+ width:100%;
+ position:relative;
+ height:120px;
+ background-color:#ffffff;
+}
+
+.title .logo
+{
+ 	float:left;
+ 	height:120px;
+	width:340px;
+	background:url("../images/logo.png") no-repeat transparent;
+	background-color:#ffffff;
+}
+
+.title  .logoauth
+{
+	position:absolute;
+	top:104px;
+	left:5px;
+	font-size:xx-small;
+}
+
+.title .info
+{
+ float:left;
+ /*width:598px;*/
+ border: 1px solid #8888cc;
+ height:100%;
+}
+
+.title .info h3
+{
+	background-color:#8888cc;
+	width:100%;
+	color:#ffffff;
+}
+
+.title  .author
+{
+	width:100%;
+	float:right;
+	font-size:12pt;
+}
+
+#m_license {
+ 	font-family:monospace;
+ 	display:block;
+	 z-index:200;
+ 	background:#ffffcc;
+ 	border:1px solid #000000;
+ 	color:#000000;
+}
+
+
+
+.title  .version
+{
+	width:100%;
+		float:right;
+	font-weight: bold;
+}
+
+.subtitle
+{
+	width:100%;
+	line-height: 2em;
+	font-size: large;
+	background: #8888cc;
+	color: #ffffff;
+	font-weight: bold;
+	margin-top:5px;
+}
+
+.saveinfo
+{
+	float:right;
+	font-size: small;
+	font-weight:normal;
+	padding-right:5px;
+}
+
+.actionbutton
+{
+	border:1px solid #ccccff;
+		background:#eeeeff;
+	
+	text-decoration: none;
+	font-size: small;
+}
+.actionbutton:hover
+{
+	border:1px solid #8888cc;
+	background:#ccccff;
+	
+}
+
+.error
+{
+ color:#cc0000;
+}
+
+li.value span
+{
+ padding-top:4px;
+ height:16px;
+}
+span.version
+{
+	float: right;
+	font-weight : normal;
+	font-size : medium;
+	padding-right: 10px;
+}
+
+.log_error,.mgupload_error
+{
+	border:1px solid #cc0000;
+	background: #ff8888;
+	color:#000000;
+	text-align: center;
+	font-size: 10pt;
+	font-weight: normal;
+	padding-top:2px;
+	padding-bottom:2px;
+	
+}
+
+.log_standard
+{
+	font-size: 10pt;
+	font-weight: normal;
+	padding-top:2px;
+	padding-bottom:2px;
+	
+}
+
+.log_indexing
+{
+	border:1px solid #0000cc;
+	background: #8888ff;
+	color:#000000;
+	text-align: center;
+	font-size: 10pt;
+	font-weight: normal;
+	padding-top:2px;
+	padding-bottom:2px;
+	
+}
+
+.log_warning
+{
+	border:1px solid #cccc00;
+	background: #ffff88;
+	color:#000000;
+	text-align: center;
+	font-size: 10pt;
+	font-weight: normal;
+	padding-top:2px;
+	padding-bottom:2px;
+	
+}
+
+/*.log_itime,.log_dbtime
+{
+	border:1px solid #cccccc;
+	background: #eeeeee;
+	color:#000000;
+	text-align: left;
+	font-size: 10pt;
+	padding-top:2px;
+	padding-bottom:2px;
+}*/
+
+.log_end
+{
+	border:1px solid #00cc00;
+	background: #88ff88;
+	color:#000000;
+	text-align: center;
+	font-size: 10pt;
+	font-weight: normal;
+	padding-top:2px;
+	padding-bottom:2px;
+	
+}
+.log_end span
+{
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.log_warning span
+{
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.log_info,.mgupload_info
+{
+	border:1px solid #00cc44;
+	background: #88ffcc;
+	color:#000000;
+	text-align: left;
+	font-size: 10pt;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+.log_end a
+{
+	color:#000000;
+}
+
+.import_params
+{
+  margin-top:10px;
+  line-height: 1.4em;
+  border:1px solid #cccccc;
+  
+}
+
+.import_params h2
+{
+	background-color: #cccccc;
+	line-height: 1.4em;
+}
+	
+.import_running h2
+{
+	line-height: 1.4em;
+}
+
+#import_log
+{
+  margin-top:10px;
+}
+#progress_container
+{
+	position:relative;
+	float:right;
+	width:300px;
+	border:1px solid #888888;
+	font-size: small;
+	margin-top:0px;
+	border-collapse: collapse;
+}
+#import_progress
+{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	text-align: center;
+	font-weight:normal;
+	z-index:200;
+}
+
+.section_title
+{
+	background-color:#cccccc;
+	line-height: 1.4em;
+	font-weight: bold;
+	border:1px solid #cccccc;
+	border-collapse: collapse;
+	padding-bottom: 2px;
+}
+
+#common_config input[type=text],#common_config input[type=password]
+{
+	width:180px;
+}
+
+#common_config ul.formline li.label
+{
+	width:120px;
+	height:18px;
+	padding-top:3px;
+}
+
+#profile_action li.label
+{
+	height:18px;
+	padding-top:3px;
+}
+
+
+.pluginselect
+{
+	width:400px;
+	clear:both;
+	float:left;
+}
+
+.pluginselect input[type=checkbox]
+{
+	margin:0px;
+	padding:0px;
+	height:20px;
+	margin-top:3px;
+}
+
+div.plugininfo
+{
+	float:left;
+	position:relative;
+	padding-top:2px;
+	background-color:#eeeeee;
+	height:18px;
+	margin-bottom:1px;
+}
+
+.pluginname
+{
+}
+
+span.pluginname.sponsored
+{
+ background:#eeeeff;
+}
+
+div.plugininfo div.plugininfohover
+{
+	position:absolute;
+	top:-9999px;
+	left:-9999px;
+}
+
+div.plugininfo
+{
+	width:50px;
+	text-align: center;
+}
+
+div.plugininfo:hover 
+{
+background-color:#ccffcc;
+}
+
+div.pluginconf
+{
+ float:left;
+ margin-left:10px;
+}
+
+div.plugindoc,
+div.plugindoc span
+{
+	float:left;
+	margin-left:10px;
+	color:#6C6C6C;
+}
+
+select
+{
+	border:1px solid #888888;
+	/* background: #ffffff; */
+	background: #f3ffd1;
+	color:#6C6C6C;
+	padding:2px;
+	border-radius:5px;
+	font-size: 12px;
+}
+
+div.plugininfo:hover div.plugininfohover
+{
+ width:400px;
+ border:1px solid #000000;
+ background:#eeeecc;
+ top:0px;
+ left: -410px;
+ z-index:200;
+}
+
+div.plugindata .ul
+{
+	
+}
+div.plugindata .minidoc
+{
+	background:#ffffff;
+	border-top:1px solid #cccccc;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+div.pluginconfpanel
+{
+ display:none;
+}
+div.pluginconfpanel.selected
+{
+	display:block;
+	clear:both;
+	border:1px solid #888888;
+}
+
+#import_current
+{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:0px;
+	background-color: #33cc33;
+	border:none;
+	z-index:20;
+}
+#runlog
+{
+	clear:both;
+	background-color:#ffffff;
+}
+
+#runlog .runtime_info
+{
+	height:100px;
+	overflow:auto;
+}
+
+.config_error
+{
+	margin-top:10px;
+	border:1px solid #cc0000;
+	background: #ff8888;
+	color:#000000;
+	text-align: center;
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+.scrollbox
+{
+	height:200px;
+	position:relative;
+}
+.scrollbox_content {
+	margin-right: 8px;
+}
+
+.scrollbox_scrollbar {
+	background-color: silver;
+	border-left: solid black 1px;
+	height: 100%;
+	width: 8px;
+}
+.scrollbox_handle {
+	background-color: #888888;
+}
+
+.log_itime table,.log_dbtime table
+{
+	width:100%;
+}
+.log_itime table td,.log_dbtime table td
+{
+	border:1px solid #eeeeee;
+}
+
+div.log_warning
+{
+ clear:both;
+}
+div.log_error
+{
+ clear:both;
+}
+
+.plugin_description
+{
+	border: 1px solid #eeeeee;
+	background-color:#dddddd;
+	margin:2px;
+}
+
+.plupload_error,.magmi_error
+{
+	border:1px #cc0000 solid;
+	background-color:#ffaaaa;
+	color:#000000;
+	font-weight:normal;
+	font-size: 14px;
+	padding: 20px 20px 20px 20px;
+}
+.magmi_error li
+{
+	list-style: disc inside;
+	padding: 10px 0 0 15px;
+	font-weight: bold;
+}
+.message
+{
+	padding-top:4px;
+}
+
+.fieldhelp
+{
+	float:right;
+	width:24px;
+	height:24px;
+	margin-right:4px;
+	background: url('fieldhelp.png') transparent no-repeat;
+}
+
+div.trace
+{
+	font-size:small;
+	font-family:courier,monospace;
+	background-color:#;
+	border:1px solid #cc0000;
+}
+#directrun ul.formline li.label
+{
+ width:200px;	
+}
+
+ul#globstep input[type=text]
+{
+	 width:100px;
+}
+
+ul#globstep.formline li.label
+{
+	 width:200px;
+}
+
+ul#mssep input[type=text]
+{
+	 width:50px;
+}
+
+ul#mssep.formline li.label
+{
+	 width:250px;
+}
+
+
+li.utility
+{
+	margin-top:2px;
+}
+.utility .pluginselect
+{
+	height:20px;
+	vertical-align: middle;
+}
+
+.utility .plugininfo
+{
+	height:20px;
+	vertical-align: middle;
+}
+
+.utility .utility_run
+{
+	float:right;
+	height:20px;
+}
+
+.utility .utility_run a
+{
+	margin-top:2px;
+}
+
+.utility .pluginoptionpanel
+{
+	clear:both;
+}
+
+.separator
+{
+width:100%;
+border:0px;
+border-top:1px solid #cccccc;
+margin-bottom:5px;
+clear:both;
+}
+.pluginrun_results 
+{
+	border:1px solid #0000cc;
+}
+
+p.logentry
+{
+ margin:0px;
+ padding:0px;
+ border-bottom:1px solid #cccccc;
+}
+
+.pluginrun_results h3
+{
+ background-color:#0000cc;
+ color:#ffffff;
+} 
+
+#overlay {
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+	 background:url("../images/white50.png");
+}
+
+#overlaycontent {
+     width:800px;
+     margin: 200px auto;
+     background-color: #fff;
+     border:1px solid #000;
+     text-align:left;
+}
+
+div.actionbuttons
+{
+ width:100%;
+ border-top:1px solid #000000;
+ margin-top:5px;
+ padding-top:5px;
+ height:24px;
+}
+
+div.actionbuttons a
+{
+ display:block;
+ float:right;
+ margin-right:5px;
+}
+
+div.changedesc
+{
+ width:100%;
+ border-top:1px solid #000000;
+ border-bottom:1px solid #000000;
+ margin-top:5px;
+ padding-top:5px;
+ padding-bottom:5px;
+	
+}
+
+/* dZine-Hub */
+
+body {
+	background-color:#F8F8F8;
+	background:url("../images/footer_bg.jpg") repeat-x;
+	background-position:left bottom;
+}
+
+.wrapper {
+	background:url("../images/header_bg.jpg") repeat-x;
+	background-position:left top;
+}
+
+.magmi-page {
+	width:980px;
+	margin:0 auto;
+}
+
+.header {
+	height:115px;
+	background:url("../images/header.jpg") no-repeat;
+}
+
+.footer {
+	clear:both;
+	height:136px;
+}
+
+div.title , .title .logo {
+	background:transparent;
+}
+
+.title .info {
+	border:none;
+	font-size:11px;
+}
+
+.title .version {
+	color:#9CBC3F;
+	line-height:12px;
+}
+
+.title .info {
+	width:294px !important;
+	padding:40px 0px 0px 112px;
+	color:#858585;
+}
+
+.title .author {
+	font-size:11px;
+}
+
+.title .info a {
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+	color:#858585;
+}
+
+.title .info .donate a {
+	color:#9CBC3F;
+	font-size:10px;
+	font-weight:bold;
+	line-height:18px;
+}
+
+/* CSS Code */
+.tabs {
+	float:left;
+	width:100%;
+	height:34px;
+	border:none;
+	background:url("../images/menu_bg.jpg") repeat-x;
+	list-style:none;
+	padding:0px;
+	margin:-45px 0px 0px;
+}
+
+.tabs li {
+	float:left;
+	height:31px;
+	line-height:31px;
+	border:none;
+	border-left:none;
+	margin:1px 0px 0px 12px;
+	overflow:hidden;
+	position:relative;
+	background:transparent;
+}
+
+.tabs li a {
+	float:left;
+	text-decoration: none;
+	color:#FFFFFF;
+	display:block;
+	font-size:12px;
+	padding:0px 20px;
+	border:none;
+	outline:none;
+}
+
+.tabs li.active a , .tabs li a:hover {
+	color:#636363;
+}
+
+html .tabs li.active, html .tabs li.active a:hover , .tabs li a:hover {
+	background:url("../images/hover_bg.jpg") repeat-x;
+	border-bottom: 1px solid #fff;
+}
+
+.tab_container {
+	float:left;
+	width:980px;
+	overflow:hidden;
+	clear:both;
+	border-top: none;
+	border:none;
+	background:#fff;
+}
+
+.tab_content {
+	padding:0px;
+	font-size:12px;
+}
+
+.tab_left {
+	float:left;
+	width:7px;
+	height:33px;
+}
+
+.tab_right {
+	float:right;
+	width:7px;
+	height:33px;
+}
+
+.tabs li.active .tab_left , .tabs li:hover .tab_left {
+	float:left;
+	width:7px;
+	height:33px;
+	background:url("../images/hover_left.jpg") no-repeat;
+}
+
+.tabs li.active .tab_right , .tabs li:hover .tab_right {
+	float:right;
+	width:7px;
+	height:33px;
+	background:url("../images/hover_right.jpg") no-repeat;
+}
+
+.tab_container .subtitle-left , .utility-subtitle-left {
+	float:left;
+	width:13px;
+	height:45px;
+	background:url("../images/header_tab_left.jpg") no-repeat;
+}
+
+.tab_container .subtitle-right , .utility-subtitle-right {
+	float:right;
+	width:13px;
+	height:45px;
+	background:url("../images/header_tab_right.jpg") no-repeat;
+}
+
+.tab_container .subtitle , .utility-subtitle {
+	float:left;
+	width:954px;
+	height:45px;
+	margin-top:0px;
+	background:url("../images/header_tab_bg.jpg") repeat-x;
+}
+
+.tab_container .subtitle span {
+	line-height:45px;
+	font-weight:normal;
+	color:#636363;
+	font-size:14px;
+}
+
+.dash_tabs_left {
+    min-height:120px;
+    background:url("../images/tab_left_bg.jpg") repeat-y;
+    background-position:left top;
+    margin:10px 0px 20px 0px;
+}
+
+.dash_tabs_right {
+	min-height:120px;
+    background:url("../images/tab_right_bg.jpg") repeat-y;
+    background-position:right top;
+}
+
+.dash_tabs_bottom_left {
+	min-height:120px;
+	background:url("../images/tab_bottom_left.jpg") no-repeat;
+    background-position:left bottom;
+}
+
+.dash_tabs_bottom_right  {
+	min-height:120px;
+    padding:0px 0px 8px;
+    background:url("../images/tab_bottom_right.jpg") no-repeat;
+    background-position:right bottom;
+}
+
+.dash_tabs_bottom {
+	min-height:120px;
+	background:url("../images/tab_bottom_bg.jpg") repeat-x;
+    background-position:left bottom;
+}
+
+.col {
+	margin-left:-7px;
+	border:none;
+}
+
+.col h3 {
+	clear:both;
+	line-height:28px;
+	padding:0px 10px;
+	font-weight:normal;
+	color:#000;
+	background-color:#F0F0F0;
+}
+
+.grid_12 h1 {
+	clear:both;
+	padding:15px 10px 5px;
+	font-weight:bold;
+	color:#9CBC3F;
+	text-transform:capitalize;
+}
+
+.grid_12.omega > ul {
+	clear:both;
+	padding-bottom:20px;
+	margin:5px 10px;
+}
+
+#chooseprofile > h3 {
+	clear:both;
+	padding:0px 10px;
+	margin-left:-7px;
+	width:980px;
+}
+
+.formline {
+	padding:10px;
+	margin:0px 10px;
+	color:#6C6C6C;
+	font-size:12px;
+}
+
+.grid_12 {
+	float:none;
+}
+
+.pluginselect .pl_datasources {
+	margin:14px;
+	padding:2px;
+	border-radius:5px;
+}
+
+div.pluginconfpanel.selected {
+	font-size:12px;
+	color:#6C6C6C;
+	border:1px solid #EFEFEF;
+	border-radius:5px;
+	margin:0px 13px 0px;
+}
+
+.plugin_description {
+	margin:0px !important;
+	padding:2px 10px;
+	background-color:#F0F0F0;
+	font-size:12px;
+	line-height:18px;
+	color:#000;
+}
+
+.plugin_description b {
+	font-weight:normal;
+}
+
+.pluginconfpanel.selected > div {
+	color:#000;
+	font-size:12px;
+}
+
+.pluginconfpanel.selected > div ul.formline {
+	margin:0px 10px;
+}
+
+.pluginconfpanel.selected input , .pluginconfpanel.selected > div span , .pluginconfpanel.selected > div input {
+	margin:5px 10px;
+	vertical-align:middle;
+	color:#6C6C6C !important;
+}
+
+.pluginselect input[type="checkbox"] {
+	vertical-align:middle;
+	margin:0px;
+}
+
+ul.formline li.label {
+	font-size:12px !important;
+}
+
+div#localcsv ul.formline li.value > input {
+	margin:5px 0px !important;
+}
+
+#runmagmi select , #runmagmi input , .utility-content input {
+	padding:2px;
+	border-radius:5px;
+	color:#6C6C6C;
+	font-size:12px;
+}
+
+.grid_12 .copy-select-profile {
+	width:136px;
+	height:27px;
+	background:url("../images/copy_prof.jpg") no-repeat;
+	margin:0px 10px;
+	color:transparent !important;
+	border-radius:0px !important;
+	border:none;
+	vertical-align:middle;
+}
+
+.grid_12 .copy-select-profile:hover {
+	cursor:pointer;
+	background-position:0px -27px;
+}
+
+.pluginconf span a , .plugindoc a , .fieldinfo , #csvdl {
+	color:#9CBC3F;
+	line-height:24px;
+	font-size:12px;
+	text-decoration:underline;
+}
+.pluginconf span a:hover , 
+.plugindoc a:hover {
+	color:#6C6C6C;
+}
+.fieldinfo , #csvdl {
+	font-weight:bold;
+	font-size:11px;
+}
+
+div.plugininfo {
+	width:50px;
+	height:25px;
+	padding-left:0px;
+	padding-right:0px;
+	background:url("../images/info_btn.jpg") no-repeat;
+	float: right;
+}
+
+div.plugininfo:hover {
+	background-position:0px -27px;
+}
+
+div.plugininfo span {
+	line-height:20px;
+	font-size:12px;
+	color:#6C6C6C;
+}
+
+div.plugininfohover {
+	background:#C5D88A;
+	border:1px solid #9CBC3F !important;
+}
+
+div.plugininfohover .plugindata ul li , div.plugininfohover .plugindata ul li span {
+	color:#000000;
+}
+div.pluginconfpanel,
+div.pluginconfpanel span {
+	font-size: 12px;
+}
+
+div.plugindata .minidoc {
+	background:#9CBC3F;
+	color:#FFFFFF;
+}
+
+container_12 , .pluginname , .pluginselect {
+	color:#6C6C6C;
+	font-size:12px;
+}
+
+span.pluginname.sponsored {
+	background:transparent;
+	font-size:12px;
+}
+
+.run_import {
+	width:118px;
+	height:39px;
+	background:url("../images/run_btn.jpg") no-repeat;
+	border:none;
+	border-radius:0px;
+	vertical-align: middle;
+	margin: 0 0 0 15px;
+}
+
+.run_import:hover {
+	cursor:pointer;
+	background-position:0px -39px;
+}
+
+.actionbutton {
+	float:right;
+	width:136px;
+	height:23px;
+	background:url("../images/save_btn.jpg") no-repeat;
+	border:none;
+	color:transparent;
+	text-indent:-9999px;
+	position:relative;
+	margin:20px 0px;
+}
+.savebutton {
+	margin:10px 0px !Important;
+}
+
+.actionbutton:hover {
+	background:url("../images/save_btn.jpg") no-repeat;
+	background-position:0px -23px;
+	border:none;
+}
+
+.actionbutton.save-global {
+	float:right;
+	width:145px !important;
+	height:23px;
+	border:none;
+	color:transparent;
+	text-indent:-9999px;
+	position:relative;
+	margin:20px 0px;
+	background:url("../images/save_global_btn.jpg") no-repeat;
+}
+
+.actionbutton.save-global:hover {
+	background:url("../images/save_global_btn.jpg") no-repeat;
+	background-position:0px -23px;
+	border:none;
+}
+
+#common_config ul.formline li.label {
+	width:140px;
+}
+
+#common_config input[type="text"], #common_config input[type="password"] , .connectivity ul.formline li.value {
+	width:135px;
+	padding:2px;
+	border-radius:5px;
+	color:#6C6C6C;
+}
+
+.magmi-release input {
+	margin:23px 10px 0px;
+	width:200px;
+}
+
+.utility-subtitle-left {
+	clear:left;
+}
+
+.utility-subtitle {
+	float:left;
+	width:954px !important;
+}
+
+.utility-subtitle span {
+	line-height:45px;
+	color:#6C6C6C;
+}
+
+.utility-content {
+	clear:both;
+	background-color:#FFFFFF;
+}
+
+.utility-content .plugininfo {
+	margin-bottom:10px;
+}
+
+.utility-content .plugininfo  {
+	width:75px;
+	height:27px;
+	padding:0px;
+	background:url("../images/options_btn.jpg") no-repeat;
+}
+
+.utility-content .plugininfo a {
+	line-height:25px;
+	text-decoration:none;
+	color:#6C6C6C;
+}
+
+.utility_run.actionbutton {
+	width:84px;
+	height:23px;
+	background:url("../images/run_utility.jpg") no-repeat;
+}
+
+.utility_run.actionbutton:hover {
+	background-position:0px -23px;
+}
+
+.utility_run.actionbutton a {
+	display:block;
+	height:23px;
+}
+
+.pluginoptionpanel div {
+	border:1px solid #F0F0F0;
+}
+
+.csv_options {
+	padding:10px;
+	color:#6C6C6C;
+}
+
+.pluginrun_results {
+	clear:both;
+	border:none;
+}
+
+.log_error, .mgupload_error {
+	line-height:25px;
+	background-color:#F2DEDE;
+	border:1px solid #EBCCD0;
+	border-radius:5px;
+	color:#AE4442;
+	font-weight:normal;
+}
+
+.logentry.log_error {
+	border:1px solid #EBCCD0;
+	margin:10px;
+}
+
+p.logentry {
+	border:none;
+	margin:10px;
+}
+
+.advance-utility {
+	width:165px;
+	height:44px;
+	display:block;
+	background:url("../images/advance_btn.jpg") no-repeat;
+}
+
+.advance-utility:hover {
+	background-position:0px -44px;
+}
+
+.back-to-magmi {
+	float:left;
+	text-decoration:none;
+	color:#9CBC3F;
+	margin:10px 0px;
+}
+
+#runlog .col {
+	padding:10px;
+}
+
+#import_current {
+	background-color:#9CBC3F;
+	line-height:25px;
+}
+
+#progress_container , .log_info, .mgupload_info {
+	line-height:25px;
+}
+
+.log_end span a {
+	line-height:25px;
+	color:#00F;
+	text-decoration:underline;
+}
+
+#m_license {
+	background:#C5D88A;
+	color:#FFFFFF;
+	position:relative;
+	top:72px;
+	padding:10px;
+	border:1px solid #9CBC3F;
+}
+
+/* LOGIN
+*******************************************************************************/
+#login-page, 
+#login-page .wrapper 
+{
+	background-image: none !Important;
+	background: #F8F8F8 !Important;
+}
+#page-login { background:scroll #d5d5d5 url(images/bkg_login.jpg) 50% 0 no-repeat; }
+.login-box { width:704px; margin:0 auto; padding:130px 0 0; }
+.login-form { padding:0 0 20px; text-align:left; background:url(../images/bkg_login-box.png) 0 0 no-repeat; }
+.login-form .input-box { padding:0 0 0 72px; }
+.login-form .input-left { float:left; }
+.login-form .input-right { float:right; padding:0 72px 0 0; }
+.login-form .input-box br { display:none; }
+.login-form input.input-text { width:255px; background:transparent url(images/bkg_login-input.png) no-repeat 0 0; border:0; padding:8px 10px 9px; font-size:16px; -moz-box-shadow:none; box-shadow:none; }
+.login-form input.validation-failed { background-position:0 -47px; }
+.login-form h2 { font:bold 16px/1.1 Helvetica, Arial, sans-serif; color:#f47b20; margin:0 0 40px; background:url(images/login-logo.gif) no-repeat 33px 19px; padding:38px 0 20px 239px; }
+.login-form label { font-weight:bold; font:bold 16px/1.1 Helvetica, Arial, sans-serif; color:#555; display:block; padding:0 0 5px 5px; }
+.login-form .form-buttons { margin:12px 0 0 0; padding:0 72px; clear:both; text-align:right; }
+.login-container a { color:#0065b1; text-decoration:none; }
+.login-container a:hover { color:#0065b1; text-decoration:underline; }
+.login-form .form-buttons .left { font-size:13px; line-height:34px; }
+.login-container .login-support { margin:0; text-align:center; padding:10px 0 30px; color:#555; font-size:11px; background:url(images/bkg_login-box.png) 0 100% no-repeat; }
+.login-container .legal { margin:0; text-align:center; padding:10px 0 0; color:#a09f9f; font-size:11px; }
+.login-form .validation-advice { margin:3px 0 0 0; }
+.login-form .forgot-link { margin:0 17px 0 0; text-align:right; }
+.login-container .block-billing { margin:0; background:url(images/bkg_login-box.png) 0 50% no-repeat; padding:10px 0; }
+.login-container .block-billing span { display:block; border:solid #ededed; border-width:1px 0; margin:0 32px; font:bold 16px/1.1 Helvetica, Arial, sans-serif; padding:20px 40px 20px; text-align:left; color:#555; }
+.login-container input.forgot-password { width:560px !important; background-position:0 -98px; padding:8px 10px 9px; }
+.login-container input.forgot-password.validation-failed { background-position:0 -145px; }
+.login-container button.btn-login { padding:0; margin:0; background:none; border:0; }
+.login-container button.btn-login span { height:34px; margin:0 34px 0 10px; font:bold 13px/34px Helvetica, Arial, sans-serif; text-transform:uppercase; color:#fff; cursor:pointer; text-align:center; background:transparent url(images/bkg_btn-login.png) repeat-x 0 -35px; position:relative; border:0; display:block; }
+.login-container button.btn-login span:before,
+.login-container button.btn-login span:after { content:""; height:34px; position:absolute; top:0; background:url(images/bkg_btn-login.png) no-repeat 0 0; }
+.login-container button.btn-login span:before { width:15px; left:-15px; }
+.login-container button.btn-login span:after { width:34px; right:-34px; background-position:-16px 0; }
+.login-container button.btn-login span { text-shadow:0 -2px 1px #a35112; }
+.login-container .form-button { width:95px; height:34px; text-align:left; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; cursor:pointer; padding:0; background:transparent url(images/btn-admin-login.png) no-repeat 0 0; border:0; }
+html[lang="fr"] .login-container .form-button { background-image:url(images/btn-admin-login-vf.png) }
+
+.login-container .messages { margin:-15px 72px 30px; }
+
+.login-content {
+	clear:both;
+	padding:60px 0px 0px;
+}
+
+.login-form {
+	width:459px;
+	height:330px;
+	background:url("../images/login_boxbg_magmi.png") no-repeat;
+	margin:0 auto;
+	padding:110px 30px 0px;
+}
+
+.login-form input.username , .login-form input.password {
+    width:410px;
+    height:60px;
+    margin:10px 0px 20px;
+    padding:0px 30px 0px 20px;
+    background:transparent;
+    border:1px solid #E8E8E8;
+    border-radius:5px 5px 5px 5px;
+    color:#999999;
+    font-size:16px;
+}
+
+.login-form input.username {
+    background: url("../images/login_username.png") no-repeat scroll 95% center #F4F4F4;
+}
+
+.login-form input.password {
+    background: url("../images/login_password.png") no-repeat scroll 95% center #F4F4F4;
+}
+
+.login-form .form-button {
+	float:right;
+    width:125px;
+    height:50px;
+    position:relative;
+    text-indent:-99999px;
+    border:none;
+    cursor:pointer;
+    background: url("../images/login_signin.png") no-repeat scroll 0 0 transparent;
+}
+
+.login-form .forget-pass {
+	float:left;
+	line-height:50px;
+}
+
+.login-form .forget-pass a {
+	text-decoration:none;
+	color:#999999 !important;
+	font-size:16px;
+}
+
+.messages {
+    background: none repeat scroll 0 0 #F2DEDE;
+    border: 1px solid #EBCCD0;
+    border-radius: 5px 5px 5px 5px;
+    color: #AE4442;
+    font-size: 12px;
+    line-height: 32px;
+    margin: 0 3px 10px;
+    padding: 0 5px;
+}
+.warning_msg {
+	background:transparent;
+	color:#AE4442;
+	line-height:32px;
+	padding:0px 5px;
+	font-size:14px;
+	border:1px solid #EBCCD0;
+	border-radius:5px;
+	background-color:#F2DEDE;
+	margin:0px 3px 10px;
+}
+
+.utility .plugininfo a {
+	color:#636363;
+	text-decoration:none;
+	line-height:20px;
+	font-size:10px;
+}

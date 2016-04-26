@@ -1,0 +1,79 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Rma
+ * @version    1.5.3
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php $_item = $this->getItem() ?>
+<?php $_helper = Mage::helper('awrma') ?>
+<?php $viewOnly = $_item->getData('awrma_view_only') ?>
+<tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
+    <?php if (!$viewOnly && Mage::helper('awrma/config')->getAllowPerOrderRMA()) : ?>
+        <td class="a-center">
+            <span class="nobr">
+                <input type="checkbox" name="orderitems[<?php echo $_item->getId() ?>]" value="<?php echo $_item->getId() ?>" id="awrma-items-selected-<?php echo $_item->getId() ?>" class="awrma-items-selected" />
+            </span>
+        </td>
+    <?php endif; ?>
+    <td><h5 class="title"><?php echo $this->htmlEscape($_item->getName()) ?></h5>
+        <?php if ($_options = $this->getItemOptions()): ?>
+            <dl class="item-options">
+                <?php foreach ($_options as $_option) : ?>
+                    <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                    <?php if (!$this->getPrintStatus()): ?>
+                        <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                        <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
+                            <?php echo $_formatedOptionValue['value'] ?>
+                            <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                <div class="truncated_full_value">
+                                    <dl class="item-options">
+                                        <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                                        <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+                                    </dl>
+                                </div>
+                            <?php endif; ?>
+                        </dd>
+                    <?php else: ?>
+                        <dd><?php echo $this->htmlEscape((isset($_option['print_value']) ? $_option['print_value'] : $_option['value'])) ?></dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php echo $_item->getDescription() ?>
+        <?php if ($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId()): ?>
+            <br /><a href="#" id="order-item-gift-message-link-<?php echo $_item->getId() ?>" class="giftmessage-preview-link expand" onclick="return giftMessageToogle('<?php echo $_item->getId() ?>')"><?php echo $this->__('Gift Message') ?></a>
+        <?php endif; ?>
+    </td>
+    <td><?php echo Mage::helper('core/string')->splitInjection($this->getSku()) ?></td>
+    <td class="a-right nowrap">
+        <span class="nobr">
+            <?php if ($_helper->getItemMaxCount($_item) > 0): ?>
+                <?php if (!$viewOnly && Mage::helper('awrma/config')->getAllowPerOrderRMA()) : ?>
+                    <input type="text" name="orderitemscount[<?php echo $_item->getId() ?>]" id="orderitem-count<?php echo $_item->getId() ?>" value="<?php echo $itemCount ?>" class="awrma-items-count" selectitemid="awrma-items-selected-<?php echo $_item->getId() ?>" />
+                    <input type="hidden" id="orderitem-count<?php echo $_item->getId() ?>-maxcount" value="<?php echo $itemCount; ?>" />
+                <?php else : ?>
+                    <?php echo $_helper->getItemCount($_item) ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        </span>
+    </td>
+</tr>

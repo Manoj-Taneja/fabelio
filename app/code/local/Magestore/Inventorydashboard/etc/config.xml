@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorydashboard
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<config>
+    <modules>
+        <Magestore_Inventorydashboard>
+            <version>0.1.0</version>
+        </Magestore_Inventorydashboard>
+    </modules>
+    <frontend>
+        <routers>
+            <inventorydashboard>
+                <use>standard</use>
+                <args>
+                    <module>Magestore_Inventorydashboard</module>
+                    <frontName>inventorydashboard</frontName>
+                </args>
+            </inventorydashboard>
+        </routers>
+        <layout>
+            <updates>
+                <inventorydashboard>
+                    <file>inventorydashboard.xml</file>
+                </inventorydashboard>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventorydashboard>
+                    <files>
+                        <default>Magestore_Inventorydashboard.csv</default>
+                    </files>
+                </Magestore_Inventorydashboard>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <inventorydashboardadmin>
+                <use>admin</use>
+                <args>
+                    <module>Magestore_Inventorydashboard</module>
+                    <frontName>inventorydashboardadmin</frontName>
+                </args>
+            </inventorydashboardadmin>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <inventorydashboard>
+                    <file>inventorydashboard.xml</file>
+                </inventorydashboard>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventorydashboard>
+                    <files>
+                        <default>Magestore_Inventorydashboard.csv</default>
+                    </files>
+                </Magestore_Inventorydashboard>
+            </modules>
+        </translate>
+        <events>
+            <inventory_menu_list>
+                <observers>
+                    <inventorydashboard_observers>
+                        <class>inventorydashboard/observer</class>
+                        <method>addMenu</method>
+                    </inventorydashboard_observers>
+                </observers>
+            </inventory_menu_list>      
+            <controller_action_predispatch_inventoryplusadmin_adminhtml_dashboard_index>
+                <observers>
+                    <inventorydashboard_observers>
+                        <class>inventorydashboard/observer</class>
+                        <method>changeDashboard</method>
+                    </inventorydashboard_observers>
+                </observers>
+            </controller_action_predispatch_inventoryplusadmin_adminhtml_dashboard_index>      
+        </events>
+    </adminhtml>   
+    <global>
+        <models>
+            <inventorydashboard>
+                <class>Magestore_Inventorydashboard_Model</class>
+                <resourceModel>inventorydashboard_mysql4</resourceModel>
+            </inventorydashboard>
+            <inventorydashboard_mysql4>
+                <class>Magestore_Inventorydashboard_Model_Mysql4</class>
+                <entities>
+                    <tabs>
+                        <table>erp_inventory_dashboard_tab</table>
+                    </tabs>
+                    <items>
+                        <table>erp_inventory_dashboard_item</table>
+                    </items>
+                </entities>
+            </inventorydashboard_mysql4>
+        </models>
+        <resources>
+            <inventorydashboard_setup>
+                <setup>
+                    <module>Magestore_Inventorydashboard</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </inventorydashboard_setup>
+            <inventorydashboard_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </inventorydashboard_write>
+            <inventorydashboard_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </inventorydashboard_read>
+        </resources>
+        <blocks>
+            <inventorydashboard>
+                <class>Magestore_Inventorydashboard_Block</class>
+            </inventorydashboard>
+        </blocks>
+        <helpers>
+            <inventorydashboard>
+                <class>Magestore_Inventorydashboard_Helper</class>
+            </inventorydashboard>
+        </helpers>
+        <!-- <events>
+            <controller_action_predispatch>
+                <observers>
+                    <inventorydashboard_observers>
+                        <class>inventorydashboard/observer</class>
+                        <method>controllerActionPredispatch</method>
+                    </inventorydashboard_observers>
+                </observers>
+            </controller_action_predispatch>
+        </events> -->
+    </global>
+</config>

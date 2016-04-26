@@ -1,0 +1,26 @@
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<sales>
+						<children>
+							<order>
+								<children>
+									<actions>
+										<children>
+											<change_in_status>
+												<title>Change In Status</title>
+												<sort_order>200</sort_order>
+											</change_in_status>
+										</children>
+									</actions>
+								</children>
+							</order>
+						</children>
+					</sales>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

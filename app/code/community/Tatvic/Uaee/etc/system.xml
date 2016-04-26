@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<tabs>
+        <tatvic translate="label" module="tatvic_uaee">
+            <label>Tatvic Inc.</label>
+            <sort_order>1</sort_order>
+        </tatvic>
+    </tabs>
+    <sections>
+		<tatvic_uaee module="tatvic_uaee">
+			<label>Google Analytics Enhanced Ecommerce</label>
+			<tab>tatvic</tab>
+			<sort_order>100</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+                <general translate="label" module="tatvic_uaee">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                     <comment><![CDATA[<a href="http://bit.ly/1JbU2lo" target="_blank"><img src="data:image/jpeg;base64,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" style="float:right" width=400 height=200/></a> <span style="float:right;clear:right;margin-right:13px"><strong><i>(The Ultimate Google Analytics Extension for Your Magento Store)</i></strong></span>
+]]></comment>
+                    <fields>
+                        <enable>
+                            <label>Activate Extension</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable>
+                        <account_id>
+                            <label>GA Account ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<validate>required-entry</validate>
+                            <comment>Enter your Google Analytics ID here. You can login into your Google Analytics account to find your ID e.g. UA-XXXXXXX-1</comment>
+                        </account_id>
+						<email_id>
+                            <label>Email (Optional)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<validate>validate-email</validate>
+                            <comment>Provide your work email address to receive plugin enhancement update</comment>
+                        </email_id>
+                        
+                    </fields>
+                </general>
+                <ecommerce translate="label" module="tatvic_uaee">
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                   
+                    <fields>
+                        <checkout_url>
+                            <label>Checkout  URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enter Your Checkout URL, Example - /checkout/onepage</comment>
+                        </checkout_url>
+                        <success_url>
+                            <label>Checkout Success Page URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enter Your Checkout Success Page URL, Example - /checkout/onepage/success</comment>
+                        </success_url>
+                         <gtmid>
+                            <label>Use Our Extension with Your GTM </label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[ If Yes, follow the instructions  <a href= "http://plugins.tatvic.com/downloads/magento-extension-GTM-steps-for-free-user.pdf" target="_blank">mention</a> in the document to learn how to set your GTM with our Extension.]]> </comment>
+                         </gtmid>
+                         <home_id>
+                            <label>Home Page Category ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<validate>validate-number</validate>
+                            <comment>Enter the category ID of the products that you want to showcase on the home page. You can find the category Id from Catalog > managed products section.</comment>
+                        </home_id>
+                         <brand>
+                            <label>Brand Code (Optional)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Provide the brand code to see the product brand name in GA.</comment>
+                        </brand>
+                        
+                    </fields>
+                </ecommerce>
+						
+			</groups>
+		</tatvic_uaee>
+    </sections>
+</config>

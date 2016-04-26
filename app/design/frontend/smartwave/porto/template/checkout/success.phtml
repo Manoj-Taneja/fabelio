@@ -1,0 +1,66 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Terima Kasih') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="form-wrap">
+    <h2 class="sub-title"><?php echo $this->__('Terima kasih atas pembelian Anda!') ?></h2>
+
+    <?php if ($this->getOrderId()):?>
+    <?php if ($this->getCanViewOrder()) :?>
+        <p><?php echo $this->__('Nomor pesanan Anda: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+    <?php  else :?>
+        <p><?php echo $this->__('Nomor pesanan Anda: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+    <?php endif;?>
+        <p><?php echo $this->__('Anda akan menerima email konfirmasi pemesanan berisi detail pemesanan Anda dan sebuah link untuk mengecek status pembelian.') ?></p>
+    <?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+        <p>
+            <?php echo $this->__('Klik <a href="%s" onclick="this.target=\'_blank\'">disini</a> untuk mencetak lembar konfirmasi pemesanan Anda.', $this->getPrintUrl()) ?>
+            <?php echo $this->getChildHtml() ?>
+        </p>
+    <?php endif;?>
+    <?php endif;?>
+
+    <?php if ($this->getAgreementRefId()): ?>
+        <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+    <?php endif;?>
+
+    <?php if ($profiles = $this->getRecurringProfiles()):?>
+    <p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+    <ul class="disc">
+    <?php foreach($profiles as $profile):?>
+    <?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+        <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+    <?php endforeach;?>
+    </ul>
+    <?php endif;?>
+
+    <div class="buttons-set">
+        <button type="button" class="button" title="<?php echo $this->__('Lanjutkan Berbelanja') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Lanjutkan Berbelanja') ?></span></span></button>
+    </div>
+</div>

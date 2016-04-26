@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fabmod_Checkout>
+            <version>0.0.1</version>
+        </Fabmod_Checkout>
+    </modules>
+    <global>
+        <blocks>
+            <checkout>
+                <rewrite>
+                    <onepage>Fabmod_Checkout_Block_Onepage</onepage><!-- rewrite the onepage chackout block -->
+                </rewrite>
+            </checkout>
+        </blocks>
+        <helpers>
+            <fabmod_checkout>
+                <class>Fabmod_Checkout_Helper</class>
+            </fabmod_checkout>
+        </helpers>
+        <models>
+            <fabmod_checkout>
+                <class>Fabmod_Checkout_Model</class>
+            </fabmod_checkout>
+        </models>
+    </global>
+    <default>
+        <checkout>
+            <options>
+                <hide_shipping>1</hide_shipping>
+                <default_shipping>flatrate_flatrate</default_shipping><!-- set the default shipping method code -->
+            </options>
+        </checkout>
+    </default>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <Fabmod_Checkout before="Mage_Checkout">Fabmod_Checkout</Fabmod_Checkout>
+                    </modules>
+                </args>
+            </checkout>
+        </routers>
+        <translate>
+            <modules>
+                <Fabmod_Checkout>
+                    <files>
+                        <default>Fabmod_Checkout.csv</default>
+                    </files>
+                </Fabmod_Checkout>
+            </modules>
+        </translate>
+    </frontend>
+</config>

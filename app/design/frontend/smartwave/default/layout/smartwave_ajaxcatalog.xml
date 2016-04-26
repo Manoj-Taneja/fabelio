@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+    <catalog_category_view>
+        <reference name="head">
+            <action method="addJs"><script>smartwave/jquery/jquery-1.10.2.min.js</script></action>        
+            <action method="addJs"><script>smartwave/jquery/jquery-noconflict.js</script></action>
+        </reference>
+        <reference name="content">
+            <remove name="chat_zopim_default"/>
+            <block type="ajaxcatalog/ajax" name="ajaxcatalog" template="smartwave/ajaxcatalog/ajax.phtml"/>            
+        </reference>
+        <reference name="before_body_end">
+            <remove name="chat_zopim_default"/>
+        </reference>
+    </catalog_category_view>
+    <catalogsearch_result_index>
+        <reference name="head">
+            <action method="addJs"><script>smartwave/jquery/jquery-1.10.2.min.js</script></action>        
+            <action method="addJs"><script>smartwave/jquery/jquery-noconflict.js</script></action>
+        </reference>
+        <reference name="content">
+            <remove name="chat_zopim_default"/>
+            <block type="ajaxcatalog/ajax" name="ajaxcatalog" template="smartwave/ajaxcatalog/ajax.phtml"/>
+        </reference>
+        <reference name="before_body_end">
+            <remove name="chat_zopim_default"/>
+        </reference>
+    </catalogsearch_result_index>
+    <catalogsearch_advanced_index>
+        <reference name="head">
+            <action method="addJs"><script>smartwave/jquery/jquery-1.10.2.min.js</script></action>        
+            <action method="addJs"><script>smartwave/jquery/jquery-noconflict.js</script></action>
+        </reference>
+        <reference name="content">
+            <remove name="chat_zopim_default"/>
+            <block type="ajaxcatalog/ajax" name="ajaxcatalog" template="smartwave/ajaxcatalog/ajax.phtml"/>
+        </reference>
+        <reference name="before_body_end">
+            <remove name="chat_zopim_default"/>
+        </reference>
+    </catalogsearch_advanced_index>
+</layout>

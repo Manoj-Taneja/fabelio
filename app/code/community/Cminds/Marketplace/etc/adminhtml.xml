@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <suppliers translate="title" module="marketplace">
+            <title>Suppliers</title>
+            <sort_order>50</sort_order>
+            <children>
+                <supplier_grid translate="title" module="marketplace">
+                    <title>Manage Suppliers</title>
+                    <action>adminhtml/suppliers</action>
+                </supplier_grid>
+                <custom_fields translate="title" module="marketplace">
+                    <title>Manage Profile Fields</title>
+                    <action>adminhtml/suppliers/fields</action>
+                </custom_fields>
+            </children>
+            <children>
+                <billing_grid translate="title" module="marketplace">
+                    <title>Billing Report</title>
+                    <action>adminhtml/billing</action>
+                </billing_grid>
+            </children>
+        </suppliers>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <marketplace_configuration translate="title" module="marketplace">
+                                        <title>CMinds Marketplace Extension General Settings</title>
+                                    </marketplace_configuration>
+                                    <marketplace_shipping_labels translate="title" module="marketplace">
+                                        <title>CMinds Marketplace Extension Shipping Labels</title>
+                                    </marketplace_shipping_labels>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <suppliers>
+                        <children>
+                            <supplier_grid translate="title" module="marketplace">
+                                <title>CMinds Marketplace Extension - Supplier grid</title>
+                            </supplier_grid>
+                            <custom_fields translate="title" module="marketplace">
+                                <title>CMinds Marketplace Extension - Supplier Custom Fields Grid</title>
+                            </custom_fields>
+                            <billing_grid translate="title" module="marketplace">
+                                <title>CMinds Marketplace Extension - Billling Grid</title>
+                            </billing_grid>
+                        </children>
+                    </suppliers>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

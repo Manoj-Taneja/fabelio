@@ -1,0 +1,7 @@
+<?php $customer = $this->getCustomer(); ?>
+<?php $customFields = $this->getCustomFieldsValues(true); ?>
+<h1><?php echo $this->htmlEscape($customer->getSupplierName()); ?></h1>
+<p><?php echo strip_tags($customer->getSupplierDescription(), '<ol><li><b><span><a><i><u><p><br><h1><h2><h3><h4><h5><div>'); ?></p>
+<?php foreach($customFields AS $field): ?>
+    <p><?php echo $field['value']  ?></p>
+<?php endforeach;?>

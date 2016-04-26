@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Tatvic_Uaee>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Tatvic_Uaee>
+    </modules>
+</config>

@@ -1,0 +1,58 @@
+<?php
+$messages = Mage::getSingleton('customer/session')->getMessages(true);
+$errorMsg = $messages->getItems('error');
+$successMsg = $messages->getItems('success');
+?>
+<div class="container vendor-container form-signin">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 supplier-login-card">
+            <div class="login-form">
+                <?php if(Mage::helper('supplierfrontendproductuploader')->noAccessInformation()): ?>
+                <h3><?php echo $this->__('Error'); ?></h3>
+                <p class="alert alert-error">
+                    <strong><?php echo $this->__('Sorry') ?>!</strong> <?php echo $this->__('It looks like you are logged in, but you do not have access to this page. Please contact website administrator.') ?>
+                </p>
+                <div><a class="fab-btn" href='<?php echo Mage::getBaseUrl() ?>customer/account/logout/'><?php echo $this->__('Logout') ?></a></div>
+                <?php else: ?>
+                  <h3><?php echo $this->__('Log In'); ?></h3>
+                  <?php if(count($errorMsg) > 0 || count($successMsg)): ?>
+                  <ul>
+                      <?php if(count($errorMsg) > 0): ?>
+                      <li class="error-msg">
+                          <?php foreach($errorMsg AS $msg): ?>
+                              <ul><li><span><?php echo $msg->getCode(); ?></span></li></ul>
+                          <?php endforeach; ?>
+                      </li>
+                      <?php endif; ?>
+                      <?php if(count($successMsg) > 0): ?>
+                      <li class="success-msg">
+                          <?php foreach($successMsg AS $msg): ?>
+                              <ul><li><span><?php echo $msg->getCode(); ?></span></li></ul>
+                          <?php endforeach; ?>
+                      </li>
+                      <?php endif; ?>
+                  </ul>
+                  <?php endif; ?>
+                <form name="login_form" id="login_form" action="<?php echo Mage::getBaseUrl() ?>supplierfrontendproductuploader/login/login/" method="POST">
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="example@example.com" class="required-entry validate-email form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Password" class="required-entry form-control">
+                        </div>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit"><?php echo $this->__('Sign In'); ?></button>
+                    </fieldset>
+                </form>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('login_form');
+    //]]>
+</script>
+
+

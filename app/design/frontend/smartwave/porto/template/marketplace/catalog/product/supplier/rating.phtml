@@ -1,0 +1,11 @@
+<?php if($this->isCreatedBySupplier()) : ?>
+<?php $supplierRating = $this->getSupplierRating(); ?>
+    <div class="supplier-rating">
+        <p><?php echo Mage::helper('marketplace')->__('Vendor Rating'); ?> :</p>
+        <div class="ratings">
+            <div class="rating-box">
+                <div class="rating" style="width:<?php echo $supplierRating; ?>%" title="<?php echo $supplierRating / 20; ?>"></div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

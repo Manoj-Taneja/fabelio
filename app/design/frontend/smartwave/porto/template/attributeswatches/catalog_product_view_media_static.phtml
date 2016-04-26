@@ -1,0 +1,181 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ * @package     base_default
+ */
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+?>
+
+<?php
+$_product = $this->getProduct();
+$_helper = Mage::helper('simpleconfigurableproducts');
+$videos = $_helper->parseVideos($_product->getData('product_videos'));
+?>
+
+<?php
+/* if fancybox plugin is enabled */
+if (Mage::getStoreConfig('attributeswatches/lightbox/enabled')):
+  // TODO: write lightbox code here
+?>
+<?php endif; ?>
+
+<?php
+$ratio_width = min($this->helper('catalog/image')->init($_product, 'image')->getOriginalWidth(), 1200);
+$ratio_height = 1000;
+$ratio = $ratio_height / $ratio_width;
+?>
+
+<div class="product-img-box-wrap">
+  <?php if (count($this->getGalleryImages()) > 0): ?>
+  <ul class="product-img-big-wrap">
+    <?php
+      $imgIdx = 0;
+      foreach ($this->getGalleryImages() as $_image):
+    ?>
+    <li class=" <?php echo !$imgIdx? 'active': '' ?>">
+      <?php
+      $image_src = $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize($ratio_width);
+      ?>
+      <a href="<?php echo $image_src; ?>" rel="fancy-zoom" target="_blank" class=" fancy-zoom"><span class="glyphicon glyphicon-search"></span></a>
+      <img <?php echo !$imgIdx? 'src': 'class="lazy-imgsrc" data-imgsrc' ?>="<?php echo $image_src; ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
+    </li>
+    <?php
+      $imgIdx++;
+      endforeach;
+    ?>
+    <?php
+      foreach ($videos as $_video):
+    ?>
+    <li class="video-box video-box-<?php echo $_video['type']; ?> <?php echo !$imgIdx? 'active': '' ?>">
+      <?php echo $_video['embed']; ?>
+    </li>
+    <?php
+      $imgIdx++;
+      endforeach;
+    ?>
+  </ul>
+  <div class="product-img-small-wrap" style="display: none;">
+    <?php
+      $imgIdx = 0;
+      foreach ($this->getGalleryImages() as $k=>$_image):
+    ?>
+    <a data-index="<?php echo $imgIdx; ?>" class="thumb-link <?php echo !$imgIdx? 'active': '' ?>">
+      <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->resize(100*$ratio, 100)?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
+    </a>
+    <?php
+      $imgIdx++;
+      endforeach;
+    ?>
+    <?php
+      foreach ($videos as $k=>$_video):
+    ?>
+    <a data-index="<?php echo $imgIdx; ?>" class="thumb-link thumb-link-video thumb-link-video-<?php echo $_video['type']; ?> <?php echo !$imgIdx? 'active': '' ?>">
+      <img src="<?php echo $_video['thumb']; ?>"/>
+    </a>
+    <?php
+      $imgIdx++;
+      endforeach;
+    ?>
+  </div>
+  <?php else: ?>
+  <ul class="product-img-big-wrap">
+    <li class="active">
+      <?php
+      $image_src = $this->helper('catalog/image')->init($_product, 'image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize($ratio_width);
+      ?>
+      <a href="<?php echo $image_src; ?>" rel="fancy-zoom" target="_blank" class=" fancy-zoom"><span class="glyphicon glyphicon-search"></span></a>
+      <img src="<?php echo $image_src; ?>" alt="<?php echo $this->htmlEscape($this->getImageLabel()) ?>"/>
+    </li>
+  </ul>
+  <div class="product-img-small-wrap" style="display: none;">
+    <a data-index="0" class="thumb-link active">
+      <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(100*$ratio, 100)?>" alt="<?php echo $this->htmlEscape($this->getImageLabel()) ?>"/>
+    </a>
+  </div>
+  <?php endif; ?>
+</div>
+  <script>
+  (function($){
+
+    $(function(){
+      var $prodImgSmallW = $(".product-img-box-wrap .product-img-small-wrap");
+      $prodImgSmallW.owlCarousel({
+        afterInit: function(){
+          $('.owl-wrapper', $prodImgSmallW).css('display', 'flex');
+        },
+        itemsCustom: [[0, 4], [700, 6], [1000, 8], [1200, 10], [1600, 16]]
+      });
+    });
+
+    var $bigImageWrap = $('.product-img-box-wrap .product-img-big-wrap'),
+        $bigImages = $('li', $bigImageWrap),
+        $smallImages = $('.product-img-small-wrap .thumb-link');
+
+    $smallImages.on('mouseenter', function(e){
+      e.preventDefault();
+      var $this = $(this);
+      $bigImages.removeClass('active');
+      $bigImages.eq($this.data('index')).addClass('active');
+      $smallImages.removeClass('active');
+      $this.addClass('active');
+    });
+
+    $(function(){
+      $('.lazy-imgsrc').each(function(){
+        $(this).attr('src', $(this).data('imgsrc'));
+      });
+    });
+
+    $('a.fancy-zoom').fancybox({
+      'transitionIn'  : 'elastic',
+      'transitionOut' : 'elastic',
+      'speedIn'   : 600, 
+      'speedOut'    : 200, 
+      'overlayShow' : false
+    });
+    
+    $bigImageWrap.on('mouseenter', 'li.active', function(e){
+      var $img = $('img', this);
+      $img.css({
+        'max-width': 'none',
+        'max-height': 'none',
+        'position': 'absolute'
+      });
+    }).on('mouseout touchend', 'li.active', function(e){
+      var $img = $('img', this);
+      $img.css({
+        'max-width': '100%',
+        'max-height': '100%',
+        'position': 'static'
+      });
+    }).on('mousemove', 'li.active', function(e){
+      var $this = $(this),
+          $img = $('img', $this).css({
+            'max-width': 'none',
+            'max-height': 'none',
+            'position': 'absolute'
+          }),
+          tWidth = $this.outerWidth(),
+          tHeight = $this.outerHeight(),
+          offset = $this.offset(),
+          eX = e.pageX,
+          eY = e.pageY,
+          relX = ((eX - offset.left)/tWidth)*100,
+          relY = ((eY - offset.top)/tHeight)*100;
+
+      $img.css({
+        left: -1 * (((relX * $img.width()) / 100) - (eX - offset.left)),
+        top: -1 * (((relY * $img.height()) / 100) - (eY - offset.top))
+      });
+
+    });
+
+  }(jQuery));
+  </script>
+

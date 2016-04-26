@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <supplierfrontendproductuploader translate="label" module="supplierfrontendproductuploader">
+            <label>Supplier Frontend Product Uploader</label>
+            <sort_order>1</sort_order>
+        </supplierfrontendproductuploader>
+    </tabs>
+    <sections>
+        <supplierfrontendproductuploader_catalog translate="label" module="supplierfrontendproductuploader">
+            <label>Configuration</label>
+            <tab>supplierfrontendproductuploader</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="supplierfrontendproductuploader">
+                    <label>General</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <module_enabled translate="label" module="supplierfrontendproductuploader">
+                            <label>Module enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </module_enabled>
+                        <allow_choose_customer_group translate="label" module="supplierfrontendproductuploader">
+                            <label>Allow customer to select customer group in the registration</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </allow_choose_customer_group>
+                    </fields>
+                </general>
+                <login translate="label" module="supplierfrontendproductuploader">
+                    <label>Registration and Login</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <use_separated_login translate="label" module="supplierfrontendproductuploader">
+                            <label>Use separated login page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </use_separated_login>
+                        <register_enable translate="label" module="supplierfrontendproductuploader">
+                            <label>Allow suppliers to register</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </register_enable>
+                        <register_customer_group translate="label" module="supplierfrontendproductuploader">
+                            <label>Group of registered supplier</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_register_groups</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <depends>
+                                <register_enable>1</register_enable>
+                            </depends>
+                        </register_customer_group>
+                    </fields>
+                </login>
+                <supplierfrontendproductuploader_presentation translate="label" module="supplierfrontendproductuploader">
+                    <label>Presentation</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <fields>
+                        <account_page_label translate="label" module="supplierfrontendproductuploader">
+                            <label>Link label in customer account panel</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </account_page_label>
+                        <show_header translate="label" module="supplierfrontendproductuploader">
+                            <label>Header in Supplier Panel</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_presentation_visibility</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </show_header>
+                        <show_footer translate="label" module="supplierfrontendproductuploader">
+                            <label>Footer in Supplier Panel</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_presentation_visibility</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </show_footer>
+                        <include_jquery translate="label" module="supplierfrontendproductuploader">
+                            <label>Include jQuery</label>
+                            <comment>
+                                <![CDATA[If you use custom theme, and you include jquery by default, select no to prevent to errors]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </include_jquery>
+                    </fields>
+                </supplierfrontendproductuploader_presentation>
+                <supplierfrontendproductuploader_supplier_config translate="label" module="supplierfrontendproductuploader">
+                    <label>Suppliers Group</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <supplier_group_id translate="label" module="supplierfrontendproductuploader">
+                            <label>Supplier group</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_customer_group</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </supplier_group_id>
+                        <editor_group_id translate="label" module="supplierfrontendproductuploader">
+                            <label>Supplier group which can edit own products</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_customer_group</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </editor_group_id>
+                    </fields>
+                </supplierfrontendproductuploader_supplier_config>
+                <supplierfrontendproductuploader_supplier_notification_config translate="label" module="supplierfrontendproductuploader">
+                    <label>Suppliers Notifications</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <notify_on_product_was_approved translate="label" module="supplierfrontendproductuploader">
+                            <label>Notify supplier when product was approved</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </notify_on_product_was_approved>
+                        <email_title_on_product_approved translate="label" module="supplierfrontendproductuploader">
+                            <label>Email title when product was approved</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </email_title_on_product_approved>
+                        <email_text_on_product_approved translate="label" module="supplierfrontendproductuploader">
+                            <label>Email text on product approvation</label>
+                            <comment>
+                                <![CDATA[Shortcodes: {{supplierName}}, {{productName}}, {{productLink}}, {{productQty}}]]>
+                            </comment>
+                            <sort_order>30</sort_order>
+                            <frontend_type>textarea</frontend_type>
+                            <show_in_default>1</show_in_default>
+                        </email_text_on_product_approved>
+                        <notify_on_product_was_ordered translate="label" module="supplierfrontendproductuploader">
+                            <label>Notify supplier when product was ordered</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </notify_on_product_was_ordered>
+                        <email_title_on_product_was_ordered translate="label" module="supplierfrontendproductuploader">
+                            <label>Email title when product was ordered</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </email_title_on_product_was_ordered>
+                        <email_text_on_product_was_ordered translate="label" module="supplierfrontendproductuploader">
+                            <label>Email text on product was ordered</label>
+                            <comment>
+                                <![CDATA[Shortcodes: {{supplierName}}, {{productName}}, {{productLink}}, {{productQty}}, {{price}}, {{sku}}, {{firstname}}, {{lastname}}, {{street}}, {{city}}, {{email}}, {{postcode}}, {{region}}, {{getCountryId}}]]>
+                            </comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </email_text_on_product_was_ordered>
+                    </fields>
+                </supplierfrontendproductuploader_supplier_notification_config>
+            </groups>
+        </supplierfrontendproductuploader_catalog>
+        <supplierfrontendproductuploader_products translate="label" module="supplierfrontendproductuploader">
+            <label>Products Settings</label>
+            <tab>supplierfrontendproductuploader</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <supplierfrontendproductuploader_catalog_config translate="label" module="supplierfrontendproductuploader">
+                    <label>Adding Products</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <fields>
+                        <attribute_set translate="label" module="supplierfrontendproductuploader">
+                            <label>Attributes set</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_attribute_set</source_model>
+                            <description>ads</description>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </attribute_set>
+                        <images_count translate="label" module="supplierfrontendproductuploader">
+                            <label>Maximum allowed images</label>
+                            <frontend_type>text</frontend_type>
+                            <description>ads</description>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </images_count>
+                        <tax_class_id translate="label" module="supplierfrontendproductuploader">
+                            <label>Product tax class</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_tax_class</source_model>
+                            <description>ads</description>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </tax_class_id>
+                        <can_define_sku translate="label" module="supplierfrontendproductuploader">
+                            <label>Supplier can define SKU</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>supplierfrontendproductuploader/config_source_availbility_sku</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </can_define_sku>
+                        <sku_schema translate="label" module="supplierfrontendproductuploader">
+                            <label>Auto increment SKU number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </sku_schema>
+                    </fields>
+                </supplierfrontendproductuploader_catalog_config>
+            </groups>
+        </supplierfrontendproductuploader_products>
+    </sections>
+</config>

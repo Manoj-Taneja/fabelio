@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magmodules_Shareorder>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Magmodules_Shareorder>
+    </modules>
+</config>

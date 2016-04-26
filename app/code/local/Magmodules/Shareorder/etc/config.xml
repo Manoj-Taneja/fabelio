@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magmodules.eu
+ * http://www.magmodules.eu
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@magmodules.eu so we can send you a copy immediately.
+ *
+ * @category    Magmodules
+ * @package     Magmodules_Ordershare
+ * @author      Magmodules <info@magmodules.eu)
+ * @copyright   Copyright (c) 2013 (http://www.magmodules.eu)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+ <config>
+    <modules>
+        <Magmodules_Shareorder>
+            <version>1.0.0.0</version>
+        </Magmodules_Shareorder>
+    </modules>
+    <global>
+        <models>
+            <shareorder>
+                <class>Magmodules_Shareorder_Model</class>
+            </shareorder>
+        </models>
+        <blocks>
+            <shareorder>
+                <class>Magmodules_Shareorder_Block</class>
+            </shareorder>
+        </blocks>
+        <helpers>
+            <shareorder>
+                <class>Magmodules_Shareorder_Helper</class>
+            </shareorder>
+        </helpers>
+    </global>
+    <frontend>
+		<layout>
+            <updates>
+                <shareorder>
+                    <file>magmodules/shareorder/shareorder.xml</file>
+                </shareorder>
+            </updates>
+        </layout>  
+        <translate>
+            <modules>
+                <Magmodules_Shareorder>
+                    <files>
+                        <default>Magmodules_Shareorder.csv</default>
+                    </files>
+                </Magmodules_Shareorder>
+            </modules>
+        </translate>                  
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Magmodules_Colorbox>
+                    <files>
+                        <default>Magmodules_Shareorder.csv</default>
+                    </files>
+                </Magmodules_Colorbox>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <shareorder>
+			<settings>
+				<enabled>0</enabled>
+				<facebook_enable>1</facebook_enable>
+				<twitter_enable>1</twitter_enable>
+				<twitter_share>Yeah, i just ordered a {{product}} at Magmodules!</twitter_share>				
+			</settings>
+        </shareorder>
+    </default>    
+</config>

@@ -1,0 +1,22 @@
+<!--
+/**
+ * @package     BlueAcorn\Optimizely
+ * @version     1.1.0
+ * @author      Blue Acorn, Inc. <code@blueacorn.com>
+ * @copyright   Blue Acorn, Inc. 2014
+ */
+-->
+<config>
+    <modules>
+        <BlueAcorn_Optimizely>
+            <active>true</active>
+            <codePool>community</codePool>
+        </BlueAcorn_Optimizely>
+    </modules>
+    <modules>
+        <BlueAcorn_MiniGrid>
+            <active>true</active>
+            <codePool>community</codePool>
+        </BlueAcorn_MiniGrid>
+    </modules>
+</config>

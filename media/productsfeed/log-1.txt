@@ -1,0 +1,3 @@
+September 9, 2015, 1:13:11 pm, page:0, items selected:500
+September 9, 2015, 1:13:16 pm, page:500, items selected:345
+September 9, 2015, 1:13:19 pm, page:1000, items selected:0

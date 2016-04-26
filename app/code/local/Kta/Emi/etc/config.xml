@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Kta_Emi>
+      <version>1.0.0</version>
+    </Kta_Emi>
+  </modules>
+ 
+  <global>     
+    <helpers>
+      <emi>
+        <class>Kta_Emi_Helper</class>
+      </emi>
+    </helpers>
+ 
+    <blocks>
+      <emi>
+        <class>Kta_Emi_Block</class>
+      </emi>
+    </blocks>
+         
+    <models>
+      <emi>
+        <class>Kta_Emi_Model</class>
+      </emi>
+    </models>
+ 
+  </global>
+ 
+  <default>
+    <payment>
+      <emi>
+        <active>1</active>
+        <model>emi/paymentmethod</model>
+        <order_status>pending</order_status>
+        <title>KTA EMI</title>
+        <allowspecific>0</allowspecific>
+        <payment_action>sale</payment_action>
+      </emi>
+    </payment>
+  </default>
+   
+  <frontend>
+    <routers>
+      <emi>
+        <use>standard</use>
+        <args>
+          <module>Kta_Emi</module>
+          <frontName>emi</frontName>
+        </args>
+      </emi>
+    </routers>
+  </frontend>
+</config>

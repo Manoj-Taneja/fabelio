@@ -1,0 +1,44 @@
+<?php $_order = $this->getOrder(); ?>
+<div class="container vendor-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h2 class="text-center"><?php echo $this->__('Order'); ?> #<?php echo $_order->getIncrementId(); ?></h2>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class='margin-bottom-mobile'><?php echo $this->__("Order Information"); ?></h3>
+                        <p><strong><?php echo $this->__("Order Date"); ?> : </strong> <?php echo date("M d, Y g:i:s A", strtotime($_order->getCreatedAt())); ?></p>
+                        <p><strong><?php echo $this->__("Order Status"); ?> : </strong>
+                            <?php if($_order->getStatus() == 'canceled') :?>
+                                <span class="text-danger"><?php echo ucfirst($_order->getStatus()); ?></span>
+                            <?php else : ?>
+                                <?php echo ucfirst($_order->getStatus()); ?>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class='margin-bottom-mobile'><?php echo $this->__("Account Information"); ?></h3>
+                        <p><strong><?php echo $this->__("Customer Name"); ?> : </strong> <?php echo $this->escapeHtml($_order->getCustomerFirstname()); ?> <?php echo $this->escapeHtml($_order->getCustomerLastname()); ?></p>
+                        <p><strong><?php echo $this->__("Email"); ?> : </strong> <a href="mailto:<?php echo $_order->getCustomerEmail(); ?>"><?php echo $this->escapeHtml($_order->getCustomerEmail()); ?></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist" style='margin-left: 0'>
+            <li<?php echo $this->getCurrentTab() == 'products' ? " class=\"active\"" : "" ?>><a href="#order" role="tab" data-toggle="tab"><?php echo $this->__('Order'); ?></a></li>
+            <li<?php echo $this->getCurrentTab() == 'shipment' ? " class=\"active\"" : "" ?>><a href="#shipments" role="tab" data-toggle="tab"><?php echo $this->__('Shipments'); ?></a></li>
+            <li<?php echo $this->getCurrentTab() == 'invoice' ? " class=\"active\"" : "" ?>><a href="#invoices" role="tab" data-toggle="tab"><?php echo $this->__('Invoices'); ?></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane<?php echo $this->getCurrentTab() == 'products' ? " active" : "" ?>" id="order">
+                <?php echo $this->getChild('view_order')->setOrder($_order)->setItems($this->getItems())->toHtml(); ?>
+            </div>
+            <div class="tab-pane<?php echo $this->getCurrentTab() == 'shipment' ? " active" : "" ?>" id="shipments"><?php echo $this->getChild('view_shipments')->setOrder($_order)->toHtml(); ?></div>
+            <div class="tab-pane<?php echo $this->getCurrentTab() == 'invoice' ? " active" : "" ?>" id="invoices"><?php echo $this->getChild('view_invoices')->setOrder($_order)->toHtml(); ?></div>
+        </div>
+    </div>
+</div>

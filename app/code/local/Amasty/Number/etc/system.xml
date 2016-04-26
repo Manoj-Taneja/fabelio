@@ -1,0 +1,627 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @copyright   Copyright (c) 2010 Amasty
+ */
+-->
+<config>
+    <sections>
+        <amnumber translate="label" module="amnumber">
+            <label>Order Number</label>
+            <tab>amasty</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>141300</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>   
+                        <offset translate="label">
+                            <label>Timezone offset</label>
+                            <frontend_type>select</frontend_type>
+                             <source_model>amnumber/source_offset</source_model> 
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                        
+                            <comment><![CDATA[Please use only if the system fails to determine current timezone automatically.]]></comment> 
+                        </offset>
+                    </fields>                    
+                </general>    
+                
+                <order translate="label">
+                    <label>Order</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <format translate="label">
+                            <label>Number Format</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[You can use variables {counter}, {store}, {yyyy}, {yy}, {m}, {mm}, {d}, {dd}, {rand}. If you type ORD-{yy}-{mm}-{dd}-{counter} in the field, you will have order numbers of the kind: ORD-13-08-15-000077]]></comment> 
+                        </format>
+                        <start translate="label">
+                            <label>Start Counter From</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </start>
+                        <increment translate="label">
+                            <label>Counter Increment Step</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[E.g. the last number is 00015. If increment step is 4, the next number will be 00019]]></comment> 
+                        </increment>
+                        <pad translate="label">
+                            <label>Counter Padding</label>
+                            <frontend_type>text</frontend_type> 
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Total number of digits in the order number. If the order id is 24 and padding is 6, the result will be 000024. Set to 0 (zero) not to add leading zeros.]]></comment>
+                        </pad>
+                        <reset translate="label">
+                            <label>Reset Counter on Date Change</label>
+                            <frontend_type>select</frontend_type>
+                             <source_model>amnumber/source_reset</source_model> 
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reset>
+                        <per_website translate="label">
+                            <label>Separate Counter per Website</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </per_website>
+                        <per_store translate="label">
+                            <label>Separate Counter per Store View</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </per_store>
+                        <counter translate="label">
+                            <label>Reset Counter</label>
+                            <frontend_type>counter</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If you really need to reset current counter value to the starting number, tick the checkbox and click `Save`]]></comment> 
+                        </counter>                                                                       
+                    </fields>
+                </order>
+                
+                <invoice translate="label">
+                    <label>Invoice</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <same translate="label">
+                            <label>Same as Order Number</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </same>   
+                        <prefix translate="label">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Will be added before the order number]]></comment>
+                            <depends><same>1</same></depends>  
+                        </prefix>
+                        <replace translate="label">
+                            <label>Part of the order number to replace with the prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If you have the order number as `11/13-order`, you can replace the `-order` part with the prefix instead of adding it in the beginning.]]></comment>
+                            <depends><same>1</same></depends>  
+                        </replace>
+                        <format translate="label">
+                            <label>Number Format</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[You can use variables {counter}, {store}, {yyyy}, {yy}, {m}, {mm}, {d}, {dd}. If you type INV-{yy}-{mm}-{dd}-{counter} in the field, you will have invoice numbers of the kind: INV-13-08-15-000077]]></comment> 
+                            <depends><same>0</same></depends>  
+                        </format>
+                        <start translate="label">
+                            <label>Start Counter From</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                        </start>
+                        <increment translate="label">
+                            <label>Counter Increment Step</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                            <comment><![CDATA[E.g. the last number is 00015. If increment step is 4, the next number will be 00019]]></comment> 
+                        </increment>
+                        <pad translate="label">
+                            <label>Counter Padding</label>
+                            <frontend_type>text</frontend_type> 
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Total number of digits in the order number. If the order id is 24 and padding is 6, the result will be 000024. Set to 0 (zero) not to add leading zeros.]]></comment>
+                            <depends><same>0</same></depends>  
+                        </pad>
+                        <reset translate="label">
+                            <label>Reset Counter on Date Change</label>
+                            <frontend_type>select</frontend_type>
+                             <source_model>amnumber/source_reset</source_model> 
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </reset>
+                        <per_website translate="label">
+                            <label>Separate Counter per Website</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_website>
+                        <per_store translate="label">
+                            <label>Separate Counter per Store View</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_store>
+                        <counter translate="label">
+                            <label>Reset Counter</label>
+                            <frontend_type>counter</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                            <comment><![CDATA[If you really need to reset current counter value to the starting number, tick the checkbox and click `Save`]]></comment>  
+                        </counter>                                                                       
+                    </fields>
+                </invoice>
+                
+                <shipment translate="label">
+                    <label>Shipping</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <same translate="label">
+                            <label>Same as Order Number</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </same>   
+                        <prefix translate="label">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Will be added before the order number]]></comment>
+                            <depends><same>1</same></depends>  
+                        </prefix>
+                        <replace translate="label">
+                            <label>Part of the order number to replace with the prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If you have the order number as `11/13-order`, you can replace the `-order` part with the prefix instead of adding it in the beginning.]]></comment>
+                            <depends><same>1</same></depends>  
+                        </replace>
+                        <format translate="label">
+                            <label>Number Format</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[You can use variables {counter}, {store}, {yyyy}, {yy}, {m}, {mm}, {d}, {dd}. If you type SHI-{yy}-{mm}-{dd}-{counter} in the field, you will have shipping numbers of the kind: SHI-13-08-15-000077]]></comment> 
+                            <depends><same>0</same></depends>  
+                        </format>
+                        <start translate="label">
+                            <label>Start Counter From</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                        </start>
+                        <increment translate="label">
+                            <label>Counter Increment Step</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                            <comment><![CDATA[E.g. the last number is 00015. If increment step is 4, the next number will be 00019]]></comment> 
+                        </increment>
+                        <pad translate="label">
+                            <label>Counter Padding</label>
+                            <frontend_type>text</frontend_type> 
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Total number of digits in the order number. If the order id is 24 and padding is 6, the result will be 000024. Set to 0 (zero) not to add leading zeros.]]></comment>
+                            <depends><same>0</same></depends>  
+                        </pad>
+                        <reset translate="label">
+                            <label>Reset Counter on Date Change</label>
+                            <frontend_type>select</frontend_type>
+                             <source_model>amnumber/source_reset</source_model> 
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </reset>
+                        <per_website translate="label">
+                            <label>Separate Counter per Website</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_website>
+                        <per_store translate="label">
+                            <label>Separate Counter per Store View</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_store>
+                        <counter translate="label">
+                            <label>Reset Counter</label>
+                            <frontend_type>counter</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>
+                            <comment><![CDATA[If you really need to reset current counter value to the starting number, tick the checkbox and click `Save`]]></comment>   
+                        </counter>                                                                       
+                    </fields>
+                </shipment>
+
+                <creditmemo translate="label">
+                    <label>Credit Memo</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <same translate="label">
+                            <label>Same as Order Number</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </same>   
+                        <prefix translate="label">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Will be added before the order number]]></comment>
+                            <depends><same>1</same></depends>  
+                        </prefix>
+                        <replace translate="label">
+                            <label>Part of the order number to replace with the prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If you have the order number as `11/13-order`, you can replace the `-order` part with the prefix instead of adding it in the beginning.]]></comment>
+                            <depends><same>1</same></depends>  
+                        </replace>
+                        <format translate="label">
+                            <label>Number Format</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[You can use variables {counter}, {store}, {yyyy}, {yy}, {m}, {mm}, {d}, {dd}. If you type MEMO-{yy}-{mm}-{dd}-{counter} in the field, you will have credit memo numbers of the kind: MEMO-13-08-15-000077]]></comment> 
+                            <depends><same>0</same></depends>  
+                        </format>
+                        <start translate="label">
+                            <label>Start Counter From</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                        </start>
+                        <increment translate="label">
+                            <label>Counter Increment Step</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                            <comment><![CDATA[E.g. the last number is 00015. If increment step is 4, the next number will be 00019]]></comment> 
+                        </increment>
+                        <pad translate="label">
+                            <label>Counter Padding</label>
+                            <frontend_type>text</frontend_type> 
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Total number of digits in the order number. If the order id is 24 and padding is 6, the result will be 000024. Set to 0 (zero) not to add leading zeros.]]></comment>
+                            <depends><same>0</same></depends>  
+                        </pad>
+                        <reset translate="label">
+                            <label>Reset Counter on Date Change</label>
+                            <frontend_type>select</frontend_type>
+                             <source_model>amnumber/source_reset</source_model> 
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </reset>
+                        <per_website translate="label">
+                            <label>Separate Counter per Website</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_website>
+                        <per_store translate="label">
+                            <label>Separate Counter per Store View</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_store>
+                        <counter translate="label">
+                            <label>Reset Counter</label>
+                            <frontend_type>counter</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                            <comment><![CDATA[If you really need to reset current counter value to the starting number, tick the checkbox and click `Save`]]></comment> 
+                        </counter>                                                                       
+                    </fields>
+                </creditmemo>
+            <rma translate="label">
+                    <label><![CDATA[RMA]]></label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <notice translate="label">
+                            <label></label>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[
+                                <script>
+                                Event.observe(window, "load", function(){
+                                    $('amnumber_rma_notice').hide();
+                                    $('row_amnumber_rma_notice').down('.scope-label').hide();
+                                });
+                                </script>
+                                    <div>For EE version only</div>
+                                    <div>For CE consider <a href='http://amasty.com/magento-rma.html' target='_blank'>RMA by Amasty</a></div>
+                                ]]>
+                            </comment>
+                            
+                        </notice> 
+                        <same translate="label">
+                            <label>Same as Order Number</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </same>   
+                        <prefix translate="label">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Will be added before the order number]]></comment>
+                            <depends><same>1</same></depends>  
+                        </prefix>
+                        <replace translate="label">
+                            <label>Part of the order number to replace with the prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[If you have the order number as `11/13-order`, you can replace the `-order` part with the prefix instead of adding it in the beginning.]]></comment>
+                            <depends><same>1</same></depends>  
+                        </replace>
+                        <format translate="label">
+                            <label>Number Format</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[You can use variables {counter}, {store}, {yyyy}, {yy}, {m}, {mm}, {d}, {dd}. If you type MEMO-{yy}-{mm}-{dd}-{counter} in the field, you will have credit memo numbers of the kind: MEMO-13-08-15-000077]]></comment> 
+                            <depends><same>0</same></depends>  
+                        </format>
+                        <start translate="label">
+                            <label>Start Counter From</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                        </start>
+                        <increment translate="label">
+                            <label>Counter Increment Step</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends> 
+                            <comment><![CDATA[E.g. the last number is 00015. If increment step is 4, the next number will be 00019]]></comment> 
+                        </increment>
+                        <pad translate="label">
+                            <label>Counter Padding</label>
+                            <frontend_type>text</frontend_type> 
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Total number of digits in the order number. If the order id is 24 and padding is 6, the result will be 000024. Set to 0 (zero) not to add leading zeros.]]></comment>
+                            <depends><same>0</same></depends>  
+                        </pad>
+                        <reset translate="label">
+                            <label>Reset Counter on Date Change</label>
+                            <frontend_type>select</frontend_type>
+                             <source_model>amnumber/source_reset</source_model> 
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </reset>
+                        <per_website translate="label">
+                            <label>Separate Counter per Website</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_website>
+                        <per_store translate="label">
+                            <label>Separate Counter per Store View</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                        </per_store>
+                        <counter translate="label">
+                            <label>Reset Counter</label>
+                            <frontend_type>counter</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><same>0</same></depends>  
+                            <comment><![CDATA[If you really need to reset current counter value to the starting number, tick the checkbox and click `Save`]]></comment> 
+                        </counter>                                                                       
+                    </fields>
+                </rma>
+            </groups>
+        </amnumber>
+    </sections>
+</config>

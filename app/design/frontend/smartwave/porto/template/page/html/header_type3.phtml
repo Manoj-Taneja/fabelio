@@ -1,0 +1,124 @@
+<?php echo $this->getChildHtml('sticky.nav') ?>
+<?php
+    $store = Mage::app()->getStore();
+    $code  = $store->getCode();
+    $custom_block = Mage::getStoreConfig('porto_settings/header/static_block', $code);
+?>
+<style>
+.top-helpline-no {
+  color: white;
+  font-size: 11px;
+  padding-top: 2px;
+}
+.top-helpline-no {
+  padding-top: 7px;
+}
+.top-links-icon a.logged-in {
+  display: none;
+}
+.top-links-icon a.no-logged-in::before {
+  display: none;
+}
+@media (max-width:640px){
+  .top-links-icon a.logged-in {
+    display: block;
+  }
+}
+</style>
+<div class="header-container type3">
+    <div class="top-links-container">
+        <div class="top-links container">
+            <?php
+                $store_currency = $this->getChildHtml('store_currency');
+                $store_language = $this->getChildHtml('store_language');
+				        $compare_link = $this->getChildHtml('compare_link');
+            ?>
+            <?php echo $store_currency; ?>
+            <?php if($store_currency && $store_language):?>
+            <span class="split"></span>
+            <?php endif; ?>
+            <?php echo $store_language; ?>
+            <?php if(($store_currency || $store_language) && $compare_link):?>
+            <span class="split"></span>
+            <?php endif; ?>
+			      <?php //echo $compare_link; ?>
+            <div class="top-links-area">
+                <div class="top-links-icon" style="display: block;">
+                  <?php if(Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                  <a href="javascript:void(0)" class="logged-in">
+                    <?php echo "Hello, ".Mage::getSingleton('customer/session')->getCustomer()->getName(); ?>
+                  </a>
+                  <?php else: ?>
+                  <a href="<?php echo Mage::helper('customer')->getLoginUrl();?>" class="no-logged-in">
+                    <?php echo $this->__("Log In/Sign Up"); ?>
+                  </a>
+                  <?php endif; ?>
+                </div>
+                <?php
+                if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+                  echo $this->getChildHtml('topLinks'); 
+                }
+                ?>
+            </div>
+            <div class="top-helpline-no pull-left">
+              <span class="visible-lg-block visible-md-block hidden-xs hidden-sm pull-left">Kesulitan? Hubungi &nbsp;</span><a href="tel:02122775029">(021) 22775029</a>
+            </div>
+            <div class="clearer"></div>
+        </div>
+    </div>
+    <div class="header container">
+        <?php if ($this->getIsHomePage()):?>
+        <h1 class="logo"><strong><?php echo $this->getLogoAlt(); ?></strong><a href="<?php echo $this->getUrl(''); ?>" title="<?php echo $this->getLogoAlt(); ?>" class="logo"><img src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>" /></a></h1>
+        <?php else:?>
+        <a href="<?php echo $this->getUrl(''); ?>" title="<?php echo $this->getLogoAlt(); ?>" class="logo"><strong><?php echo $this->getLogoAlt(); ?></strong><img src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>" /></a>
+        <?php endif; ?>
+        <div class="cart-area">
+            <div class="custom-block">
+              <p class="welcome-msg"><?php echo $this->getChildHtml('welcome'); ?> <?php echo $this->getAdditionalHtml(); ?></p>
+              <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId($custom_block)->toHtml(); ?>
+            </div>
+            <?php echo $this->getChildHtml('minicart'); ?>
+        </div>
+        <div class="search-area">
+            <a href="javascript:void(0);" class="search-icon"><i class="icon-search"></i></a>
+            <?php echo $this->getChildHtml('topSearch'); ?>
+        </div>
+        <div class="menu-icon"><a href="javascript:void(0)"><i class="fa fa-bars"></i></a></div>
+        <?php echo $this->getChildHtml("demo_header_tooltip"); ?>
+    </div>
+    <div class="header-usp">
+      <div class="container">
+        <ul class="usp-features">
+          <li>
+            <span class="icon">
+              <img src="/media/fab/icons/icon-truck-small.png">
+            </span>
+            <label>Pengiriman Gratis</label>
+          </li>
+          <li>
+            <span class="icon">
+              <img src="/media/fab/icons/icon-return-14-small.png">
+            </span>
+            <label>14 Hari Pengembalian Gratis</label>
+          </li>
+          <li>
+            <span class="icon">
+              <img src="/media/fab/icons/icon-365-small.png" data-pin-nopin="true">
+            </span>
+            <label>Garansi 365 Hari</label>
+          </li>
+          <!--<li>
+            <span class="icon">
+              <i class="icon-phone"></i>
+            </span>
+            <label> (021) 22775029 (Senin-Jumat: 10.00-18.00) | <a href="/contacts">Hubungi Kami</a> </label>
+          </li> -->
+       <!-- <li>  
+            <label>(Hanya berlaku untuk di daerah Jabodetabek)</label>
+        </li>-->
+        </ul>
+      </div>
+    </div>
+    <?php echo $this->getChildHtml('topMenu') ?>
+</div>
+<?php echo $this->getChildHtml('mobile.nav') ?>

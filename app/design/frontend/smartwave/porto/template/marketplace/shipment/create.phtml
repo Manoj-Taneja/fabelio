@@ -1,0 +1,138 @@
+<?php $_order = $this->getOrder(); ?>
+<?php $_items = $this->getItems(); ?>
+<?php $_shippingAddress = $this->getOrder()->getShippingAddress(); ?>
+<?php $_billingAddress = $this->getOrder()->getBillingAddress(); ?>
+<div class="container-fluid main-container vendor-container">
+<h2 class="text-center"><?php echo $this->__('Create Shipment for Order'); ?> #<?php echo $_order->getIncrementId(); ?></h2>
+<div class="row">
+    <div class="col-md-5 col-sm-6">
+        <h3><?php echo $this->__("Order Information"); ?></h3>
+        <p><strong><?php echo $this->__("Order Date"); ?> : </strong> <?php echo date("M d, Y g:i:s A", strtotime($_order->getCreatedAt())); ?></p>
+        <p><strong><?php echo $this->__("Order Status"); ?> : </strong>
+            <?php if($_order->getStatus() == 'canceled') :?>
+                <span class="text-danger"><?php echo ucfirst($_order->getStatus()); ?></span>
+            <?php else : ?>
+                <?php echo ucfirst($_order->getStatus()); ?>
+            <?php endif; ?>
+        </p>
+    </div>
+    <div class="col-md-5 col-sm-6">
+        <h3><?php echo $this->__("Account Information"); ?></h3>
+        <p><strong><?php echo $this->__("Customer Name"); ?> : </strong> <?php echo $_order->getCustomerFirstname(); ?> <?php echo $_order->getCustomerLastname(); ?></p>
+        <p><strong><?php echo $this->__("Email"); ?> : </strong> <a href="mailto:<?php echo $_order->getCustomerEmail(); ?>"><?php echo $_order->getCustomerEmail(); ?></a></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 col-sm-6">
+        <h3><?php echo $this->__("Billing Address"); ?></h3>
+        <p><?php echo $this->escapeHtml($_billingAddress->getFirstname()); ?> <?php echo $_billingAddress->getLastname(); ?></p>
+        <p><?php echo $this->escapeHtml(join(' ', $_billingAddress->getStreet())); ?></p>
+        <p><?php echo $this->escapeHtml($_billingAddress->getCity()); ?> <?php echo $this->escapeHtml($_billingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_billingAddress->getPostcode()); ?></p>
+        <?php $countryCode = $this->escapeHtml($_billingAddress->getCountry()); ?>
+        <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+        <p><?php echo $this->escapeHtml($country->getName()); ?></p>
+    </div>
+    <div class="col-md-5 col-sm-6">
+        <h3><?php echo $this->__("Shipping Address"); ?></h3>
+        <p><?php echo $this->escapeHtml($_shippingAddress->getFirstname()); ?> <?php echo $this->escapeHtml($_shippingAddress->getLastname()); ?></p>
+        <p><?php echo join(' ', $_shippingAddress->getStreet()); ?></p>
+        <p><?php echo $this->escapeHtml($_shippingAddress->getCity()); ?> <?php echo $this->escapeHtml($_shippingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_shippingAddress->getPostcode()); ?></p>
+        <?php $countryCode = $this->escapeHtml($_shippingAddress->getCountry()); ?>
+        <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+        <p><?php echo $country->getName(); ?></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="sub-header"><?php echo $this->__("Add Tracking Code"); ?></h2>
+        <form action="<?php echo $this->getUrl("*/*/save"); ?>" id="createShipmentForm" method="post">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><?php echo $this->__('Carrier'); ?></th>
+                        <th><?php echo $this->__('Title'); ?></th>
+                        <th><?php echo $this->__('Number'); ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select name="carrier_code" id="trackingC1" class="select carrier">
+                                    <option value="custom">Custom Value</option>
+                                    <option value="dhl">DHL (Deprecated)</option>
+                                    <option value="fedex">Federal Express</option>
+                                    <option value="ups">United Parcel Service</option>
+                                    <option value="usps">United States Postal Service</option>
+                                    <option value="dhlint">DHL</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="title" value="" class="required-entry form-control"/></td>
+                            <td><input type="text" name="number" value="" class="required-entry validate-number form-control"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="sub-header"><?php echo $this->__("Ordered Items"); ?></h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><?php echo $this->__('Product'); ?></th>
+                    <th><?php echo $this->__('Qty Ordered'); ?></th>
+                    <th><?php echo $this->__('Available for Shipment'); ?></th>
+                    <th><?php echo $this->__('Qty to Ship'); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($_items AS $_item) : ?>
+                    <?php if($_item->getData('parent_item_id')) continue; ?>
+                    <tr>
+                        <td>
+                            <?php echo $this->escapeHtml($_item->getName()); ?>
+                            <?php $data = unserialize($_item->getData('product_options')); ?>
+                            <?php if(isset($data['attributes_info'])): ?>
+                                <dl>
+                                    <?php foreach($data['attributes_info'] AS $attribute): ?>
+                                        <dt><?php echo $attribute['label']; ?></dt>
+                                        <dd><?php echo $attribute['value']; ?></dd>
+                                    <?php endforeach; ?>
+
+                                </dl>
+                            <?php endif;?>
+                        <td><?php echo number_format($_item->getQtyOrdered()); ?></td>
+                        <td><?php echo $_item->getQtyOrdered() - $_item->getQtyShipped(); ?></td>
+                        <td><?php if($_item->getQtyOrdered() - $_item->getQtyShipped() > 0): ?><input type="text" class="validate-number required-entry form-control" name="product[<?php echo $_item->getId(); ?>]" value="<?php echo $_item->getQtyOrdered() - $_item->getQtyShipped(); ?>"/><?php endif; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php if(Mage::getStoreConfig('marketplace_configuration/presentation/allow_to_send_shipment')): ?>
+                <div class="container form-group">
+                    <div class="checkbox">
+                        <label for="notify_customer"><?php echo $this->__('Notify Customer'); ?></label>
+                        <input type="checkbox" name="notify_customer" id="notify_customer" value="1" checked/>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="col-md-2 col-sm-4 col-sm-offset-4 col-md-offset-5">
+                <input type="hidden" name="order_id" value="<?php echo $_order->getId(); ?>" />
+                <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save Shipment') ?>" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    var myForm= new VarienForm('createShipmentForm', true);
+</script>
+</div>

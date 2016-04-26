@@ -1,0 +1,62 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Storecredit
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if (count($this->getAwStorecredit()) > 0): ?>
+    <?php foreach($this->getAwStorecredit() as $storeCredit): ?>
+    <tr>
+        <th colspan="<?php echo $this->getColspan(); ?>" style="<?php echo $this->getTotal()->getStyle() ?>" class="a-right">
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?>
+                <strong>
+            <?php endif; ?>
+            <?php $_title = $this->__('Remove'); ?>
+            <?php
+                $_url = Mage::getUrl('awstorecredit/storecredit/remove',
+                    array(
+                         '_secure' => Mage::app()->getStore(true)->isCurrentlySecure(),
+                         'awstorecredit_code' => base64_encode($storeCredit->getStorecreditId())
+                    )
+                );
+            ?>
+            <a href="<?php echo $_url; ?>" title="<?php echo $_title; ?>" class="aw-storecredit-btn-remove">
+                <img src="<?php echo $this->getSkinUrl('images/btn_remove.gif') ?>" alt="<?php echo $this->__('Remove')?>" />
+            </a>
+
+            <?php echo $this->__('Store Credit'); ?>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?>
+                </strong>
+            <?php endif; ?>
+        </th>
+        <td style="<?php echo $this->getTotal()->getStyle() ?>" class="a-right">
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?>
+                <strong>
+            <?php endif; ?>
+            -<?php echo $this->helper('checkout')->formatPrice($storeCredit->getStorecreditAmount()) ?>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?>
+                </strong>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php endforeach;?>
+<?php endif;?>

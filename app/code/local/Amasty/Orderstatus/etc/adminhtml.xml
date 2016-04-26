@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Orderstatus
+ */
+-->
+<config>
+    <translate>
+        <modules>
+            <Amasty_Orderstatus>
+                <files>
+                    <default>Amasty_Orderstatus.csv</default>
+                </files>
+            </Amasty_Orderstatus>
+        </modules>
+    </translate>
+    <menu>
+         <sales>
+            <children>
+                <amorderstatus translate="title" module="amorderstatus">
+                    <title>Order Statuses</title>
+                    <action>amorderstatus/adminhtml_status</action>
+                    <sort_order>16</sort_order>
+                </amorderstatus>
+            </children>
+         </sales>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <amorderstatus translate="title">
+                                <title>Order Statuses</title>
+                                <sort_order>16</sort_order>
+                            </amorderstatus>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <amorderstatus translate="title" module="amorderstatus">
+                                        <title>Amasty: Order Status</title>
+                                    </amorderstatus>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Rma
+ * @version    1.5.3
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if (Mage::helper('awrma')->checkExtensionVersion('Mage_Core', '0.8.25')) : ?>
+    <div class="buttons-set">
+        <p class="back-link"><a href="<?php echo $this->getBackLink() ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    </div>
+<?php else : ?>
+    <div class="button-set">
+        <a class="left" href="<?php echo $this->getBackLink() ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
+    </div>
+<?php endif ?>

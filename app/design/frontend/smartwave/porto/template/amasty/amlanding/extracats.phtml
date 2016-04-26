@@ -1,0 +1,92 @@
+<?php
+$_page = $this->_getPage();
+?>
+
+<div class="extra-landing-categories">
+<?php
+function catSplit($cat){
+  return explode(':', $cat);
+}
+$cats =  $_page->getExtraCategories() ? array_map("catSplit", explode(',', $_page->getExtraCategories())) : array();
+foreach($cats as $cat){
+  if(!$cat[0]) continue;
+  $_cat = Mage::getModel('catalog/category')->load($cat[0]);
+  $products = $_cat->getProductCollection()
+    ->addAttributeToFilter('status', 1)
+    ->addAttributeToFilter('visibility', 4)
+    ->setPageSize($cat[1]);
+?>
+  <div class="landing-category category-products">
+    <h2 class="filter-title"><strong><?php echo $_cat->getName(); ?></strong></h2>
+    <ul class="products-grid product-items columns4">
+
+<?php
+  foreach($products as $_p){
+    $_p = Mage::getModel('catalog/product')->load($_p->getId());
+    $price     = 0 + $_p->getPrice();
+    $msrp      = 0 + $_p->getMsrp();
+    $finaPrice = 0 + $_p->getFinalPrice();
+?>
+    <li class="item">
+      <div class="item-area">
+<!-- discount code starts -->
+ <div class="price-discount-percentage">
+<?php
+   if($finaPrice < $price){
+     $_savePercent = 100 - round(($finaPrice / $price)*100);
+     echo '<span class="perc-text">'.$_savePercent.'</span>';
+    }
+?>
+ </div>
+ <!-- discount code ends -->
+        <div class="product-image-area">
+          <a class="product-image" href="<?php echo $_p->getProductUrl();?>">
+            <img class="defaultImage catalog-product-image" src="<?php echo $this->helper('catalog/image')->init($_p, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(true)->resize(300, 300);?>" alt="<?php echo $_p->getName(); ?>">
+            <img class="hoverImage" src="<?php echo $this->helper('catalog/image')->init($_p, 'thumbnail')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(true)->resize(300, 300);?>" alt="<?php echo $_p->getName(); ?>">
+          </a>
+        </div>
+        <div class="details-area">
+          <h2 class="product-name"><a href="<?php echo $_p->getProductUrl();?>"><?php echo $_p->getName(); ?></a></h2>
+          <div class="price-box">
+            <?php if($finaPrice < $price){ ?>
+            <p class="old-price">
+              <span id="old-price-<?php echo $_p->getId(); ?>" class="price original-price">
+                <?php echo Mage::helper('core')->currency($_p->getPrice(), true, false); ?>
+              </span>
+              <span class="price-label special-price-label">Harga Sekarang:</span>
+            </p>
+            <?php } ?>
+            <span id="product-price-<?php echo $_p->getId(); ?>" class="regular-price">
+              <span class="price"><?php echo Mage::helper('core')->currency($_p->getFinalPrice(), true, false); ?></span>
+            </span>
+            <?php if($finaPrice < $msrp){ ?>
+            <p class="old-price rrp-price">
+              <span class="rrp-price-label price-label">Harga Tetangga:</span>
+              <span class="price msrp-price" id="msrp-price-<?php echo $_p->getId(); ?>"><?php echo Mage::helper('core')->currency($_p->getMsrp(), true, false); ?></span>
+            </p>
+            <?php } ?>
+          </div>
+         <!--  <div class="txt-free-shipping">Pengiriman Gratis</div> -->
+        </div>
+      </div>
+    </li>
+    <?php } ?>
+    <?php if($products->count() >= 3){ ?>
+    <li class="item show-more-items">
+      <a href="<?php echo $_cat->getUrl($_cat); ?>" class="item-area">
+        <div class="show-more-wrap">
+          <div class="red-arrow">
+            <div class="icon">
+              <img src="/media/icons/red-arrow.png" alt="">
+            </div>
+            <div>Lihat semuanya &gt;&gt;</div>
+          </div>
+        </div>
+      </a>
+    </li>
+    <?php } ?>
+    </ul>
+  </div>
+  <?php } ?>
+</div>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <catalog>
+            <tab>catalog</tab>
+            <groups>
+                <productbreadcrumbs translate="label" module="magefast_productbreadcrumbs">
+                    <label>Product Breadcrumbs</label>
+                    <frontend_type>text</frontend_type>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>1000</sort_order>
+                    <fields>
+                        <skip_categories translate="label comment">
+                            <label>Skip categories IDs</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Please add categories IDs, that need skip when will build Product Breadcrumbs. Separator - comma</comment>
+                        </skip_categories>
+                    </fields>
+                </productbreadcrumbs>
+            </groups>
+        </catalog>
+    </sections>
+</config>

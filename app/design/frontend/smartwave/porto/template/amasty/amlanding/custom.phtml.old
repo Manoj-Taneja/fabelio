@@ -1,0 +1,57 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Xlanding
+ */
+?>
+<?php
+$_page = $this->_getPage();
+$file = $_page->getLayoutFile();
+$contentLayout = $_page->getContentUpdateTemplate();
+?>
+<?php if ($this->getHeading()) {?>
+<div class="page-title category-title">
+    <h1><?php echo $this->htmlEscape($this->getHeading()) ?></h1>
+</div>
+<?php }?>
+
+<?php
+if($contentLayout == 'fabelio-looks'):
+?>
+<div class="row amlanding-content-block">
+  <?php if ($file) {?>
+  <div class="col-sm-6 pull-right">
+    <p class="category-image">
+        <img src="<?php echo $this->getFile();?>" alt="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" title="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" />
+    </p>
+  </div>
+  <?php }?>
+  
+  <?php if ($this->getDescription()) {?>
+  <div class="col-sm-6 pull-left">
+    <div class="category-description std">
+        <?php echo Mage::helper('cms')->getPageTemplateProcessor()->filter($this->getDescription()); ?>
+    </div>
+  </div>
+  <?php }?>
+</div>
+<?php
+  else:
+?>
+<div class="amlanding-content-block">
+  <?php if ($file) {?>
+  <p class="category-image">
+      <img src="<?php echo $this->getFile();?>" alt="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" title="<?php echo $this->escapeHtml($this->getFileAlt()) ?>" />
+  </p>
+  <?php }?>
+  
+  <?php if ($this->getDescription()) {?>
+  <div class="category-description std">
+      <?php echo Mage::helper('cms')->getPageTemplateProcessor()->filter($this->getDescription()); ?>
+  </div>
+  <?php }?>
+</div>
+<?php
+endif;
+?>

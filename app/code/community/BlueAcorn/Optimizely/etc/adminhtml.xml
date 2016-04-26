@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package     BlueAcorn\Optimizely
+ * @version     1.1.0
+ * @author      Blue Acorn, Inc. <code@blueacorn.com>
+ * @copyright   Blue Acorn, Inc. 2014
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <blueacorn_optimizely module="blueacorn_optimizely" translate="title">
+                                        <title>Optimizely</title>
+                                    </blueacorn_optimizely>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

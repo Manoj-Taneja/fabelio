@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<config>
+  	<modules>
+    	<Sprint_Migs>
+      		<version>1.0.1</version>
+    	</Sprint_Migs>
+  	</modules>
+  	<global>
+    	<models>
+      		<migs>
+        		<class>Sprint_Migs_Model</class>
+      		</migs>
+    	</models>
+		<helpers>
+			<migs>
+				<class>Sprint_Migs_Helper</class>
+			</migs>
+		</helpers>
+		<blocks>
+      		<migs>
+        		<class>Sprint_Migs_Block</class>
+      		</migs>
+    	</blocks>
+    	<resources>
+            <migs_setup>
+                <setup>
+                    <module>Sprint_Migs</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </migs_setup>
+            <migs_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </migs_write>
+            <migs_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </migs_read>
+        </resources>
+        <events>
+          <controller_action_postdispatch_checkout_onepage_savePayment>
+            <observers>
+              <controller_action_postdispatch_checkout_onepage_observer>
+                <type>singleton</type>
+                <class>migs/observer</class>
+                <method>setPaymentSession</method>
+              </controller_action_postdispatch_checkout_onepage_observer>
+            </observers>
+          </controller_action_postdispatch_checkout_onepage_savePayment>
+        </events>
+  	</global>
+  	<default>
+    	<payment>
+
+        <migs>
+          <model>migs/migs</model>
+          <active>1</active>
+          <order_status>pending</order_status>
+          <title>VISA / MasterCard</title>
+          <allowspecific>0</allowspecific>
+          <sort_order>4</sort_order>
+        </migs>
+        <bri>
+          <model>migs/bri</model>
+          <active>1</active>
+          <order_status>pending</order_status>
+          <title>BRI Payment</title>
+          <allowspecific>0</allowspecific>
+          <sort_order>4</sort_order>
+        </bri>
+        <permata>
+          <model>migs/permata</model>
+          <active>1</active>
+          <order_status>pending</order_status>
+          <title>Permata Payment</title>
+          <allowspecific>0</allowspecific>
+          <sort_order>4</sort_order>
+        </permata>
+         <bcacredit>
+          <model>migs/bcacredit</model>
+          <active>1</active>
+          <order_status>pending</order_status>
+          <title>BCA Credit Cicilan 0%</title>
+          <allowspecific>0</allowspecific>
+          <sort_order>4</sort_order>
+        </bcacredit>
+        <sc>
+          <model>migs/sc</model>
+          <active>1</active>
+          <order_status>pending</order_status>
+          <title>Standard Chartered</title>
+          <allowspecific>0</allowspecific>
+          <sort_order>4</sort_order>
+        </sc>
+
+    	</payment>
+	</default>
+  	<frontend>
+  		<layout>
+            <updates>
+                <migs module="Sprint_Migs">
+                    <file>migs.xml</file>
+                </migs>
+            </updates>
+        </layout>
+    	<routers>
+      		<migs>
+        		<use>standard</use>
+        		<args>
+          			<module>Sprint_Migs</module>
+          			<frontName>migs</frontName>
+        		</args>
+      		</migs>
+    	</routers>
+  	</frontend>
+
+</config>

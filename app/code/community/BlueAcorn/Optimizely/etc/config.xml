@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @package     BlueAcorn\Optimizely
+ * @version     1.1.0
+ * @author      Blue Acorn, Inc. <code@blueacorn.com>
+ * @copyright   Blue Acorn, Inc. 2014
+ */
+-->
+<config>
+    <modules>
+        <BlueAcorn_Optimizely>
+            <version>1.1.0</version>
+        </BlueAcorn_Optimizely>
+    </modules>
+    <global>
+        <blocks>
+            <blueacorn_optimizely>
+                <class>BlueAcorn_Optimizely_Block</class>
+            </blueacorn_optimizely>
+            <page>
+                <rewrite>
+                    <html_head>BlueAcorn_Optimizely_Block_Head</html_head>
+                </rewrite>
+            </page>
+        </blocks>
+        <helpers>
+            <blueacorn_optimizely>
+                <class>BlueAcorn_Optimizely_Helper</class>
+            </blueacorn_optimizely>
+        </helpers>
+        <models>
+            <blueacorn_optimizely>
+                <class>BlueAcorn_Optimizely_Model</class>
+            </blueacorn_optimizely>
+        </models>
+        <resources>
+                <blueacorn_optimizely_setup>
+                <setup>
+                    <module>BlueAcorn_Optimizely</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </blueacorn_optimizely_setup>
+        </resources>
+    </global>
+    <default>
+        <blueacorn_optimizely>
+            <project_settings>
+                <attributes backend_model="baminigrid/system_config_backend_minigrid" />
+            </project_settings>
+        </blueacorn_optimizely>
+    </default>
+    <frontend>
+        <layout>
+            <updates>
+                <blueacorn_optimizely module="BlueAcorn_Optimizely">
+                    <file>blueacorn/optimizely.xml</file>
+                </blueacorn_optimizely>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <BlueAcorn_Optimizely>
+                    <files>
+                        <default>BlueAcorn_Optimizely.csv</default>
+                    </files>
+                </BlueAcorn_Optimizely>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

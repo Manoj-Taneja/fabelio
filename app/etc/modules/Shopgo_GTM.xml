@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Shopgo_GTM>
+      <active>true</active>
+      <codePool>community</codePool>
+    </Shopgo_GTM>
+  </modules>
+</config>
+

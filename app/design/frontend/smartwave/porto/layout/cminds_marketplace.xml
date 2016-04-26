@@ -1,0 +1,500 @@
+<?xml version="1.0" ?>
+<layout version="1.0.0">
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="marketplace">
+                <name>marketplace_supplier_rates</name>
+                <path>marketplace/supplier/rates</path>
+                <label>My Rates</label>
+            </action>
+            <action method="addLink" translate="label" module="marketplace">
+                <name>marketplace_supplier_rate</name>
+                <path>marketplace/supplier/ratelist</path>
+                <label>Rate Supplier</label>
+            </action>
+        </reference>
+    </customer_account>
+    <cminds_supplierfrontendproductuploader_product_ordered>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_nav">
+                <action method="setTemplate">
+                    <template>marketplace/nav.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_ordered>
+    <cminds_supplierfrontendproductuploader_index_index>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_nav">
+                <action method="setTemplate">
+                    <template>marketplace/nav.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_index_index>
+    <cminds_supplierfrontendproductuploader_product_list>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_nav">
+                <action method="setTemplate">
+                    <template>marketplace/nav.phtml</template>
+                </action>
+            </reference>
+            <reference name="supplierfrontendproductuploader_product_list">
+                <action method="setTemplate">
+                    <template>marketplace/product/list.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_list>
+    <cminds_supplierfrontendproductuploader_product_create>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_nav">
+                <action method="setTemplate">
+                    <template>marketplace/nav.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_create>
+    <cminds_supplierfrontendproductuploader_settings_notifications>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_nav">
+                <action method="setTemplate">
+                    <template>marketplace/nav.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_settings_notifications>
+    <cminds_supplierfrontendproductuploader_product_edit>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_nav">
+                <action method="setTemplate">
+                    <template>marketplace/nav.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_edit>
+    <cminds_marketplace_settings_shipping>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/shipping_methods" name="marketplace_settings_shipping_methods"
+                   template="marketplace/settings/methods.phtml"/>
+        </reference>
+    </cminds_marketplace_settings_shipping>
+    <cminds_marketplace_order_index>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/order_list" name="marketplace_order_list" />
+        </reference>
+    </cminds_marketplace_order_index>
+    <cminds_marketplace_order_view>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/marketplace/bootstrap.min.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/order_view" name="marketplace_order_view">
+                <block type="page/html" name="order_view_order" as="view_order" template="marketplace/order/view/order.phtml" />
+                <block type="page/html" name="order_view_shipments" as="view_shipments" template="marketplace/order/view/shipments.phtml" />
+                <block type="page/html" name="order_view_history" as="view_history" template="marketplace/order/view/history.phtml" />
+                <block type="page/html" name="order_view_invoices" as="view_invoices" template="marketplace/order/view/invoices.phtml" />
+            </block>
+        </reference>
+    </cminds_marketplace_order_view>
+    <cminds_marketplace_shipment_create>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/shipment_create" name="marketplace_shipment_create" template="marketplace/shipment/create.phtml" />
+        </reference>
+    </cminds_marketplace_shipment_create>
+    <cminds_marketplace_invoice_create>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/invoice_create" name="marketplace_invoice_create" template="marketplace/invoice/create.phtml" />
+        </reference>
+    </cminds_marketplace_invoice_create>
+    <cminds_marketplace_shipment_view>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/shipment_view" name="marketplace_shipment_view" template="marketplace/shipment/view.phtml" />
+        </reference>
+    </cminds_marketplace_shipment_view>
+    <cminds_marketplace_import_products>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/import_products" name="marketplace_import_products" />
+        </reference>
+    </cminds_marketplace_import_products>
+    <cminds_marketplace_reports_orders>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="page/html" name="marketplace_filtration" template="marketplace/report/filtration.phtml" />
+            <block type="marketplace/report_order" name="marketplace_report_order" template="marketplace/report/list.phtml" />
+        </reference>
+    </cminds_marketplace_reports_orders>
+
+    <cminds_marketplace_settings_profile>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/supplier" name="marketplace_settings_profile"
+                   template="marketplace/settings/profile.phtml"/>
+        </reference>
+    </cminds_marketplace_settings_profile>
+    <cminds_marketplace_supplier_view>
+        <reference name="content">
+            <block type="marketplace/supplier" name="marketplace_supplier_profile"/>
+        </reference>
+    </cminds_marketplace_supplier_view>
+    <cminds_marketplace_product_choosetype>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/marketplace/nav.phtml"/>
+            <block type="marketplace/product_create" name="marketplace.product_create"
+                   template="marketplace/product/chooseType.phtml"/>
+        </reference>
+    </cminds_marketplace_product_choosetype>
+    <cminds_marketplace_product_createconfigurable>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/datepicker.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/uploadify/uploadify.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/marketplace/nav.phtml"/>
+            <block type="marketplace/product_create" name="marketplace.product_create"
+                   template="marketplace/product/createConfigurable.phtml"/>
+        </reference>
+    </cminds_marketplace_product_createconfigurable>
+    <cminds_marketplace_product_editconfigurable>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/datepicker.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/uploadify/uploadify.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/marketplace/nav.phtml"/>
+            <block type="marketplace/product_create" name="marketplace.product_create"
+                   template="marketplace/product/createConfigurable.phtml"/>
+        </reference>
+    </cminds_marketplace_product_editconfigurable>
+    <cminds_marketplace_product_associatedproducts>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/marketplace/nav.phtml"/>
+            <block type="marketplace/product_associated" name="marketplace.product_create"
+                   template="marketplace/product/associatedProducts.phtml"/>
+        </reference>
+    </cminds_marketplace_product_associatedproducts>
+<cminds_marketplace_reports_mostviewed>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/report_mostviewed" name="marketplace_report_mostviewed" template="marketplace/report.phtml" />
+        </reference>
+    </cminds_marketplace_reports_mostviewed>
+    <cminds_marketplace_reports_bestsellers>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/report_bestsellers" name="marketplace_report_bestsellers" template="marketplace/report.phtml" />
+        </reference>
+    </cminds_marketplace_reports_bestsellers>
+    <cminds_marketplace_reports_lowstock>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="marketplace/nav.phtml"/>
+            <block type="marketplace/report_lowstock" name="marketplace_report_lowstock" template="marketplace/report/lowstock.phtml" />
+        </reference>
+    </cminds_marketplace_reports_lowstock>
+    <cminds_marketplace_supplier_ratelist>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="page/html_wrapper" name="my.account.wrapper" translate="label">
+                <label>My Account Wrapper</label>
+                <action method="setElementClass"><value>my-account</value></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="customer/account/navigation.phtml">
+                <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
+                <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
+                <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
+                <action method="addLink" translate="label" module="sales"><name>orders</name><path>sales/order/history/</path><label>My Orders</label></action>
+                <action method="addLink" translate="label"><name>billing_agreements</name><path>sales/billing_agreement/</path><label>Billing Agreements</label></action>
+                <action method="addLink" translate="label"><name>recurring_profiles</name><path>sales/recurring_profile/</path><label>Recurring Profiles</label></action>
+                <action method="addLink" translate="label" module="review"><name>reviews</name><path>review/customer</path><label>My Product Reviews</label></action>
+                <action method="addLink" translate="label" module="wishlist" ifconfig="wishlist/general/active"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action>
+                <action method="addLink" translate="label" module="oauth">
+                    <name>OAuth Customer Tokens</name>
+                    <path>oauth/customer_token</path>
+                    <label>My Applications</label>
+                </action>
+                <action method="addLink" translate="label" module="newsletter"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter Subscriptions</label></action>
+                <action method="addLink" translate="label" module="downloadable"><name>downloadable_products</name><path>downloadable/customer/products</path><label>My Downloadable Products</label></action>
+                <action method="addLink" translate="label" module="supplierfrontendproductuploader">
+                    <name>supplierfrontendproductuploader</name>
+                    <path>supplierfrontendproductuploader/</path>
+                    <label>My Supplier Frontend Product Uploader Panel</label>
+                </action>
+                <action method="addLink" translate="label" module="marketplace">
+                    <name>marketplace_supplier_rates</name>
+                    <path>marketplace/supplier/rates</path>
+                    <label>My Rates</label>
+                </action>
+                <action method="addLink" translate="label" module="marketplace">
+                    <name>marketplace_supplier_rate</name>
+                    <path>marketplace/supplier/ratelist</path>
+                    <label>Rate Supplier</label>
+                </action>
+            </block>
+            <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml">
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
+            </block>
+            <block type="catalog/product_compare_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
+            <remove name="tags_popular"/>
+        </reference>
+        <reference name="content">
+            <block type="marketplace/supplier_rate_list" name="marketplace_supplier_profile"/>
+        </reference>
+    </cminds_marketplace_supplier_ratelist>
+    <cminds_marketplace_supplier_rates>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+        </reference>
+        <reference name="left">
+            <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="customer/account/navigation.phtml">
+                <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>Account Dashboard</label></action>
+                <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
+                <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
+                <action method="addLink" translate="label" module="sales"><name>orders</name><path>sales/order/history/</path><label>My Orders</label></action>
+                <action method="addLink" translate="label"><name>billing_agreements</name><path>sales/billing_agreement/</path><label>Billing Agreements</label></action>
+                <action method="addLink" translate="label"><name>recurring_profiles</name><path>sales/recurring_profile/</path><label>Recurring Profiles</label></action>
+                <action method="addLink" translate="label" module="review"><name>reviews</name><path>review/customer</path><label>My Product Reviews</label></action>
+                <action method="addLink" translate="label" module="wishlist" ifconfig="wishlist/general/active"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action>
+                <action method="addLink" translate="label" module="oauth">
+                    <name>OAuth Customer Tokens</name>
+                    <path>oauth/customer_token</path>
+                    <label>My Applications</label>
+                </action>
+                <action method="addLink" translate="label" module="newsletter"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter Subscriptions</label></action>
+                <action method="addLink" translate="label" module="downloadable"><name>downloadable_products</name><path>downloadable/customer/products</path><label>My Downloadable Products</label></action>
+                <action method="addLink" translate="label" module="supplierfrontendproductuploader">
+                    <name>supplierfrontendproductuploader</name>
+                    <path>supplierfrontendproductuploader/</path>
+                    <label>My Supplier Frontend Product Uploader Panel</label>
+                </action>
+                <action method="addLink" translate="label" module="marketplace">
+                    <name>marketplace_supplier_rates</name>
+                    <path>marketplace/supplier/rates</path>
+                    <label>My Rates</label>
+                </action>
+                <action method="addLink" translate="label" module="marketplace">
+                    <name>marketplace_supplier_rate</name>
+                    <path>marketplace/supplier/ratelist</path>
+                    <label>Rate Supplier</label>
+                </action>
+            </block>
+            <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml">
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
+            </block>
+            <block type="catalog/product_compare_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
+            <remove name="tags_popular"/>
+        </reference>
+        <reference name="content">
+            <block type="marketplace/supplier_rated" name="marketplace_supplier_rated"/>
+        </reference>
+    </cminds_marketplace_supplier_rates>
+    <cminds_supplierfrontendproductuploader_product_list>
+        <reference name="content">
+            <reference name="supplierfrontendproductuploader_product_list">
+                <action method="setTemplate">
+                    <template>marketplace/product/list.phtml</template>
+                </action>
+            </reference>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_list>
+</layout>

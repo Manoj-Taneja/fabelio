@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Tatvic_Uaee>
+            <version>2.0.4</version>
+        </Tatvic_Uaee>
+    </modules>
+    <global>
+        <models>
+            <tatvic_uaee>
+                <class>Tatvic_Uaee_Model</class>
+            </tatvic_uaee>
+        </models>
+        <blocks>
+            <tatvic_uaee>
+                <class>Tatvic_Uaee_Block</class>
+            </tatvic_uaee>
+        </blocks>
+        <helpers>
+            <tatvic_uaee>
+                <class>Tatvic_Uaee_Helper</class>
+				
+            </tatvic_uaee>
+        </helpers>
+        <resources>
+            <tatvic_uaee_setup>
+                <setup>
+                    <module>Tatvic_Uaee</module>
+                </setup>
+            </tatvic_uaee_setup>
+        </resources>
+		
+	</global>
+    <frontend>
+        <layout>
+            <updates>
+                <tatvic_uaee>
+                    <file>tatvic_uaee.xml</file>
+                </tatvic_uaee>
+            </updates>
+        </layout>
+		
+       
+    
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <tatvic_uaee>
+                                            <title>Tatvic Enhanced eCommerce Section</title>
+                                        </tatvic_uaee>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    
+</config>

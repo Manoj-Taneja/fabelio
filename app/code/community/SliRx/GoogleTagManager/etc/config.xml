@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @author     Karazey Sergey <karazey.sergey@gmail.com>
+* @copyright  2014 Karazey Sergey
+* @created    10:00 27/06/2014
+* @license    http://opensource.org/licenses/OSL-3.0 Open Software License v. 3.0 (OSL-3.0)
+*/
+-->
+<config>
+	<modules>
+		<SliRx_GoogleTagManager>
+			<version>0.1.2</version>
+		</SliRx_GoogleTagManager>
+	</modules>
+	<global>
+		<blocks>
+			<slirx_google_tag_manager>
+				<class>SliRx_GoogleTagManager_Block</class>
+			</slirx_google_tag_manager>
+		</blocks>
+		<helpers>
+			<slirx_google_tag_manager>
+				<class>SliRx_GoogleTagManager_Helper</class>
+			</slirx_google_tag_manager>
+		</helpers>
+	</global>
+	<frontend>
+		<layout>
+			<updates>
+				<slirx_google_tag_manager>
+					<file>google_tag_manager.xml</file>
+				</slirx_google_tag_manager>
+			</updates>
+		</layout>
+	</frontend>
+	<default>
+		<slirx_gtm>
+			<slirx_gtm_group>
+				<enable>0</enable>
+				<container_id></container_id>
+			</slirx_gtm_group>
+			<slirx_gtm_remarketing_group>
+				<enable_remarketing>0</enable_remarketing>
+			</slirx_gtm_remarketing_group>
+			<slirx_gtm_transaction_group>
+				<enable_transaction>1</enable_transaction>
+				<transaction_affiliation>My store</transaction_affiliation>
+			</slirx_gtm_transaction_group>
+		</slirx_gtm>
+	</default>
+</config>

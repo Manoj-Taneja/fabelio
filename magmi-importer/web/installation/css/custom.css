@@ -1,0 +1,394 @@
+/* Custom CSS */
+body, p, div {
+	/* font-family: "Arial, Helvetica, sans-serif"; */
+}
+/* Force the widths so it stops from dropping to a new line */
+.page {
+	width: 960px !Important;
+}
+.container_12 .grid_9 {
+	width: 73% !Important;
+}
+/* Custom CSS */
+.header {
+	height: 100px;
+	border: 1px solid #00F;
+}
+.footer {
+	height: 100px;
+	border: 1px solid #0F0;
+}
+.progress {
+	float: left;
+	border: 1px solid #F00;
+}
+.actions {
+	float: left;
+	border: 1px solid #000;
+}
+.warning {
+	background-color: #F00;
+	color: #FFF;
+}
+.warning  span, 
+.warning  h3 {
+	font-weight:bold; 
+	color:#C31F2A;
+}
+.warning ul {
+	list-style-type: disc;
+}
+.warning ul li {
+	margin: 0 0 0 25px
+}
+.warning .videoholder {
+	margin-left:auto;
+	margin-right:auto;
+	text-align: center;
+}
+.stage {
+	margin: 10px 0 0 0;
+	padding: 0 5px 0 5px;
+}
+.stage_on {
+	background-color: #0F0;
+}
+.setting_ok {
+	color: #a6ce39;
+	font-weight: bold;
+}
+.setting_bad {
+	color: #F00;
+	font-weight: bold;
+}
+.setting_bad_row {
+	background-color: #F2DEDE !Important;
+	font-weight: bold;
+	color: #F00;
+}
+input[type=submit][disabled=disabled], 
+input[type=submit]:disabled {
+	opacity:0.4;
+	filter:alpha(opacity=40);
+}
+
+
+/* dZine-Hub */
+.header {
+	height:115px;
+	background:url("../images/headerbg.jpg") repeat-x;
+	background-position:left top;
+	border:none;
+}
+
+.header-left , .footer-left {
+	width:209px;
+	height:79px;
+	margin:5px 0px 0px;
+	background:url("../images/magmilogo.jpg") no-repeat;
+}
+
+.footer-left {
+	float:left;
+}
+
+.footer-right {
+	float:right;
+	padding-top:65px;
+}
+
+.footer-right .desined_by {
+	font-size:11px;
+	font-weight:normal;
+	color:#636363;
+	text-decoration:none;
+	font-family:"Arial";
+	text-transform:capitalize;
+
+}
+
+.step-content {
+	min-height:450px;
+}
+.progress .stage-help {
+	color: #747474;
+}
+
+.magmi-content {
+	clear:both;
+	width:98%;
+	margin:0px 12px 22px;
+	padding:10px 0px;
+	background-color:#FAFAFA;
+}
+
+.stage-1 {
+	width:200px;
+	height:51px;
+	margin-bottom:10px;
+	background:url("../images/st_1.jpg") no-repeat;
+}
+
+.stage-1.stage_on {
+	background:url("../images/st_1_hover.jpg") no-repeat;	
+}
+
+.stage-2 {
+	width:200px;
+	height:51px;
+	margin-bottom:10px;
+	background:url("../images/st_2.jpg") no-repeat;
+}
+
+.stage-2.stage_on {
+	background:url("../images/st_2_hover.jpg") no-repeat;	
+}
+
+.stage-3 {
+	width:200px;
+	height:51px;
+	margin-bottom:10px;
+	background:url("../images/st_3.jpg") no-repeat;
+}
+
+.stage-3.stage_on {
+	background:url("../images/st_3_hover.jpg") no-repeat;	
+}
+.value_required {
+	background-color: #F2DEDE; 
+}
+.stage-4 {
+	width:200px;
+	height:51px;
+	margin-bottom:10px;
+	background:url("../images/st_4.jpg") no-repeat;
+}
+
+.stage-4.stage_on {
+	background:url("../images/st_4_hover.jpg") no-repeat;	
+}
+
+.actions {
+	border:none;
+}
+
+.actions-top-left {
+	background:url("../images/tab_top_left.jpg") no-repeat;
+	background-position:left top;
+}
+
+.actions-top-right {
+	background:url("../images/tab_top_right.jpg") no-repeat;
+	background-position:right top;
+}
+
+.actions-bottom-left {
+	background:url("../images/tab_bottom_left.jpg") no-repeat;
+	background-position:left bottom;
+}
+
+.actions-bottom-right {
+	background:url("../images/tab_bottom_right.jpg") no-repeat;
+	background-position:right bottom;
+	padding:5px 0px;
+}
+
+.actions-bg-left {
+	background:url("../images/tab_left_bg.jpg") repeat-y;
+	background-position:left top;	
+}
+
+.actions-bg-right {
+	background:url("../images/tab_right_bg.jpg") repeat-y;
+	background-position:right top;	
+}
+
+.actions-bg-top {
+	background:url("../images/tab_top_bg.jpg") repeat-x;
+	background-position:left top;	
+}
+
+.actions-bg-bottom {
+	background:url("../images/tab_bottom_bg.jpg") repeat-x;
+	background-position:left bottom;	
+}
+
+.step_content {
+	min-height:255px;
+	margin:0px 5px;
+	padding:10px;
+	background-color:#FFFFFF;
+	font-size:12px;
+	font-family:"Arial";
+}
+
+.license-description {
+	min-height:118px;
+    line-height: 20px;
+    margin: 10px 0;
+    text-align:justify;
+}
+
+.agreement {
+	float:left;
+}
+
+.agree-license {
+	float:left;
+	width:50%;
+	line-height: 20px;
+    margin: 10px 0;
+    font-size:12px;
+	font-family:"Arial";
+	color:#6C6C6C;
+}
+
+.next-step {
+	margin:10px 0px;
+}
+
+.continue {
+	float:right;
+	width:108px;
+	height:39px;
+	border:none;
+	background:url("../images/cont.jpg") no-repeat;
+}
+
+.continue:hover {
+	background-position:0px -39px;
+	cursor:pointer;
+}
+
+.footer {
+	border:none;
+	background-color:#FFFFFF;
+}
+
+.warning {
+	background:transparent;
+	color:#AE4442;
+	line-height:32px;
+	padding:0px 5px;
+	font-size:14px;
+	border:1px solid #EBCCD0;
+	border-radius:5px;
+	background-color:#F2DEDE;
+	margin:0px 3px 10px;
+}
+
+/* Stage - 2 */
+
+.version-table  tr.headings {
+	line-height:35px;
+	background-color:#9EC457;
+}
+
+.version-table  tr.headings th {
+	color:#FFFFFF;
+	font-weight:normal;
+	font-size:14px;
+	text-align:left;
+}
+
+.version-table  tr.headings th.first , .version-table  tr td.first {
+	padding-left:20px;
+}
+
+.version-table  tr.odd {
+	background-color:#F3F3F3;
+}
+
+.version-table  tr td {
+	line-height:35px;
+}
+
+.install-step label {
+	float:left;
+	width:130px;
+	padding-right:20px;
+	text-align:right;
+	color:#747474;
+	line-height:22px;
+}
+
+.install-step h1 {
+	font-size:16px;
+	font-weight:normal;
+	text-transform:capitalize;
+	color:#747474;
+}
+
+.install-step p {
+	margin-bottom:10px;
+}
+
+.install-step input {
+	height:20px;
+	border:1px solid #DDDDDD;
+	border-radius:5px;
+	padding:2px 5px;
+	color:#747474;
+}
+
+.next-install {
+	float:right;
+	width:106px;
+	height:39px !important;
+	border:none;
+	background:url("../images/install.jpg") no-repeat;
+	border:none !important;
+	color:transparent !important;
+	position:relative;
+	text-indent:-9999px;
+}
+
+.next-install:hover {
+	background-position:0px -39px !important;
+	cursor:pointer;
+}
+
+.step_content {
+	color:#747474;
+}
+
+.step_content h1 {
+	font-size:20px;
+	font-weight:normal;
+	text-transform:capitalize;
+	color:#747474;
+	margin-bottom:5px;
+}
+
+.step_content p.step-finish {
+	padding-bottom:30px;
+}
+
+.login-label {
+	float:left;
+	line-height:39px;
+	padding-right:10px;
+}
+
+.login-here {
+	float:left;
+	width:108px;
+	height:39px !important;
+	border:none;
+	background:url("../images/login.jpg") no-repeat;
+	border:none !important;
+	color:transparent !important;
+	position:relative;
+	text-indent:-9999px;
+}
+
+.login-here:hover {
+	background-position:0px -39px !important;
+	cursor:pointer;
+}
+
+.field-required {
+	color:#FF0000;
+	font-size: 18px;
+}
+

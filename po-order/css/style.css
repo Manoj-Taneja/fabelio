@@ -1,0 +1,59 @@
+
+span.twitter-typeahead {
+  width: 100%;
+}
+.input-group span.twitter-typeahead {
+  display: block !important;
+}
+.input-group span.twitter-typeahead .tt-dropdown-menu {
+  top: 32px !important;
+}
+.input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
+  top: 44px !important;
+}
+.input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
+  top: 28px !important;
+}
+.po-form .form-group {
+  position: relative;
+  width: 100%;
+}
+.po-form .form-control {
+  width: 100%;
+}
+.prod-snap {
+}
+.prod-img {
+  float: left;
+  border: 1px solid #ccc;
+}
+.prod-img img {
+  display: block;
+  vertical-align: baseline;
+  width: 70px;
+}
+.prod-content {
+  overflow: hidden;
+  padding-left: 5px;
+  padding-top: 2px;
+}
+.prod-snap .small {
+    font-size: 11px;
+    margin-top: 5px;
+}
+.prod-snap h3 {
+    font-size: 14px;
+    margin: 0;
+    font-weight: bold;
+}
+.price {
+  font-size: 12px;
+  font-weight: bold;
+}
+.new-po-form.panel-default {
+  border-radius: 0 0 4px 4px;
+  border-top: 0;
+}
+.preferred_supplier{
+  margin: 4px 20px 0px !important;
+}

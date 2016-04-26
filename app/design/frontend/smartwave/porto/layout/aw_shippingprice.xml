@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout version="0.2.0">
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/aw_shippingprice/aw_shippingprice.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="aw_shippingprice_ids" template="aw_shippingprice/ids.phtml"/>
+        </reference>
+    </catalog_product_view>
+    <catalog_category_view>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/aw_shippingprice/aw_shippingprice.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="aw_shippingprice_ids" template="aw_shippingprice/ids.phtml"/>
+        </reference>
+    </catalog_category_view>
+</layout>

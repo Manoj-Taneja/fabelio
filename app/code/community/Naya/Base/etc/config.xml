@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Naya_Base>
+            <version>1.0.0</version>
+        </Naya_Base>
+    </modules>
+    
+    <global>
+        <helpers>
+            <naya_base>
+                <class>Naya_Base_Helper</class>
+            </naya_base>
+        </helpers>
+    </global>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <Naya_Base>
+                    <files>
+                        <default>Naya_Base.csv</default>
+                    </files>
+                </Naya_Base>
+            </modules>
+        </translate>
+    </adminhtml>
+    
+    <frontend>
+        <translate>
+            <modules>
+                <Naya_Base>
+                    <files>
+                        <default>Naya_Base.csv</default>
+                    </files>
+                </Naya_Base>
+            </modules>
+        </translate>
+    </frontend>
+</config>

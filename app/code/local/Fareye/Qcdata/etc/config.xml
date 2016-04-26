@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<config>
+  <modules>
+    <Fareye_Qcdata>
+      <version>0.0.1</version>
+    </Fareye_Qcdata>
+  </modules>
+
+  <frontend>
+    <routers>
+      <qcdata>
+        <use>standard</use>
+        <args>
+          <module>Fareye_Qcdata</module>
+          <frontName>qcdata</frontName>
+        </args>
+      </qcdata>
+    </routers>
+  </frontend>
+  
+  <global>
+
+    <helpers>
+      <qcdata>
+        <class>Fareye_Qcdata_Helper</class>
+      </qcdata>
+    </helpers>
+
+    <models>
+
+      <qcdata>
+        <class>Fareye_Qcdata_Model</class>
+        <resourceModel>fareye_qcdata_resource</resourceModel>
+      </qcdata>
+
+      <!--  <fareye_qcdata>
+        <resourceModel>fareye_qcdata_resource</resourceModel>
+      </fareye_qcdata>  -->
+
+      <fareye_qcdata_resource>
+        <entities>
+          <data>
+            <table>fareye_qcdata_data</table>
+          </data>
+          <postdata>
+            <table>fareye_qcdata_postdata</table>
+          </postdata>
+        </entities>
+      </fareye_qcdata_resource>
+
+    </models>
+
+    <resources>
+      <fareye_qcdata_setup>
+
+        <setup>
+          <module>Fareye_Qcdata</module>
+          <class>Mage_Core_Model_Resource_Setup</class>
+        </setup>
+
+      </fareye_qcdata_setup>
+    </resources>
+
+  </global>
+
+  <default>
+    <fareye_qcdata>
+      <api>
+        <key>4WzkTnLtzW</key>
+      </api>
+    </fareye_qcdata>
+  </default>
+
+</config>
+

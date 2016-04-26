@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <aw_storecredit translate="label" module="aw_storecredit">
+            <label>Store Credit and Refund</label>
+            <tab>awall</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>110</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Module</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <refund_automatically translate="label">
+                            <label>Refund to Store Credit automatically</label>
+                            <comment><![CDATA[The option defines the default Credit Memo behavior]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </refund_automatically>
+                        <display_toplink translate="label">
+                            <label>Display 'Store Credit' in top links</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_toplink>
+                        <display_customer_balance translate="label">
+                            <label>Display customer Store Credit Balance in top links</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><display_toplink>1</display_toplink></depends>
+                        </display_customer_balance>
+                        <cms_page translate="label">
+                            <label>CMS Page in Customer Area</label>
+                            <comment><![CDATA[Redirects a customer to this CMS page when clicking on the 'Question' icon]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>aw_storecredit/source_system_config_cms_page</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cms_page>
+                    </fields>
+                </general>
+                <email>
+                    <label>Email Notifications</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <subscribe_automatically translate="label">
+                            <label>Subscribe customers automatically</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </subscribe_automatically>
+                        <autologin_enabled translate="label">
+                            <label>Enable automatic logging in</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>All links in the email will log a customer in!</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </autologin_enabled>
+                        <landing_page translate="label">
+                            <label>Landing Page</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Related to website URL, e.g. 'phones/samsung/'. The customer will be browsed to this page after clicking on the 'come back' link in the email.</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </landing_page>
+                        <sender translate="label">
+                            <label>Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender>
+                        <template translate="label">
+                            <label>Balance update template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+                    </fields>
+                </email>
+            </groups>
+        </aw_storecredit>
+    </sections>
+</config>

@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Amasty_Number>
+            <version>1.1.1</version>
+        </Amasty_Number>
+    </modules>
+    
+    <adminhtml>
+        <!--
+        <events>
+            <adminhtml_block_html_before>
+                <observers>
+                    <amnumber>
+                        <type>singleton</type>
+                        <class>amnumber/observer</class>
+                        <method>processBlockHtmlBefore</method>
+                    </amnumber>
+                </observers>
+            </adminhtml_block_html_before>
+        </events> 
+        -->
+            
+        <translate>
+            <modules>
+                <Amasty_Number>
+                    <files>
+                        <default>Amasty_Number.csv</default>
+                    </files>
+                </Amasty_Number>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amnumber translate="title" module="amnumber">
+                                            <title>Order Number</title>
+                                        </amnumber>
+                                    </children>
+                                </config>
+                            </children>
+                        </system> 
+                     </children>
+                </admin> 
+            </resources>
+        </acl>
+    </adminhtml>
+        
+    <global> 
+        <models>
+            <amnumber>
+                <class>Amasty_Number_Model</class>
+            </amnumber>
+            <eav>
+			     <rewrite>
+				    <entity_type>Amasty_Number_Model_Eav_Entity_Type</entity_type>
+			     </rewrite>
+            </eav>
+            <sales_resource>
+                <rewrite>
+                    <quote>Amasty_Number_Model_Sales_Resource_Quote</quote>
+                </rewrite>
+            </sales_resource>
+        </models>     
+
+        <helpers>
+            <amnumber>
+                <class>Amasty_Number_Helper</class>
+            </amnumber>
+        </helpers>
+        <events>
+            <sales_order_invoice_save_before>
+                <observers>
+                    <sales_order_invoice_save_before>
+                        <type>singleton</type>
+                        <class>amnumber/observer</class>
+                        <method>processDocumentSaveBefore</method>
+                    </sales_order_invoice_save_before>
+                </observers>
+            </sales_order_invoice_save_before>
+            <sales_order_shipment_save_before>
+                <observers>
+                    <sales_order_shipment_save_before>
+                        <type>singleton</type>
+                        <class>amnumber/observer</class>
+                        <method>processDocumentSaveBefore</method>
+                    </sales_order_shipment_save_before>
+                </observers>
+            </sales_order_shipment_save_before>
+            <sales_order_creditmemo_save_before>
+                <observers>
+                    <sales_order_creditmemo_save_before>
+                        <type>singleton</type>
+                        <class>amnumber/observer</class>
+                        <method>processDocumentSaveBefore</method>
+                    </sales_order_creditmemo_save_before>
+                </observers>
+            </sales_order_creditmemo_save_before>
+        <model_save_before>
+                <observers>
+                    <sales_order_rma_save_before>
+                        <type>singleton</type>
+                        <class>amnumber/observer</class>
+                        <method>processDocumentSaveBefore</method>
+                    </sales_order_rma_save_before>
+                </observers>
+            </model_save_before>
+        </events>
+    <blocks>
+            <amnumber>
+                <class>Amasty_Number_Block</class>
+            </amnumber>
+            
+            <enterprise_rma>
+                <rewrite>
+                    <adminhtml_rma_grid>Amasty_Number_Block_Adminhtml_Rma_Grid</adminhtml_rma_grid>
+                </rewrite>
+            </enterprise_rma>
+        </blocks>
+    </global>
+     
+    <default>
+        <amnumber>
+            <general>
+                <enabled>0</enabled>
+                <offset>0</offset>
+            </general>
+            
+            <order>
+                <format>ORD-{yy}-{mm}-{dd}-{counter}</format>
+                <start>1</start> 
+                <pad>8</pad> 
+                <increment>1</increment> 
+                <reset>0</reset> 
+                <per_website>0</per_website> 
+                <per_store>0</per_store> 
+            </order>
+        
+            <invoice>
+                <same>1</same>
+                <prefix>INV-</prefix>
+                
+                <format>INV-{yy}-{mm}-{dd}-{counter}</format>
+                <start>1</start> 
+                <pad>8</pad> 
+                <increment>1</increment> 
+                <reset>0</reset> 
+                <per_website>0</per_website> 
+                <per_store>0</per_store> 
+            </invoice>
+            
+            <shipment>
+                <same>31</same>
+                <prefix>SHI-</prefix>
+                
+                <format>SHI-{yy}-{mm}-{dd}-{counter}</format>
+                <start>1</start> 
+                <pad>8</pad> 
+                <increment>1</increment> 
+                <reset>0</reset> 
+                <per_website>0</per_website> 
+                <per_store>0</per_store> 
+            </shipment>
+            
+            <creditmemo>
+                <same>1</same>
+                <prefix>MEMO-</prefix>
+                
+                <format>MEMO-{order_id}</format>
+                <start>1</start> 
+                <pad>8</pad> 
+                <increment>1</increment> 
+                <reset>0</reset> 
+                <per_website>0</per_website> 
+                <per_store>0</per_store> 
+            </creditmemo>
+        </amnumber>  
+    </default> 
+</config>

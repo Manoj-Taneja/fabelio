@@ -1,0 +1,100 @@
+<?php $_order = $this->getOrder(); ?>
+<?php $_items = $this->getItems(); ?>
+<?php $_shippingAddress = $this->getOrder()->getShippingAddress(); ?>
+<?php $_billingAddress = $this->getOrder()->getBillingAddress(); ?>
+<div class="container-fluid main-container vendor-container">
+<h2 style="text-align: center"><?php echo $this->__('Create Invoice for Order'); ?> #<?php echo $_order->getIncrementId(); ?></h2>
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <h3><?php echo $this->__("Order Information"); ?></h3>
+                <p><strong><?php echo $this->__("Order Date"); ?> : </strong> <?php echo date("M d, Y g:i:s A", strtotime($_order->getCreatedAt())); ?></p>
+                <p><strong><?php echo $this->__("Order Status"); ?> : </strong>
+                    <?php if($_order->getStatus() == 'canceled') :?>
+                        <span class="text-danger"><?php echo ucfirst($_order->getStatus()); ?></span>
+                    <?php else : ?>
+                        <?php echo ucfirst($_order->getStatus()); ?>
+                    <?php endif; ?>
+                </p>
+            </div>
+            <div class="col-md-5">
+                <h3><?php echo $this->__("Account Information"); ?></h3>
+                <p><strong><?php echo $this->__("Customer Name"); ?> : </strong> <?php echo $_order->getCustomerFirstname(); ?> <?php echo $_order->getCustomerLastname(); ?></p>
+                <p><strong><?php echo $this->__("Email"); ?> : </strong> <a href="mailto:<?php echo $_order->getCustomerEmail(); ?>"><?php echo $_order->getCustomerEmail(); ?></a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <h3><?php echo $this->__("Billing Address"); ?></h3>
+            <p><?php echo $this->escapeHtml($_billingAddress->getFirstname()); ?> <?php echo $_billingAddress->getLastname(); ?></p>
+            <p><?php echo $this->escapeHtml(join(' ', $_billingAddress->getStreet())); ?></p>
+            <p><?php echo $this->escapeHtml($_billingAddress->getCity()); ?> <?php echo $this->escapeHtml($_billingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_billingAddress->getPostcode()); ?></p>
+            <?php $countryCode = $this->escapeHtml($_billingAddress->getCountry()); ?>
+            <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+            <p><?php echo $this->escapeHtml($country->getName()); ?></p>
+        </div>
+        <div class="col-md-5">
+            <h3><?php echo $this->__("Shipping Address"); ?></h3>
+            <p><?php echo $this->escapeHtml($_shippingAddress->getFirstname()); ?> <?php echo $this->escapeHtml($_shippingAddress->getLastname()); ?></p>
+            <p><?php echo join(' ', $_shippingAddress->getStreet()); ?></p>
+            <p><?php echo $this->escapeHtml($_shippingAddress->getCity()); ?> <?php echo $this->escapeHtml($_shippingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_shippingAddress->getPostcode()); ?></p>
+            <?php $countryCode = $this->escapeHtml($_shippingAddress->getCountry()); ?>
+            <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+            <p><?php echo $country->getName(); ?></p>
+        </div>
+    </div>
+</div>
+    <form action="<?php echo $this->getUrl("*/*/save"); ?>" id="createInvoiceForm" method="post">
+    <div class="container">
+        <h2 class="sub-header"><?php echo $this->__("Items to Invoice"); ?></h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><?php echo $this->__('Product'); ?></th>
+                    <th><?php echo $this->__('Qty Ordered'); ?></th>
+                    <th><?php echo $this->__('Available for Invoice'); ?></th>
+                    <th><?php echo $this->__('Qty'); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($_items AS $_item) : ?>
+                    <?php if($_item->getData('parent_item_id')) continue; ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($_item->getName()); ?></td>
+                        <td><?php echo $_item->getQtyOrdered(); ?></td>
+                        <td><?php echo $_item->getQtyOrdered() - $_item->getQtyInvoiced(); ?></td>
+                        <td><?php if($_item->getQtyOrdered() - $_item->getQtyInvoiced() > 0): ?><input type="text" class="validate-number form-control required-entry" name="product[<?php echo $_item->getId(); ?>]" value="<?php echo $_item->getQtyOrdered() - $_item->getQtyInvoiced(); ?>"/><?php endif; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="span12">
+            <?php if(Mage::getStoreConfig('marketplace_configuration/presentation/allow_to_send_invoice')): ?>
+                <div class="container form-group">
+                    <div class="span3 label-container">
+                        <label for="notify_customer"><?php echo $this->__('Notify Customer'); ?></label>
+                    </div>
+                    <div class="span3 input-container">
+                        <input type="checkbox" name="notify_customer" id="notify_customer" value="1" checked/>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <input type="hidden" name="order_id" value="<?php echo $_order->getId(); ?>" />
+            <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save Invoice') ?>" />
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    var myForm= new VarienForm('createInvoiceForm', true);
+</script>
+</div>

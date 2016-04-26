@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fabmod_Feed>
+            <version>0.0.1</version>
+        </Fabmod_Feed>
+    </modules>
+
+    <frontend>
+      <routers>
+        <feed>
+          <use>standard</use>
+          <args>
+            <module>Fabmod_Feed</module>
+            <frontName>flfeed</frontName>
+          </args>
+        </feed>
+      </routers>
+    </frontend>
+
+    <global>
+      <models>
+        <feed>
+          <class>Fabmod_Feed_Model</class>
+        </feed>
+      </models>
+
+      <helpers>
+          <feed>
+              <class>Fabmod_Feed_Helper</class>
+          </feed>
+      </helpers>
+    </global>
+</config>

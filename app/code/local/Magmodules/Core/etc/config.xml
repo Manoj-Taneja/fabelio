@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magmodules.eu
+ * Http://www.magmodules.eu
+ * ========================
+ * @category    Magmodules
+ * @package     Magmodules_Core
+ * @author      Magmodules <info@magmodules.eu)
+ * @copyright   Copyright (c) 2013 (http://www.magmodules.eu)
+ * @license     http://www.magmodules.eu/license-agreement/  [ Single domain license ]
+ */
+ -->
+<config>
+	<modules>
+		<Magmodules_Core>
+			<version>1.0.0</version>
+		</Magmodules_Core>
+	</modules>		
+	<adminhtml>
+		<layout>
+			<updates>
+				<magmodulescore>
+					<file>magmodules/core.xml</file>
+				</magmodulescore>
+			</updates>
+		</layout>
+		<translate>
+			<modules>
+				<Magmodules_Core>
+					<files>
+						<default>Magmodules_Core.csv</default>
+					</files>
+				</Magmodules_Core>
+			</modules>
+		</translate>
+	</adminhtml>
+</config>

@@ -1,0 +1,9 @@
+<?php
+class Fareye_Potrack_Model_Resource_Posthook_Collection  extends   Mage_Core_Model_Resource_Db_Collection_Abstract 
+{
+  public function _construct()
+  {
+    $this->_init('fareye_potrack/posthook');
+  }
+
+}

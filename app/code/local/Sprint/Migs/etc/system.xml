@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<config>
+  	<sections>
+    	<payment>
+      		<groups>
+				<migs translate="label comment" module="paygate">
+					  <label>MIGS (MasterCard Internet Gateway Service)</label>
+					  <frontend_type>text</frontend_type>
+					  <sort_order>1</sort_order>
+					  <show_in_default>1</show_in_default>
+					  <show_in_website>1</show_in_website>
+					  <show_in_store>1</show_in_store>
+					  <fields>
+							<active translate="label">
+								  <label>Enabled</label>
+								  <frontend_type>select</frontend_type>
+								  <source_model>adminhtml/system_config_source_yesno</source_model>
+								  <sort_order>10</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>1</show_in_website>
+								  <show_in_store>1</show_in_store>
+							</active>
+							<title translate="label">
+								  <label>Title</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>20</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>1</show_in_website>
+								  <show_in_store>1</show_in_store>
+							</title>
+							<transaction_url translate="label">
+								  <label>MIGS Transaction URL</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>30</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</transaction_url>
+							<site_id translate="label">
+								  <label>Merchant Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>40</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+                </site_id>
+	            <bri_three_months_site_id translate="label">
+								  <label>BRI 3 Months Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>41</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</bri_three_months_site_id>
+	            <bri_six_months_site_id translate="label">
+								  <label>BRI 6 Months Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>42</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</bri_six_months_site_id>
+	            <bri_twelve_months_site_id translate="label">
+								  <label>BRI 12 Months Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>43</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+                </bri_twelve_months_site_id>
+               <permata_three_months_site_id translate="label">
+								  <label>Permata 3 Months Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>44</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</permata_three_months_site_id>
+	            <permata_six_months_site_id translate="label">
+								  <label>Permata 6 Months Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>45</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</permata_six_months_site_id>
+	            <permata_twelve_months_site_id translate="label">
+								  <label>Permata 12 Months Site ID</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>46</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</permata_twelve_months_site_id>
+							<profile_code translate="label">
+								  <label>Merchant Profile Code</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>50</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</profile_code>
+							<transactionType translate="label">
+								  <label>Transaction Type</label>
+								  <frontend_type>select</frontend_type>
+								  <source_model>migs/system_config_source_view</source_model>
+								  <sort_order>60</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</transactionType>
+							<jcb_logo translate="label">
+								  <label>Display JCB Logo</label>
+								  <frontend_type>select</frontend_type>
+								  <source_model>adminhtml/system_config_source_yesno</source_model>
+								  <sort_order>70</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>0</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</jcb_logo>
+							<order_status translate="label">
+								  <label>New Order Status</label>
+								  <frontend_type>select</frontend_type>
+								  <source_model>adminhtml/system_config_source_order_status</source_model>
+								  <sort_order>80</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>1</show_in_website>
+								  <show_in_store>0</show_in_store>
+								  <comment>Please only set to Pending.</comment>
+							</order_status>
+							<allowspecific translate="label">
+								  <label>Payment Applicable From</label>
+								  <frontend_type>select</frontend_type>
+								  <sort_order>90</sort_order>
+								  <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>1</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</allowspecific>
+							<specificcountry translate="label">
+								  <label>Countries Payment Applicable From</label>
+								  <frontend_type>multiselect</frontend_type>
+								  <sort_order>100</sort_order>
+								  <source_model>adminhtml/system_config_source_country</source_model>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>1</show_in_website>
+								  <show_in_store>0</show_in_store>
+								  <depends>
+										<allowspecific>1</allowspecific>
+								  </depends>
+							</specificcountry>
+							<sort_order translate="label">
+								  <label>Sort Order</label>
+								  <frontend_type>text</frontend_type>
+								  <sort_order>110</sort_order>
+								  <show_in_default>1</show_in_default>
+								  <show_in_website>1</show_in_website>
+								  <show_in_store>0</show_in_store>
+							</sort_order>
+					  </fields>
+				</migs>
+		  	</groups>
+		</payment>
+  	</sections>
+</config>

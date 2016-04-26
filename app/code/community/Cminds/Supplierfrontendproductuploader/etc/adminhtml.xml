@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<config>
+    <layout>
+        <updates>
+            <marketplace>
+                <file>cminds_supplierfrontendproductuploader.xml</file>
+            </marketplace>
+        </updates>
+    </layout>
+    <menu>
+        <catalog>
+            <children>
+                <supplierfrontendproductuploader_catalog_product translate="title" module="supplierfrontendproductuploader">
+                    <sort_order>10</sort_order>
+                    <title>Supplier Products</title>
+                    <action>adminhtml/supplier_product</action>
+                </supplierfrontendproductuploader_catalog_product>
+            </children>
+        </catalog>
+        <report>
+            <children>
+                <salesroot>
+                    <children>
+                        <supplier_items_ordered translate="title" module="supplierfrontendproductuploader">
+                            <title>Suppliers Item Ordered</title>
+                            <action>adminhtml/supplier_report</action>
+                        </supplier_items_ordered>
+                    </children>
+                </salesroot>
+            </children>
+        </report>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <supplierfrontendproductuploader_catalog translate="title" module="supplierfrontendproductuploader">
+                                        <title>CMinds Supplier Frontend Uploader Extension - General Settings</title>
+                                    </supplierfrontendproductuploader_catalog>
+                                    <supplierfrontendproductuploader_products translate="title" module="supplierfrontendproductuploader">
+                                        <title>CMinds Supplier Frontend Uploader Extension - Products Settings</title>
+                                    </supplierfrontendproductuploader_products>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <catalog>
+                        <children>
+                            <supplierfrontendproductuploader_catalog_product translate="title" module="supplierfrontendproductuploader">
+                                <title>CMinds Supplier Frontend Uploader Extension - Products Created by Suppliers</title>
+                            </supplierfrontendproductuploader_catalog_product>
+                        </children>
+                    </catalog>
+                    <report>
+                        <children>
+                            <salesroot>
+                                <children>
+                                    <supplier_items_ordered translate="title" module="supplierfrontendproductuploader">
+                                        <title>CMinds Supplier Frontend Uploader Extension - Products Created By Suppliers</title>
+                                    </supplier_items_ordered>
+                                </children>
+                            </salesroot>
+                        </children>
+                    </report>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<config>
+   <sections>
+        <payment>
+            <groups>
+                <hellopay_standard translate="label" module="hellopay">
+                    <label>helloPay Payment Solution</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>601</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>
+                    </comment>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable / Disable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_Enabledisable</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>                      
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <description translate="label comment">
+                            <label>Description</label>
+                            <comment>Store name will be used if left empty</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </description>
+                        <merchant_api_url translate="label">
+                          <label>Merchant API URL</label>
+                          <frontend_type>text</frontend_type>
+                          <validate>required-entry</validate>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>0</show_in_store>
+                          <sort_order>4</sort_order>
+                        </merchant_api_url>
+                        <api_key translate="label">
+                          <label>Merchant API Key</label>
+                          <frontend_type>text</frontend_type>
+                          <validate>required-entry</validate>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>0</show_in_store>
+                          <sort_order>5</sort_order>
+                        </api_key>
+                        <secret_token translate="label">
+                          <label>Secret Token</label>
+                          <frontend_type>text</frontend_type>
+                          <validate>required-entry</validate>
+                          <show_in_default>1</show_in_default>
+                          <show_in_website>1</show_in_website>
+                          <show_in_store>0</show_in_store>
+                          <sort_order>6</sort_order>
+                        </secret_token>
+                        <order_status translate="label">
+                            <label>New order status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                          <sort_order>7</sort_order>
+                        </order_status>
+                        <debug_flag translate="label">
+                            <label>Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>8</sort_order>
+                        </debug_flag>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            
+                            <sort_order>9</sort_order>
+                        </sort_order>
+                        <description translate="label comment">
+                            <label>Callback URL</label>
+                            <frontend_type>label</frontend_type>
+                            <comment>
+                                <model>Hellopay/Callback</model>
+                            </comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </description>
+                    </fields>
+                </hellopay_standard>
+            </groups>
+        </payment>
+    </sections>
+</config>

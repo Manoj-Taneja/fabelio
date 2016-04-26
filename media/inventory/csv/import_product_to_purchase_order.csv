@@ -1,0 +1,4 @@
+SKU,COST,TAX,DISCOUNT,SUPPLIER_SKU,warehouse_1,warehouse_2,warehouse_3
+n2610,100,2,1,vn_n2610,100,100,1000
+mycomputer,200,1,2,vn_mycomputer,100,50,300
+HTC Touch Diamond,200,1,22,vn_htc_touch_diamond,100,50,300

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kontenta_Status>
+			<version>0.1.0</version>
+		</Kontenta_Status>
+	</modules>
+	<adminhtml>
+		<layout>
+			<updates>
+				<Kontenta_Status>
+					<file>kontenta/status.xml</file>
+				</Kontenta_Status>
+			</updates>
+		</layout>
+	</adminhtml>
+	<admin>
+        <routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<statuses before="Mage_Adminhtml">Kontenta_Status_Adminhtml</statuses>
+					</modules>
+				</args>
+			</adminhtml>
+        </routers>
+    </admin>
+	<global>
+		<blocks>
+			<statuses>
+				<class>Kontenta_Status_Block</class>
+			</statuses>
+		</blocks>
+		<models>
+			<statuses>
+				<class>Kontenta_Status_Model</class>
+			</statuses>
+		</models>
+	</global>
+</config>

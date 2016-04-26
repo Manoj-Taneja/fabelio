@@ -1,0 +1,57 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_ShippingPrice
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php $idsEncoded = Mage::helper('aw_shippingprice')->getEncodedProductIds(); ?>
+<?php if ($idsEncoded): ?>
+    <script>
+        document.observe("dom:loaded",  function() {
+            new Ajax.Request('<?php echo Mage::getUrl('shippingprice/ajax/load/'); ?>', {
+                method: "get",
+                parameters: {'ids' : '<?php echo $idsEncoded; ?>'},
+                onSuccess: function(transport) {
+                    var response = transport.responseText.evalJSON(true);
+                    if (response.success && response.content) {
+                        var shippingPrices = $H(response.content);
+                        shippingPrices.each( function(item){
+                            $$('.aw-shipping-price-' + item.key).each(function(block){block.insert(item.value)});
+                            $$('.aw-shipping-price-box-' + item.key).each(function(block){block.style.display = 'block'});
+                        });
+                        Catalog.Map.helpLinks.each(
+                            function(item) {
+                                item.link.observe(
+                                    'click',
+                                    function(e) {
+                                        $$('#map-popup .aw-shipping-price-' + item.product_id).each(function(block){block.insert(shippingPrices.get(item.product_id))});
+                                        $$('#map-popup .aw-shipping-price-box-' + item.product_id).each(function(block){block.style.display = 'block'});
+                                    }
+                                )
+                            }
+                        );
+                    }
+                }
+            });
+        });
+    </script>
+<?php endif; ?>

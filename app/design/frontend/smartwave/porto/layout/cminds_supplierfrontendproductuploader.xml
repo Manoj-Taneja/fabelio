@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<layout version="1.0.0">
+    <default>
+        <reference name="head">
+        </reference>
+    </default>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="supplierfrontendproductuploader">
+                <name>supplierfrontendproductuploader</name>
+                <path>supplierfrontendproductuploader/</path>
+                <label>My Supplier Frontend Product Uploader Panel</label>
+            </action>
+        </reference>
+    </customer_account>
+    <cminds_supplierfrontendproductuploader_index_index>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/supplierfrontendproductuploader/nav.phtml"/>
+            <block type="supplierfrontendproductuploader/dashboard" name="supplierfrontendproductuploader_dashboard"
+                   template="supplierfrontendproductuploader/dashboard.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_index_index>
+    <cminds_supplierfrontendproductuploader_product_list>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/supplierfrontendproductuploader/nav.phtml"/>
+            <block type="supplierfrontendproductuploader/product_list" name="supplierfrontendproductuploader_product_list"
+                   template="supplierfrontendproductuploader/product/list.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_list>
+    <cminds_supplierfrontendproductuploader_product_ordered>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/supplierfrontendproductuploader/nav.phtml"/>
+            <block type="supplierfrontendproductuploader/sales_order" name="supplierfrontendproductuploader_order_items"
+                   template="supplierfrontendproductuploader/product/list/ordered.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_ordered>
+    <cminds_supplierfrontendproductuploader_product_create>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/datepicker.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/uploadify/uploadify.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/supplierfrontendproductuploader/nav.phtml"/>
+            <block type="supplierfrontendproductuploader/product_create" name="cminds_supplierfrontendproductuploader.product_create"
+                   template="supplierfrontendproductuploader/product/create/form.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_create>
+    <cminds_supplierfrontendproductuploader_product_edit>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/datepicker.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/uploadify/uploadify.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="/supplierfrontendproductuploader/nav.phtml"/>
+            <block type="supplierfrontendproductuploader/product_create" name="cminds_supplierfrontendproductuploader.product_create"
+                   template="supplierfrontendproductuploader/product/edit/form.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_product_edit>
+    <cminds_supplierfrontendproductuploader_settings_notifications>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="supplierfrontendproductuploader/navbar" name="supplierfrontendproductuploader_nav" template="supplierfrontendproductuploader/nav.phtml"/>
+            <block type="page/html" name="supplierfrontendproductuploader_settings_shipping_methods"
+                   template="supplierfrontendproductuploader/settings/notifications.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_settings_notifications>
+    <cminds_supplierfrontendproductuploader_login_index>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="head">
+          <!--<action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>-->
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="cminds_supplierfrontendproductuploader.login_index"
+                   template="supplierfrontendproductuploader/login/form.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_login_index>
+    <cminds_supplierfrontendproductuploader_register_index>
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <block type="core/messages" name="global_messages" as="global_messages"/>
+        </reference>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/bootstrap.min.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supplierfrontendproductuploader/custom.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="cminds_supplierfrontendproductuploader.register_index"
+                   template="supplierfrontendproductuploader/register/form.phtml"/>
+        </reference>
+    </cminds_supplierfrontendproductuploader_register_index>
+    <customer_account_create translate="label">
+        <reference name="customer_form_register">
+            <action method="setTemplate"><template>supplierfrontendproductuploader/customer/form/register.phtml</template></action>
+        </reference>
+    </customer_account_create>
+</layout>

@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Yotpo_Yotpo>
+            <version>1.6.2</version>
+        </Yotpo_Yotpo>
+    </modules>
+    
+    <global>
+    	<blocks>
+    		<yotpo>
+	    		<class>Yotpo_Yotpo_Block</class>
+    		</yotpo>
+    	</blocks>
+    	<models>
+    		<yotpo>
+    			<class>Yotpo_Yotpo_Model</class>
+                <resourceModel>yotpo_mysql4</resourceModel>
+    		</yotpo>
+
+            <yotpo_mysql4>
+            <class>Yotpo_Yotpo_Model_Mysql4</class>  
+            <entities>
+                <richsnippet>
+                    <table>yotpo_rich_snippets</table>
+                </richsnippet>
+            </entities>                
+            </yotpo_mysql4>
+    	</models>
+        <helpers>
+            <yotpo>
+                <class>Yotpo_Yotpo_Helper</class>
+            </yotpo>
+        </helpers>
+    	<events>
+			<sales_order_save_after>
+			  <observers>
+			  	  <yotpo_yotpo_mail_observer>
+			  	  	  <type>singleton</type>
+			          <class>Yotpo_Yotpo_Model_Mail_Observer</class>
+			          <method>mail_after_purchase</method>
+			      </yotpo_yotpo_mail_observer>
+			  </observers>
+			</sales_order_save_after>
+      	</events>
+        <resources>
+            <yotpo_setup>
+                <setup>
+                    <module>Yotpo_Yotpo</module>
+                    <class>Yotpo_Yotpo_Model_Resource_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </yotpo_setup>
+            <yotpo_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </yotpo_write>
+            <yotpo_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </yotpo_read>      
+        </resources>        
+    </global>
+    
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Yotpo_Yotpo before="Mage_Adminhtml">Yotpo_Yotpo</Yotpo_Yotpo>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>    
+    </admin>
+
+	<frontend>
+		<layout>
+			<updates>
+				<yotpo>
+					<file>yotpo.xml</file>
+				</yotpo>
+			</updates>
+		</layout>
+	</frontend>
+	
+	<adminhtml>
+        <events>
+            <core_block_abstract_prepare_layout_before>
+                <observers>
+                    <yotpo_block_abstract_prepare_layout_before>
+                        <class>Yotpo_Yotpo_Model_Export_Observer</class>
+                        <method>addMassAction</method>
+                    </yotpo_block_abstract_prepare_layout_before>
+                </observers>
+            </core_block_abstract_prepare_layout_before>
+        </events>
+
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <yotpo>
+                                            <title>Yotpo Module Section</title>
+                                        </yotpo>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <default>
+        <yotpo>
+            <yotpo_general_group>
+                <custom_order_status>complete</custom_order_status>
+            </yotpo_general_group>
+        </yotpo>
+    </default>
+</config>

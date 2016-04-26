@@ -1,0 +1,40 @@
+
+span.twitter-typeahead {
+  width: 100%;
+}
+.input-group span.twitter-typeahead {
+  display: block !important;
+}
+.input-group span.twitter-typeahead .tt-dropdown-menu {
+  top: 32px !important;
+}
+.input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
+  top: 44px !important;
+}
+.input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
+  top: 28px !important;
+}
+.po-form .form-group {
+  position: relative;
+  width: 100%;
+}
+.po-form .form-control {
+  width: 100%;
+}
+.prod-snap {
+  overflow: hidden;
+}
+.prod-img {
+  float: left;
+}
+.prod-content {
+}
+.prod-snap .small {
+    font-size: 11px;
+    margin-top: 5px;
+}
+.prod-snap h3 {
+    font-size: 14px;
+    margin: 0;
+    font-weight: bold;
+}

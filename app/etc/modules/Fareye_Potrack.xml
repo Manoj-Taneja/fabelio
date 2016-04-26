@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Fareye_Potrack>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Fareye_Potrack>
+  </modules>
+</config>

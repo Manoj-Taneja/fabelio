@@ -1,0 +1,66 @@
+<div class="container vendor-container">
+    <div class="row">
+        <ul class="messages">
+            <?php $messages = Mage::getSingleton('customer/session')->getMessages(true); ?>
+            <?php foreach($messages->getItems('error') AS $msg): ?>
+                <li class="error-msg">
+                    <ul><li><span><?php echo $msg->getCode(); ?></span></li></ul>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="span8">
+            <form action="<?php echo Mage::getUrl('supplierfrontendproductuploader/register/createpost') ?>" method="post" class="form-horizontal" id="registerForm" accept-charset="utf-8">
+                <div class="control-group">
+                    <label for="firstname" class="control-label">
+                        <?php echo $this->__('First Name'); ?><em class="text-error">*</em>
+                    </label>
+                    <div class="controls">
+                        <input name="group_id" type="hidden" value="<?php echo Mage::getStoreConfig('supplierfrontendproductuploader_catalog/login/register_customer_group') ?>" id="group_id" class="input-text required-entry">
+                        <input name="firstname" type="text" value="" id="firstname" class="input-text required-entry">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="lastname" class="control-label">
+                        <?php echo $this->__('Last Name'); ?><em class="text-error">*</em>
+                    </label>
+                    <div class="controls"><input name="lastname"  type="text" value="" id="lastname" class="input-text required-entry">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="email" class="control-label">
+                        <?php echo $this->__('Email Address'); ?><em class="text-error">*</em>
+                    </label>
+                    <div class="controls"><input name="email" type="text" value="" id="email" class="input-text validate-email"></div>
+                </div>
+
+                <div class="control-group">
+                    <label for="city" class="control-label">
+                        <?php echo $this->__('Password'); ?><em class="text-error">*</em>
+                    </label>
+                    <div class="controls"><input name="password" type="password" value="password" id="password" class="input-text required-entry validate-password"></div>
+                </div>
+
+                <div class="control-group">
+                    <label for="country" class="control-label">
+                        <?php echo $this->__('Retype Password'); ?><em class="text-error">*</em>
+                    </label>
+                    <div class="controls"><input name="confirmation" type="password" value="" id="confirmation" class="input-text required-entry required-entry validate-cpassword"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-large btn-primary"><?php echo $this->__('Create Account'); ?></button>
+                </div>
+            </form>
+        </div> <!-- .span8 -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('registerForm');
+    //]]>
+</script>

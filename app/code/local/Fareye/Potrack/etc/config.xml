@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<config>
+  <modules>
+    <Fareye_Potrack>
+      <version>0.0.1</version>
+    </Fareye_Potrack>
+  </modules>
+  <frontend>
+    <routers>
+      <potrack>
+         <use>standard</use>
+         <args>
+           <module>Fareye_Potrack</module>
+             <frontName>fareye</frontName>
+         </args>
+      </potrack>
+    </routers>
+  </frontend>  
+  <global>
+    <!-- Atif comment
+    <models>
+      <fareye_potrack>
+        <class>Fareye_Potrack_Model</class>
+        <resourceModel>fareye_potrack_resource</resourceModel> 
+      </fareye_potrack>
+      <fareye_potrack_resource>
+        <class>Fareye_Potrack_Model_Resource</class>
+        <entities>
+          <posthook>
+            <table>fareye_potrack_posthook</table>
+          </posthook>
+        </entities>
+      </fareye_potrack_resource>
+    </models>
+    <resources>
+      <fareye_potrack_setup>
+        <setup>
+          <module>fareye_potrack</module>
+        </setup>
+      </fareye_potrack_setup>
+    </resources>
+    -->
+    <events>
+      <!--   <purchaseorder_save_product>
+        <observers>
+          <fareye_potrack_model_observer>
+            <type>singleton</type>
+            <class>Fareye_Potrack_Model_Observer</class>
+            <method>postpodatafareye</method>
+          </fareye_potrack_model_observer>
+        </observers>
+    </purchaseorder_save_product>  -->
+       <purchaseorder_save_after>
+        <observers>
+          <fareye_potrack_model_observers>
+            <type>singleton</type>
+            <class>Fareye_Potrack_Model_Observer</class>
+            <method>postpodatafareye</method>
+          </fareye_potrack_model_observers>
+        </observers>
+    </purchaseorder_save_after>
+    </events>
+  </global>
+</config>

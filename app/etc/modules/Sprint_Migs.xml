@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sprint_Migs>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sprint_Migs>
+    </modules>
+</config>

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * System XML for Optimizely
+ *
+ * @package     BlueAcorn\Optimizely
+ * @version     1.1.0
+ * @author      Blue Acorn, Inc. <code@blueacorn.com>
+ * @copyright   Blue Acorn, Inc. 2014
+ */
+-->
+<config>
+    <sections>
+        <blueacorn_optimizely translate="label" module="blueacorn_optimizely">
+            <class>optimizely</class>
+            <label>Optimizely</label>
+            <tab>general</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>2000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <signup translate="label">
+                            <label>Login or Signup</label>
+                            <frontend_model>blueacorn_optimizely/system_config_loginlink</frontend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signup>
+                        <enabled translate="label">
+                            <backend_model>blueacorn_optimizely/enabledcheck</backend_model>
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <optimizely_project_code translate="label comment">
+                            <label>Optimizely Project Code</label>
+                            <frontend_type>textarea</frontend_type>
+                            <backend_model>blueacorn_optimizely/projectcode</backend_model>
+                            <sort_order>20</sort_order>
+                            <comment>Please enter your Optimizely script here. Your Project Code is located on the Dashboard in your Optimizely.com account.</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </optimizely_project_code>
+                        <revenue_tracking translate="label">
+                            <label>Enable Revenue Tracking</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </revenue_tracking>
+                    </fields>
+                </settings>
+
+                <project_settings translate="label">
+                    <label>Custom Variables</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <explanation translate="label">
+                            <label>What are Product Settings?</label>
+                            <frontend_model>blueacorn_optimizely/system_config_explanation</frontend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </explanation>
+                        <attributes translate="label comment">
+                            <label>Attributes to include</label>
+                            <comment>Price, Product Type, Name, and SKU are not available to select as these attributes will automatically be added for every product.</comment>
+                            <frontend_type>minigrid</frontend_type>
+                            <source_model>blueacorn_optimizely/system_config_source_minigrid_attribute</source_model>
+                            <backend_model>baminigrid/system_config_backend_minigrid</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </attributes>
+                    </fields>
+                </project_settings>
+            </groups>
+        </blueacorn_optimizely>
+    </sections>
+</config>

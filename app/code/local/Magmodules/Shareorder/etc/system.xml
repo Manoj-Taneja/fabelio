@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magmodules.eu
+ * http://www.magmodules.eu
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@magmodules.eu so we can send you a copy immediately.
+ *
+ * @category    Magmodules
+ * @package     Magmodules_Ordershare
+ * @author      Magmodules <info@magmodules.eu)
+ * @copyright   Copyright (c) 2013 (http://www.magmodules.eu)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+	<tabs>
+		<magmodules translate="label" module="shareorder">
+			<label>Magmodules</label>
+			<sort_order>200</sort_order>
+		</magmodules>
+	</tabs>
+	<sections>
+		<shareorder translate="label" module="shareorder">
+			<label>Social Share Order</label>
+			<tab>magmodules</tab>
+			<header_css>mm-moduleheader</header_css>			
+			<frontend_type>text</frontend_type>
+			<sort_order>40</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>			
+			<groups>
+                <settings translate="label">
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+		            <expanded>1</expanded>	                    
+                    <fields>
+                        <enable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable>
+                        <facebook_enable translate="label">
+                            <label>Facebook Share</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </facebook_enable>                       
+                        <twitter_enable translate="label">
+                            <label>Twitter Share</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </twitter_enable>
+						<twitter_user translate="label">
+							<label>Twitter Username</label>
+                            <frontend_type>text</frontend_type>
+							<sort_order>21</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment><![CDATA[Twitter Username]]></comment>							
+						</twitter_user>                                                                                                  
+						<twitter_share translate="label">
+							<label>Twitter Share Text</label>
+                            <frontend_type>textarea</frontend_type>
+							<sort_order>22</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <comment><![CDATA[Twitter Share Text. <br>
+                            Use {{product}} to show the the name of the product.]]></comment>							
+						</twitter_share>                                                                                                  
+                    </fields>
+                </settings>
+            </groups>
+        </shareorder>
+    </sections>
+</config>

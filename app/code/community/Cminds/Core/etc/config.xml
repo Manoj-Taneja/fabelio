@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <modules>
+        <Cminds_Core>
+            <version>1.0.0</version>
+        </Cminds_Core>
+    </modules>
+    <default>
+        <cmindsConf>
+            <cminds_marketplace>
+                <deactivate>Deactivate</deactivate>
+            </cminds_marketplace>
+        </cmindsConf>
+    </default>
+    <global>
+        <models>
+            <cminds>
+                <class>Cminds_Core_Model</class>
+            </cminds>
+        </models>
+        <blocks>
+            <cminds>
+                <class>Cminds_Core_Block</class>
+            </cminds>
+        </blocks>
+        <helpers>
+            <cminds>
+                <class>Cminds_Core_Helper</class>
+            </cminds>
+        </helpers>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <cminds_check_license>
+                        <type>singleton</type>
+                        <class>Cminds_Core_Model_Core</class>
+                        <method>validateModules</method>
+                    </cminds_check_license>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <cminds_core before="Mage_Adminhtml">Cminds_Core_Adminhtml</cminds_core>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <crontab>
+        <jobs>
+            <cminds_check_updates>
+                <schedule><cron_expr>0 0 * * 6</cron_expr></schedule>
+                <run><model>cminds/core::checkUpdates</model></run>
+            </cminds_check_updates>
+        </jobs>
+    </crontab>
+</config>

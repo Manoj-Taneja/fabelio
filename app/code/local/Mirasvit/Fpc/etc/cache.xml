@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <containers>
+        <html_header>
+            <block>page/html_header</block>
+            <name>header</name>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>package_name,mobile,logged_in,cart,customer,customer_group,compare,wishlist,store,currency,locale,is_home,category</depends>
+        </html_header>
+        <cart_sidebar>
+            <block>checkout/cart_sidebar</block>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>store,cart,customer,customer_group</depends>
+        </cart_sidebar>
+        <welcome_message>
+            <block>page/html_welcome</block>
+            <container>Mirasvit_Fpc_Model_Container_Welcome</container>
+            <depends>store,logged_in,customer,customer_group</depends>
+        </welcome_message>
+        <last_viewed_products>
+            <block>reports/product_viewed</block>
+            <container>Mirasvit_Fpc_Model_Container_Productviewed</container>
+        </last_viewed_products>
+        <compare_list_sidebar>
+            <block>catalog/product_compare_sidebar</block>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>compare</depends>
+        </compare_list_sidebar>
+        <wishlist>
+            <block>wishlist/customer_sidebar</block>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>customer,wishlist</depends>
+        </wishlist>
+        <top_links>
+            <block>page/template_links</block>
+            <name>top.links</name>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>store,customer,cart,wishlist</depends>
+        </top_links>
+        <global_notices>
+            <block>page/html_notices</block>
+            <name>global_notices</name>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>allow_save_cookies</depends>
+        </global_notices>
+        <global_cookie_notice>
+            <block>page/html_cookieNotice</block>
+            <name>global_cookie_notice</name>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>allow_save_cookies</depends>
+        </global_cookie_notice>
+
+        <ow_cookie_notice>
+            <block>cookienotice/notice</block>
+            <name>optimiseweb_cookienotice</name>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>ow_cookie_notice</depends>
+        </ow_cookie_notice>
+        <page_switch>
+            <block>page/switch</block>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>store,product,category,locale,is_home</depends>
+        </page_switch>
+        <!-- <breadcrumbs>
+            <block>page/html_breadcrumbs</block>
+            <container>Mirasvit_Fpc_Model_Container_Breadcrumbs</container>
+            <depends></depends>
+            <in_app>false</in_app>
+        </breadcrumbs> -->
+        <!-- <searchautocomplete_form>
+            <block>searchautocomplete/form</block>
+            <container>Mirasvit_Fpc_Model_Container_Base</container>
+            <depends>secure</depends>
+            <in_app>false</in_app>
+        </searchautocomplete_form> -->
+    </containers>
+
+    <actions>
+        <catalog_product_view>
+            <recently_viewed>
+                <class>Mirasvit_Fpc_Model_Container_Productviewed</class>
+                <method>registerViewedProduct</method>
+            </recently_viewed>
+        </catalog_product_view>
+        <catalog_category_view>
+            <catalog_session>
+                <class></class>
+                <method>saveSessionVariables</method>
+            </catalog_session>
+        </catalog_category_view>
+        <splash_page_view>
+            <catalog_session>
+                <class></class>
+                <method>saveSessionVariables</method>
+            </catalog_session>
+        </splash_page_view>
+    </actions>
+</config>

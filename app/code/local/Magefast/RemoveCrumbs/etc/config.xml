@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Magefast_RemoveCrumbs>
+            <version>1.0.0</version>
+        </Magefast_RemoveCrumbs>
+    </modules>
+    <global>
+        <blocks>
+            <page>
+                <rewrite>
+                    <html_breadcrumbs>Magefast_RemoveCrumbs_Block_Html_Breadcrumbs</html_breadcrumbs>
+                </rewrite>
+            </page>
+        </blocks>
+        <helpers>
+            <magefast_removecrumbs>
+                <class>Magefast_RemoveCrumbs_Helper</class>
+            </magefast_removecrumbs>
+        </helpers>
+    </global>
+</config>

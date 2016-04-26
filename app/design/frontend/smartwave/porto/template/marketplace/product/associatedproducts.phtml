@@ -1,0 +1,182 @@
+<?php $attributes = $this->getAttributes(); ?>
+<?php $notAssociatedProducts = $this->getNotAssociatedProducts(); ?>
+<div class="container-fluid main-container vendor-container">
+    <div class="page-header">
+   		<h2><?php echo $this->__("Quick Create Associated Product") ?></h2>
+	</div>
+    <div class="row">
+        <div class="col-md-12 form-container">
+            <form name="product_create_form" id="product_create_form" action="<?php echo Mage::getUrl('marketplace/product/saveAssociatedProduct') ?>" method="post" enctype="multipart/form-data">
+                <div class="container-fluid">
+                    <div class="col-md-4">
+                            <input type="hidden" name="super_product_id" value="<?php echo $this->getProductId(); ?>">
+                            <div class="cold-md-5">
+                                <?php if(count($notAssociatedProducts) > 0) : ?>
+                                    <div class="container form-group">
+                                        <div class="col-md-3 label-container">
+                                            <label for="name">
+                                                <?php echo $this->getLabel('Existing Product', 'Existing Product', false); ?>:
+                                            </label>
+                                        </div>
+                                        <div class="col-md-5 input-container">
+                                            <select name="product_id" id="product_id">
+                                                <option value="0">----------</option>
+                                                <?php foreach($notAssociatedProducts AS $product): ?>
+                                                <?php ; ?>
+                                                    <option value="<?php echo $product->getId(); ?>" <?php echo $this->areOptionsExists($product) ? "disabled" : ""; ?> ><?php echo $product->getName(); ?>, <?php echo $this->__('SKU'); ?>: <?php echo $product->getSku(); ?></option>
+                                                <?php endforeach;?> 
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="container form-group">
+                                    <div class="col-md-4 label-container">
+                                        <label for="name">
+                                            <?php echo $this->getLabel('name', 'Name', false); ?>
+                                            <span class="required">*</span>:
+                                        </label>
+                                    </div>
+                                    <div class="col-md-5 input-container">
+                                        <input type="text" id="name" name="name" class="input-text form-control required-entry" value="<?php echo (isset($data['name']) ? $data['name'] : ''); ?>"/>
+                                    </div>
+                                </div>
+                                <div class="container form-group">
+                                    <div class="col-md-3 label-container">
+                                        <label for="qty">
+                                            <?php echo $this->getLabel('qty', 'QTY Available', false); ?>
+                                            <span class="required">*</span>:
+                                        </label>
+                                    </div>
+                                    <div class="col-md-5 input-container">
+                                        <input type="text" id="qty" name="qty" value="<?php echo (isset($data['qty']) ? $data['qty'] : ''); ?>" class="input-text form-control required-entry validate-number validate-greater-than-zero" />
+                                    </div>
+                                </div>
+                                <div class="container form-group">
+                                    <div class="col-md-3 label-container">
+                                        <label for="weight">
+                                            <?php echo $this->getLabel('weight', 'Product Weight', false); ?>
+                                            <span class="required">*</span>:
+                                        </label>
+                                    </div>
+                                    <div class="col-md-5 input-container">
+                                        <input type="text" id="weight" name="weight" value="<?php echo (isset($data['weight']) ? $data['weight'] : ''); ?>" class="input-text form-control required-entry validate-number" />
+                                    </div>
+                                </div>
+                                <div class="custom-attributes">
+                                    <?php foreach($attributes AS $attribute): ?>
+                                        <?php $attributeObj = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute['attribute_code']); ?>
+
+                                        <?php if($attributeObj->getData('is_user_defined') == 1) : ?>
+                                            <?php $attributeFrontend = $attributeObj->getFrontend(); ?>
+                                            <?php if(!$attributeObj->getData('is_configurable')) continue; ?>
+                                            <?php $isRequired = $attributeFrontend->getAttribute()->getIsRequired(); ?>
+                                            <input type="hidden" name="options[<?php echo $attributeObj->getAttributeCode(); ?>][id]" value="<?php echo $attribute['id'] ?>" style="" />
+                                            <input type="hidden" name="options[<?php echo $attributeObj->getAttributeCode(); ?>][attribute_id]" value="<?php echo $attributeObj->getAttributeId(); ?>" style="" />
+                                            <div class="container form-group">
+                                                <div class="col-md-3 label-container">
+                                                    <label for="<?php echo $attributeObj->getAttributeCode() ?>">
+                                                        <?php echo $this->escapeHtml($this->getLabel($attributeObj)); ?>
+                                                        <?php if($isRequired == 1): ?><span class="required">*</span> <?php endif; ?>:
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-5 input-container">
+                                                    <?php echo $this->getAttributeHtml($attributeObj, array()); ?>
+                                                    <div class="priceContainer" style="display:none;">
+                                                    <label><?php echo $this->__("Price"); ?></label>
+                                                        <input type="text" name="options[<?php echo $attributeObj->getAttributeCode(); ?>][price]" class="input-text form-control  attribute-price validate-number price" style="" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td><strong><?php echo $this->__("ID"); ?></strong></td>
+                                        <td class="text-center"><strong><?php echo $this->__("Name"); ?></strong></td>
+                                        <td class="text-center"><strong><?php echo $this->__("SKU"); ?></strong></td>
+                                        <td class="text-right"><strong><?php echo $this->__("Action"); ?></strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($this->getChildrenProducts() AS $product): ?>
+                                        <?php $p = Mage::getModel('catalog/product')->load($product->getId()); ?>
+                                        <tr>
+                                            <td><input class="associated" type="checkbox" value="<?php echo $this->escapeHtml($product->getId()); ?>" checked="true"/></td>
+                                            <td><?php echo $this->escapeHtml($product->getId()); ?></td>
+                                            <td><?php echo $this->escapeHtml($p->getName()); ?></td>
+                                            <td class="text-center"><?php echo $this->escapeHtml($product->getSku()); ?></td>
+                                            <td class="text-center">
+                                                <a class="btn btn-danger btn-sm" href="<?php echo Mage::getUrl('marketplace/product/deleteAssociated', array('id' => $product->getId()))?>"><?php echo $this->__('Remove Product'); ?></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save Product') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('product_create_form');
+    jQuery(document).ready(function(){
+        jQuery('.custom-attributes input, .custom-attributes select, .custom-attributes textarea').not('.price').on('change', function(){
+            jQuery(this).next().show().find('input').addClass('required-entry');
+        });
+
+        jQuery('.associated').change(function(){
+            var checkbox = jQuery(this)[0]; 
+            var checked = checkbox.checked;
+            var productId = checkbox.value;
+
+            var configurableId = "<?php echo $this->getProductId(); ?>";
+
+            jQuery(checkbox).attr('disabled', true);
+            jQuery.ajax({
+                type : 'POST',
+                url: '<?php echo Mage::getUrl("*/*/changeAssociatedStatus")?>',
+                data : {
+                    product_id : productId,
+                    configurable_id : configurableId,
+                    status : checked,
+                },
+                success : function(){
+                    jQuery(checkbox).removeAttr('disabled');
+                }
+            });
+        });
+
+        jQuery('#product_id').change(function(){
+            if(jQuery(this).val() != 0) {
+                jQuery('#name').attr('disabled', '').removeClass('required-entry');
+                jQuery('#qty').attr('disabled', '').removeClass('required-entry');
+                jQuery('#weight').attr('disabled', '').removeClass('required-entry');
+                jQuery('#sku').attr('disabled', '').removeClass('required-entry');
+                jQuery('.associated-dropdown').attr('disabled', '').removeClass('required-entry');
+            } else {
+                jQuery('#name').removeAttr('disabled').addClass('required-entry');
+                jQuery('#qty').removeAttr('disabled').addClass('required-entry');
+                jQuery('#weight').removeAttr('disabled').addClass('required-entry');
+                jQuery('#sku').removeAttr('disabled').addClass('required-entry');
+            }
+        });
+    });
+    //]]>
+</script>

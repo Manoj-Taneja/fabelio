@@ -1,0 +1,4 @@
+app/code/community/Shopgo/GTM/                            app/code/community/Shopgo/GTM/
+app/design/frontend/base/default/layout/shopgo/gtm.xml     app/design/frontend/base/default/layout/shopgo/gtm.xml
+app/design/frontend/base/default/template/shopgo/gtm/     app/design/frontend/base/default/template/shopgo/gtm/
+app/etc/modules/Shopgo_GTM.xml                             app/etc/modules/Shopgo_GTM.xml

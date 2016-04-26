@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <naya translate="label" module="naya_base">
+            <label>Naya</label>
+            <sort_order>2000</sort_order>
+        </naya>
+    </tabs>
+</config>

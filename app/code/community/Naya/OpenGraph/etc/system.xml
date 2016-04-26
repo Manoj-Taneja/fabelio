@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <naya_opengraph translate="label" module="naya_opengraph">
+            <class>separator-top</class>
+            <label>Open graph</label>
+            <tab>naya</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="naya_opengraph">
+                    <label>General settings</label>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <site_id translate="label">
+                            <label>ID of your site</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<a href="http://developers.facebook.com/setup/" target="_blank">Register here</a>]]></comment>
+                        </site_id>
+                        <admin_id translate="label">
+                            <label>Admin ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </admin_id>
+                    </fields>
+                </general>
+            </groups>
+        </naya_opengraph>
+    </sections>
+</config>

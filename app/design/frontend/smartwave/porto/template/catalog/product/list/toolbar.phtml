@@ -1,0 +1,79 @@
+<?php if($this->getCollection()->getSize()): ?>
+
+<?php
+$setrecommendation = 'false';
+$Sortorderurl =  trim(substr($this->helper('core/url')->getCurrentUrl(), 0, strpos($this->helper('core/url')->getCurrentUrl(), "?")));
+if(Mage::getSingleton('core/session')->getUrlCategorysort() == '' ) {
+	Mage::getSingleton('core/session')->setUrlCategorysort($Sortorderurl);
+}
+$old_order_url = Mage::getSingleton('core/session')->getUrlCategorysort(); 
+if($Sortorderurl != $old_order_url ) {
+	Mage::getSingleton('core/session')->setUrlCategorysort($Sortorderurl);
+  $setrecommendation = 'true';
+}
+?>
+<div class="toolbar">
+
+    <?php if( $this->isExpanded() ): ?>
+    <div class="sorter">
+        <div class="sort-by">
+          <label><?php echo $this->__('Sort By') ?>:</label>
+          <select onchange="setLocation(this.value)">
+            <?php foreach($this->getAvailableOrders() as $_key=>$_order): ?>
+              <?php
+              $sortvalue = $this->__($_order) ;
+              if($sortvalue!='Price'  && $sortvalue!='Name'){
+              ?>
+                <option value="<?php echo $this->getOrderUrl($_key, 'asc') ?>"<?php if($this->isOrderCurrent($_key) || $setrecommendation=='true'): ?> selected="selected"<?php endif; ?>>
+                  <?php echo $this->__($_order) ?>
+                </option>
+              <?php } ?>
+            <?php endforeach; ?> 
+            <option value="<?php echo $this->getOrderUrl('price', 'asc') ?>"<?php if(($this->isOrderCurrent('price') && $this->getCurrentDirection() == 'asc' ) && $setrecommendation=='false'): ?> selected="selected"<?php endif; ?>>
+              Harga: Rendah ke Tinggi
+            </option>
+            <option value="<?php echo $this->getOrderUrl('price', 'desc') ?>"<?php if(($this->isOrderCurrent('price') && $this->getCurrentDirection() == 'desc') && $setrecommendation=='false'): ?> selected="selected"<?php endif; ?>>
+            Harga: Tinggi ke Rendah
+			      </option>	
+          </select>
+        </div>
+
+        <?php if( $this->isEnabledViewSwitcher() ): ?>
+        <p class="view-mode">
+            <?php $_modes = $this->getModes(); ?>
+            <?php if($_modes && count($_modes)>1): ?>
+            <?php foreach ($this->getModes() as $_code=>$_label): ?>
+                <?php if($this->isModeActive($_code)): ?>
+                    <strong title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><i class="icon-mode-<?php echo strtolower($_code); ?>"></i></strong>&nbsp;
+                <?php else: ?>
+                    <a href="<?php echo $this->getModeUrl($_code) ?>" title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><i class="icon-mode-<?php echo strtolower($_code); ?>"></i></a>&nbsp;
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </p>
+        <?php endif; ?>
+        <div class="pager">
+            <p class="amount">
+                <?php if($this->getLastPageNum()>1): ?>
+                    <?php echo $this->__('Items %s to %s of %s total', $this->getFirstNum(), $this->getLastNum(), $this->getTotalNum()) ?>
+                <?php else: ?>
+                    <strong><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></strong>
+                <?php endif; ?>
+            </p>
+            <?php echo $this->getPagerHtml() ?>
+        </div>
+        <div class="limiter">
+            <label><?php echo $this->__('Show') ?>:</label>
+            <select onchange="setLocation(this.value)">
+            <?php foreach ($this->getAvailableLimit() as  $_key=>$_limit): ?>
+                <option value="<?php echo $this->getLimitUrl($_key) ?>"<?php if($this->isLimitCurrent($_key)): ?> selected="selected"<?php endif ?>>
+                    <?php echo $_limit ?>
+                </option>
+				
+            <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php endif ?>

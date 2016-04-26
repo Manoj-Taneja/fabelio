@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Xlanding
+ */
+-->
+<layout version="1.0">
+	<default>
+        <reference name="head">
+            <action method="addJs"><script>amasty/amlanding/amlanding.js</script></action>
+            <action method="addJs"><script>amasty/amlanding/picturefill.min.js</script></action>
+        </reference>
+    </default>
+   	    
+    <amlanding_page_view>                    
+        <reference name="content">
+           <block type="catalog/product_list" name="product_list" template="catalog/product/list.phtml">
+               <block type="core/text_list" name="product_list.name.after" as="name.after" />
+               <block type="core/text_list" name="product_list.after" as="after" />
+               <block type="catalog/product_list_toolbar" name="product_list_toolbar" template="catalog/product/list/toolbar.phtml">
+                   <block type="page/html_pager" name="product_list_toolbar_pager"/>
+               </block>
+               <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
+           </block>
+        <update handle="product_list"/>
+        </reference>
+    </amlanding_page_view>
+    <amlanding_page_view>
+        <update handle="product_list"/>
+    </amlanding_page_view>
+</layout>

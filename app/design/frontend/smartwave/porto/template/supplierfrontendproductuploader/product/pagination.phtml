@@ -1,0 +1,28 @@
+<?php
+$currentPage = (int) $this->getRequest()->getParam('p', 1);
+
+$pageSize = 10;
+
+$collection = $this->getCollection();
+
+$totCat = $collection->getSize();
+$store_cats = $collection->load();
+
+$pageTot = ceil( $totCat / $pageSize );
+
+?>
+<?php if($pageTot > 1) : ?>
+<ul class="pagination">
+    <?php for ( $i=1; $i<=$pageTot; $i++ ) : ?>
+        <?php if ( $i == $currentPage ) : ?>
+            <li class="current">
+                <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/list', array('p' => $i)); ?>"><?php echo $i ?></a>
+            </li>
+        <?php else : ?>
+            <li>
+                <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/list', array('p' => $i)); ?>"><?php echo $i ?></a>
+            </li>
+        <?php endif; ?>
+    <?php endfor; ?>
+</ul>
+<?php endif; ?>

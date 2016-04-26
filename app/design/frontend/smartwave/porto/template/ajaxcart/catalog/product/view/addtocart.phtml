@@ -1,0 +1,23 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+        <div class="qty-prod-li clearfix">
+          <label for="qty" class="pull-left qty-lbl"><?php echo $this->__('Qty:') ?></label>
+          <div class="qty-holder pull-right">
+            <a href="javascript:void(0)" class="table_qty_dec">-</a>
+              <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+            <a href="javascript:void(0)" class="table_qty_inc">+</a>
+          </div>
+        </div>
+        <?php endif; ?>
+        <div class="add-to-btn-wrap">
+          <button type="button" title="<?php echo $buttonTitle ?>" class="add-to-cart-btn fab-btn fab-btn-primary" onclick="productAddToCartForm.submit(this)">
+            <i class="icon-cart"></i><?php echo $this->__('Beli Sekarang'); ?>
+          </button>
+          <span id='ajax_loader' style='display:none'><i class="ajax-loader small animate-spin"></i></span>
+          <?php echo $this->getChildHtml('', true, true) ?>
+        </div>
+    </div>
+<?php endif; ?>

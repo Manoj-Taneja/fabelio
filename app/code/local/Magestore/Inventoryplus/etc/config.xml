@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventoryplus
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<config>	
+    
+    <modules>
+        <Magestore_Inventoryplus>
+            <version>0.1.1</version>
+        </Magestore_Inventoryplus>
+    </modules>
+    <frontend>
+        <routers>
+            <inventoryplus>
+                <use>standard</use>
+                <args>
+                    <module>Magestore_Inventoryplus</module>
+                    <frontName>inventoryplus</frontName>
+                </args>
+            </inventoryplus>
+        </routers>
+        <layout>
+            <updates>
+                <inventoryplus>
+                    <file>inventoryplus.xml</file>
+                </inventoryplus>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventoryplus>
+                    <files>
+                        <default>Magestore_Inventoryplus.csv</default>
+                    </files>
+                </Magestore_Inventoryplus>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <inventoryplusadmin>
+                <use>admin</use>
+                <args>
+                    <module>Magestore_Inventoryplus</module>
+                    <frontName>inventoryplusadmin</frontName>
+                </args>
+            </inventoryplusadmin>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <inventoryplus>
+                    <file>inventoryplus.xml</file>
+                </inventoryplus>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventoryplus>
+                    <files>
+                        <default>Magestore_Inventoryplus.csv</default>
+                    </files>
+                </Magestore_Inventoryplus>
+            </modules>
+        </translate>        
+        
+        <events>
+            <admin_session_user_login_success>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>adminLoginSuccess</method>
+                    </inventory_observers>
+                </observers>
+            </admin_session_user_login_success>
+            
+            <catalog_product_save_after>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>catalogProductSaveAfter</method>
+                    </inventory_observers>
+                </observers>
+            </catalog_product_save_after>
+
+            <catalog_product_save_before>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>catalogProductSaveBefore</method>
+                    </inventory_observers>
+                </observers>
+            </catalog_product_save_before>
+        </events>
+    </adminhtml>   
+    <global>
+        <models>
+            <inventoryplus>
+                <class>Magestore_Inventoryplus_Model</class>
+                <resourceModel>inventoryplus_mysql4</resourceModel>
+            </inventoryplus>
+            <inventoryplus_mysql4>
+                <class>Magestore_Inventoryplus_Model_Mysql4</class>
+                <entities>
+                    <warehouse>
+                        <table>erp_inventory_warehouse</table>
+                    </warehouse>
+                    <warehouse_product>
+                        <table>erp_inventory_warehouse_product</table>
+                    </warehouse_product>
+                    <warehouse_permission>
+                        <table>erp_inventory_warehouse_permission</table>
+                    </warehouse_permission>
+                    <warehouse_order>
+                        <table>erp_inventory_warehouse_order</table>
+                    </warehouse_order>
+                    <warehouse_shipment>
+                        <table>erp_inventory_warehouse_shipment</table>
+                    </warehouse_shipment>
+                    <warehouse_history>
+                        <table>erp_inventory_warehouse_history</table>
+                    </warehouse_history>
+                    <warehouse_historycontent>
+                        <table>erp_inventory_warehouse_history_content</table>
+                    </warehouse_historycontent>					
+                    <adjuststock>
+                        <table>erp_inventory_adjuststock</table>
+                    </adjuststock>
+                    <adjuststock_product>
+                        <table>erp_inventory_adjuststock_product</table>
+                    </adjuststock_product>
+					
+                    <inventory_product>
+                        <table>erp_inventory_products</table>
+                    </inventory_product>
+                    <checkupdate>
+                        <table>erp_inventory_checkupdate</table>
+                    </checkupdate>
+                </entities>
+            </inventoryplus_mysql4>
+            <importexport>
+                <rewrite>
+                    <import_entity_product>Magestore_Inventoryplus_Model_ImportExport_Import_Entity_Product</import_entity_product>
+                </rewrite>
+            </importexport>
+            <catalog>
+                <rewrite>
+                    <convert_adapter_product>Magestore_Inventoryplus_Model_Catalog_Convert_Adapter_Product</convert_adapter_product>
+                </rewrite>
+            </catalog>
+        </models>
+        <resources>
+            <inventoryplus_setup>
+                <setup>
+                    <module>Magestore_Inventoryplus</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </inventoryplus_setup>
+            <inventoryplus_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </inventoryplus_write>
+            <inventoryplus_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </inventoryplus_read>
+        </resources>
+        <blocks>
+            <inventoryplus>
+                <class>Magestore_Inventoryplus_Block</class>
+            </inventoryplus>    
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_edit_tab_inventory>Magestore_Inventoryplus_Block_Adminhtml_Catalog_Product_Edit_Tab_Inventory</catalog_product_edit_tab_inventory>
+                    <catalog_product_edit_tab_super_config_simple>Magestore_Inventoryplus_Block_Adminhtml_Catalog_Product_Edit_Tab_Supper_Config_Simple</catalog_product_edit_tab_super_config_simple>                    
+                </rewrite>
+            </adminhtml>   
+            <importexport>
+                <rewrite>
+                    <adminhtml_import_edit_form>Magestore_Inventoryplus_Block_Adminhtml_Importexport_Edit_Form</adminhtml_import_edit_form>
+                </rewrite>
+            </importexport>     
+        </blocks>
+        <helpers>
+            <inventoryplus>
+                <class>Magestore_Inventoryplus_Helper</class>
+            </inventoryplus>
+        </helpers>
+        <!-- <events>
+            <controller_action_predispatch>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>controllerActionPredispatch</method>
+                    </inventory_observers>
+                </observers>
+            </controller_action_predispatch>
+        </events> -->
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>controllerActionPredispatch</method>
+                    </inventory_observers>
+                </observers>
+            </controller_action_predispatch>
+
+            <catalog_product_prepare_save>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>productPrepareSave</method>
+                    </inventory_observers>
+                </observers>
+            </catalog_product_prepare_save>
+                
+            <sales_order_place_after>
+                <observers>
+                    <inventory_observers>
+                        <class>inventoryplus/observer</class>
+                        <method>salesOrderPlaceAfter</method>
+                    </inventory_observers>
+                </observers>
+            </sales_order_place_after>
+            
+            <sales_order_shipment_save_after>
+                <observers>
+                    <inventory_observers>                        
+                        <class>inventoryplus/observer</class>
+                        <method>salesOrderShipmentSaveAfter</method>
+                    </inventory_observers>
+                </observers>
+            </sales_order_shipment_save_after>
+            
+            <order_cancel_after>
+                <observers>
+                    <inventoryplus>
+                        <type>model</type>
+                        <class>inventoryplus/observer</class>
+                        <method>orderCancelAfter</method>
+                    </inventoryplus>
+                </observers>
+            </order_cancel_after>
+            
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <inventoryplus>
+                        <type>model</type>
+                        <class>inventoryplus/observer</class>
+                        <method>salesOrderCreditmemoSaveAfter</method>
+                    </inventoryplus>
+                </observers>
+            </sales_order_creditmemo_save_after>
+        </events>
+    </global>
+</config>

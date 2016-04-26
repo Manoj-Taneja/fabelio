@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mexbs_Shipping>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Mexbs_Shipping>
+    </modules>
+</config>

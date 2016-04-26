@@ -1,0 +1,322 @@
+<?php $menuHelper = Mage::helper('megamenu'); ?>
+<?php $menuData = $menuHelper->getMenuData(); extract($menuData); ?>
+<style>
+/* .nav-sublist-dropdown {
+  background: url('/media/images/megamenu/sofa-nav-bg.png') no-repeat #EBEBEB right bottom;
+  background-size: cover; 
+ background-size: cover; 
+ padding-left:0px;
+  margin-left:180px; 
+ background-repeat:no-repeat;
+ background-position:right center; 
+  height: 270px; 
+} */
+
+/*.nav-sublist-dropdown.sofa {
+  background-color: red;
+  background-size:cover;
+}
+
+.level-cat{
+  font-weight:bold;
+  padding-left:13px;
+  font-size:13.5px;
+}
+.menu-item .level2 span{
+  font-size:14px;
+} 
+
+.view-all{
+  padding-left: 500px;
+  font-size: 16px;
+}*/
+</style>
+
+<?php
+/*$catModels =  Mage::getModel("catalog/category")->getCollection()->addIdFilter(array(336, 337, 338, 340));
+$cats = array();
+foreach($cats as $cat) {
+  print_r($cat->toArray());
+  die;
+  $cats[$cat->getId()] = $cat->toArray();
+}
+print_r($cats); die;*/
+?>
+
+<div class="header-wrapper">
+  <div class="main-nav">
+    <div class="container">            
+      <div class="menu-wrapper">
+        <div class="menu-all-pages-container">
+          <ul class="menu">
+            <li class="menu-full-width">
+              <a href="<?php $cat = Mage::getModel("catalog/category")->load(313); echo $cat->getUrl();?>"><?php echo $cat->getName(); ?></a>
+              <div class="nav-sublist-dropdown" style="width:85%; ">
+              <a href="http://fabelio.com/sofa/sofa-l/arsa-l-sofa-wooden-leg.html?megamenu-img" ><img src="/media/images/megamenu/sofa-nav-bg.png" class="megamenu-img"></a>
+                <ul class="container">
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop By Category</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(345); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(320); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(328); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat =Mage::getModel("catalog/category")->load(329); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat =Mage::getModel("catalog/category")->load(330); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat =Mage::getModel("catalog/category")->load(331); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop By Designer</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/sofa.html?manufacturer=167" class="level2"><span>SDF</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/sofa.html?manufacturer=168" class="level2"><span>Prissilia Home</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/sofa.html?manufacturer=185" class="level2"><span>Beranda Living</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Designer's Pick</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                          <a href="http://fabelio.com/taby-2-seater-sofa.html" class="level2"><span>Taby 2 Seater Sofa</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/arsa-l-sofa.html" class="level2"><span>Arsa L Sofa</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/taby-l-sofa.html" class="level2"><span>Taby L Sofa</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/boris-3-seater-sofa.html" class="level2"><span>Boris 3 Seater Sofa</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="view-all" style="text-align: center;position: relative;z-index: 2;margin-top: 10px;" > 
+                  <a href="<?php $cat = Mage::getModel("catalog/category")->load(313); echo $cat->getUrl();?>" class="level1"><span>View All Sofa &raquo;</span></a>
+                </div>
+              </div>
+            </li>
+            <li class="menu-full-width">
+              <a href="<?php $cat = Mage::getModel("catalog/category")->load(314); echo $cat->getUrl();?>"><?php echo $cat->getName(); ?></a>
+              <div class="nav-sublist-dropdown">
+                <a href ="http://fabelio.com/meja-kursi/meja/set-meja-makan.html?megamenu-img" ><img src="/media/images/megamenu/mejakursi-nav-bg.png" class="megamenu-img"></a>
+                <ul class="container">
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop Meja By Category</span></a>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(332); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(333); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(334); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(335); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(339); echo $cat->getUrl();?>" class="level2"><span>View All Meja &raquo;</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop Kursi By Category</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(336); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(337); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(338); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(340); echo $cat->getUrl();?>" class="level2"><span>View All Kursi &raquo;</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop By Designer</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/meja-kursi.html?manufacturer=167" class="level2"><span>SDF</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/meja-kursi.html?manufacturer=183" class="level2"><span>Rumah Lunar</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/meja-kursi.html?manufacturer=168" class="level2"><span>Prissilia Home</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/meja-kursi.html?manufacturer=185" class="level2"><span>Beranda Living</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li> 
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Designer's Pick</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/mutoyo-dining-table-4-seater-1017.html" class="level2"><span>Mutoyo Dining Table 4 Seater</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/thompson-side-table-kayu-jati-set.html" class="level2"><span>Thompson Side Table</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/java-coffee-table-jati.html" class="level2"><span>Java Coffee Table</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/meja-kursi/kursi/kursi-makan/conan-dining-chair-jati.html" class="level2"><span>Conan Dining Chair
+</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>            
+                </ul>
+                <div class="view-all" style="margin-top:40px;"> 
+                  <a href="<?php $cat = Mage::getModel("catalog/category")->load(314); echo $cat->getUrl();?>" class="level1"><span>View All &raquo;</span></a>
+                </div>
+              </div>
+            </li>
+            <li class="menu-full-width">
+              <a href="<?php $cat = Mage::getModel("catalog/category")->load(316); echo $cat->getUrl();?>"><?php echo $cat->getName(); ?></a>
+              <div class="nav-sublist-dropdown" style="width:85%; margin-left:15%">
+                <a href="http://fabelio.com/penyimpanan/credenza-rak-tv/benjamin-credenza.html?megamenu-img"><img src="/media/images/megamenu/penyimpanan-nav-bg.png" class="megamenu-img"></a>
+                <ul class="container">
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop By Category</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(341); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(342); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(343); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="<?php $cat = Mage::getModel("catalog/category")->load(344); echo $cat->getUrl();?>" class="level2"><span><?php echo $cat->getName(); ?></span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Shop By Designer</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/penyimpanan.html?manufacturer=167" class="level2"><span>SDF</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/penyimpanan.html?manufacturer=183" class="level2"><span>Rumah Lunar</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/penyimpanan.html?manufacturer=168" class="level2"><span>Prissilia Home</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/penyimpanan.html?manufacturer=185" class="level2"><span>Beranda Living</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>  
+                  <li class="menu-item menu-item-has-children menu-parent-item">
+                    <div class="cat-wrap">
+                      <span class="level-cat">Designer's Pick</span>
+                      <div class="nav-sublist level1">
+                        <ul>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/benjamin-credenza.html" class="level2"><span>Benjamin Credenza</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/jefferson-credenza.html" class="level2"><span>Jefferson Credenza</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/huxley-credenza.html" class="level2"><span>Huxley Credenza</span></a>
+                          </li>
+                          <li class="menu-item">
+                            <a href="http://fabelio.com/morrissey-credenza-jati.html" class="level2"><span>Morrissey Credenza</span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>           
+                </ul>
+                <div class="view-all" > 
+                  <a href="<?php $cat = Mage::getModel("catalog/category")->load(316); echo $cat->getUrl();?>" class="level1"><span>View All &raquo;</span></a>
+                </div>
+              </div>
+            </li>
+            <li >
+              <a href="http://fabelio.com/koleksi-terbaru">Koleksi Terbaru</a>
+            </li>
+            <li>
+              <a href="http://fabelio.com/ready-stock">Ready Stock</a>
+            </li>
+            <li >
+              <a href="http://fabelio.com/must-have">Must Have</a>
+            </li> 
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var SW_MENU_POPUP_WIDTH = <?php echo $_popupWidth; ?>;
+//]]>
+</script>

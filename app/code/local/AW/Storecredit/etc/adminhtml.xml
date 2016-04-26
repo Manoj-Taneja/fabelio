@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <sales>
+            <children>
+                <aw_storecredit>
+                    <title>Store Credit</title>
+                    <sort_order>150</sort_order>
+                    <children>
+                        <customer module="aw_storecredit">
+                            <title>Customers</title>
+                            <sort_order>1</sort_order>
+                            <action>aw_storecredit_admin/adminhtml_customer</action>
+                        </customer>
+                        <transactions module="aw_storecredit">
+                            <title>Transactions</title>
+                            <sort_order>2</sort_order>
+                            <action>aw_storecredit_admin/adminhtml_transactions</action>
+                        </transactions>
+                        <settings module="aw_storecredit">
+                            <title>Settings</title>
+                            <sort_order>3</sort_order>
+                            <action>adminhtml/system_config/edit/section/aw_storecredit</action>
+                        </settings>
+                    </children>
+                </aw_storecredit>
+            </children>
+        </sales>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <aw_storecredit>
+                                <title>Store Credit</title>
+                                <sort_order>150</sort_order>
+                                <children>
+                                    <customer module="aw_storecredit">
+                                        <title>Customers</title>
+                                        <sort_order>1</sort_order>
+                                        <action>aw_storecredit_admin/adminhtml_customer</action>
+                                    </customer>
+                                    <transactions module="aw_storecredit">
+                                        <title>Transactions</title>
+                                        <sort_order>2</sort_order>
+                                        <action>aw_storecredit_admin/adminhtml_transactions</action>
+                                    </transactions>
+                                    <settings module="aw_storecredit">
+                                        <title>Settings</title>
+                                        <sort_order>3</sort_order>
+                                        <action>adminhtml/system_config/edit/section/aw_storecredit</action>
+                                    </settings>
+                                </children>
+                            </aw_storecredit>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <aw_storecredit>
+                                        <title>aheadWorks - Store Credit Section</title>
+                                    </aw_storecredit>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

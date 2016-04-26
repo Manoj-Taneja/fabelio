@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * The MiniGrid is that grid that you see around magento like
+ * in the tier prices area of the catalog product edit admin
+ * page. This module makes this grid a system config frontend
+ * type that can be used for a wide variety of things that require
+ * a bit more love than a multiselect.
+ * 
+ * @package     BlueAcorn\MiniGrid
+ * @version     1.1.0
+ * @author      Blue Acorn, Inc. <code@blueacorn.com>
+ * @copyright   Blue Acorn, Inc. 2014
+ */
+-->
+<config>
+    <modules>
+        <BlueAcorn_MiniGrid>
+            <version>1.0.0</version>
+        </BlueAcorn_MiniGrid>
+    </modules>
+    <global>
+        <blocks>
+            <baminigrid>
+                <class>BlueAcorn_MiniGrid_Block</class>
+            </baminigrid>
+            <adminhtml>
+                <rewrite>
+                    <system_config_form>BlueAcorn_MiniGrid_Block_System_Config_Form</system_config_form>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <baminigrid>
+                <class>BlueAcorn_MiniGrid_Helper</class>
+            </baminigrid>
+        </helpers>
+        <models>
+            <baminigrid>
+                <class>BlueAcorn_MiniGrid_Model</class>
+            </baminigrid>
+        </models>
+    </global>
+</config>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Atul_Welcome>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Atul_Welcome>
+    </modules>
+</config>

@@ -1,0 +1,68 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Storecredit
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if($this->isAllowed()): ?>
+    <div class="checkout-onepage-payment-storecredit" id="storecredit_box">
+        <input type="hidden" name="payment[use_storecredit]" value="0" />
+        <input type="checkbox" class="checkbox" name="payment[use_storecredit]" value="1" id="use_storecredit" <?php echo ($this->isStorecreditUsed() ? 'checked' : '') ?>/>
+
+        <?php $balance = Mage::helper('core')->currency($this->getBalance(), true, false); ?>
+        <label for="use_storecredit">
+        <strong>
+            <?php echo Mage::helper('aw_storecredit')->__('Use Store Credit'); ?>
+            (<span id="storecredit_available_amount"><?php echo $balance; ?></span>
+            <?php echo Mage::helper('aw_storecredit')->__('available'); ?>)
+        </strong>
+        </label>
+        <script type="text/javascript">
+            if (payment) {
+                var config = {
+                    quoteBaseGrandTotal: <?php echo (float)$this->getQuote()->getBaseGrandTotal(); ?>,
+                    balance: <?php echo Mage::helper('core')->currency($this->getBalance(), false, false);?>,
+                    formattedBalance: '<?php echo Mage::helper('core')->currency($this->getBalance(), true, false);?>',
+                    baseBalance: <?php echo (float)$this->getBalance()?>,
+                    baseStorecreditAmountUsed: <?php echo (float)$this->getQuote()->getBaseAwStorecreditAmountUsed() ?>,
+                    isStorecreditSubstracted: <?php echo $this->isStorecreditUsed() ?>,
+                    storecreditBoxSelector: '#storecredit_box',
+                    storecreditCheckboxSelector: '#use_storecredit',
+                    storecreditAvailableAmountSelector: '#storecredit_available_amount'
+                };
+
+                var storeCreditManager = new awStoreCreditManager(config);
+            }
+        </script>
+    </div>
+    <script type="text/javascript">
+        (function(){
+            var containerEl = $$("#storecredit_box").first();
+            var insertBefore = $$("#checkout-payment-method-load").first();
+            if (!insertBefore || !containerEl) {
+                return;
+            }
+            insertBefore.up().insertBefore(containerEl, insertBefore);
+            containerEl.removeClassName("no-display");
+        })();
+    </script>
+<?php endif; ?>

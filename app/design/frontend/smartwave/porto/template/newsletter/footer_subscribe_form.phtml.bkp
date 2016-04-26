@@ -1,0 +1,39 @@
+<?php
+/**
+ Made by Smartwave.
+ */
+?>
+<?php
+    $store = Mage::app()->getStore();
+    $code  = $store->getCode();
+    $footer = Mage::getStoreConfig('porto_settings/footer',$code);
+?>
+<div class="fl-contact-info visible-xs">
+  <h3><?php echo $this->__('Kontak kami'); ?></h3>
+  <ul>
+    <li>
+      <i class="fa fa-envelope-o"></i>
+      <span class="lbl">Email:</span>
+      <span class="txt"><a href="mailto:hello@fabelio.com">hello@fabelio.com</a></span>
+    </li>
+    <li>
+      <i class="fa fa-phone"></i>
+      <span class="lbl">Telephone:</span>
+      <span class="txt"><a href="tel:02122775029">(021) 22775029</a></span>
+    </li>
+    <li>
+      <i class="fa fa-caret-right"></i>
+      <span class="lbl">WhatsApp:</span>
+      <span class="txt">+62 812 611 44 200</span>
+    </li>
+  </ul>
+</div>
+<form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="footer-newsletter-form-validate-detail" onsubmit="setNewsletterCookie()" style="display: block;">
+    <input type="text" class="field fab-field" name="email" placeholder="<?php echo $this->__('Enter your e-mail Address'); ?>">
+    <input type="submit" class="submit fab-btn fab-btn-primary" value="<?php echo $this->__('Submit') ?>">
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var footernewsletterFormSubscriberFormDetail = new VarienForm('footer-newsletter-form-validate-detail');
+//]]>
+</script>

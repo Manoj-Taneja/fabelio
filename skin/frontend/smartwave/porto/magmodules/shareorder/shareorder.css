@@ -1,0 +1,47 @@
+/**
+ * Magmodules.eu
+ * http://www.magmodules.eu
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@magmodules.eu so we can send you a copy immediately.
+ *
+ * @category    Magmodules
+ * @package     Magmodules_Ordershare
+ * @author      Magmodules <info@magmodules.eu)
+ * @copyright   Copyright (c) 2013 (http://www.magmodules.eu)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/* Shareorder ========================================================================== */
+ 
+.share {
+	width: 180px;
+	float: left;		     
+	text-align: center;
+	font-size: 12px;
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	-moz-box-shadow: 0 8px 6px -6px black;
+	box-shadow: 0 8px 6px -6px black;
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin: 10px 10px 5px 0;
+}
+
+.share h3 {
+	font-size: 13px;
+	margin-top: 3px;
+	height: 50px;
+	overflow: hidden;
+}
+
+.twitter-share-button {
+	margin-top: 10px;
+	margin-left: 30px;
+}

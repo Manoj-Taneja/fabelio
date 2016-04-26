@@ -1,0 +1,32 @@
+<?php $_items = $this->getOrder()->getInvoiceCollection(); ?>
+<div class="container">
+    <h2 class="sub-header"><?php echo $this->__("Invoices"); ?></h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><?php echo $this->__('Invoice Number'); ?></th>
+                <th><?php echo $this->__('Date'); ?></th>
+                <th><?php echo $this->__('Amount'); ?></th>
+                <th><?php echo $this->__('Action'); ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if($_items->getSize() && count($_items->getData()) > 0): ?>
+                <?php foreach($_items AS $_item) : ?>
+                    <?php if($_item->getData('parent_item_id')) continue; ?>
+                    <tr>
+                        <td><?php echo $_item->getIncrementId(); ?></td>
+                        <td><?php echo $_item->getCreatedAtDate(); ?></td>
+                        <td><?php echo Mage::helper('core')->currency($_item->getGrandTotal(), true, false); ?></td>
+                        <td><a class="btn btn-primary" href="<?php echo Mage::getUrl('marketplace/invoice/print', array('id' => $_item->getId()));?>"><?php echo $this->__('Print'); ?></a></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <td colspan="3"><?php echo $this->__("No Invoices"); ?></td>
+                <td><a href="<?php echo Mage::getUrl('marketplace/invoice/create/', array('id' => $this->getOrder()->getId())) ?>" class="btn btn-primary"><?php echo $this->__('Create'); ?></a></td>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

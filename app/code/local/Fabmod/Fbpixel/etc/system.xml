@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<config>
+  <tabs>
+    <fabmod>
+      <label>Fabelio</label>
+      <sort_order>200</sort_order>
+    </fabmod>
+  </tabs>
+  <sections>
+    <fabmod_fbpixel translate="label">
+      <label>Facebook Pixels</label>
+      <tab>fabmod</tab>
+      <frontend_type>text</frontend_type>
+      <sort_order>100</sort_order>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
+      <show_in_store>1</show_in_store>
+      <groups>
+        <fbpx translate="label">
+          <label>Facebook Pixel</label>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <enabled translate="label" module="fabmod_fbpixel">
+              <label>Enable</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_enabledisable</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </enabled>
+            <pxid translate="label">
+              <label>Pixel ID</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+              <comment>Fabcebook Pixel ID</comment>
+            </pxid>
+          </fields>
+        </fbpx>
+        <inpx translate="label">
+          <label>Instagram Pixel</label>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <enabled translate="label" module="fabmod_fbpixel">
+              <label>Enable</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_enabledisable</source_model>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </enabled>
+            <pxid translate="label">
+              <label>Pixel ID</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>20</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+              <comment>Instagram Pixel ID</comment>
+            </pxid>
+          </fields>
+        </inpx>
+      </groups>
+    </fabmod_fbpixel>
+  </sections>
+</config>

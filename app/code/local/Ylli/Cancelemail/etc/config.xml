@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Ylli_Cancelemail>
+      <version>0.1.0</version>
+    </Ylli_Cancelemail>
+  </modules>
+  <global>
+    <helpers>
+      <cancelemail>
+        <class>Ylli_Cancelemail_Helper</class>
+      </cancelemail>
+    </helpers>
+    <models>
+      <cancelemail>
+        <class>Ylli_Cancelemail_Model</class>
+        <resourceModel>cancelemail_mysql4</resourceModel>
+      </cancelemail>
+    </models>
+    <events>
+      <sales_order_save_commit_after> <!-- identifier of the event we want to catch -->
+        <observers>
+          <sales_order_save_commit_after_handler> <!-- identifier of the event handler -->
+            <type>model</type> <!-- class method call type; valid are model, object and singleton -->
+            <class>cancelemail/observer</class> <!-- observers class alias -->
+            <method>invoicedStatusChange</method>  <!-- observer's method to be called -->
+            <args></args> <!-- additional arguments passed to observer -->
+          </sales_order_save_commit_after_handler>
+        </observers>
+      </sales_order_save_commit_after>
+	  
+	<sales_email_order_items>
+        <block type="sales/order_email_items" name="items" template="email/order/items.phtml">
+            <action method="addItemRender"><type>default</type><block>sales/order_email_items_order_default</block><template>email/order/items/order/default.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>sales/order_email_items_order_grouped</block><template>email/order/items/order/default.phtml</template></action>
+            <block type="sales/order_totals" name="order_totals" template="sales/order/totals.phtml">
+                <action method="setLabelProperties"><value>colspan="3" align="right" style="padding:3px 9px"</value></action>
+                <action method="setValueProperties"><value>align="right" style="padding:3px 9px"</value></action>
+                <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml">
+                    <action method="setIsPlaneMode"><value>1</value></action>
+                </block>
+            </block>
+        </block>
+	
+		
+        <block type="core/text_list" name="additional.product.info" />
+    </sales_email_order_items>
+	<sales_email_order_items>
+			<reference name="items">
+				<action method="setTemplate">
+					<template>email/order/items.phtml</template>
+				</action>
+			</reference>
+</sales_email_order_items>
+	
+    </events>
+  </global>
+</config> 

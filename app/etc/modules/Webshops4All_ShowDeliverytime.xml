@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webshops4All_ShowDeliverytime>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Webshops4All_ShowDeliverytime>
+    </modules>
+</config>

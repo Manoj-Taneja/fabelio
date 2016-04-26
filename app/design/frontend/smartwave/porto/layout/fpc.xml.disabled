@@ -1,0 +1,5 @@
+<layout version="0.1.0">
+    <default>
+        <block type="fpc/debug" output="toHtml" name="fpc_debug"/>
+    </default>
+</layout>

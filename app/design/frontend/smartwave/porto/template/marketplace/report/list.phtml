@@ -1,0 +1,79 @@
+<?php $_items = $this->getCollection(); ?>
+<div class="container-fluid main-container vendor-container">
+        <h1><?php echo $this->__('Order Totals') ?></h1>
+        <div class="jumbotron">
+            <form name="report_filter" id="report_filter" action="<?php echo Mage::getUrl('*/*/*') ?>" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-2">
+                        <select id="sales_report_period_type" name="period_type" title="Period" class="form-control select">
+                            <option value="day"><?php echo $this->__('Day')?></option>
+                            <option value="month"><?php echo $this->__('Month')?></option>
+                            <option value="year"><?php echo $this->__('Year')?></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control datepicker input-text required-entry" name="from" value="<?php echo $this->getRequest()->getPost('from', ''); ?>" placeholder="<?php echo $this->__('From')?>*"/>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control datepicker input-text required-entry" name="to" value="<?php echo $this->getRequest()->getPost('to', ''); ?>" placeholder="<?php echo $this->__('To')?>*"/>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" name="submit" class="btn btn-primary btn-sm" value="<?php echo $this->__('Show Report') ?>" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" name="submit" class="btn btn-sm" value="<?php echo $this->__('Export to CSV') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    <div class="row">
+        <div class='col-md-12'>
+        <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="text-center"><?php echo $this->__('Period'); ?></th>
+                            <th class="text-center"><?php echo $this->__('Qty Sold'); ?></th>
+                            <th class="text-center"><?php echo $this->__('Subtotal'); ?></th>
+                            <th class="text-center"><?php echo $this->__('Net Income'); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <?php $sumQtySold = 0; ?>
+                            <?php $sumSubtotal = 0; ?>
+                            <?php $sumIncome = 0; ?>
+                            <?php foreach($_items AS $_item) : ?>
+                                <?php $sumQtySold += $_item->getSoldCount(); ?>
+                                <?php $sumSubtotal += $_item->getSumPrice(); ?>
+                                <?php $sumIncome += $_item->getVendorIncome(); ?>
+                                <tr>
+                                    <td><?php echo $this->getPeriodString($_item->getCreatedAt()); ?></td>
+                                    <td><?php echo number_format($_item->getSoldCount()); ?></td>
+                                    <td><?php echo Mage::helper('core')->currency($_item->getSumPrice()); ?></td>
+                                    <td><?php echo Mage::helper('core')->currency($_item->getVendorIncome()) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td class="info"><?php echo $this->__('Total'); ?></td>
+                            <td class="info"><?php echo $sumQtySold; ?></td>
+                            <td class="info"><?php echo Mage::helper('core')->currency($sumSubtotal); ?></td>
+                            <td class="info"><?php echo Mage::helper('core')->currency($sumIncome); ?></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('report_filter');
+    //]]>
+
+    jQuery(document).ready(function($){
+        $('.datepicker').datepicker();
+    });
+</script>

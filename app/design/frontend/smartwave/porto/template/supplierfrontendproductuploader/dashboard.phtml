@@ -1,0 +1,103 @@
+<div class="container main-container vendor-container">
+    <h1 class="text-center"><?php echo $this->__('Dashboard'); ?></h1>
+    <div class="row">
+        <div class="col-md-12 container form-container">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><?php echo $this->__('Revenues'); ?></h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <?php echo Mage::helper('core')->currency($this->getSupplierSaleAmount()); ?>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                            <h3 class="panel-title text-center"><?php echo $this->__('Average Revenues Per Order'); ?></h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <?php echo Mage::helper('core')->currency($this->getSupplierSaleAvg()); ?>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><?php echo $this->__('Items Sold'); ?></h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/ordered') ?>"><?php echo intval($this->getSupplierSaleCount()); ?></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 charts">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><?php echo $this->__('Revenues'); ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart" id="earnings-chart"></div>
+                    </div>
+                </div>
+                <div class="panel panel-default charts">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><?php echo $this->__('Number of Items Sold'); ?></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart" id="amount-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+    $saleEarningsObject = $this->getSaleDailyEarnings();
+    $saleItemsCountObject = $this->getSaleDailyItemsCount();
+    $salesEarningsForPlot = array();
+    $saleItemsCountForPlot = array();
+
+    foreach($saleEarningsObject AS $sale) {
+        $salesEarningsForPlot[date('Y-m', strtotime($sale['created_at']))] = array(strtotime(date('Y-m', strtotime($sale['created_at'])))*1000 , (int) $sale['sale_amount']);
+    }
+
+    foreach($saleItemsCountObject AS $sale) {
+        $saleItemsCountForPlot[date('Y-m', strtotime($sale['created_at']))] = array(strtotime(date('Y-m', strtotime($sale['created_at'])))*1000 , $sale['sale_count']);
+    }
+
+    $now = new DateTime();
+    ksort($salesEarningsForPlot);
+    reset($salesEarningsForPlot);
+    $first_key = key($salesEarningsForPlot);
+
+    $startDate = new DateTime($first_key);
+        $startDate->modify('-1 month');
+    while($startDate <= $now) {
+        if(!isset($salesEarningsForPlot[$startDate->format('Y-m')])) {
+            $salesEarningsForPlot[$startDate->format('Y-m')] = array(strtotime($startDate->format('Y-m'))*1000 , 0);
+        }
+        if(!isset($saleItemsCountForPlot[$startDate->format('Y-m')])) {
+            $saleItemsCountForPlot[$startDate->format('Y-m')] = array(strtotime($startDate->format('Y-m'))*1000 , 0);
+        }
+        $startDate->modify('+1 month');
+    }
+    ksort($salesEarningsForPlot);
+    ksort($saleItemsCountForPlot);
+?>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        jQuery.plot("#earnings-chart", [<?php echo json_encode(array_values($salesEarningsForPlot)) ?>], {
+            xaxis: { mode: "time", timeformat: "%m/%y", minTickSize: [1, "month"] },
+            bars: { show: true,barWidth : 36500000*5 },
+            colors: ["#5cb85c"],
+            shadowSize: 0
+        });
+        jQuery.plot("#amount-chart", [<?php echo json_encode(array_values($saleItemsCountForPlot)) ?>], {
+            xaxis: { mode: "time", timeformat: "%m/%y", minTickSize: [1, "month"] },
+            bars: { show: true,barWidth : 36500000*5 },
+            colors: ["#d9534f"],
+            shadowSize: 0
+        });
+    });
+</script>

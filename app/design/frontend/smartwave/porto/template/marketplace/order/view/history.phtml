@@ -1,0 +1,61 @@
+<?php $_historyLog = $this->getOrder()->getAllStatusHistory(); ?>
+<div class="row">
+    <div class="span8">
+        <?php if($_historyLog): ?>
+            <ul class="timeline">
+            <?php foreach($_historyLog AS $log): ?>
+                <li>
+                    <div class="timeline-badge success"></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title"><?php echo date("M d, Y g:i:s A", strtotime($log->getCreatedAt())); ?></h4>
+                            <h6><?php echo $this->__("Status"); ?> : <?php echo ucfirst($log->getStatus()); ?></h6>
+                        </div>
+                        <div class="timeline-body">
+                            <p><?php echo $log->getComment(); ?></p>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach;?>
+            </ul>
+        <?php else : ?>
+            <div class="media">
+                <div class="media-body">
+                    <h4 class="media-heading"><?php echo $this->__("So comments so far..."); ?></h4>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="span4 form-col">
+        <h3><?php echo $this->__("Add New Comment"); ?></h3>
+        <div class="span12 container-fluid form-container">
+            <div class="row">
+                <form name="comment_form" id="comment_form" action="<?php echo Mage::getUrl('marketplace/order/saveComment') ?>" method="post" enctype="multipart/form-data">
+                    <div class="span6">
+                        <div class="cont">
+                            <div class="span5 input-container">
+                                <textarea id="comment" name="comment" class="input-text required-entry form-control"></textarea>
+                                <input name="order_id" class="input-text required-entry form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="container form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="checkbox" name="notify_customer" value="1"> <?php echo $this->__('Notify customer by email'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span12">
+                        <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save Comment') ?>" />
+                    </div>
+                </form>
+            </div>
+    </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('comment_form');
+    //]]>
+</script>

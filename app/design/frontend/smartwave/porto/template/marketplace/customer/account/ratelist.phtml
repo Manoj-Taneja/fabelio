@@ -1,0 +1,53 @@
+<?php $availableSuppliers = $this->getAvailableSuppliers(); ?>
+<div class="my-account">
+    <div class="page-title">
+        <h1><?php echo Mage::helper('marketplace')->__('rate vendor'); ?></h1>
+    </div>
+    <div class="box-account box-recent">
+    	<form method="POST">
+	    <table class="data-table orders" id="my-orders-table">
+    	<colgroup><col width="1">
+    		<col width="1">
+    		<col width="1">
+    	</colgroup>
+	    <thead>
+	        <tr class="first last">
+	            <th><?php echo Mage::helper('marketplace')->__('Supplier Name'); ?></th>
+	            <th><?php echo Mage::helper('marketplace')->__('Order ID'); ?></th>
+	            <th><?php echo Mage::helper('marketplace')->__('Rate'); ?></th>
+	        </tr>
+	        </thead>
+	        <tbody>
+			<?php if(count($availableSuppliers) > 0) : ?>
+				<?php foreach($availableSuppliers AS $supplier): ?>
+					<?php $vendor = Mage::getModel('customer/customer')->load($supplier->getSupplierId()); ?>
+	            	<tr class="last">		
+	            	    <td><?php echo $vendor->getFirstname() . ' ' . $vendor->getLastname(); ?></td>
+	        	        <td># <a href="<?php echo Mage::getUrl('sales/order/view/', array('order_id' => $supplier->getOrderId())) ?>"><?php echo $supplier->getOrderId(); ?></a></td>
+	        	        <td class="last rate-list">
+							<input type="radio" name="ratings[<?php echo $supplier->getSupplierId() ?>]" value="1" class="radio" title="1" id="rate-1"/><label
+                                for="rate-1">1</label>
+							<input type="radio" name="ratings[<?php echo $supplier->getSupplierId() ?>]" value="2" class="radio" title="2" id="rate-2"/><label
+                                for="rate-2">2</label>
+							<input type="radio" name="ratings[<?php echo $supplier->getSupplierId() ?>]" value="3" class="radio" title="3" id="rate-3"/><label
+                                for="rate-3">3</label>
+							<input type="radio" name="ratings[<?php echo $supplier->getSupplierId() ?>]" value="4" class="radio" title="4" id="rate-4"/><label
+                                for="rate-4">4</label>
+							<input type="radio" name="ratings[<?php echo $supplier->getSupplierId() ?>]" value="5" class="radio" title="5" id="rate-5"/><label
+                                for="rate-5">5</label>
+	        	        </td>
+	       	    </tr>
+            	<?php endforeach; ?>
+			<?php else : ?>
+				<?php echo Mage::helper('marketplace')->__("No suppliers to rate"); ?>	
+			<?php endif; ?>
+	        </tbody>
+	    </table>
+	    <?php if(count($availableSuppliers) > 0) : ?>
+		    <div class="buttons-set">
+		        <input type="submit" class="button">
+	    	</div>
+	    <?php endif; ?>
+	    </form>
+	</div>
+</div>

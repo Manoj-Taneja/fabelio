@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventoryshipment
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<config>
+    <modules>
+        <Magestore_Inventoryshipment>
+            <version>0.1.0</version>
+        </Magestore_Inventoryshipment>
+    </modules>
+    <frontend>
+        <routers>
+            <inventoryshipment>
+                <use>standard</use>
+                <args>
+                    <module>Magestore_Inventoryshipment</module>
+                    <frontName>inventoryshipment</frontName>
+                </args>
+            </inventoryshipment>
+        </routers>
+        <layout>
+            <updates>
+                <inventoryshipment>
+                    <file>inventoryshipment.xml</file>
+                </inventoryshipment>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventoryshipment>
+                    <files>
+                        <default>Magestore_Inventoryshipment.csv</default>
+                    </files>
+                </Magestore_Inventoryshipment>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <inventoryshipmentadmin>
+                <use>admin</use>
+                <args>
+                    <module>Magestore_Inventoryshipment</module>
+                    <frontName>inventoryshipmentadmin</frontName>
+                </args>
+            </inventoryshipmentadmin>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <inventoryshipment>
+                    <file>inventoryshipment.xml</file>
+                </inventoryshipment>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventoryshipment>
+                    <files>
+                        <default>Magestore_Inventoryshipment.csv</default>
+                    </files>
+                </Magestore_Inventoryshipment>
+            </modules>
+        </translate>
+        <events>
+            <inventory_menu_list>
+                <observers>
+                    <inventoryshipment_observers>
+                        <class>inventoryshipment/observer</class>
+                        <method>addMenu</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </inventory_menu_list>            
+            <controller_action_predispatch_inventoryshipmentadmin_sales_order_address>
+                <observers>
+                    <inventoryshipment_observers>
+                        <type>singleton</type>
+                        <class>inventoryshipment/observer</class>
+                        <method>salesOrderAddress</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </controller_action_predispatch_inventoryshipmentadmin_sales_order_address>
+            <controller_action_predispatch_inventoryshipmentadmin_sales_order_view>
+                <observers>
+                    <inventoryshipment_observers>
+                        <type>singleton</type>
+                        <class>inventoryshipment/observer</class>
+                        <method>changeSalesOrderAddress</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </controller_action_predispatch_inventoryshipmentadmin_sales_order_view>
+            <controller_action_predispatch_inventoryshipmentadmin_customer_edit>
+                <observers>
+                    <inventoryshipment_observers>
+                        <type>singleton</type>
+                        <class>inventoryshipment/observer</class>
+                        <method>changeCustomerEdit</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </controller_action_predispatch_inventoryshipmentadmin_customer_edit>
+            
+            <controller_action_predispatch_adminhtml_sales_order_view>
+                <observers>
+                    <inventoryshipment_observers>
+                        <type>singleton</type>
+                        <class>inventoryshipment/observer</class>
+                        <method>salesOrderView</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </controller_action_predispatch_adminhtml_sales_order_view>
+            
+            
+            <!-- remove button order/shipment view -->
+            <adminhtml_widget_container_html_before>
+                <observers>
+                    <inventoryshipment_observers>
+                        <type>singleton</type>
+                        <class>inventoryshipment/observer</class>
+                        <method>changeButton</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </adminhtml_widget_container_html_before>            
+        </events>
+    </adminhtml>   
+    <global>
+        <models>
+            <inventoryshipment>
+                <class>Magestore_Inventoryshipment_Model</class>
+                <resourceModel>inventoryshipment_mysql4</resourceModel>
+            </inventoryshipment>
+            <inventoryshipment_mysql4>
+                <class>Magestore_Inventoryshipment_Model_Mysql4</class>
+                <entities>                    
+                </entities>
+            </inventoryshipment_mysql4>
+        </models>
+        <resources>
+            <inventoryshipment_setup>
+                <setup>
+                    <module>Magestore_Inventoryshipment</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </inventoryshipment_setup>
+            <inventoryshipment_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </inventoryshipment_write>
+            <inventoryshipment_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </inventoryshipment_read>
+        </resources>
+        <blocks>
+            <inventoryshipment>
+                <class>Magestore_Inventoryshipment_Block</class>
+            </inventoryshipment>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_view_tab_shipments>Magestore_Inventoryshipment_Block_Adminhtml_Sales_Order_View_Tab_Shipments</sales_order_view_tab_shipments>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <inventoryshipment>
+                <class>Magestore_Inventoryshipment_Helper</class>
+            </inventoryshipment>
+        </helpers>
+        <events>
+            <sales_order_save_after>
+                <observers>
+                    <inventoryshipment_observers>
+                        <class>inventoryshipment/observer</class>
+                        <method>saveOrderSaveAfter</method>
+                    </inventoryshipment_observers>
+                </observers>
+            </sales_order_save_after> 
+        </events>
+    </global>
+</config>

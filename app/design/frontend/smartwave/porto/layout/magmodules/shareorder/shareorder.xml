@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <checkout_onepage_success>
+        <reference name="head">
+            <action method="addCss"><stylesheet>magmodules/shareorder/shareorder.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <block type="shareorder/share" name="shareorder.share" template="magmodules/shareorder/share.phtml" after="-"/>
+        </reference>
+    </checkout_onepage_success>
+    <checkout_multishipping_success>
+        <reference name="head">
+            <action method="addCss"><stylesheet>magmodules/shareorder/shareorder.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <block type="shareorder/share" name="shareorder.share" template="magmodules/shareorder/share.phtml" after="-"/>
+        </reference>
+    </checkout_multishipping_success>    
+</layout>

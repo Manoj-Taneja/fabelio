@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+/**
+ * zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento COMMUNITY edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zeon
+ * @package    Zeon_Jobs
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <zextension translate="title">
+                        <title>Zeon Extensions</title>
+                        <sort_order>200</sort_order>
+                        <children>
+                            <zeon_jobs translate="title" module="zeon_jobs">
+                                <title>Jobs</title>
+                                <sort_order>200</sort_order>
+                                <children>
+                                    <jobs_list translate="title" module="zeon_jobs">
+                                        <title>Manage Jobs</title>
+                                        <sort_order>10</sort_order>
+                                    </jobs_list>
+                                    <jobs_category translate="title" module="zeon_jobs">
+                                        <title>Manage Departments</title>
+                                        <sort_order>20</sort_order>
+                                    </jobs_category>
+                                    <jobs_apply translate="title" module="zeon_jobs">
+                                        <title>Manage Applications</title>
+                                        <sort_order>30</sort_order>
+                                    </jobs_apply>
+                                    <jobs_settings>
+                                        <title>Manage Job Settings</title>
+                                    </jobs_settings>
+                                </children>
+                            </zeon_jobs>
+                        </children>
+                    </zextension>
+                     <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <zextension translate="title">
+                                        <title>Zeon Extensions</title>
+                                    </zextension>
+                                    <zeon_jobs>
+                                        <title>Zeon Extensions - Jobs Settings Section</title>
+                                    </zeon_jobs>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <zextension translate="title">
+            <title>Zeon Extensions</title>
+            <sort_order>90</sort_order>
+            <children>
+                <zeon_jobs translate="title" module="zeon_jobs">
+                    <title>Jobs</title>
+                    <sort_order>200</sort_order>
+                    <children>
+                        <jobs_list translate="title" module="zeon_jobs">
+                            <title>Manage Jobs</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/jobs_list</action>
+							<depends>
+								<module>Zeon_Jobs</module>
+								<config>zeon_jobs/general/is_enabled</config>
+							</depends>
+                        </jobs_list>
+                        <jobs_category module="zeon_jobs">
+                            <title>Manage Departments</title>
+                            <sort_order>20</sort_order>
+                            <action>adminhtml/jobs_category</action>
+							<depends>
+								<module>Zeon_Jobs</module>
+								<config>zeon_jobs/general/is_enabled</config>
+							</depends>
+                        </jobs_category>
+                        <jobs_apply module="zeon_jobs">
+                            <title>Manage Applications</title>
+                            <sort_order>30</sort_order>
+                            <action>adminhtml/jobs_application</action>
+							<depends>
+								<module>Zeon_Jobs</module>
+								<config>zeon_jobs/general/is_enabled</config>
+							</depends>
+                        </jobs_apply>
+                        <jobs_settings module="zeon_jobs">
+                            <title>Manage Job Settings</title>
+                            <sort_order>40</sort_order>
+                            <action>adminhtml/system_config/edit/section/zeon_jobs</action>
+                        </jobs_settings>
+                    </children>
+                </zeon_jobs>
+            </children>
+        </zextension>
+    </menu>
+</config>

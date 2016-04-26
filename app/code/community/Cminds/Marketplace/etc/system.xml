@@ -1,0 +1,1016 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <marketplace>
+            <label>Marketplace</label>
+            <sort_order>100</sort_order>
+        </marketplace>
+    </tabs>
+    <sections>
+        <carriers>
+            <groups>
+                <marketplace_shipping translate="label" module="marketplace">
+                    <label>Supplier Marketplace</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>11</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <cost_calculation translate="label comment">
+                            <label>Calculate shipping price based on</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>marketplace/shipping_calculate_options</source_model>
+                            <comment></comment>
+                        </cost_calculation>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <default_shipping_fee translate="label">
+                            <label>Shipping cost for non supplier products</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>41</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number</validate>
+                        </default_shipping_fee>
+                        <default_shipping_fee_not_set_supplier translate="label">
+                            <label>Default shipping cost if supplier does not set shipping prices</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>42</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number</validate>
+                        </default_shipping_fee_not_set_supplier>
+                        <minimum_suppler_shipping_price translate="label">
+                            <label>Minimum price for supplier shipped products</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>43</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number</validate>
+                        </minimum_suppler_shipping_price>
+                        <specificerrmsg translate="label">
+                            <label>Displayed error message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        <sallowspecific translate="label">
+                            <label>Ship to applicable countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>90</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to specific countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>91</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show method if not applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>92</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showmethod>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+                    </fields>
+                </marketplace_shipping>
+            </groups>
+        </carriers>
+        <marketplace_configuration translate="label" module="marketplace">
+            <label>Configuration</label>
+            <tab>marketplace</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>Pricing</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <default_percentage_fee translate="label">
+                            <label>Default percentage fee</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </default_percentage_fee>
+                        <notify_admin_on_profile_changed translate="label">
+                            <label>Notify when supplier changed his profile</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </notify_admin_on_profile_changed>
+                        <notify_supplier_on_profile_approved translate="label">
+                            <label>Notify supplier when his profile was approved</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </notify_supplier_on_profile_approved>
+                    </fields>
+                </general>
+                <presentation translate="label">
+                    <label>Presentation</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <can_create_configurable translate="label">
+                            <label>Allow to create configurable products</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </can_create_configurable>
+                        <supplier_page_enabled translate="label">
+                            <label>Enable supplier pages</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </supplier_page_enabled>
+                        <sold_by translate="label">
+                            <label>Add 'Sold by' option on product page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </sold_by>
+                        <supplier_rating translate="label">
+                            <label>Enable supplier rating</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </supplier_rating>
+                        <change_shipping_costs translate="label">
+                            <label>Allow supplier to manage shipping costs</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </change_shipping_costs>
+                        <allow_to_send_shipment translate="label">
+                            <label>Allow to send emails to customers if supplier create a shipment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </allow_to_send_shipment>
+                        <allow_to_send_invoice translate="label">
+                            <label>Allow to send emails to customers if supplier create a invoice</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </allow_to_send_invoice>
+                    </fields>
+                </presentation>
+                <csv_import translate="label">
+                    <label>CSV Import</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <csv_import_enabled translate="label">
+                            <label>Enable CSV import</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </csv_import_enabled>
+                        <notify_admin_on_uploading_products translate="label">
+                            <label>Send a notification when supplier uploads the products</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </notify_admin_on_uploading_products>
+                        <product_limit translate="label">
+                            <label>How many product can be imported</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <comment>
+                                <![CDATA[Set 0 for unlimited]]>
+                            </comment>
+                        </product_limit>
+                    </fields>
+                </csv_import>
+            </groups>
+        </marketplace_configuration>
+        <marketplace_shipping_labels translate="label">
+            <label>Shipping Labels</label>
+            <tab>marketplace</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+              <custom translate="label">
+                    <label>Custom Label</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <number_down translate="label">
+                            <label>Number down</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_down>
+                        <number_across translate="label">
+                            <label>Number across</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_across>
+                        <page_height translate="label comment">
+                            <label>Page Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 8.7]]></comment>
+                        </page_height>
+                        <page_width translate="label">
+                            <label>Page Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 6.6]]></comment>
+                        </page_width>
+                        <width translate="label">
+                            <label>Label Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.95]]></comment>
+                        </width>
+                        <height translate="label">
+                            <label>Label Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2]]></comment>
+                        </height>
+                        <vertical_pitch translate="label">
+                            <label>Vertical pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.2]]></comment>
+                        </vertical_pitch>
+                        <horizontal_pitch translate="label">
+                            <label>Horizontal pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 3.2]]></comment>
+                        </horizontal_pitch>
+                        <top_margin translate="label">
+                            <label>Top margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_margin>
+                        <side_margin translate="label">
+                            <label>Side margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.3]]></comment>
+                        </side_margin>
+                        <top_padding translate="label">
+                            <label>Top padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>103</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_padding>
+                        <left_padding translate="label">
+                            <label>Left padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>106</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </left_padding>
+                        <font_size translate="label">
+                            <label>Font Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[For eg. 10]]></comment>
+                        </font_size>
+                    </fields>
+                </custom>
+              <dhl translate="label">
+                    <label>DHL Label</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <number_down translate="label">
+                            <label>Number down</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_down>
+                        <number_across translate="label">
+                            <label>Number across</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_across>
+                        <page_height translate="label comment">
+                            <label>Page Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 8.7]]></comment>
+                        </page_height>
+                        <page_width translate="label">
+                            <label>Page Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 6.6]]></comment>
+                        </page_width>
+                        <width translate="label">
+                            <label>Label Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.95]]></comment>
+                        </width>
+                        <height translate="label">
+                            <label>Label Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2]]></comment>
+                        </height>
+                        <vertical_pitch translate="label">
+                            <label>Vertical pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.2]]></comment>
+                        </vertical_pitch>
+                        <horizontal_pitch translate="label">
+                            <label>Horizontal pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 3.2]]></comment>
+                        </horizontal_pitch>
+                        <top_margin translate="label">
+                            <label>Top margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_margin>
+                        <side_margin translate="label">
+                            <label>Side margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.3]]></comment>
+                        </side_margin>
+                        <top_padding translate="label">
+                            <label>Top padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>103</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_padding>
+                        <left_padding translate="label">
+                            <label>Left padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>106</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </left_padding>
+                        <font_size translate="label">
+                            <label>Font Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[For eg. 10]]></comment>
+                        </font_size>
+                    </fields>
+                </dhl>
+              <fedex translate="label">
+                    <label>Fedex Label</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <number_down translate="label">
+                            <label>Number down</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_down>
+                        <number_across translate="label">
+                            <label>Number across</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_across>
+                        <page_height translate="label comment">
+                            <label>Page Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 8.7]]></comment>
+                        </page_height>
+                        <page_width translate="label">
+                            <label>Page Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 6.6]]></comment>
+                        </page_width>
+                        <width translate="label">
+                            <label>Label Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.95]]></comment>
+                        </width>
+                        <height translate="label">
+                            <label>Label Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2]]></comment>
+                        </height>
+                        <vertical_pitch translate="label">
+                            <label>Vertical pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.2]]></comment>
+                        </vertical_pitch>
+                        <horizontal_pitch translate="label">
+                            <label>Horizontal pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 3.2]]></comment>
+                        </horizontal_pitch>
+                        <top_margin translate="label">
+                            <label>Top margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_margin>
+                        <side_margin translate="label">
+                            <label>Side margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.3]]></comment>
+                        </side_margin>
+                        <top_padding translate="label">
+                            <label>Top padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>103</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_padding>
+                        <left_padding translate="label">
+                            <label>Left padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>106</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </left_padding>
+                        <font_size translate="label">
+                            <label>Font Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[For eg. 10]]></comment>
+                        </font_size>
+                    </fields>
+                </fedex>
+              <ups translate="label">
+                    <label>UPS Label</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <number_down translate="label">
+                            <label>Number down</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_down>
+                        <number_across translate="label">
+                            <label>Number across</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_across>
+                        <page_height translate="label comment">
+                            <label>Page Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 8.7]]></comment>
+                        </page_height>
+                        <page_width translate="label">
+                            <label>Page Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 6.6]]></comment>
+                        </page_width>
+                        <width translate="label">
+                            <label>Label Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.95]]></comment>
+                        </width>
+                        <height translate="label">
+                            <label>Label Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2]]></comment>
+                        </height>
+                        <vertical_pitch translate="label">
+                            <label>Vertical pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.2]]></comment>
+                        </vertical_pitch>
+                        <horizontal_pitch translate="label">
+                            <label>Horizontal pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 3.2]]></comment>
+                        </horizontal_pitch>
+                        <top_margin translate="label">
+                            <label>Top margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_margin>
+                        <side_margin translate="label">
+                            <label>Side margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.3]]></comment>
+                        </side_margin>
+                        <top_padding translate="label">
+                            <label>Top padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>103</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_padding>
+                        <left_padding translate="label">
+                            <label>Left padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>106</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </left_padding>
+                        <font_size translate="label">
+                            <label>Font Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[For eg. 10]]></comment>
+                        </font_size>
+                    </fields>
+                </ups>
+              <usps translate="label">
+                    <label>USPS Label</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <number_down translate="label">
+                            <label>Number down</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_down>
+                        <number_across translate="label">
+                            <label>Number across</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_across>
+                        <page_height translate="label comment">
+                            <label>Page Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 8.7]]></comment>
+                        </page_height>
+                        <page_width translate="label">
+                            <label>Page Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 6.6]]></comment>
+                        </page_width>
+                        <width translate="label">
+                            <label>Label Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.95]]></comment>
+                        </width>
+                        <height translate="label">
+                            <label>Label Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2]]></comment>
+                        </height>
+                        <vertical_pitch translate="label">
+                            <label>Vertical pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.2]]></comment>
+                        </vertical_pitch>
+                        <horizontal_pitch translate="label">
+                            <label>Horizontal pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 3.2]]></comment>
+                        </horizontal_pitch>
+                        <top_margin translate="label">
+                            <label>Top margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_margin>
+                        <side_margin translate="label">
+                            <label>Side margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.3]]></comment>
+                        </side_margin>
+                        <top_padding translate="label">
+                            <label>Top padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>103</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_padding>
+                        <left_padding translate="label">
+                            <label>Left padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>106</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </left_padding>
+                        <font_size translate="label">
+                            <label>Font Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[For eg. 10]]></comment>
+                        </font_size>
+                    </fields>
+                </usps>
+              <dhlint translate="label">
+                    <label>DHLint Label</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <number_down translate="label">
+                            <label>Number down</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_down>
+                        <number_across translate="label">
+                            <label>Number across</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_across>
+                        <page_height translate="label comment">
+                            <label>Page Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 8.7]]></comment>
+                        </page_height>
+                        <page_width translate="label">
+                            <label>Page Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 6.6]]></comment>
+                        </page_width>
+                        <width translate="label">
+                            <label>Label Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.95]]></comment>
+                        </width>
+                        <height translate="label">
+                            <label>Label Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2]]></comment>
+                        </height>
+                        <vertical_pitch translate="label">
+                            <label>Vertical pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 2.2]]></comment>
+                        </vertical_pitch>
+                        <horizontal_pitch translate="label">
+                            <label>Horizontal pitch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 3.2]]></comment>
+                        </horizontal_pitch>
+                        <top_margin translate="label">
+                            <label>Top margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_margin>
+                        <side_margin translate="label">
+                            <label>Side margin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.3]]></comment>
+                        </side_margin>
+                        <top_padding translate="label">
+                            <label>Top padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>103</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </top_padding>
+                        <left_padding translate="label">
+                            <label>Left padding</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>106</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[In inches, without any metric symbol. For eg. 0.1]]></comment>
+                        </left_padding>
+                        <font_size translate="label">
+                            <label>Font Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[For eg. 10]]></comment>
+                        </font_size>
+                    </fields>
+                </dhlint>
+            </groups>
+        </marketplace_shipping_labels>
+    </sections>
+</config>

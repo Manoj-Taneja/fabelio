@@ -1,0 +1,124 @@
+<div class="container main-container vendor-container">
+    <h1 class="text-center"><?php echo $this->__('Upload Products'); ?></h1>
+    <div class="row">
+        <div class="col-md-12 form-container">
+            <form name="import_csv_products" id="import_csv_products" action="<?php echo Mage::getUrl('*/*/*') ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" value="<?php echo time(); ?>" name="salt"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="lead"><?php echo $this->__('Store admin provides various options for the product.'); ?> <a href="<?php echo Mage::getUrl('marketplace/import/downloadProductCsv') ?>"><?php echo $this->__('Download');?> </a>CSV schema.</p>
+                        <?php if(Mage::getStoreConfig('marketplace_configuration/csv_import/product_limit')) : ?>
+                            <p class="lead"><?php echo $this->__('You can upload %d products in a row.', (Mage::getStoreConfig('marketplace_configuration/csv_import/product_limit'))); ?></p>
+                        <?php endif; ?>
+                        <p class="lead">
+                            <div style="display:none;">
+                                <ul>
+                                    <li>1. Upload images needed for products</li>
+                                    <li>2. Upload CSV</li>
+                                </ul>
+                            </div>
+                            <span class="showInstructions"><?php echo $this->__('Show instructions'); ?></span>
+                        </p>
+                        <?php if(ini_get('allow_url_fopen') == 0) : ?>
+                        <div class="alert alert-danger" role="alert"><?php echo $this->__('Your server has disabled option <strong>allow_url_fopen</strong>, it can be problem to download assigned images'); ?></div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <?php if($this->isExists()) : ?>
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="success">
+                                <p><?php echo $this->__('Success count : %d.', count($this->getSuccessfull())); ?></p>
+                                <?php if(count($this->getSuccessfull()) > 0): ?>
+                                <p><a href="javascript:void()" class="expand-report"><?php echo $this->__('Click here for full report'); ?></a></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row collapse-group" style="display: none;">
+                        <div class="container-fluid">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo $this->__('Product ID'); ?></th>
+                                        <th><?php echo $this->__('Product Name'); ?></th>
+                                        <th><?php echo $this->__('SKU'); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($this->getSuccessfull() AS $data) : ?>
+                                    <tr>
+                                      <td><?php echo $this->escapeHtml($data['product_id']); ?></td>
+                                      <td><?php echo $this->escapeHtml($data['product_name']); ?></td>
+                                      <td><?php echo $this->escapeHtml($data['sku']); ?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="error">
+                                <p><?php echo $this->__('Failed count : %d.', count($this->getFailed())); ?></p>
+                                <?php if(count($this->getFailed()) > 0): ?>
+                                <p><a href="javascript:void()" class="expand-report"><?php echo $this->__('Click here for full report'); ?></a></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row collapse-group" style="display: none;">
+                        <div class="container-fluid">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo $this->__('Line #'); ?></th>
+                                        <th><?php echo $this->__('Field'); ?></th>
+                                        <th><?php echo $this->__('Message'); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($this->getFailed() AS $data) : ?>
+                                    <tr>
+                                      <td><?php echo $this->escapeHtml($data['line']); ?></td>
+                                      <td><?php echo $this->escapeHtml($data['attribute_code']); ?></td>
+                                      <td><?php echo $this->escapeHtml($data['message']); ?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <div class="row image-preview">
+                    <div class="col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4">
+                        <h4><?php echo $this->__('Product Images'); ?></h4>
+                        <input type="file" id="upload-images" class="multi" name="files[]" maxlength="<?php echo $this->getMaxImagesCount(); ?>" multiple>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4">
+                        <input type="file" name="file" style='margin: 20px 0'>
+                        <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Start Import') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.expand-report').on(__('click'), function(e) {
+            e.preventDefault();
+            var $this = jQuery(this);
+            var $collapse = $this.parent().parent().parent().parent().next();
+            $collapse.slideToggle();
+        });
+        jQuery('.showInstructions').on(__('click'_) function() {
+            jQuery(this).prev().slideToggle();
+        });
+        jQuery('#upload-images').MultiFile();
+    });
+</script>

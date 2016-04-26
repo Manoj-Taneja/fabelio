@@ -1,0 +1,67 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Storecredit
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><div class="page-title">
+    <h1><?php echo $this->__('Store Credit') ?></h1>
+</div>
+<div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    <div id="aw-storecredit-info-block">
+        <div class="fieldset">
+            <h2 class="legend"><?php echo $this->__('Balance');?></h2>
+            <div class="aw-storecredit-balance-box">
+                <?php echo $this->__('Your current balance is: ');?>
+                <?php if(Mage::registry('current_storecredit')): ?>
+                    <?php echo Mage::helper('core')->currency(Mage::registry('current_storecredit')->getBalance()) ?>
+                <?php else: ?>
+                    <?php echo Mage::helper('core')->currency(0) ?>
+                <?php endif; ?>
+                <?php if ($this->isCmsBlockCanShow()):?>
+                    <div class="aw-storecredit-cms-help">
+                        <a href="<?php echo $this->getCmsUrl() ?>"><img src="<?php echo $this->getSkinUrl('aw_storecredit/images/system_help.png') ?>"></a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <?php if(Mage::helper('aw_storecredit')->isGiftCardEnabled()): ?>
+        <div id="aw-storecredit-giftcard-redeem-block">
+            <div class="fieldset">
+                <h2 class="legend"><?php echo $this->__('Redeem Gift Card');?></h2>
+                <div>
+                    <?php echo $this->__("Have a gift card? <a href='%s'>Click here</a> to redeem it.", Mage::getUrl('awgiftcard/card/index', array('_secure' => Mage::app()->getStore(true)->isCurrentlySecure())));?>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+
+    <?php echo $this->getChildHtml('aw_storecredit.frontend.customer.storecredit.history')?>
+
+    <?php if(Mage::registry('current_storecredit')): ?>
+        <?php echo $this->getChildHtml('aw_storecredit.frontend.customer.storecredit.notification')?>
+    <?php endif;?>
+</div>

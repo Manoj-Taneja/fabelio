@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <fpc translate="label" module="fpc">
+            <label>Full Page Cache</label>
+            <tab>mstcore</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general>
+                    <label>General Settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>10</sort_order>
+                    <frontend_model>mstcore/system_config_form_fieldset</frontend_model>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <lifetime translate="label">
+                            <label>Cache Lifetime (sec)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </lifetime>
+                        <max_cache_size translate="label">
+                            <label>Max. Cache Size (Mb)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_cache_size>
+                        <max_cache_number translate="label">
+                            <label>Max. Number of Cache Files</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_cache_number>
+                        <flush_cache_schedule translate="label">
+                            <label>Flush Cache Expr</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </flush_cache_schedule>
+                    </fields>
+                </general>
+                <crawler>
+                    <label>Crawler Settings</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>20</sort_order>
+                    <frontend_model>mstcore/system_config_form_fieldset</frontend_model>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <max_threads translate="label">
+                            <label>Number of Threads</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_threads>
+                        <thread_delay translate="label">
+                            <label>Thread Delay (in milliseconds)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </thread_delay>
+                        <max_urls_per_run translate="label">
+                            <label>Limit of Crawled URLs per Run</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_urls_per_run>
+                        <schedule translate="label">
+                            <label>Schedule</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </schedule>
+                        <sort_crawler_urls translate="label">
+                            <label>Sort Crawler urls by</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>fpc/system_config_source_SortCrawlerUrls</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_crawler_urls>
+                       <sort_by_page_type translate="label">
+                            <label>Sort by page type</label>
+                            <frontend_model>fpc/adminhtml_system_SortByPageType</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_by_page_type>
+                        <sort_by_product_attribute translate="label">
+                            <label>Sort by product attribute (for product pages)</label>
+                            <frontend_model>fpc/adminhtml_system_SortByProductAttribute</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_by_product_attribute>
+                        <run_as_apache_user translate="label">
+                            <label>Run crawler as apache user</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </run_as_apache_user>
+                    </fields>
+                </crawler>
+                <cache_rules>
+                    <label>Cache Rules</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>30</sort_order>
+                    <frontend_model>mstcore/system_config_form_fieldset</frontend_model>
+                    <fields>
+                        <max_depth translate="label">
+                            <label>Max. Allowed Page Depth</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </max_depth>
+                        <cacheable_actions translate="label">
+                            <label>Cachable Actions</label>
+                            <frontend_model>fpc/adminhtml_system_CacheableActions</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cacheable_actions>
+                        <allowed_pages translate="label">
+                            <label>Allowed Pages</label>
+                            <frontend_model>fpc/adminhtml_system_AllowedPages</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowed_pages>
+                        <ignored_pages translate="label">
+                            <label>Ignored Pages</label>
+                            <frontend_model>fpc/adminhtml_system_IgnoredPages</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ignored_pages>
+                        <user_agent_segmentation translate="label">
+                            <label>User Agent Segmentation</label>
+                            <frontend_model>fpc/adminhtml_system_UserAgentSegmentation</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </user_agent_segmentation>
+                    </fields>
+                </cache_rules>
+                <debug>
+                    <label>Debug</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>40</sort_order>
+                    <frontend_model>mstcore/system_config_form_fieldset</frontend_model>
+                    <fields>
+                        <info translate="label">
+                            <label>Show Time Stats</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </info>
+                        <hints translate="label">
+                            <label>Enable Debug Hints</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </hints>
+                        <log translate="label">
+                            <label>Enable Debug Log</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </log>
+                        <allowed_ip translate="label">
+                            <label>Show debug hints only for</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allowed_ip>
+                    </fields>
+                </debug>
+            </groups>
+        </fpc>
+    </sections>
+</config>

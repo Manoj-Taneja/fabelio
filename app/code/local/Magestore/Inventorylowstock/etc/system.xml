@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorylowstock
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<config>
+    <tabs>
+        <magestore translate="label">
+            <label>Magestore Extension</label>
+            <sort_order>400</sort_order>
+        </magestore>
+    </tabs>
+    <sections>
+        <inventoryplus translate="label" module="inventoryplus">            
+            <groups>
+                <notice translate="label">
+                    <label>Low Stock Notification</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <stock_notice translate="label">
+                            <label>Enable Low Stock Notification</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                        </stock_notice>
+                        <qty_notice>                       
+                            <label>Threshold Inventory Qty</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Show low stock notification when product Qty. is equal or under this number.</comment>
+                            <validate>validate-number</validate>
+                        </qty_notice>
+                        <notice_for translate="label">
+                            <label>Show notification for products in</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>30</sort_order>
+                            <source_model>inventorylowstock/config_notice</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                        </notice_for>
+                        <use_cron>
+                            <label>Use Cron to auto update</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>35</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                        </use_cron>
+                        <time_updates translate="label">
+                            <label>Update Time(s)</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>inventorylowstock/config_times</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <depends><use_cron>1</use_cron></depends>
+                        </time_updates>
+                        <daily_updates translate="label">
+                            <label>Enable daily update</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>45</sort_order>
+                            <source_model>inventorylowstock/config_dailyupdate</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_cron>1</use_cron></depends>
+                        </daily_updates>
+                        <specificdays translate="label">
+                            <label>Choose specific day(s)</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>46</sort_order>
+                            <source_model>inventorylowstock/config_specificdays</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <depends><use_cron>1</use_cron><daily_updates>2</daily_updates></depends>
+                        </specificdays>
+                        <monthly_updates translate="label">
+                            <label>Enable monthly update</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>47</sort_order>
+                            <source_model>inventorylowstock/config_dailyupdate</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><use_cron>1</use_cron></depends>
+                        </monthly_updates>
+                        <specificmonths translate="label">
+                            <label>Choose specific month(s)</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>48</sort_order>
+                            <source_model>inventorylowstock/config_specificmonths</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <depends><use_cron>1</use_cron><monthly_updates>2</monthly_updates></depends>                            
+                        </specificmonths>
+                        <email_notice translate="label">
+                            <label>Send notification email to admin</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Admin will receive notification emails for low stock products in the System.</comment>
+                        </email_notice>
+                        
+                        <admin_email translate="label">
+                            <label>Admin’s email address to receive notification</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Emails separated by ;</comment>
+                            <depends><email_notice>1</email_notice></depends>
+                        </admin_email>
+                        <system_email translate="label">
+                            <label>Notification email template for low stock level in System</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </system_email>
+                        <warehouse_email translate="label">
+                            <label>Notification email template for low stock level in Warehouse</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </warehouse_email>                        
+                    </fields>
+                </notice>
+               
+            </groups>
+        </inventoryplus>
+    </sections>
+</config>

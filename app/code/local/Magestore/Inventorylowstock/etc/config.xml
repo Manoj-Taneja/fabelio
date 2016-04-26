@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorylowstock
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<config>
+    <modules>
+        <Magestore_Inventorylowstock>
+            <version>0.1.0</version>
+        </Magestore_Inventorylowstock>
+    </modules>
+    <frontend>
+        <routers>
+            <inventorylowstock>
+                <use>standard</use>
+                <args>
+                    <module>Magestore_Inventorylowstock</module>
+                    <frontName>inventorylowstock</frontName>
+                </args>
+            </inventorylowstock>
+        </routers>
+        <layout>
+            <updates>
+                <inventorylowstock>
+                    <file>inventorylowstock.xml</file>
+                </inventorylowstock>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventorylowstock>
+                    <files>
+                        <default>Magestore_Inventorylowstock.csv</default>
+                    </files>
+                </Magestore_Inventorylowstock>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <inventorylowstockadmin>
+                <use>admin</use>
+                <args>
+                    <module>Magestore_Inventorylowstock</module>
+                    <frontName>inventorylowstockadmin</frontName>
+                </args>
+            </inventorylowstockadmin>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <inventorylowstock>
+                    <file>inventorylowstock.xml</file>
+                </inventorylowstock>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Magestore_Inventorylowstock>
+                    <files>
+                        <default>Magestore_Inventorylowstock.csv</default>
+                    </files>
+                </Magestore_Inventorylowstock>
+            </modules>
+        </translate>
+        <events>
+            <admin_session_user_login_success>
+                <observers>
+                    <inventorylowstock_observers>
+                        <class>inventorylowstock/observer</class>
+                        <method>controllerActionPredispatch</method>
+                    </inventorylowstock_observers>
+                </observers>
+            </admin_session_user_login_success>
+            <inventory_menu_list>
+                <observers>
+                    <inventorylowstock_observers>
+                        <class>inventorylowstock/observer</class>
+                        <method>inventorylowstockMenu</method>
+                    </inventorylowstock_observers>
+                </observers>
+            </inventory_menu_list>
+            <core_config_data_save_after>
+                <observers>
+                    <inventorylowstock_observers>
+                        <class>inventorylowstock/observer</class>
+                        <method>updatelowstock</method>
+                    </inventorylowstock_observers>
+                </observers>
+            </core_config_data_save_after>
+            <admin_system_config_changed_section_inventoryplus>
+                <observers>
+                    <inventorylowstock_observers>
+                        <class>inventorylowstock/observer</class>
+                        <method>adminSystemSave</method>
+                    </inventorylowstock_observers>
+                </observers>
+            </admin_system_config_changed_section_inventoryplus>
+        </events>
+    </adminhtml>   
+    <global>
+        <models>
+            <inventorylowstock>
+                <class>Magestore_Inventorylowstock_Model</class>
+                <resourceModel>inventorylowstock_mysql4</resourceModel>
+            </inventorylowstock>
+            <inventorylowstock_mysql4>
+                <class>Magestore_Inventorylowstock_Model_Mysql4</class>
+                <entities>
+                    <notificationlog>
+                        <table>erp_inventory_notification_log</table>
+                    </notificationlog>
+                    <sendemaillog>
+                        <table>erp_inventory_send_email_log</table>
+                    </sendemaillog>
+                    <notificationlog_product>
+                        <table>erp_inventory_notification_product</table>
+                    </notificationlog_product>
+                </entities>
+            </inventorylowstock_mysql4>
+            <adminhtml>
+                <rewrite>
+                    <url>Magestore_Inventorylowstock_Model_Url</url>
+                </rewrite>
+            </adminhtml>
+        </models>
+        <resources>
+            <inventorylowstock_setup>
+                <setup>
+                    <module>Magestore_Inventorylowstock</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </inventorylowstock_setup>
+            <inventorylowstock_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </inventorylowstock_write>
+            <inventorylowstock_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </inventorylowstock_read>
+        </resources>
+        <blocks>
+            <inventorylowstock>
+                <class>Magestore_Inventorylowstock_Block</class>
+            </inventorylowstock>
+        </blocks>
+        <helpers>
+            <inventorylowstock>
+                <class>Magestore_Inventorylowstock_Helper</class>
+            </inventorylowstock>
+        </helpers>
+        <template>
+            <email>
+                <inventoryplus_notice_system_email translate="label">
+                    <label>Inventory System Email Notice</label>
+                    <file>inventory/system_email_notice.html</file>
+                    <type>html</type>
+                </inventoryplus_notice_system_email>
+                <inventoryplus_notice_warehouse_email translate="label">
+                    <label>Inventory Warehouse Email Notice</label>
+                    <file>inventory/warehouse_email_notice.html</file>
+                    <type>html</type>
+                </inventoryplus_notice_warehouse_email>                  
+            </email>
+        </template>
+    </global>
+    <default>
+        <inventoryplus>
+            <notice>
+                <stock_notice>0</stock_notice>
+                <use_cron>1</use_cron>
+                <time_updates>0</time_updates>
+                <qty_notice>1</qty_notice>
+                <notice_for>3</notice_for>
+                <time_updates>05</time_updates>
+                <daily_updates>1</daily_updates>
+                <monthly_updates>1</monthly_updates>
+                <email_notice>1</email_notice>
+                <admin_email>example@domain.com</admin_email>               
+                <system_email>inventoryplus_notice_system_email</system_email>
+                <warehouse_email>inventoryplus_notice_warehouse_email</warehouse_email>
+            </notice>
+        </inventoryplus>
+    </default>
+    
+    <crontab>
+        <jobs>
+            <magestore_inventorylowstock>
+                <schedule>
+                    <config_path>crontab/jobs/magestore_inventorylowstock/schedule/cron_expr</config_path>
+                </schedule>
+                <run>
+                    <model>inventorylowstock/notification::notification</model>
+                </run>
+            </magestore_inventorylowstock>
+        </jobs>
+    </crontab>
+</config>

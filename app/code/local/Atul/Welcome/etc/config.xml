@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Atul_Welcome>
+      <version>0.0.1</version>
+    </Atul_Welcome>
+  </modules>
+
+  <!--<frontend>
+    <routers>
+      <atul_welcome>
+        <use>standard</use>
+        <args>
+          <module>Atul_Welcome</module>
+          <frontName>welcome</frontName>
+        </args>
+      </atul_welcome>
+    </routers>
+  </frontend>-->
+
+   <global>
+    <blocks>
+      <page>
+         <rewrite>
+            <html_welcome>Atul_Welcome_Page_Block_Html_Welcome</html_welcome>
+         </rewrite>
+      </page>
+    </blocks>
+  </global>
+</config>
+
+

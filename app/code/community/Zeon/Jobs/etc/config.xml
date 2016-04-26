@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento COMMUNITY edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zeon
+ * @package    Zeon_Jobs
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+-->
+<config>
+     <modules>
+        <Zeon_Jobs>
+            <version>0.1.0</version>
+        </Zeon_Jobs>
+    </modules>
+    <frontend>
+        <routers>
+            <jobs>
+                <use>standard</use>
+                <args>
+                    <module>Zeon_Jobs</module>
+                    <frontName>careers</frontName>
+                </args>
+            </jobs>
+        </routers>
+        <layout>
+            <updates>
+                <jobs>
+                    <file>zeon_jobs.xml</file>
+                </jobs>
+            </updates>
+        </layout>
+         <translate>
+            <modules>
+                <Zeon_Jobs>
+                    <files>
+                        <default>Zeon_Jobs.csv</default>
+                    </files>
+                </Zeon_Jobs>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+         <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <zeon_jobs before="Mage_Adminhtml">Zeon_Jobs_Adminhtml</zeon_jobs>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <zeon_jobs module="Zeon_Jobs">
+                    <file>zeon_jobs.xml</file>
+                </zeon_jobs>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Zeon_Jobs>
+                    <files>
+                        <default>Zeon_Jobs.csv</default>
+                    </files>
+                </Zeon_Jobs>
+            </modules>
+        </translate>
+    </adminhtml>
+    <global>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <jobs>
+                        <class>Zeon_Jobs_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </jobs>
+                </observers>
+            </controller_front_init_routers>
+        </events>
+        <models>
+            <zeon_jobs>
+                <class>Zeon_Jobs_Model</class>
+                <resourceModel>zeon_jobs_mysql4</resourceModel>
+            </zeon_jobs>
+            <zeon_jobs_mysql4>
+                <class>Zeon_Jobs_Model_Mysql4</class>
+                <entities>
+                    <jobs>
+                        <table>zeon_jobs</table>
+                    </jobs>
+                    <category>
+                        <table>zeon_jobs_category</table>
+                    </category>
+                    <store>
+                        <table>zeon_jobs_store</table>
+                    </store>
+                    <applications>
+                        <table>zeon_jobs_applications</table>
+                    </applications>
+                </entities>
+            </zeon_jobs_mysql4>
+        </models>
+        <helpers>
+            <zeon_jobs>
+                <class>Zeon_Jobs_Helper</class>
+            </zeon_jobs>
+        </helpers>
+        <blocks>
+            <zeon_jobs>
+                <class>Zeon_Jobs_Block</class>
+            </zeon_jobs>
+        </blocks>
+         <resources>
+            <zeon_jobs_setup>
+                <setup>
+                    <module>Zeon_Jobs</module>
+                    <class>Zeon_Jobs_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </zeon_jobs_setup>
+            <zeon_jobs_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </zeon_jobs_write>
+            <zeon_jobs_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </zeon_jobs_read>
+        </resources>
+        <template>
+            <email>
+                <zeon_jobs_email_admin_email_template translate="label" module="zeon_jobs">
+                    <label>Job Application Admin</label>
+                    <file>zeon/job_admin.html</file>
+                    <type>html</type>
+                </zeon_jobs_email_admin_email_template>
+                <zeon_jobs_email_user_email_template translate="label" module="zeon_jobs">
+                    <label>Jobs Application User</label>
+                    <file>zeon/job_user.html</file>
+                    <type>html</type>
+                </zeon_jobs_email_user_email_template>
+            </email>
+        </template>
+    </global>
+	 <default>
+        <zeon_jobs>
+            <general>
+                <is_enabled>1</is_enabled>
+            </general>
+            <frontend>
+                <list_per_page_values>5,10,15,20,25</list_per_page_values>
+                <list_per_page>10</list_per_page>
+                <default_sort_by>title</default_sort_by>
+                <is_apply_online>1</is_apply_online>
+                <allowed_file_extensions><![CDATA[jpg,jpeg,gif,png,doc,docx,xls,xlsx,txt]]></allowed_file_extensions>
+            </frontend>
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>support</sender_email_identity>
+                <admin_email_template>zeon_jobs_email_admin_email_template</admin_email_template>
+                <confirm>0</confirm>
+                <user_email_template>zeon_jobs_email_user_email_template</user_email_template>
+            </email>
+        </zeon_jobs>
+    </default>
+</config>

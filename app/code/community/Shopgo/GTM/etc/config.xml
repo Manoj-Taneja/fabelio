@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    ShopGo
+ * @package     Shopgo_GTM
+ * @author      Ali Halabyah <ali@shopgo.me>
+ * @copyright   Copyright (c) 2015 ShopGo
+ * @license     http://opensource.org/licenses/osl-3.0.php Open Software License 3.0 (OSL-3.0)
+ */
+-->
+<config>
+	<modules>
+		<Shopgo_GTM>
+			<version>1.0.3</version>
+		</Shopgo_GTM>
+	</modules>
+	<global>
+		<blocks>
+			<gtm>
+				<class>Shopgo_GTM_Block</class>
+			</gtm>
+		</blocks>
+		<helpers>
+			<gtm>
+				<class>Shopgo_GTM_Helper</class>
+			</gtm>
+		</helpers>
+		<models>
+			<gtm>
+				<class>Shopgo_GTM_Model</class>
+			</gtm>
+		</models>
+	</global>
+	<frontend>
+		<routers>
+			<shopgo_gtm>
+				<use>standard</use>
+				<args>
+					<module>Shopgo_GTM</module>
+					<frontName>gtm</frontName>
+				</args>
+			</shopgo_gtm>
+		</routers>
+		<translate>
+			<modules>
+				<Shopgo_GTM>
+					<files>
+						<default>Shopgo_GTM.csv</default>
+					</files>
+				</Shopgo_GTM>
+			</modules>
+		</translate>
+		<events>
+			<checkout_onepage_controller_success_action>
+				<observers>
+					<gtm_order_success>
+						<class>gtm/observer</class>
+						<method>setGTMTransactionData</method>
+					</gtm_order_success>
+				</observers>
+			</checkout_onepage_controller_success_action>
+			<checkout_multishipping_controller_success_action>
+				<observers>
+					<gtm_order_success>
+						<class>gtm/observer</class>
+						<method>setGTMTransactionData</method>
+					</gtm_order_success>
+				</observers>
+			</checkout_multishipping_controller_success_action>
+		</events>
+		<layout>
+			<updates>
+				<gtm>
+					<file>shopgo/gtm.xml</file>
+				</gtm>
+			</updates>
+		</layout>
+	</frontend>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Shopgo_GTM>
+					<files>
+						<default>Shopgo_GTM.csv</default>
+					</files>
+				</Shopgo_GTM>
+			</modules>
+		</translate>
+	</adminhtml>
+	<default>
+		<google>
+			<gtm>
+				<active>0</active>
+				<datalayer>1</datalayer>
+			</gtm>
+		</google>
+	</default>
+</config>
