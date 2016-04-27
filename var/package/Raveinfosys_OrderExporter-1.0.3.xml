@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+    <name>Raveinfosys_OrderExporter</name>
+    <version>1.0.3</version>
+    <stability>stable</stability>
+    <license>OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Magento sales order import and export.</summary>
+    <description>Magento sales order import and export.</description>
+    <notes>This is stable version of this extension and has been tested on various version of community editions. &amp;#xD;&#xD;
+In this particular version we are supporting it to run on PHP V 5.5.X</notes>
+    <authors><author><name>Rave Infosys</name><user>raveinfo</user><email>magento@raveinfosys.com</email></author></authors>
+    <date>2014-11-27</date>
+    <time>09:18:50</time>
+    <contents><target name="magecommunity"><dir name="Raveinfosys"><dir name="Exporter"><dir name="Block"><dir name="Adminhtml"><dir name="Exporter"><dir name="Edit"><file name="Form.php" hash="400092e0356c9ec79632ea296a9e72cc"/><dir name="Tab"><file name="Form.php" hash="ae63a5095a4f929555fa6038cce9c18d"/></dir><file name="Tabs.php" hash="0babeb85a2db29aa4b6854c8baec177b"/></dir><file name="Edit.php" hash="79a1d66ea5482a539dfb2a0174b469a6"/><file name="Grid.php" hash="0286e705b323fa71460bf5ed1f29a0bf"/></dir><file name="Exporter.php" hash="0c077445a7bb4f33bf383e34f0fa1260"/></dir><file name="Exporter.php" hash="7bf9256c575b080fad7c4c3cab5017e8"/><dir name="Sales"><dir name="Order"><dir name="Form"><file name="Form.php" hash="54bb9eb64d173ad92229c229c2bc9366"/></dir><file name="Items.php" hash="e87d8e6a38786fe390e7030764458d9e"/></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="836d093b921ddced4eaedc9ea206f55b"/></dir><dir name="Model"><file name="Createorder.php" hash="a24ebe9696ff7a7cf8bfb157f9b8fefa"/><file name="Exporter.php" hash="5de2fd59c4f5a4fa7e2d32a5503fbdae"/><file name="Exportorders.php" hash="aa636bdcd02880f49e11d44cabd24ead"/><file name="Importorders.php" hash="526c16a774f1c7fd830c06514571d927"/><dir name="Operations"><file name="Creditmemo.php" hash="ad12cb5cbceebf9ab9fb41e42f940557"/><file name="Invoice.php" hash="17225a359399ff1dbe2c1dc3ea2b0137"/><file name="Shipment.php" hash="d83ed179805c3c0b71a29bd48c117edd"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="ExporterController.php" hash="fcac4d1fb1ab1488f7b9d7ed980f2775"/><file name="ImporterController.php" hash="53228d4d1204d104cf9563e1fd8e3caf"/></dir></dir><dir name="etc"><file name="config.xml" hash="af78cde246d97a2ca1e073a5bd6993fd"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Raveinfosys_Exporter.xml" hash="af376451e72fdac6ac3d8999d2d78c6c"/></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="exporter.xml" hash="4a85ad0274334473e6cfd620df3e819f"/></dir></dir></dir></dir></target><target name="mage"><dir name="var"><dir name="raveinfosys"><dir name="exporter"><file name="order_exception_log.htm" hash="f082f69ad76d9230d50fd7f134966446"/></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>5.6.3</max></php></required></dependencies>
+</package>

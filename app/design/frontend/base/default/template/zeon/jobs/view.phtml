@@ -1,0 +1,49 @@
+<?php /**
+ * zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    base_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */ 
+?>
+<?php
+$_job = $this->getJob();
+$processor = Mage::helper('zeon_jobs')->getBlockTemplateProcessor();
+?>
+<div id="messages_jobs_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo $this->htmlEscape($_job->getTitle()) ?></h1>
+    <ul class="links">
+        <li><?php echo $this->formatDate($_job->getUpdateTime(), 'full') ?></li>
+    </ul>
+</div>
+<div class="jobs-description std">
+    <?php echo $processor->filter($_job->getShortDescription()) ?>
+    <?php echo $processor->filter($_job->getDescription()) ?>
+    <?php if (Mage::helper('zeon_jobs')->getAllowedApplyOnline()): ?>
+      <div class="text-right">
+        <p>&nbsp;</p>
+        <button type="button" title="<?php echo $this->__('Apply') ?>" class="fab-btn fab-btn-primary" onclick="setLocation('<?php echo $this->getUrl('careers/application/apply', array('ref' => $_job->getJobCode())) ?>')"><span><span><?php echo $this->__('Apply') ?></span></span></button>
+        <button type="button" title="<?php echo $this->__('Cancel') ?>" class="fab-btn" onclick="setLocation('<?php echo $this->getUrl('careers') ?>')"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
+      </div>
+    <?php endif; ?>
+</div>

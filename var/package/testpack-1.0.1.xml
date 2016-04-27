@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>testpack</name>
+    <version>1.0.1</version>
+    <stability>devel</stability>
+    <license>free</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>asdfasdf</summary>
+    <description>test</description>
+    <notes>1</notes>
+    <authors><author><name>1</name><user>1</user><email>1@mail.com</email></author></authors>
+    <date>2015-09-07</date>
+    <time>15:43:52</time>
+    <contents><target name="mageweb"><dir name="."><file name="updater.php" hash="116420327344d601319f44efcc2f2009"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>4.0.0</min><max>7.0.0</max></php></required></dependencies>
+</package>

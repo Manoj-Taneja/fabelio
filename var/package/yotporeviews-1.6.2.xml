@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package>
+    <name>yotporeviews</name>
+    <version>1.6.2</version>
+    <stability>stable</stability>
+    <license uri="http://www.yotpo.com/terms-of-service">YOTPO TERMS OF SERVICE</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Yotpo is a plug and play social review solution for your website</summary>
+    <description>As you probably know, reviews on product pages keep shoppers on your site and lead to substantial increase in conversion rates. A big part of the success of commercial websites such as Amazon is driven by the many consumer reviews they display on each product.&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Most shopping cart platforms offer a built-in reviews feature. However, there are 2 challenges with reviews for small and mid-size ecommerce sites:&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Getting  your shoppers to leave reviews to achieve a critical mass of reviews&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Getting consumers to trust the reviews on you site &amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Generate more reviews&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Yotpo has been designed from the ground up to maximize the amount of reviews on your site.  Leaving a review with Yotpo is a simple, fun and social experience similar to posting on Facebook.&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Increase your review trust factor&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+With the Yotpo platform, your shoppers can see the real social identity and level of expertise of your reviewers.  This results in higher conversion rates and return visits because we trust friends and experts.&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Have an amazing social experience&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+&amp;amp;amp;#xD;&amp;amp;#xD;&amp;#xD;&#xD;&#xD;
+Leverage the social graph of your customers to both the benefit of other consumers and you as a website. Automatically engage with your customers on FB and Twitter using the Yotpo social review system.</description>
+    <notes>Rich Snippet feature support</notes>
+    <authors><author><name>Yotpo</name><user>auto-converted</user><email>omri@yotpo.com</email></author></authors>
+    <date>2014-07-15</date>
+    <time>08:18:13</time>
+    <contents><target name="magecommunity"><dir name="Yotpo"><dir name="Yotpo"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><dir name="Form"><file name="Button.php" hash="abcc46ce29901dce87fc223d46990287"/></dir></dir></dir></dir><file name="Conversion.php" hash="2baf47f1277e9fd908e0877de469da94"/><file name="Yotpo.php" hash="4f54b92af39a0f3832c486046ad34f18"/></dir><dir name="Helper"><file name="ApiClient.php" hash="acb847dc95dbd0d1d715fce0f31c758b"/><file name="Data.php" hash="86255d12346af38d3ab080cc8dd00d79"/><file name="RichSnippets.php" hash="c01262c71727327e106fefaad9bb18ee"/><file name="Utils.php" hash="0dbb6196798fe3b5fc20135fb195549e"/></dir><dir name="Model"><dir name="Export"><file name="Csv.php" hash="9d5dc4bf902daba0d1f48f9cf6a14a4d"/><file name="Observer.php" hash="6b9ba0c791f75ff5a6fb20ce9d4eada3"/></dir><dir name="Mail"><file name="Observer.php" hash="2f4465dc701fcc00388ff10cb5d3de04"/></dir><dir name="Mysql4"><dir name="Richsnippet"><file name="Collection.php" hash="5a997e395cd5a0dc27894d2e9ec327ef"/></dir><file name="Richsnippet.php" hash="cdc9d5fdd5a06b549598f2e3bb9c9e0d"/></dir><dir name="Resource"><dir name="Mysql4"><file name="Setup.php" hash="932946055a150ebd6190f876b12a2aa6"/></dir></dir><file name="Richsnippet.php" hash="5f826e90531126b881b98a69dec70d39"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="YotpoController.php" hash="348c55745ef14d723b6ca3c9db279097"/></dir><dir name="Review"><file name="ExportController.php" hash="cd6c8c992bb0ed3ef77b88b2078a93e7"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="bfe07bca1c4319a1460d899a1d2e3fd5"/><file name="config.xml" hash="0dd3b170ceec3eec03d503c589915f03"/><file name="system.xml" hash="5cb836ba0b40bf2da4d921d1b8bc2605"/></dir><dir name="sql"><dir name="yotpo_setup"><file name="mysql4-install-1.5.0.php" hash="f51b9f59bc36cb97d07ed6f7a2cab490"/><file name="mysql4-install-1.6.2.php" hash="a0baf933adca26d121c506a5a521be86"/><file name="mysql4-upgrade-1.4.9-1.5.0.php" hash="690907fe2e506a7a38c8664e82c289cf"/><file name="mysql4-upgrade-1.6.1-1.6.2.php" hash="48786b97104c00aadbbcc9a30b756d2f"/></dir></dir></dir><file name=".DS_Store" hash="580efa76b0e39bf4b11eaed0378da2e0"/></dir></target><target name="mageetc"><dir name="modules"><file name="Yotpo_Yotpo.xml" hash="1afc178951ae42041a1df71d61b76d23"/></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="template"><dir name="yotpo"><dir name="system"><dir name="config"><file name="button.phtml" hash="1e978b55675476c5efcdef68e2163465"/></dir></dir></dir></dir></dir></dir></dir><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="yotpo"><file name="app_key_js.phtml" hash="faaad7c58539bf17c5aa22b6e631c67e"/><file name="bottomline.phtml" hash="d9826b03901d597586e916be64f53253"/><file name="conversion.phtml" hash="3270284a2dc73723dfec4b04bee0826a"/><file name="default_reviews.phtml" hash="c2d39e1d577cc45841bca6d28bf3bf4d"/><file name="qa_bottomline.phtml" hash="0108b54809397be6f99bc7edc44e00e7"/><file name="reviews.phtml" hash="b897fa3850c3a0fff8a59a814191435e"/></dir></dir><dir name="layout"><file name="yotpo.xml" hash="3b2d01cadd0be440b711bf51b2ae6320"/></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies/>
+</package>

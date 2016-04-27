@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    var $j = jQuery.noConflict();
+</script>
+<div class="navbar navbar-inverse navbar-fixed-top vendor-container navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="padding: 0 70px"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+            <li<?php echo (!in_array(Mage::app()->getRequest()->getActionName(), array('create', 'list', 'edit', 'view', 'ordered')) && !in_array(Mage::app()->getRequest()->getControllerName(), array('reports', 'order', 'settings'))) ? ' class="active"' : '' ?>><a href="<?php echo Mage::getUrl('supplierfrontendproductuploader') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Home'); ?></a></li>
+            <li<?php echo (Mage::app()->getRequest()->getActionName() == 'create') ? ' class="active"' : '' ?>>
+                <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/create') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Add a Product'); ?></a>
+            </li>
+            <li<?php echo (Mage::app()->getRequest()->getActionName() == 'list') ? ' class="active"' : '' ?>>
+                <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/list') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Product List'); ?><?php if ($this->hasMarkedProducts()): ?><span
+                            class="badge pull-right badge-important"><?php echo $this->getMarkedProductCount(); ?></span><?php endif; ?>
+                </a>
+            </li>
+            <li class="dropdown<?php echo (Mage::app()->getRequest()->getControllerName() == 'settings') ? ' active' : '' ?>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <?php echo Mage::helper('supplierfrontendproductuploader')->__('Settings'); ?> <span
+                        class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/settings/notifications') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Notifications'); ?></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown<?php echo (Mage::app()->getRequest()->getControllerName() == 'reports' || Mage::app()->getRequest()->getActionName() == 'ordered') ? ' active' : '' ?>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <?php echo $this->__('Reports'); ?> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/ordered') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Ordered Items'); ?></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="<?php echo Mage::getUrl() ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Back to Home Page'); ?></a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</div>

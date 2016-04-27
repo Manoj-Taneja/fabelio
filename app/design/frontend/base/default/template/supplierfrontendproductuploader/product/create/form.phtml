@@ -1,0 +1,245 @@
+<?php $categories = $this->getCategories(); ?>
+<?php $attributes = $this->getAttributes(); ?>
+<?php $product = $this->getProductObject(); ?>
+<?php $data = Mage::getSingleton("supplierfrontendproductuploader/session")->getProductData(); ?>
+<?php Mage::getSingleton("supplierfrontendproductuploader/session")->clear(); ?>
+<?php $this->setProduct($product); ?>
+<?php $selectedCategories = isset($data['category']) ? $data['category'] : array(); ?>
+<?php $this->setSelectedCategories($selectedCategories); ?>
+<?php $mediaGallery = (isset($data['image'])) ? $data['image'] : array(); ?>
+
+<div class="container main-container vendor-container">
+    <h1 class="text-center"><?php echo $this->__('Add Product'); ?></h1>
+    <div class="row">
+        <div class="col-md-12 form-container">
+            <form name="product_create_form" id="product_create_form" action="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/save') ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="attribute_set_id" value="<?php echo $this->getAttributeSetId() ?>"/>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="name">
+                                    <?php echo $this->getLabel('name', 'Name', false); ?>
+                                    <span class="required">*</span>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="name" name="name" class="input-text form-control required-entry" value="<?php echo (isset($data['name']) ? $data['name'] : ''); ?>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="short_description">
+                                    <?php echo $this->getLabel('short_description', 'Short Description', false); ?>
+                                    <span class="required">*</span>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <textarea id="short_description" name="short_description" class="input-text form-control required-entry form-control wysiwyg" rows="15"><?php echo (isset($data['short_description']) ? $data['short_description'] : ''); ?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="description">
+                                    <?php echo $this->getLabel('description', 'Detailed Description ', false); ?>
+                                    <span class="required">*</span>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <textarea id="description" name="description" class="input-text form-control required-entry wysiwyg" rows="15"><?php echo (isset($data['description']) ? $data['description'] : ''); ?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="price">
+                                    <?php echo $this->getLabel('price', 'Price', false); ?>
+                                    <span class="required">*</span>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="price" name="price" value="<?php echo (isset($data['price']) ? $data['price'] : ''); ?>" class="input-text form-control required-entry validate-number validate-greater-than-zero" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="special_price">
+                                    <?php echo $this->getLabel('special_price', 'Special Price', false); ?>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="special_price" name="special_price" value="<?php echo (isset($data['special_price']) ? $data['special_price'] : ''); ?>" class="input-text form-control validate-number" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="special_price_from_date">
+                                    <?php echo $this->getLabel('special_price_from_date', 'Special Price From', false); ?>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="special_price_from_date" name="special_price_from_date" value="<?php echo (isset($data['special_price_from_date']) ? $data['special_price_from_date'] : ''); ?>" class="input-text form-control datepicker" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="special_price_to_date">
+                                    <?php echo $this->getLabel('special_price_to_date', 'Special Price To', false); ?>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="special_price_to_date" name="special_price_to_date" value="<?php echo (isset($data['special_price_to_date']) ? $data['special_price_to_date'] : ''); ?>" class="input-text form-control datepicker" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="qty">
+                                    <?php echo $this->getLabel('qty', 'QTY Available', false); ?>
+                                    <span class="required">*</span>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="qty" name="qty" value="<?php echo (isset($data['qty']) ? $data['qty'] : ''); ?>" class="input-text form-control required-entry validate-number validate-greater-than-zero" />
+                            </div>
+                        </div>
+                        <?php if($this->canAddSku()): ?>
+                            <div class="form-group">
+                                <div class="col-md-12 label-container">
+                                    <label for="sku">
+                                        <?php echo $this->getLabel('sku', 'SKU', false); ?>
+                                        <span class="required">*</span>:
+                                    </label>
+                                </div>
+                                <div class="col-md-12 input-container">
+                                    <input type="text" id="sku" name="sku" value="<?php echo (isset($data['sku']) ? $data['sku'] : ''); ?>" class="input-text form-control  required-entry" />
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <div class="form-group">
+                            <div class="col-md-12 label-container">
+                                <label for="weight">
+                                    <?php echo $this->getLabel('weight', 'Product Weight', false); ?>
+                                    <span class="required">*</span>:
+                                </label>
+                            </div>
+                            <div class="col-md-12 input-container">
+                                <input type="text" id="weight" name="weight" value="<?php echo (isset($data['weight']) ? $data['weight'] : ''); ?>" class="input-text form-control required-entry validate-number" />
+                            </div>
+                        </div>
+                        <?php foreach($attributes AS $attribute): ?>
+                            <?php $attributeObj = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute['code']); ?>
+
+                            <?php if($attributeObj->getData('is_user_defined') == 1) : ?>
+                                <?php $attributeFrontend = $attributeObj->getFrontend(); ?>
+                                <?php $isRequired = $attributeFrontend->getAttribute()->getIsRequired(); ?>
+                                <div class="form-group">
+                                    <div class="col-md-12 label-container">
+                                        <label for="product_name">
+                                            <?php echo $this->getLabel($attributeObj); ?>
+                                            <?php if($isRequired == 1): ?><span class="required">*</span> <?php endif; ?>:
+                                        </label>
+                                    </div>
+                                    <div class="col-md-12 input-container">
+                                        <?php echo $this->getAttributeHtml($attributeObj, $data); ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-sm-offset-1 col-md-offset-1 right sidebar">
+                    <div class="form-group">
+                        <div class="col-md-12 photo-content">
+                            <h5><?php echo $this->__('Product Images'); ?></h5>
+                            <span class="file_upload_span btn btn-primary"><?php echo $this->__('Select and Upload Image')?></span>
+                            <input type="file" name="file_upload" id="file_upload" multiupload />
+                            <input type="hidden" class="image hidden" name="main_photo" id="main_photo" value="<?php echo isset($data['main_photo']) ? $data['main_photo'] : ''; ?>" />
+                            <div class="col-md-8 photos">
+                                <ul class="photo panel-body">
+                                    <?php foreach($mediaGallery AS $img) : ?>
+                                        <li class="thumbnail<?php echo (isset($data['main_photo']) && $data['main_photo'] == $img) ? ' main' : '' ?>">
+                                            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>upload/resized<?php echo $img; ?>" alt="" data-name="<?php echo $img; ?>"/>
+                                            <span class="remove"><i class="glyphicon glyphicon-remove"></i></span>
+                                            <span class="default"><i class="glyphicon glyphicon-home"></i></span>
+                                            <input type="hidden" class="image hidden" name="image[]" value="<?php echo $img; ?>" /></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="category-list">
+                        <h5><?php echo $this->__('Product Categories'); ?></h5>
+                            <?php echo $this->getNodes($categories); ?>
+                    </ul>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-4 col-sm-offset-4 col-md-offset-5 btn-save-fix">
+                        <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save Product') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('product_create_form');
+    //]]>
+    jQuery(document).ready(function($){
+        jQuery('.datepicker').datepicker();
+
+        jQuery('#file_upload').fileupload({
+            url: '<?php echo Mage::getUrl('supplierfrontendproductuploader/product/upload') ?>',
+            dataType: 'json',
+            done: function (e, data) {
+                if(data.result.success) {
+                    $('.photo.panel-body').append('<li class="thumbnail"><img src="' + data.result.url + '" alt="" data-name="' + data.result.name + '"/><span class="remove"><i class="glyphicon glyphicon-remove" title="Remove This Picture"></i></span><span class="default"><i class="glyphicon glyphicon-home" title="Set As Main Picture"></i></span><input type="hidden" class="image hidden" name="image[]" value="' + data.result.name + '" /></li>');
+                } else {
+                    alert(data.result.message);
+                }
+            }
+        })
+        .prop('disabled', !jQuery.support.fileInput)
+            .parent().addClass(jQuery.support.fileInput ? undefined : 'disabled')
+        .on('fileuploadadd', function (e, data) {
+            var limit = <?php echo $this->getMaxImagesCount() ?>;
+    
+            if(jQuery('.thumbnail:visible').length >= limit) {
+                alert('The upload limit has been reached');
+                return false;
+            }
+        });
+
+        jQuery(document).on('click', 'li span.remove', function($){
+            var img = jQuery(this).prev();
+            var imgName = jQuery(img).attr('data-name');
+
+            $j('input.image.hidden').each(function(el){
+                if($j(this).val() == imgName) {
+                    $j(this).val('');
+                }
+            });
+            $j(this).parent().fadeOut();
+
+        });
+
+        jQuery('.wysiwyg').wysihtml5({
+            color: true,
+            html: true,
+            image: false
+        });
+        jQuery(document).on('click', 'li span.default', function($){
+            var img = jQuery(this).prev().prev();
+            var imgName = jQuery(img).attr('data-name');
+            var mainPhotoInput = jQuery('#main_photo');
+            mainPhotoInput.val(imgName);
+
+            if(jQuery('li.thumbnail.main').length) {
+                jQuery('li.thumbnail.main').removeClass('main');
+            }
+
+            img.parent().addClass('main');
+        });
+    });
+</script>

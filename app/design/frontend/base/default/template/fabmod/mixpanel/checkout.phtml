@@ -1,0 +1,129 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+if ($helper->isTagsEnabled()) {
+if (Mage::getSingleton('customer/session')->isLoggedIn()){
+?>
+
+<script type="text/javascript">
+mixpanel.track(
+    "Checkout Process",
+    {"Step":"Login" }
+);
+</script>
+<?php } else { ?>
+<script type="text/javascript">
+mixpanel.track(
+    "Checkout Process",
+    {"Step":"Register" }
+);
+</script>
+<?php } ?>
+<script type="text/javascript">
+jQuery(function($){ 
+    $('#billing-buttons-container .button').on('click', function(e){
+       if(billingForm.validator.validate()){
+         mixpanel.track(
+             "Checkout Process",
+             {"Step":"Billing" }
+          );
+      if (document.getElementById('billing:use_for_shipping_yes').checked){
+          mixpanel.track(
+             "Checkout Process",
+             {"Step":"Shipping","Option":"Use Billing Address" }
+          );
+         } 
+       }
+   });
+    $('#shipping-buttons-container .button').on('click', function(e){
+       if(shippingForm.validator.validate()){
+          if (document.getElementById('shipping:same_as_billing').checked){
+          mixpanel.track(
+             "Checkout Process",
+             {"Step":"Shipping","Option":"Use Billing Address" }
+          );
+          } else {
+          mixpanel.track(
+             "Checkout Process",
+             {"Step":"Shipping","Option":"Do not use Billing Address" }
+          );
+          }
+          
+       }
+   });
+    $('#payment-buttons-container .fab-btn-primary').on('click', function(e){
+    if(payment.validate()){
+      var option=  jQuery("input[name='payment[method]']:checked").val();
+    
+          mixpanel.track(
+             "Checkout Process",
+             {"Step":"Payment","Option":option  }
+          );
+    }
+   });
+});
+
+function mixpanelReview(){
+  try{
+          mixpanel.track(
+             "Checkout Process",
+             {"Step":"Order Review"}
+          );
+  } catch(e) {
+        return; } 
+}
+</script>
+
+<?php } ?>
+
+<?php
+  if ($helper->isAdwordsEnabled()) { ?>
+  <script type="text/javascript">
+  var google_conversion_id = 946949897;
+  var google_conversion_language = "en";
+  var google_conversion_format = "3";
+  var google_conversion_color = "ffffff";
+  var google_conversion_label = "OnIWCK2Q0WQQiZ7FwwM";
+  var google_remarketing_only = false;
+  </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async>
+    </script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?label=OnIWCK2Q0WQQiZ7FwwM&guid=ON&script=0"/>
+</div>
+</noscript>
+
+
+<script type="text/javascript">
+    goog_snippet_vars_payment = function() { 
+      var w = window; w.google_conversion_id = 946949897; 
+      w.google_conversion_label = "xgXuCLyQ0WQQiZ7FwwM"; 
+      w.google_remarketing_only = false; }
+      
+     goog_report_conversion_payment = function(url) {
+     goog_snippet_vars_payment();
+     window.google_conversion_format = "3";
+     var opt = new Object();
+     opt.onload_callback = function() {
+       if (typeof(url) != 'undefined') { 
+         // window.location = url; 
+         }
+     }
+     var conv_handler = window['google_trackConversion'];
+     if (typeof(conv_handler) == 'function')
+     { conv_handler(opt); }
+     }
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js" async></script>
+<script type="text/javascript">
+jQuery(function($){ 
+   $('#payment-buttons-container .fab-btn-primary').on('click', function(e){
+    if(payment.validate()){
+    goog_report_conversion_payment( <?php echo "'"."http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"."'"; ?> );   
+    }
+    });
+});
+
+</script>
+
+<?php } ?>

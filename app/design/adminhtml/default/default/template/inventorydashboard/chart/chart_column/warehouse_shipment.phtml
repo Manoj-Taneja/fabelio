@@ -1,0 +1,123 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php     
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    $collection = Mage::getModel('inventoryplus/warehouse_shipment')->getCollection();
+        $collection->getSelect()
+                ->joinLeft(
+                        array('shipment_item' => $resource->getTableName('sales/shipment_item')), "main_table.shipment_id = shipment_item.parent_id" .
+                        " and main_table.product_id = shipment_item.product_id" .
+                        " and shipment_item.order_item_id = main_table.item_id", array('*')
+                )
+                ->join(
+                        array('shipment' => $resource->getTableName('sales/shipment')), "main_table.shipment_id = shipment.entity_id" , array(''))
+                ->join(
+                        array('warehouse' => $resource->getTableName('inventoryplus/warehouse')), "main_table.warehouse_id = warehouse.warehouse_id", array('*')
+                )
+        ;
+        $collection->getSelect()->group(array('warehouse.warehouse_id'));
+        $collection->getSelect()->columns(array(
+            'warehouse_name' => 'warehouse.warehouse_name',
+            'total_shipment' => 'SUM(main_table.qty_shipped)',
+            'sales_total' => 'SUM(shipment_item.qty * shipment_item.price)'
+        ));
+        $collection->setIsGroupCountSql(true);
+    
+            
+    $warehouseShipment = array();
+    
+        foreach($collection as $result){              
+            $warehouseShipment['items'][$result['warehouse_id']] = $result->getTotalShipment();
+            $warehouseShipment['subtotal'][$result['warehouse_id']] = $result->getSalesTotal();
+        }
+    
+    $warehouseCollection = Mage::getModel('inventoryplus/warehouse')->getCollection();    
+    $i = 0;    
+    $categories = '[';
+    $series['warehouse']['name'] = $this->__('Qty. shipped');
+    $series['warehouse']['data'] = '[';    
+    $series['total']['name'] = $this->__('Grand Total %s',Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol());
+    $series['total']['data'] = '[';    
+    foreach($warehouseCollection as $warehouse){
+        $qtyShipped = 0;
+        $totalShipped = 0;
+        if(isset($warehouseShipment['items'][$warehouse->getId()])){
+            $qtyShipped = $warehouseShipment['items'][$warehouse->getId()];
+        }
+        if(isset($warehouseShipment['subtotal'][$warehouse->getId()])){
+            $totalShipped = $warehouseShipment['subtotal'][$warehouse->getId()];
+        }
+       
+        if($i!=0){
+            $categories .= ',';
+            $series['warehouse']['data'] .= ',';
+            $series['total']['data'] .= ',';
+        }
+        $categories .= '\''.$warehouse->getWarehouseName().'\'';
+        $series['warehouse']['data'] .= floatval($qtyShipped);         
+        $series['total']['data'] .= floatval($totalShipped);         
+        $i++;
+    }
+    $categories .= ']';
+    $series['warehouse']['data'] .= ']';
+    $series['total']['data'] .= ']';
+?>
+                            
+<script type="text/javascript">
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '<?php echo $chart->getName() ?>',
+            x: -20 //center
+        },
+        subtitle: {
+//            text: 'Source: WorldClimate.com',
+//            x: -20
+        },
+        xAxis: {
+            categories: <?php echo $categories ?>
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '<?php echo $this->__('Qty. shipped') ?>'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [
+            <?php $count = 0; ?>
+            <?php foreach($series as $serie): ?>
+                <?php if(!$count == 0) echo ','; ?>
+                <?php $count++; ?>    
+                {
+                    name: '<?php echo $serie['name']; ?>',
+                    data: <?php echo $serie['data']; ?>
+                }
+            <?php endforeach; ?>
+        ]
+    });
+});
+</script>
+<?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventoryreports')):?>
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin:10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("inventoryreportsadmin/adminhtml_sales/warehouse", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<?php endif;?>
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px;  margin: 30px auto 0;"></div>

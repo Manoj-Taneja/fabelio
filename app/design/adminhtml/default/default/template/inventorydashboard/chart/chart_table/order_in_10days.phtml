@@ -1,0 +1,67 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php $days = Mage::helper('inventorydashboard')->getDateRangeByDay(10); ?>
+<?php $from = $days['from'] ?>
+<?php $to = $days['to'] ?>
+
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px; margin: 0 auto; overflow: auto;">
+    <div text-anchor="middle" class="highcharts-title" zIndex="4" style="color: #333333;font-size: 18px;fill: #333333;text-align: center;padding-bottom: 10px;" >
+        <tspan><?php echo $chart->getName() ?></tspan>
+    </div>
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("adminhtml/sales_order", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+    <table style="width: 100%;">
+        <thead class="thead-dashboard-table">
+            <tr>
+                <th style="text-align: center;"><?php echo $this->__('Date') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Grand Total') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Total Qty') ?></th>
+            </tr>
+        </thead>
+        <tbody class="tbody-dashboard-table">            
+            <?php     
+                $timezoneLocal = Mage::app()->getStore()->getConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE);
+                $from->setTimezone($timezoneLocal);
+                $to->setTimezone($timezoneLocal);
+                $dates = array();
+                $datas = array();
+                while($from->compare($to) < 0){
+                    $d = $from->toString('yyyy-MM-dd');
+                    $from->addDay(1);
+                    $dates[] = $d;
+                }                
+                $resource = Mage::getSingleton('core/resource');        
+                $readConnection = $resource->getConnection('core_read');
+                $i = 0;
+                foreach($dates as $date){
+                    $start = $date.' 00:00:00';
+                    $end = $date.' 23:59:59';
+                    $results = '';
+                    $sql = 'SELECT `grand_total`,`total_item_count` from '.$resource->getTableName('sales/order').' WHERE 
+                                                        (`created_at` >= \''.$start.'\')
+                                                    and (`created_at` <= \''.$end.'\')
+                                                    and (`status` != "closed")
+                                                    and (`status` != "canceled")'; 
+                    $results = $readConnection->query($sql);
+                    $grandTotal = 0;
+                    $items = 0;
+                    if($results){
+                        foreach($results as $result){
+                            $grandTotal += $result['grand_total'];
+                            $items += $result['total_item_count'];
+                        }
+                    }
+                ?>
+                    <tr class="<?php if($i%2 != 0){ echo 'td-dashboard-table'; } ?>"> 
+                        <td><?php echo Mage::helper('core')->formatDate($date, 'medium', false) ?></td>
+                        <td><?php echo Mage::helper('core')->currency($grandTotal) ?></td>
+                        <td><?php echo $items ?></td>
+                    </tr>
+                <?php
+                    $i++;
+                }                
+            ?>
+        </tbody>
+    </table>
+</div>

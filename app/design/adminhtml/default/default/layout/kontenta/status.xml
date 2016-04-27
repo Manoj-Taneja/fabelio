@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout>
+	<adminhtml_sales_order_view>
+		<reference name="order_tab_info">
+				<block type = 'statuses/sales_order_view_changestatus' name="change_status" template="kontenta/order/view/changestatus.phtml">
+					<action method="setChild"><name>order_info</name><block>order_info</block></action>
+				</block>
+				<action method="setChild"><name>order_info</name><block>change_status</block></action>
+		</reference>
+	</adminhtml_sales_order_view>
+</layout>

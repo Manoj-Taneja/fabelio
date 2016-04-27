@@ -1,0 +1,80 @@
+<?php $requeststockId = $this->getRequeststockid(); ?>
+<?php $isSendstock = $this->getIssendstock(); ?>
+<?php
+if ($isSendstock) {
+    $requeststock = Mage::getModel('inventorywarehouse/sendstock')->load($requeststockId);
+    $items = Mage::getModel('inventorywarehouse/sendstock_product')
+        ->getCollection()
+        ->addFieldToFilter('warehouse_sendstock_id', $requeststockId);
+} else {
+    $requeststock = Mage::getModel('inventorywarehouse/requeststock')->load($requeststockId);
+    $items = Mage::getModel('inventorywarehouse/requeststock_product')
+        ->getCollection()
+        ->addFieldToFilter('warehouse_requeststock_id', $requeststockId);
+}
+$warehouseSource = Mage::getModel('inventoryplus/warehouse')->load($requeststock->getWarehouseIdFrom());
+$warehouseTarget = Mage::getModel('inventoryplus/warehouse')->load($requeststock->getWarehouseIdTo());
+if ($warehouseSource->getStreet())
+    $warehouseSourceStreet = $warehouseSource->getStreet() . '-';
+if ($warehouseTarget->getStreet())
+    $warehouseTargetStreet = $warehouseTarget->getStreet() . '-';
+?>
+<table cellspacing="0" cellpadding="0" border="0" width="650" style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+    <tr>
+        <td valign="top">
+            <i><?php echo $this->__('From') ?></i><br />
+            <strong><?php echo $warehouseSource->getWarehouseName() ?></strong><br />
+            <i><?php echo $warehouseSourceStreet ?></i>
+            <i><?php echo $warehouseSource->getCity() ?></i><br />
+            <i><?php echo Mage::getModel('directory/country')->load($warehouseSource->getCountryId())->getName(); ?></i><br />
+        </td>
+        <td valign="top">
+            <i><?php echo $this->__('To') ?></i><br />
+            <strong><?php echo $warehouseTarget->getWarehouseName() ?></strong><br />
+            <i><?php echo $warehouseTargetStreet ?></i>
+            <i><?php echo $warehouseTarget->getCity() ?></i><br />
+            <i><?php echo Mage::getModel('directory/country')->load($warehouseTarget->getCountryId())->getName(); ?></i><br />
+        </td>
+        <td valign="top">
+            <i><?php echo $this->__('Information') ?></i><br />
+            <i><?php echo 'Created By: ' . $requeststock->getCreatedBy() ?></i><br />
+            <i><?php echo 'Created on: ' . $requeststock->getCreatedAt() ?></i><br />
+            <i><?php echo 'Reasons: ' . $requeststock->getReason() ?></i><br />
+        </td>
+    </tr>
+</table>
+<br/>
+<table cellspacing="0" cellpadding="0" border="0" width="650" style="border:1px solid #EAEAEA;">
+    <thead>
+        <tr>
+            <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Product') ?></th>
+            <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('SKU') ?></th>
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px">
+                <?php if($isSendstock){
+                        echo $this->__('Qty Sent') ;
+                    }else {
+                        echo $this->__('Qty Requested');
+                        }
+                ?></th>                                                                                     
+        </tr>
+    </thead>
+
+    <?php $i = 0;
+    foreach ($items as $item):
+        ?>            
+        <tbody<?php echo $i % 2 ? ' bgcolor="#F6F6F6"' : '' ?>>
+            <tr>
+                <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <strong style="font-size:11px;"><?php echo $this->htmlEscape($item->getProductName()) ?></strong>                        
+                </td>
+                <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+    <?php echo $this->htmlEscape($item->getProductSku()) ?>
+                </td>
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+    <?php echo $item->getQty() ?>
+                </td>                                        
+            </tr>
+        </tbody>
+        <?php $i++; ?>
+<?php endforeach; ?>
+</table>   

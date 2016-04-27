@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+
+    <migs_payment_noidr>
+        <reference name="head">
+            <action method="setTitle" translate="title"><title>Ganti Mata Uang</title></action>
+        </reference>
+        <reference name="root">
+		     <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <action method="setHeaderTitle" translate="title"><title>Ganti Mata Uang</title></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="noidr" template="migs/noidr.phtml"/>
+			<block type="directory/currency" name="currency" template="directory/currency.phtml"/>
+        </reference>
+    </migs_payment_noidr>
+	
+	<migs_payment_response>
+		<!--<reference name="head">
+            <action method="setTitle" translate="title"><title>Order Selesai</title></action>
+     </reference>-->
+        <reference name="root">
+		     <action method="setTemplate"><template>page/1column.phtml</template></action>
+            <!--<action method="setHeaderTitle" translate="title"><title>Order Selesai</title></action>-->
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="migs_response" template="migs/payment/checkout/response.phtml"/>
+        </reference>
+	</migs_payment_response>
+
+</layout>

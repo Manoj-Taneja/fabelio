@@ -1,0 +1,105 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+$_product = Mage::registry('current_product');
+$categories = $_product->getCategoryIds();
+if ($helper->isTagsEnabled()) {
+?>
+<script type="text/javascript">
+mixpanel.track(
+    "Page Viewed",
+    {"Name":"Product" }
+);
+mixpanel.track(
+    "Product Viewed",
+    {'Name': '<?php echo $_product->getName(); ?>',       // Name or ID is required.
+     'Id': '<?php echo $_product->getId(); ?>',
+     'Sku': '<?php echo $_product->getSku(); ?>',
+     'Selling Price': '<?php echo $_product->getFinalPrice(); ?>',
+     'Original Price': '<?php echo $_product->getPrice(); ?>',
+     'Category' :'<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>',
+     <?php if($_product->getManufacturer()!=''){ ?>  
+         'Designer' : '<?php echo $_product->getAttributeText('manufacturer'); ?>'
+     <?php } ?>
+    }
+   );
+
+</script>
+<script type="text/javascript">
+jQuery(function($){ 
+   $('.add-to-cart-btn').on('click', function(e){
+       if(productAddToCartForm.validator.validate()){
+         if(jQuery('.selected-label').text()!=''){
+           var variant = jQuery('.selected-label').text();
+         }
+         else {
+           var variant = 'parent';
+         }
+mixpanel.track(
+    "Added To Cart",
+    {'Name': '<?php echo $_product->getName(); ?>',       // Name or ID is required.
+     'Id': '<?php echo $_product->getId(); ?>',
+     'Sku': '<?php echo $_product->getSku(); ?>',
+     'Selling Price': '<?php echo $_product->getFinalPrice(); ?>',
+     'Original Price': '<?php echo $_product->getPrice(); ?>',
+     <?php if($_product->getManufacturer()!=''){ ?>  
+         'Designer' : '<?php echo $_product->getAttributeText('manufacturer'); ?>',
+     <?php } ?>
+     'Variant' : variant,
+     'Quantity' : jQuery('#qty').val()
+     }
+   );
+       }
+     });
+  });
+</script>
+
+<?php } ?>
+
+<?php
+if ($helper->isAdwordsEnabled()) { ?>
+  
+<script type="text/javascript">
+var google_conversion_id = 946949897;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "4cHzCNb1wmQQiZ7FwwM";
+var google_remarketing_only = false;
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async>
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?label=4cHzCNb1wmQQiZ7FwwM&guid=ON&script=0"/>
+</div>
+</noscript>
+
+<script type="text/javascript">
+goog_snippet_vars_wishlist = function(){ 
+  var w = window; w.google_conversion_id = 946949897; 
+  w.google_conversion_label = "vK_TCOWM0WQQiZ7FwwM"; 
+  w.google_remarketing_only = false; 
+}
+    goog_report_conversion_wishlist = function(url) {
+    goog_snippet_vars_wishlist();
+    window.google_conversion_format = "3";
+    var opt = new Object();
+    opt.onload_callback = function() {
+      if (typeof(url) != 'undefined')
+      { 
+       // window.location = url;
+      }
+    }
+    var conv_handler = window['google_trackConversion'];
+    if (typeof(conv_handler) == 'function') { conv_handler(opt); }
+    }
+</script>
+<script type="text/javascript">
+jQuery(function($){ 
+  $('.add-to-links-btn').on('click', function(e){
+   goog_report_conversion_wishlist( <?php echo "'"."http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"."'"; ?> );   
+   });
+});
+
+</script>
+<?php } ?>

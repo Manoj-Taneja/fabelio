@@ -1,0 +1,59 @@
+<?php
+$helper = Mage::helper("fabmod_fbpixel");
+if (!$helper->isFbPxEnabled()&&!$helper->isInPxEnabled()) {
+  return;
+}
+if($helper->isFbPxEnabled()){
+  $pxId = $helper->getPxId();
+}
+if($helper->isInPxEnabled()){
+   $inPxId = $helper->getInPxId();
+}
+?>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','//connect.facebook.net/en_US/fbevents.js');
+<?php
+if($helper->isFbPxEnabled()){ ?>
+  fbq('init', '<?php echo $pxId; ?>');
+<?php } ?>
+<?php
+if($helper->isInPxEnabled()){ ?>
+  fbq('init', '<?php echo $inPxId; ?>');
+<?php } ?>
+fbq('track', 'PageView');
+</script>
+<script type="text/javascript">
+jQuery(function($){ 
+   $('#footer-newsletter-form-validate-detail .submit').on('click', function(e){
+   fbq('track','Lead');
+   });
+});
+</script>
+<script type="text/javascript">
+  jQuery(function($){$('#newsletter_popup .block-content .fab-btn').on('click', function(e){
+   fbq('track','Lead');
+  });
+  });
+</script>
+<?php
+  if(Mage::getModel('core/session')->getFbPixUserRegistered()){ ?>
+   <script type="text/javascript">
+    fbq('track','CompleteRegistration');
+   </script>
+   <?php 
+    Mage::getModel('core/session')->unsFbPixUserRegistered(); } 
+?>
+<?php
+  if(Mage::getModel('core/session')->getFbPixUserLoggedIn()){ ?>
+   <script type="text/javascript">
+    fbq('track','Login');
+   </script>
+   <?php 
+    Mage::getModel('core/session')->unsFbPixUserLoggedIn(); } 
+?>
+    
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?php echo $pxId; ?>&ev=PageView&noscript=1" /></noscript>

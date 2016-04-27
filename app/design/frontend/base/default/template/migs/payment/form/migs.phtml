@@ -1,0 +1,15 @@
+<?php
+/**
+ * Magento
+ *
+ * @author    WakaMage http://www.wakamage.com <cs@wakamage.com>
+ * @copyright Copyright (C) 2013 WakaMage. (http://www.wakamage.com)
+ *
+ */
+?>
+<!-- Logo -->
+<?php if (Mage::getStoreConfig('payment/migs/jcb_logo') == 0): ?>
+	<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'migs/logo-mc-visa.png'; ?>" alt="<?php echo Mage::helper('migs')->__('MIGS Logo') ?>" class="v-middle" />
+<?php elseif (Mage::getStoreConfig('payment/migs/jcb_logo') == 1): ?>
+	<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'migs/logo-mc-visa-jcb.png'; ?>" alt="<?php echo Mage::helper('migs')->__('MIGS Logo') ?>" class="v-middle" />
+<?php endif; ?>

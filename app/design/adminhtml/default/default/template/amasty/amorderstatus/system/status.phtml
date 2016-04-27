@@ -1,0 +1,56 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Orderstatus
+ */
+
+$_statuses = $this->getSystemStatuses();
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="width: 50%;"><h3 class="icon-head head-adminhtml-status">Manage System Order Statuses</h3></td>
+                <td class="form-buttons">
+                    <button style="" onclick="editForm.submit();" class="scalable save" type="button"><span>Save System Statuses</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="entry-edit">
+    <form method="post" action="<?php echo $this->getSaveUrl(); ?>" id="edit_form">
+        <div>
+            <input type="hidden" value="<?php echo $this->getFormKey(); ?>" name="form_key">
+        </div>
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Status Names'); ?></h4>
+            </div>
+            <div id="base_fieldset" class="fieldset">
+                <div class="hor-scroll">
+                    <table cellspacing="0" class="form-list">
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td><div style="padding-bottom: 3px;">&nbsp;&nbsp;<?php echo $this->__('Leave blank if you wish to keep default name.'); ?></div></td>
+                            </tr>
+                            <?php foreach ($_statuses as $label => $data): ?>
+                            <tr>
+                                <td class="label"><label for="id-<?php echo $data['alias'] ?>"><?php echo $label; ?></label></td>
+                                <td class="value"><input type="text" class="input-text" value="<?php echo $data['custom_name']; ?>" name="system[<?php echo $data['alias'] ?>]" id="id-<?php echo $data['alias'] ?>"></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    editForm = new varienForm('edit_form');
+</script>

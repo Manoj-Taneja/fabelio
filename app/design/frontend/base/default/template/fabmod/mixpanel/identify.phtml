@@ -1,0 +1,210 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+if ($helper->isTagsEnabled()) {
+?>
+  <?php
+  $action = Mage::app()->getRequest()->getActionName();
+  if($action == 'noRoute'){
+  ?>
+    <script type="text/javascript">
+    mixpanel.track(
+      "Page Viewed",
+      {"Name":"404",
+       "URL":"<?php echo $_SERVER['REQUEST_URI']; ?>" }
+    );
+    </script>
+
+  <?php
+  }
+  ?>
+  <?php 
+  if(strpos($_SERVER['REQUEST_URI'],"blog")!==false){
+  ?>
+    <script type="text/javascript">
+    mixpanel.track(
+      "Page Viewed",
+      {"Name":"Blog",
+       "URL":"<?php echo $_SERVER['REQUEST_URI']; ?>" }
+
+    );
+    </script>
+  <?php
+  }
+  ?>
+  
+  <?php
+  if(strpos($_SERVER['REQUEST_URI'],"promotion")!==false){
+  ?>
+    <script type="text/javascript">
+    mixpanel.track(
+      "Page Viewed",
+      {"Name":"Promotion",
+       "URL":"<?php echo $_SERVER['REQUEST_URI']; ?>" }
+    );
+    </script>
+  <?php
+  }
+  ?>
+
+  <?php
+  if(strpos($_SERVER['REQUEST_URI'],"faq")!==false){
+  ?>
+    <script type="text/javascript">
+    mixpanel.track(
+      "Page Viewed",
+      {"Name":"FAQ",
+       "URL":"<?php echo $_SERVER['REQUEST_URI']; ?>" }
+    );
+    </script>
+  <?php
+  }
+  ?>
+
+<?php
+if (Mage::getSingleton('customer/session')->isLoggedIn()){
+	$customerId= Mage::getSingleton('customer/session')->getCustomer()->getId();
+?>
+
+  <script type="text/javascript">
+  window.sitehound = window.sitehound || {};
+  sitehound.userId = '<?php echo $customerId; ?>';  
+  mixpanel.people.set({
+      "name":"<?php echo  Mage::getSingleton('customer/session')->getCustomer()->getName(); ?>",
+      "$email":"<?php echo  Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?>"
+    });
+
+  </script>
+
+<?php
+}
+}
+?>
+
+<?php
+if ($helper->isAdwordsEnabled()) { ?>
+  
+<script type="text/javascript">
+var google_conversion_id = 946949897;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "P6S1CKSQ0WQQiZ7FwwM";
+var google_remarketing_only = false;
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async></script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?label=P6S1CKSQ0WQQiZ7FwwM&guid=ON&script=0"/>
+</div>
+</noscript>
+
+<script type="text/javascript">
+    goog_snippet_vars_newsletter_footer = function() {
+          var w = window;
+          w.google_conversion_id = 946949897;
+          w.google_conversion_label = "htViCI_N1GQQiZ7FwwM";
+          w.google_remarketing_only = false;
+    }
+
+goog_report_conversion_newsletter_footer = function(url) {
+  goog_snippet_vars_newsletter_footer();
+  window.google_conversion_format = "3";
+  var opt = new Object();
+  opt.onload_callback = function() {
+    if (typeof(url) != 'undefined') {
+    //  window.location = url;
+    }
+  }
+  var conv_handler = window['google_trackConversion'];
+  if (typeof(conv_handler) == 'function') {
+    conv_handler(opt);
+  }
+}
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js" async></script>  
+<script type="text/javascript">
+jQuery(function($){ 
+   $('#footer-newsletter-form-validate-detail .submit').on('click', function(e){
+   ga('send', 'event', {eventCategory: 'email', eventAction: 'signup', eventLabel: 'footer'});
+   goog_report_conversion_newsletter_footer(<?php echo "'"."http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"."'"; ?> );   
+   });
+});
+</script>
+
+<script type="text/javascript">
+
+  goog_snippet_vars_newsletter_popup = function()
+  {
+    var w = window; w.google_conversion_id = 946949897; 
+    w.google_conversion_label = "htViCI_N1GQQiZ7FwwM"; 
+    w.google_remarketing_only = false; 
+  }
+
+  goog_report_conversion_newsletter_popup = function(url) {
+  goog_snippet_vars_newsletter_popup();
+  window.google_conversion_format = "3";
+  var opt = new Object();
+  opt.onload_callback = function() {
+    if (typeof(url) != 'undefined')
+    { 
+     // window.location = url; 
+    }
+  }
+  var conv_handler = window['google_trackConversion'];
+  if (typeof(conv_handler) == 'function') { conv_handler(opt); }
+}
+
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js" async></script>
+<script type="text/javascript">
+  jQuery(function($){$('#newsletter_popup .block-content .fab-btn').on('click', function(e){
+    ga('send', 'event', {eventCategory: 'email', eventAction: 'signup', eventLabel: 'popup'});
+    goog_report_conversion_newsletter_popup(<?php echo "'"."http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"."'"; ?>);
+
+  });
+  });
+</script>
+
+<?php
+  if(Mage::getModel('core/session')->getNewUserRegistered()){ ?>
+  <script type="text/javascript">
+    var google_conversion_id = 946949897;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "KgMYCNWP4WQQiZ7FwwM";
+    var google_remarketing_only = false;
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async></script>
+  <noscript>
+    <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?label=KgMYCNWP4WQQiZ7FwwM&guid=ON&script=0"/>
+  </div>
+  </noscript> 
+    <?php 
+    Mage::getModel('core/session')->unsNewUserRegistered(); } 
+?>
+
+<?php
+  if(Mage::getModel('core/session')->getUserLoggedIn()){ ?>
+  <script type="text/javascript">
+    var google_conversion_id = 946949897;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "PxJjCJmV4WQQiZ7FwwM";
+    var google_remarketing_only = false;
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async></script>
+  <noscript>
+    <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?label=PxJjCJmV4WQQiZ7FwwM&guid=ON&script=0"/>
+  </div>
+  </noscript> 
+    <?php 
+    Mage::getModel('core/session')->unsUserLoggedIn(); } 
+?>
+
+
+<?php } ?>
+

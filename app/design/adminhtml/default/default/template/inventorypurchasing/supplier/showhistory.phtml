@@ -1,0 +1,70 @@
+<?php 
+    $supplierHistoryId = $this->getRequest()->getParam('supplierHistoryId');
+    $supplierHistory = $this->getSupplierHistory($supplierHistoryId);
+    $supplierHistoryContent = $this->getSupplierContentByHistoryId($supplierHistoryId);
+	$supplierStatus = array(1=>$this->__('Enable'),2=>$this->__('Disable')); 
+?>
+<div class="content-header">
+    <h3 class="icon-head head-adminhtml-supplier"><?php echo $this->__('CHANGE HISTORY')?></h3>
+</div>
+<div>
+    <?php   echo $this->__('Action Owner: ').'<strong>'.$supplierHistory->getCreateBy().'</strong>'; ?>
+    <br />
+    <?php   echo $this->__('Time Stamp: ').'<strong>'.date('Y-m-d H:i:s',Mage::getModel('core/date')->timestamp($supplierHistory->getTimeStamp())).'</strong>';?>
+</div>
+<br />
+<?php if(count($supplierHistoryContent)): ?>
+    <div class="grid">
+        <div class="hor-scroll" style="max-height:300px;overflow-y:auto;">
+            <table cellspacing="0" id="supplier_history_id_table" class="data">
+                <colgroup>
+                    <col>
+                    <col width="280">
+                    <col width="280">
+                </colgroup>
+                <thead>
+                    <tr class="headings">
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title"><?php echo $this->__('Field Name') ?></span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('Old Value'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('New Value'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                    </tr>   
+                </thead>    
+                <tbody>
+                    <?php $i = 0 ?>
+                    <?php foreach($supplierHistoryContent as $content): ?>
+                        <?php $i++ ?>
+                        <tr class="even pointer">
+                            <td class=" ">
+                                <?php echo $content->getData('field_name') ?>
+                            </td>
+                            <td class=" ">
+                                <?php $oldValue = $content->getData('old_value');echo $supplierStatus[$oldValue]; ?>                                
+                            </td>
+                            <td class=" last">
+                                <?php $newVales = $content->getData('new_value');echo $supplierStatus[$newVales]; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php else: ?>
+    <?php echo $this->__('Not found any supplier history!') ?>
+<?php endif; ?>

@@ -1,0 +1,109 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Rma
+ * @version    1.5.3
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php $_item = $this->getItem() ?>
+<?php $_helper = Mage::helper('awrma') ?>
+<?php $viewOnly = $_item->getData('awrma_view_only') ?>
+<?php $itemCount = $_helper->getItemCount($_item); ?>
+<tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
+    <td><h3 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h3>
+            <?php if ($this->getLinks()): ?>
+                <dl class="item-options">
+                    <dt><?php echo $this->getLinksTitle(); ?></dt>
+                    <?php foreach ($this->getLinks()->getPurchasedItems() as $_link): ?>
+                        <dd><?php echo $this->escapeHtml($_link->getLinkTitle()) ?> (<?php echo $_link->getNumberOfDownloadsUsed() . ' / ' . ($_link->getNumberOfDownloadsBought()?$_link->getNumberOfDownloadsBought():Mage::helper('downloadable')->__('U')) ?>)</dd>
+                    <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+        <?php if ($_options = $this->getItemOptions()): ?>
+            <dl class="item-options">
+                <?php foreach ($_options as $_option) : ?>
+                    <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                    <?php if (!$this->getPrintStatus()): ?>
+                        <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                        <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
+                            <?php echo $_formatedOptionValue['value'] ?>
+                            <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                <div class="truncated_full_value">
+                                    <dl class="item-options">
+                                        <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
+                                        <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+                                    </dl>
+                                </div>
+                            <?php endif; ?>
+                        </dd>
+                    <?php else: ?>
+                        <dd><?php echo $this->htmlEscape((isset($_option['print_value']) ? $_option['print_value'] : $_option['value'])) ?></dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php echo $this->htmlEscape($_item->getDescription()) ?>
+        <?php if ($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId()): ?>
+            <a href="#" id="order-item-gift-message-link-<?php echo $_item->getId() ?>" class="gift-message-link" onclick="return giftMessageToogle('<?php echo $_item->getId() ?>')"><?php echo $this->__('Gift Message') ?></a>
+        <?php endif; ?>
+    </td>
+    <td><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
+    <td class="a-right">
+        <span class="nobr">
+            <input type="text" name="orderitems[<?php echo $_item->getId() ?>]" id="orderitem-count<?php echo $_item->getId() ?>" value="<?php echo $itemCount; ?>" class="awrma-items-count" />
+            <input type="hidden" id="orderitem-count<?php echo $_item->getId() ?>-maxcount" value="<?php echo $itemCount; ?>" />
+        </span>
+
+        <?php
+        $_rma = Mage::registry('awrmaformdatarma');
+
+        $_currentRmaId = null;
+        if ($_rma && $_rma->getTextId()) {
+            $_currentRmaId = $_rma->getId();
+        }
+
+        $allItems = $_helper->getAllRmaItems($_item->getData('order_id'));
+
+        $_anotherRma = array();
+        if (isset($allItems[$_item->getId()]) && is_array($allItems[$_item->getId()])) {
+            foreach ($allItems[$_item->getId()] as $item) {
+                $_rma = $item['rma'];
+                if ($_rma->getId() !== $_currentRmaId) {
+                    $_anotherRma[] = $_rma;
+                }
+            }
+        }
+        ?>
+        <?php if ($_anotherRma): ?>
+            <p><?php echo $this->__('Another RMA for this product:'); ?> </p>
+            <ul>
+                <?php foreach ($_anotherRma as $_rma) : ?>
+                    <li><a href="<?php echo $_rma->getAdminUrl(); ?>"><?php echo $_rma->getTextId(); ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+        <br />
+        <?php $notAvailableGiftCardsCount = $_helper->getItemMaxCount($_item) - $itemCount; ?>
+        <?php if (!$viewOnly && $notAvailableGiftCardsCount > 0) : ?>
+            <span><?php echo $this->__('%d gift card(s) already not available', $notAvailableGiftCardsCount); ?> </span>
+        <?php endif; ?>
+    </td>
+</tr>

@@ -1,0 +1,28 @@
+<?php
+/**
+ * Google Tag Manager Template
+ *
+ * @category    ShopGo
+ * @package     Shopgo_GTM
+ * @author      Ali Halabyah <ali@shopgo.me>
+ * @copyright   Copyright (c) 2015 ShopGo
+ * @license     http://opensource.org/licenses/osl-3.0.php Open Software License 3.0 (OSL-3.0)
+ */
+?>
+<?php if (Mage::helper('gtm')->isGTMAvailable()): ?>
+<!-- Google Tag Manager -->
+<?php
+// Render the data layer.
+// echo $this->_getDataLayer();
+
+// Render the container snippet.
+$GTMContainerId =  $this->_getContainerId();
+?>
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=<?php echo $GTMContainerId; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<?php echo $this->_getDataLayer(); ?>
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','<?php echo $GTMContainerId; ?>');
+</script>
+
+<!-- End Google Tag Manager -->
+<?php endif; ?>

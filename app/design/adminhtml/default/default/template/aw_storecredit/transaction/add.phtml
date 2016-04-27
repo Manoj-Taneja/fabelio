@@ -1,0 +1,121 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Storecredit
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><div class="content-header">
+    <h3 class="icon-head"><?php echo $this->getHeaderText() ?></h3>
+    <p class="content-buttons form-buttons">
+        <?php echo $this->getBackButtonHtml(); ?>
+        <?php echo $this->getSaveButtonHtml(); ?>
+    </p>
+</div>
+<div>
+    <?php echo $this->getForm() ?>
+</div>
+<div>
+    <?php echo $this->getCustomersGrid() ?>
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+    var selectedCustomers = new Hash();
+    var internalCustomer = new Hash();
+    $('selected_customers').value = selectedCustomers.toQueryString();
+    $('internal_customer').value = internalCustomer.toQueryString();
+
+    Event.observe(window, 'load', function() {
+        storecreditCustomerGridJsObject.rowClickCallback = transactionCustomerRowClick;
+        storecreditCustomerGridJsObject.checkboxCheckCallback = registerTransactionCustomer;
+
+        if (typeof(storecreditCustomerGrid_massactionJsObject)!='undefined') {
+            // rewrite selectAll()
+            storecreditCustomerGrid_massactionJsObject._selectAll = storecreditCustomerGrid_massactionJsObject.selectAll;
+            storecreditCustomerGrid_massactionJsObject.selectAll = function () {
+                storecreditCustomerGrid_massactionJsObject._selectAll();
+                $('selected_customers').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                $('internal_customer').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                return false;
+            };
+
+            // rewrite unselectAll()
+            storecreditCustomerGrid_massactionJsObject._unselectAll = storecreditCustomerGrid_massactionJsObject.unselectAll;
+            storecreditCustomerGrid_massactionJsObject.unselectAll = function () {
+                storecreditCustomerGrid_massactionJsObject._unselectAll();
+                $('selected_customers').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                $('internal_customer').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                return false;
+            };
+
+            // rewrite selectVisible()
+            storecreditCustomerGrid_massactionJsObject._selectVisible = storecreditCustomerGrid_massactionJsObject.selectVisible;
+            storecreditCustomerGrid_massactionJsObject.selectVisible = function () {
+                storecreditCustomerGrid_massactionJsObject._selectVisible();
+                $('selected_customers').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                $('internal_customer').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                return false;
+            };
+
+            // rewrite unselectVisible()
+            storecreditCustomerGrid_massactionJsObject._unselectVisible = storecreditCustomerGrid_massactionJsObject.unselectVisible;
+            storecreditCustomerGrid_massactionJsObject.unselectVisible = function() {
+                storecreditCustomerGrid_massactionJsObject._unselectVisible();
+                $('selected_customers').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                $('internal_customer').value = storecreditCustomerGrid_massactionJsObject.getCheckedValues();
+                return false;
+            }
+
+        }
+    });
+
+    function registerTransactionCustomer(grid, element, checked){
+        if(checked){
+            selectedCustomers.set(element.value, true);
+            internalCustomer.set(element.value, true);
+            storecreditCustomerGrid_massactionJsObject.setCheckbox(element);
+            internalCustomer.set(element.value, true);
+        } else{
+            selectedCustomers.unset(element.value);
+            internalCustomer.unset(element.value);
+            storecreditCustomerGrid_massactionJsObject.setCheckbox(element);
+        }
+        $('selected_customers').value = storecreditCustomerGrid_massactionJsObject.checkedString;
+        $('internal_customer').value = storecreditCustomerGrid_massactionJsObject.checkedString;
+
+        grid.reloadParams = {'selected_customers[]':selectedCustomers.keys(), 'internal_entity_id':internalCustomer.keys().toString()};
+    }
+    function transactionCustomerRowClick(grid, event){
+        var trElement = Event.findElement(event, 'tr');
+        var isInput   = Event.element(event).tagName == 'INPUT';
+        if(trElement){
+            var checkbox = Element.getElementsBySelector(trElement, 'input');
+            if(checkbox[0]){
+                var checked = isInput ? checkbox[0].checked : !checkbox[0].checked;
+                storecreditCustomerGridJsObject.setCheckboxChecked(checkbox[0], checked);
+            }
+        }
+    }
+
+    var transactionAddForm = new varienForm('transaction_add_form');
+
+    //]]>
+</script>

@@ -1,0 +1,100 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php     
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    $results = '';
+    $collection = Mage::getModel('inventoryplus/warehouse_shipment')->getCollection();
+    $collection->getSelect()
+                ->joinLeft(
+                        array('shipment_item' => $resource->getTableName('sales/shipment_item')), "main_table.shipment_id = shipment_item.parent_id" .
+                        " and main_table.product_id = shipment_item.product_id" .
+                        " and shipment_item.order_item_id = main_table.item_id", array('*')
+                )
+                ->join(
+                        array('shipment' => $resource->getTableName('sales/shipment')), "main_table.shipment_id = shipment.entity_id" , array(''))
+                ->join(
+                        array('warehouse' => $resource->getTableName('inventoryplus/warehouse')), "main_table.warehouse_id = warehouse.warehouse_id", array('*')
+                )
+        ;
+    $collection->getSelect()->group(array('warehouse.warehouse_id'));
+    $collection->getSelect()->columns(array(
+            'warehouse_name' => 'warehouse.warehouse_name',
+            'total_shipment' => 'SUM(main_table.qty_shipped)',
+            'sales_total' => 'SUM(shipment_item.qty * shipment_item.price)'
+        ));
+    $collection->setIsGroupCountSql(true);
+    
+    
+    $warehouseShipment = array();
+    
+        foreach($collection as $result){            
+            $warehouseShipment['items'][$result['warehouse_id']] = $result->getTotalShipment();
+            $warehouseShipment['subtotal'][$result['warehouse_id']] = $result->getSalesTotal();
+        }
+    
+    $warehouseCollection = Mage::getModel('inventoryplus/warehouse')->getCollection();
+    $series = '';
+    $i = 0;    
+    foreach($warehouseCollection as $warehouse){
+        $qtyShipped = 0;
+        
+        $totalShipped = 0;
+        if(isset($warehouseShipment['items'][$warehouse->getId()])){
+            $qtyShipped = $warehouseShipment['items'][$warehouse->getId()];
+        }
+        if(isset($warehouseShipment['subtotal'][$warehouse->getId()])){
+            $totalShipped = $warehouseShipment['subtotal'][$warehouse->getId()];
+        }
+        
+        if($i!=0)
+            $series .= ',';
+        $series .= '[\''.$warehouse->getWarehouseName().'('.$qtyShipped.' items)\','.$qtyShipped.']';
+        $i++;
+    }
+?>
+                            
+<script type="text/javascript">
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: '<?php echo $chart->getName() ?>',
+            x: -20 //center
+        },        
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f} %</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '<?php echo $this->__('Warehouse Shipment') ?>',
+            data: [                
+                <?php echo $series ?>
+            ]
+        }]
+    });
+});
+</script>
+<?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventoryreports')):?>
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin:10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("inventoryreportsadmin/adminhtml_sales/warehouse", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<?php endif?>
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px;  margin: 30px auto 0;"></div>

@@ -1,0 +1,92 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php     
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    $results = '';
+    $sql = 'SELECT `supplier_id`,count(`supplier_id`) as `total_time` FROM '.$resource->getTableName('erp_inventory_purchase_order').' group by `supplier_id`';     
+    $results = $readConnection->query($sql);
+    $supplierPurchase = array();
+    if($results){
+        foreach($results as $result){            
+            $supplierPurchase[$result['supplier_id']] = $result['total_time'];
+        }
+    }
+    $supplierCollection = Mage::getModel('inventorypurchasing/supplier')->getCollection();
+    $i = 0;    
+    $categories = '[';
+    $series['supplier']['name'] = $this->__('No. of purchase orders');
+    $series['supplier']['data'] = '[';      
+    foreach($supplierCollection as $supplier){
+        $totalTime = 0;
+        if(isset($supplierPurchase[$supplier->getId()]))
+            $totalTime = $supplierPurchase[$supplier->getId()];
+        if($i!=0){
+            $categories .= ',';
+            $series['supplier']['data'] .= ',';
+        }
+        $categories .= '\''.$supplier->getSupplierName().'\'';
+        $series['supplier']['data'] .= floatval($totalTime);         
+        $i++;
+    }
+    $categories .= ']';
+    $series['supplier']['data'] .= ']';
+?>
+                            
+<script type="text/javascript">
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '<?php echo $chart->getName() ?>',
+            x: -20 //center
+        },
+        subtitle: {
+//            text: 'Source: WorldClimate.com',
+//            x: -20
+        },
+        xAxis: {
+            categories: <?php echo $categories ?>
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '<?php echo $this->__('No. of purchase orders') ?>'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.0f} <?php echo $this->__('order(s)') ?></b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [
+            <?php $count = 0; ?>
+            <?php foreach($series as $serie): ?>
+                <?php if(!$count == 0) echo ','; ?>
+                <?php $count++; ?>    
+                {
+                    name: '<?php echo $serie['name']; ?>',
+                    data: <?php echo $serie['data']; ?>
+                }
+            <?php endforeach; ?>
+        ]
+    });
+});
+</script>
+<?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventoryreports')):?>
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("inventoryreportsadmin/adminhtml_supplier/inventorybysupplier", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<?php endif;?>
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px;  margin: 30px auto 0;"></div>

@@ -1,0 +1,51 @@
+<?php
+/**
+ * zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    base_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+?>
+<?php $_manufacturersCollection = $this->getManufacturersCollection(); ?>
+<div class="block">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Shop By Manufacturer') ?></span></strong>
+    </div>
+    <div class="block-content">
+        <form id="pollForm" action="<?php echo $this->getUrl('manufacturers') ?>" method="post" >
+            <?php $_iterator = 0; ?>
+            <ul class="products-grid first">
+                <?php foreach ($_manufacturersCollection as $_manufacturer): ?>
+                    <li class="item<?php if (++$_iterator == sizeof($_manufacturersCollection)): ?> last<?php endif; ?>">
+                        <a class="product-images" href="<?php echo $this->getUrl('manufacturers' . '/' . $_manufacturer->getIdentifier()) ?>" title="<?php echo $_manufacturer->getManufacturer() ?>"><img alt="<?php echo $_manufacturer->getManufacturerLogo() ?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'manufacturer' . '/' . $_manufacturer->getManufacturerLogo() ?>" width="40" height="40"></a>
+                        <!-- To display name 
+                        <h2><?php //echo Mage::getModel('zeon_manufacturer/manufacturer')->getManufacturerName($_manufacturer->getManufacturer(), Mage::app()->getStore()->getId())  ?></h2> -->
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="actions" style="clear:left;">
+                <button type="submit" title="<?php echo $this->__('View All123') ?>" class="button"><span><span><?php echo $this->__('View All') ?></span></span></button>
+            </div> 
+        </form>
+    </div>
+</div>

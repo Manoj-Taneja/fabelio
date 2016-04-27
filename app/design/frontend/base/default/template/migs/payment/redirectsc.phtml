@@ -1,0 +1,29 @@
+<?php
+/**
+ * Magento
+ *
+ * @author    WakaMage http://www.wakamage.com <cs@wakamage.com>
+ * @copyright Copyright (C) 2013 WakaMage. (http://www.wakamage.com)
+ *
+ */
+?>
+<!--<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+    <li class="form-alt"><?php echo $this->getRedirectMessage() ?></li>
+</ul>-->
+<?php $_code=$this->getMethodCode() ?>
+ <?php $total = $this->helper('checkout/cart')->getQuote()->getGrandTotal();
+$threeMonths = sprintf('%0.2f', $total/3);
+ $sixMonths = sprintf('%0.2f', $total/6);
+ $twelveMonths = sprintf('%0.2f', $total/12);?>
+<div class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+<p>Please Choose Installment Type:</p>
+ <select id="sc_installment" name="payment[sc_installment]" class="installment_select">
+<option value="sc">no installment</option>
+<option value="sc3">3 months x Rp <?php echo $threeMonths?></option>
+<option value="sc6">6 months x Rp <?php echo $sixMonths?></option>
+ <option value="sc12">12 months x Rp <?php echo $twelveMonths?></option>
+</select>
+<div>
+<?php echo $this->getMethod()->getConfigData('message');?>
+</div>
+</div>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <exporter_adminhtml_exporter_index>
+        <reference name="content">
+            <block type="exporter/adminhtml_exporter" name="exporter" />
+        </reference>
+    </exporter_adminhtml_exporter_index>
+	
+	<exporter_adminhtml_exporter_grid>
+        <reference name="root">
+            <block type="exporter/adminhtml_exporter_grid" name="root" output="toHtml"/>
+        </reference>
+    </exporter_adminhtml_exporter_grid>
+	
+	<exporter_adminhtml_importer_index>
+        <reference name="content">
+            <block type="exporter/adminhtml_exporter_edit_tab_form" name="importer" />
+        </reference>
+    </exporter_adminhtml_importer_index>
+</layout>

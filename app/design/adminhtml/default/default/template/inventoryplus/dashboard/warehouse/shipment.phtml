@@ -1,0 +1,32 @@
+<div class="column-widget-container">
+    <div class="mini-dashboard">
+        <div class="dashboard-widget-header">
+            <p><?php echo $this->__('Last 10 Orders With Warehouse Shipment') ?></p>
+        </div>
+        <div class="dashboard-widget-content">
+            <span><?php echo $this->__('Recent Orders With Warehouse Shipment') ?></span>
+            <?php $warehouseshipments = $this->getWarehouseShipmentCollection(); ?> 
+            <table>
+                <tr id="table-title">
+                    <td><?php echo $this->__('Date') ?></td>
+                    <td><?php echo $this->__('Order ID') ?></td>
+                    <td><?php echo $this->__('Warehouses') ?></td>
+                    <td><?php echo $this->__('Items') ?></td>
+                    <td><?php echo $this->__('Grand Total') ?></td>
+                </tr>
+                <?php foreach ($warehouseshipments as $warehouseshipment): ?>                    
+                    <tr>
+                        <?php $date = new Zend_Date(); ?>
+                        <?php $date->setLocale(Mage::app()->getLocale()->getLocaleCode()); ?>
+                        <?php $date_ship = $date->setDate($warehouseshipment->getCreatedAt(), 'yyyy/MM/dd'); ?>
+                        <td><?php echo Mage::helper('core')->formatDate($date_ship, 'medium'); ?></td>
+                        <td><?php echo $warehouseshipment->getOrderIncrementId(); ?></td>
+                        <td><?php echo $warehouseshipment->getNames(); ?></td>
+                        <td><?php echo $warehouseshipment->getQtyShipped(); ?></td>
+                        <td><?php echo Mage::helper('checkout')->formatPrice($warehouseshipment->getGrandTotal()); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+</div>

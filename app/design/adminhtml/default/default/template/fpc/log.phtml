@@ -1,0 +1,185 @@
+<?php
+$_data = $this->getChartData();
+$_info = $this->getCacheInfo();
+$_cron = $this->getCronInfo();
+?>
+
+<br><br>
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody><tr>
+            <td><h3><?php echo ('Full Page Cache') ?></h3></td>
+            <td class="form-buttons">
+                <button onclick="setLocation('<?php echo $this->getUrl('fpc/adminhtml_log/update')?>')" type="button" class="scalable"><span><?php echo ('Update Chart Data') ?></span></button>
+            </td>
+         </tr>
+    </tbody></table>
+</div>
+<?php echo $_info ?>
+<?php if ($_data): ?>
+<div id="fpclog" style="width: 100%; height: 400px;"></div>
+<script type="text/javascript">
+    var chart;
+    var logData = [];
+    <?php foreach ($_data as $_item): ?>
+        logData.push({
+            date             : '<?php echo $_item['period'] ?>',
+            response_with    : <?php echo round($_item['response_with'], 2) ?>,
+            response_without : <?php echo round($_item['response_without'], 2) ?>,
+            hits             : <?php echo round($_item['hits'] / ($_item['hits'] + $_item['miss'])  * 100, 0) ?>,
+            miss             : <?php echo round($_item['miss'] / ($_item['hits'] + $_item['miss'])  * 100, 0) ?>,
+        });
+    <?php endforeach ?>
+
+    AmCharts.ready(function () {
+        chart               = new AmCharts.AmSerialChart();
+        chart.dataProvider  = logData;
+        chart.categoryField = "date";
+        chart.pathToImages  = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'mirasvit/core/amcharts-3.4.5/images/' ?>';
+
+
+        var categoryAxis              = chart.categoryAxis;
+        categoryAxis.parseDates       = true;
+        categoryAxis.minPeriod        = "DD";
+        categoryAxis.dashLength       = 1;
+        categoryAxis.minorGridEnabled = true;
+        categoryAxis.position         = "top";
+        categoryAxis.axisColor        = "#DADADA";
+
+        var responseAxis        = new AmCharts.ValueAxis();
+        responseAxis.axisAlpha  = 1;
+        responseAxis.dashLength = 1;
+        responseAxis.title      = "Average Response Time";
+        responseAxis.inside     = true;
+        chart.addValueAxis(responseAxis);
+
+        var guide = new AmCharts.Guide();
+        guide.value     = 0;
+        guide.toValue   = 0.7;
+        guide.fillColor = "#00FF00";
+        guide.fillAlpha = 0.1;
+        guide.lineAlpha = 0.2;
+        responseAxis.addGuide(guide);
+
+        var guide = new AmCharts.Guide();
+        guide.value     = 0.7;
+        guide.toValue   = 1.5;
+        guide.fillColor = "#FFFF00";
+        guide.fillAlpha = 0.1;
+        guide.lineAlpha = 0.2;
+        responseAxis.addGuide(guide);
+
+        var guide = new AmCharts.Guide();
+        guide.value     = 1.5;
+        guide.toValue   = 4.0;
+        guide.fillColor = "#FF0000";
+        guide.fillAlpha = 0.1;
+        guide.lineAlpha = 0.2;
+        responseAxis.addGuide(guide);
+
+        var guide = new AmCharts.Guide();
+        guide.value     = 4.0;
+        guide.toValue   = 1000;
+        guide.fillColor = "#FF0000";
+        guide.fillAlpha = 0.15;
+        guide.lineAlpha = 0;
+        responseAxis.addGuide(guide);
+
+        var graph = new AmCharts.AmGraph();
+        graph.id                          = 'response';
+        graph.valueField                  = "response_with";
+        graph.title                       = "Average Response Time (sec.)";
+        graph.valueAxis                   = responseAxis;
+        graph.balloonText                 = "Average Response Time: [[response_with]] s. / [[response_without]] s.";
+        graph.type                        = "smoothedLine";
+        graph.lineColor                   = "#5fb503";
+        graph.lineAlpha                   = 1;
+        graph.lineThickness               = 2;
+        graph.fillAlphas                  = 0.1;
+        graph.bulletSize                  = 6;
+        graph.bullet                      = 'round';
+        graph.hideBulletsCount            = 50,
+        graph.bulletBorderAlpha           = 1;
+        graph.bulletColor                 = '#FFFFFF';
+        graph.useLineColorForBulletBorder = true;
+        chart.addGraph(graph);
+
+        var hitsAxis        = new AmCharts.ValueAxis();
+        hitsAxis.gridAlpha  = 0;
+        hitsAxis.dashLength = 1;
+        hitsAxis.title      = "Hits";
+        hitsAxis.inside     = true;
+        hitsAxis.position   = "right";
+        chart.addValueAxis(hitsAxis);
+
+        var hitsGraph = new AmCharts.AmGraph();
+        hitsGraph.valueField                  = "hits";
+        hitsGraph.title                       = "Hits (%)";
+        hitsGraph.valueAxis                   = hitsAxis;
+        hitsGraph.balloonText                 = "Hits: [[value]]%";
+        hitsGraph.type                        = "smoothedLine";
+        hitsGraph.lineColor                   = "#0000ff";
+        hitsGraph.lineAlpha                   = 0.3;
+        hitsGraph.lineThickness               = 2;
+        hitsGraph.fillAlphas                  = 0;
+        hitsGraph.bulletSize                  = 6;
+        hitsGraph.bullet                      = 'round';
+        hitsGraph.hideBulletsCount            = 50,
+        hitsGraph.bulletBorderAlpha           = 0.1;
+        hitsGraph.bulletColor                 = '#FFFFFF';
+        hitsGraph.useLineColorForBulletBorder = true;
+        chart.addGraph(hitsGraph);
+
+        var missAxis        = new AmCharts.ValueAxis();
+        missAxis.gridAlpha  = 0;
+        missAxis.dashLength = 1;
+        missAxis.title      = "Miss";
+        missAxis.inside     = true;
+        missAxis.position   = "right";
+        chart.addValueAxis(missAxis);
+
+        var mssGraph = new AmCharts.AmGraph();
+        mssGraph.valueField                  = "miss";
+        mssGraph.title                       = "Miss (%)";
+        mssGraph.valueAxis                   = hitsAxis;
+        mssGraph.balloonText                 = "Miss: [[value]]%";
+        mssGraph.type                        = "smoothedLine";
+        mssGraph.lineColor                   = "#999999";
+        mssGraph.lineAlpha                   = 0.3;
+        mssGraph.lineThickness               = 2;
+        mssGraph.fillAlphas                  = 0;
+        mssGraph.fillAlphas                  = 0;
+        mssGraph.bulletSize                  = 6;
+        mssGraph.bullet                      = 'round';
+        mssGraph.hideBulletsCount            = 50,
+        mssGraph.bulletBorderAlpha           = 0.1;
+        mssGraph.bulletColor                 = '#FFFFFF';
+        mssGraph.useLineColorForBulletBorder = true;
+        chart.addGraph(mssGraph);
+
+        var legend = new AmCharts.AmLegend();
+        legend.equalWidths = false;
+        chart.addLegend(legend);
+
+        var chartCursor = new AmCharts.ChartCursor();
+        chartCursor.cursorPosition = "mouse";
+        chartCursor.pan = true; // set it to fals if you want the cursor to work in "select" mode
+        chart.addChartCursor(chartCursor);
+
+        var chartScrollbar = new AmCharts.ChartScrollbar();
+        chartScrollbar.autoGridCount   = true;
+        chartScrollbar.graph           = 'response';
+        chartScrollbar.scrollbarHeight = 40;
+        chart.addChartScrollbar(chartScrollbar);
+
+        chart.write("fpclog");
+
+        var from = new Date();
+        from.setDate(from.getDate() - 14);
+
+        var to = new Date();
+
+        chart.zoomToDates(from, to);
+    });
+</script>
+<?php endif;?>

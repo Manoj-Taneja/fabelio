@@ -1,0 +1,44 @@
+<?php $id = $this->getRequest()->getParam('id') ?>
+<?php $lowStock = Mage::getModel('inventorylowstock/sendemaillog')->load($id) ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Low Stock Notification') ?></h4>
+    </div>
+    <div id="lowstock_form" class="fieldset ">     
+        <div>
+            <label for="lowstock">
+                <strong><?php echo $this->__('Type') ?>:&nbsp;&nbsp;</strong>
+            </label>            
+            <?php echo $lowStock->getType() ?>
+        </div>
+        <?php if($lowStock->getType() == 'Warehouse'): ?>
+            <div>
+                <label for="lowstock">
+                    <strong><?php echo $this->__('Warehouse') ?>:&nbsp;&nbsp;</strong>
+                </label>            
+                <?php echo $lowStock->getWarehouseName() ?>
+            </div>
+        <?php endif ?>
+        <div>
+            <label for="lowstock">
+                <strong><?php echo $this->__('Email Received') ?>:&nbsp;&nbsp;</strong>
+            </label>            
+            <?php echo $lowStock->getEmailReceived() ?>
+        </div>
+        <div>
+            <label for="lowstock">
+                <strong><?php echo $this->__('Recipients') ?>:&nbsp;&nbsp;</strong>
+            </label>            
+            <?php echo $lowStock->getManagerName() ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend">            
+            <?php echo $this->__('Low Stock Products') ?>
+        </h4>
+    </div>
+</div>

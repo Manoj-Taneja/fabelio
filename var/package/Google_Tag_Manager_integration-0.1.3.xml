@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package>
+    <name>Google_Tag_Manager_integration</name>
+    <version>0.1.3</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">Open Software License (OSL)</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>With this extension you can integrate Google Tag Manager and enable support for transactions and remarketing.</summary>
+    <description>Google Tag Manager integration&#xD;
+&#xD;
+With Google Tag Manager you can manage your Analytics events, Adwords conversion tracking, remarketing, etc. in one place. This module allows you to integrate Google Tag Manager to your site.&#xD;
+&#xD;
+All you need is insert your container id to configuration of this extension.&#xD;
+&#xD;
+Where to configure the extension?&#xD;
+System &gt; Configuration &gt; Google Tag Manager &gt; Configuration.&#xD;
+&#xD;
+Extension features:&#xD;
+    Support multi-store&#xD;
+    Support transactions (ecommerce tracking)&#xD;
+    Support remarketing&#xD;
+&#xD;
+Transaction features:&#xD;
+    Support all product types&#xD;
+    You can specify a name of your shop for each store&#xD;
+&#xD;
+Remarketing allows you to show ads to your past site visitors and customize those ads based on the section of your site people visited. With dynamic remarketing, you can take this a step further, and show your site visitors an ad with the specific product they viewed on your site.</description>
+    <notes>support transactions and remarketing</notes>
+    <authors><author><name>John</name><user>Evans</user><email>slirx@yandex.ua</email></author></authors>
+    <date>2014-09-08</date>
+    <time>19:18:16</time>
+    <contents><target name="magecommunity"><dir name="SliRx"><dir name="GoogleTagManager"><dir name="Block"><file name="Code.php" hash="e374b8a0d2c29bd42ab7ff54c3b320c6"/><file name="Remarketing.php" hash="3f7c87cb7525d878a62b97d5e7a5f0f1"/><file name="Transactions.php" hash="bf3d2bc1d282fc09064a70542e731f5a"/></dir><dir name="Helper"><file name="Data.php" hash="9c646391b6df470bd457739d1563af25"/></dir><dir name="etc"><file name="adminhtml.xml" hash="8eba6f1f08000fd8a9a766c9ea7c6cc4"/><file name="config.xml" hash="657509599b280beebf7f9d420e621791"/><file name="system.xml" hash="41e792789e3816717bfd5e92880a8eea"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="google_tag_manager.xml" hash="3c04bcb79719205fe02c8023211357bc"/></dir><dir name="template"><dir name="slirx"><dir name="google_tag_manager"><file name="code.phtml" hash="3aeda87f1673de15d4788729878ec8cb"/><file name="remarketing.phtml" hash="476a26599c10716fc6b0090434c19325"/><file name="transactions.phtml" hash="97796a1fa643bcac5d562cea18078219"/></dir></dir></dir></dir></dir><dir name="rwd"><dir name="default"><dir name="layout"><file name="google_tag_manager.xml" hash="3c04bcb79719205fe02c8023211357bc"/></dir><dir name="template"><dir name="slirx"><dir name="google_tag_manager"><file name="code.phtml" hash="3aeda87f1673de15d4788729878ec8cb"/><file name="remarketing.phtml" hash="476a26599c10716fc6b0090434c19325"/><file name="transactions.phtml" hash="97796a1fa643bcac5d562cea18078219"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="SliRx_GoogleTagManager.xml" hash="cacbd2952d32ef55adbd4e599bb9f6a1"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.3.0</min><max>5.6.9</max></php></required></dependencies>
+</package>

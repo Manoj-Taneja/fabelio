@@ -1,0 +1,30 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$products = Mage::getBlockSingleton('catalog/product_list')->getLoadedProductCollection();
+$ids = '';
+$i=1;
+?>
+<script type="text/javascript">
+dataLayer.push({
+    'ecommerce': {
+          'currencyCode': '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',         
+                'impressions': [
+                      <?php foreach($products as $item) { 
+                      $categories = $item->getCategoryIds();
+                      ?>
+                       {
+                                'name': '<?php echo $item->getName(); ?>',       // Name or ID is required.
+                                'id': '<?php echo $item->getId(); ?>',
+                                'price': '<?php echo $item->getFinalPrice(); ?>',
+                                'category' :'<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>',
+                                'list' : 'Search List',
+                                'position': <?php echo $i; ?>
+                       }
+               <?php if(sizeof($products)>$i) { ?> , <?php } ?>
+               <?php $i++; } ?> ]
+                   }
+});
+</script>

@@ -1,0 +1,104 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$_product = Mage::registry('current_product');
+$categories = $_product->getCategoryIds();
+if(Mage::registry('current_category'))
+{
+  
+  $list = Mage::registry('current_category')->getName();
+  $currentCat = Mage::registry('current_category');
+  $parentIds = explode('/', $currentCat->getPath());
+  array_pop($parentIds);
+  array_shift($parentIds);
+  $catArray=array();
+  foreach ($parentIds as $category_id) {
+    $_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($category_id);
+    array_push($catArray,$_cat->getName());
+  }
+  array_push($catArray,$list);
+  $category = join("/",$catArray);
+  if(!($_product->getAttributeText('reporting_category') === NULL)){
+    $list = $_product->getAttributeText('reporting_category');
+  }
+}
+else {
+  $category = Mage::getModel('catalog/category')->load($categories[0])->getName();
+  $list ='';
+}
+?>
+<script type="text/javascript">
+
+<?php if(Mage::registry('current_category')) { ?>
+
+dataLayer.push({
+    'event':'productClick',
+    'ecommerce': {
+          'click': {       
+          'actionField':{'list':'<?php echo $list; ?>'},
+            'products': [
+                       {
+                                'name': '<?php echo $_product->getName(); ?>',       // Name or ID is required.
+                                'id': '<?php echo $_product->getId(); ?>',
+                                'price': '<?php echo $_product->getFinalPrice(); ?>',
+                                <?php if($_product->getManufacturer()!=''){ ?>  'brand' : '<?php echo $_product->getAttributeText('manufacturer'); ?>', <?php } ?>
+                                'category' :'<?php echo $category; ?>'
+                       }
+                         ]
+                    }
+          }
+});
+
+<?php } ?>
+
+dataLayer.push({
+    'event':'viewProduct',
+    'ecommerce': {
+          'detail': {       
+          'actionField':{'list':'<?php echo $list; ?>'},
+            'products': [
+                       {
+                                'name': '<?php echo $_product->getName(); ?>',       // Name or ID is required.
+                                'id': '<?php echo $_product->getId(); ?>',
+                                'price': '<?php echo $_product->getFinalPrice(); ?>',
+                                <?php if($_product->getManufacturer()!=''){ ?>  'brand' : '<?php echo $_product->getAttributeText('manufacturer'); ?>', <?php } ?>
+                                'category' :'<?php echo $category; ?>'
+                       }
+                         ]
+                    }
+          }
+});
+jQuery(function($){ 
+   $('.add-to-cart-btn').on('click', function(e){
+       if(productAddToCartForm.validator.validate()){
+         if(jQuery('.selected-label').text()!=''){
+           var variant = jQuery('.selected-label').text();
+         }
+         else {
+           var variant = 'parent';
+         }
+           dataLayer.push({
+            'event': 'addToCart',
+            'ecommerce': {
+              'currencyCode': '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',
+                 'add': {                                // 'add' actionFieldObject measures.
+                  'actionField':{'list':'<?php echo $list; ?>'},
+                  'products': [{  
+                                'name': '<?php echo $_product->getName(); ?>',       // Name or ID is required.
+                                'id': '<?php echo $_product->getId(); ?>',
+                                'price': '<?php echo $_product->getFinalPrice(); ?>',
+                                <?php if($_product->getManufacturer()!=''){ ?>  'brand' : '<?php echo $_product->getAttributeText('manufacturer'); ?>', <?php } ?>
+                                'category' :'<?php echo $category; ?>',
+                                'variant' : variant,
+                                'quantity' : jQuery('#qty').val()
+                               }]
+                        }
+                         }
+                     });
+     }
+   });
+});
+
+</script>

@@ -1,0 +1,83 @@
+<?php
+$mixpanel = Mage::helper("fabmod_mixpanel");
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+if ($orderId) {
+    $order = Mage::getModel('sales/order')->loadByAttribute('increment_id', $orderId);
+?>
+<?php
+
+    if ($mixpanel->isTagsEnabled()) {
+    $items = $order->getAllItems();
+    foreach ($items as $item) {
+?>
+      <script type="text/javascript">
+      mixpanel.people.track_charge('<?php echo $item->getProduct()->getFinalPrice(); ?>');
+      mixpanel.track(
+        "Product Purchased",
+       {'Name': '<?php echo $item->getName(); ?>',       // Name or ID is required.
+        'Id': '<?php echo $item->getId(); ?>',
+        'Sku': '<?php echo $item->getSku(); ?>',
+        'Selling Price': '<?php echo $item->getProduct()->getFinalPrice(); ?>',
+        'Original Price': '<?php echo $item->getPrice(); ?>',
+        <?php if($item->getManufacturer()!=''){ ?>  
+         'Designer' : '<?php echo $item->getAttributeText('manufacturer'); ?>',
+        <?php } ?>
+        'Quantity' : '<?php echo $item->getQtyOrdered() ?>'
+     }
+      );
+      </script>
+<?php   } 
+
+?>
+
+<script type="text/javascript">
+mixpanel.track(
+    "Purchase Completed",
+       {"Order Id":"<?php echo $orderId; ?>",
+        "Amount":"<?php echo $order->getGrandTotal(); ?>",
+        "Coupon Code":"<?php echo Mage::getModel('sales/order')->loadByIncrementId($orderId)->coupon_code; ?>",
+        "Payment Method":"<?php echo Mage::getModel('sales/order')->loadByIncrementId($orderId)->getPayment()->getMethodInstance()->getTitle(); ?>",
+        "No Of Items Ordered":"<?php echo count($items); ?>" } 
+      );
+
+</script>
+<?php }
+if ($mixpanel->isPlusEnabled()){
+?>
+<script>
+var pmLoaded = setInterval(function() {
+    if (PlusMargin) {
+        clearInterval(pmLoaded);
+        PlusMargin.setPurchased("<?php echo $order->getGrandTotal(); ?>");
+    }
+
+}, 1000);
+</script>
+<?php
+}
+?>
+
+<?php
+if ($mixpanel->isAdwordsEnabled()){
+?>
+<script type="text/javascript">
+var google_conversion_id = 946949897;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "YT8QCMmnzWQQiZ7FwwM";
+var google_conversion_value = <?php echo $order->getGrandTotal(); ?>;
+var google_conversion_currency = "IDR";
+var google_remarketing_only = false;
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async>
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?value=0.00&currency_code=IDR&label=YT8QCMmnzWQQiZ7FwwM&guid=ON&script=0"/>
+</div>
+</noscript>
+<?php
+}
+}
+?>

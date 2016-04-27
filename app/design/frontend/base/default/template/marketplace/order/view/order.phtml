@@ -1,0 +1,78 @@
+<?php $_order = $this->getOrder(); ?>
+<?php $_items = $this->getItems(); ?>
+<?php $_shippingAddress = $this->getOrder()->getShippingAddress(); ?>
+<?php $_billingAddress = $this->getOrder()->getBillingAddress(); ?>
+
+<div class='row'>
+    <div class="col-md-5">
+        <h3><?php echo $this->__("Billing Address"); ?></h3>
+        <p><?php echo $this->escapeHtml($_billingAddress->getFirstname()); ?> <?php echo $this->escapeHtml($_billingAddress->getLastname()); ?></p>
+        <p><?php echo $this->escapeHtml(join(' ', $_billingAddress->getStreet())); ?></p>
+        <p><?php echo $this->escapeHtml($_billingAddress->getCity()); ?> <?php echo $this->escapeHtml($_billingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_billingAddress->getPostcode()); ?></p>
+        <?php $countryCode = $this->escapeHtml($_billingAddress->getCountry()); ?>
+        <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+        <p><?php echo $this->escapeHtml($country->getName()); ?></p>
+    </div>
+    <?php if($_shippingAddress) : ?>
+    <div class="col-md-5">
+        <h3><?php echo $this->__("Shipping Address"); ?></h3>
+        <p><?php echo $this->escapeHtml($_shippingAddress->getFirstname()); ?> <?php echo $this->escapeHtml($_shippingAddress->getLastname()); ?></p>
+        <p><?php echo $this->escapeHtml(join(' ', $_shippingAddress->getStreet())); ?></p>
+        <p><?php echo $this->escapeHtml($_shippingAddress->getCity()); ?> <?php echo $this->escapeHtml($_shippingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_shippingAddress->getPostcode()); ?></p>
+        <?php $countryCode = $this->escapeHtml($_shippingAddress->getCountry()); ?>
+        <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+        <p><?php echo $this->escapeHtml($country->getName()); ?></p>
+    </div>
+</div>
+
+<?php endif ;?>
+
+
+<div class='row'>
+    <div class='col-md-12'>
+        <h2 class="sub-header"><?php echo $this->__("Ordered Items"); ?></h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><?php echo $this->__('Product'); ?></th>
+                    <th><?php echo $this->__('Item Status'); ?></th>
+                    <th><?php echo $this->__('Price'); ?></th>
+                    <th><?php echo $this->__('Qty'); ?></th>
+                    <th><?php echo $this->__('Row Total'); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php $sumPrice = 0; $sumQty = 0; $sumRowTotal = 0;?>
+                <?php foreach($_items AS $_item) : ?>
+                    <?php if($_item->getData('parent_item_id')) continue; ?>
+                    <tr>
+                        <td>
+                            <?php echo $this->escapeHtml($_item->getName()); ?>
+                            <?php $data = unserialize($_item->getData('product_options')); ?>
+                            <?php if(isset($data['attributes_info'])): ?>
+                                <dl>
+                                    <?php foreach($data['attributes_info'] AS $attribute): ?>
+                                        <dt><?php echo $attribute['label']; ?></dt>
+                                        <dd><?php echo $attribute['value']; ?></dd>
+                                    <?php endforeach; ?>
+
+                                </dl>
+                            <?php endif;?>
+                        </td>
+                        <td><?php echo $_item->getStatus(); ?></td>
+                        <td><?php $sumPrice = $sumPrice + $_item->getPrice(); echo  $_item->getPrice(); ?></td>
+                        <td><?php $sumQty = $sumQty + $_item->getQtyOrdered(); echo $_item->getQtyOrdered(); ?></td>
+                        <td><?php $sumRowTotal = $sumRowTotal + $_item->getRowTotal(); echo Mage::helper('core')->currency($_item->getRowTotal()); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                <th colspan="3"></th>
+                <th><?php echo $sumQty; ?></th>
+                <th><?php echo Mage::helper('core')->currency($sumRowTotal); ?></th>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

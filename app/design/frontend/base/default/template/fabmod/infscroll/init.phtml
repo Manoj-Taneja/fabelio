@@ -1,0 +1,72 @@
+<?php
+$ajaxReq = Mage::app()->getRequest()->isXmlHttpRequest();
+if($ajaxReq) return;
+
+$pager = Mage::registry('this_pager');
+if(!$pager) return;
+?>
+
+<script>
+jQuery(function($){
+
+  var _throttleTimer = null;
+  var _throttleDelay = 100;
+  var $window = $(window);
+  var $document = $(document);
+  var scrollBottom = $(document).height() - $('.toolbar-bottom').offset().top;
+  var $categoryProducts = $('.category-products');
+  var $prodList = '';
+
+  var $loader = $('<div></div>', {
+    'class': 'fl-intinite-scroll-loader',
+    'text': 'Loading...'
+  });
+
+  var pageUrl     = '<?php echo $pager->getNextPageUrl(); ?>';
+  var totalPages  = <?php echo $pager->getLastPageNum(); ?>;
+  var currentPage = <?php echo $pager->getCurrentPage(); ?>;
+  var pageBusy    = false;
+
+  function loadNextPage(){
+    $.ajax({
+      url: pageUrl.replace(/&amp;/g, '&'),
+      dataType: 'JSON',
+      beforeSend: function(){
+        pageBusy = true;
+        $categoryProducts.append($loader.show());
+      },
+      success: function(res){
+        if(res.pager){
+          pageUrl = res.pager.next_page_url.replace(/&amp;/g, '&');
+          $prodList = $(res.productlist);
+          $categoryProducts.append($('.product-items', $prodList));
+          currentPage++;
+        }
+      },
+      complete: function(){
+        pageBusy = false;
+        $loader.hide();
+      }
+    });
+  }
+
+  window.ScrollHandler = function() {
+    if(pageBusy || currentPage >= totalPages) return;
+    clearTimeout(_throttleTimer);
+    _throttleTimer = setTimeout(function () {
+      if ($window.scrollTop() + $window.height() > $document.height() - scrollBottom) loadNextPage();
+    }, _throttleDelay);
+  }
+
+  /*$('.toolbar-bottom').remove();
+  $('.toolbar .pager').remove();
+  $('.toolbar .limiter').remove();
+
+  $document.ready(function () {
+    $window
+      .off('scroll.infscroll', window.ScrollHandler)
+      .on('scroll.infscroll', window.ScrollHandler);
+  });*/
+
+});
+</script>

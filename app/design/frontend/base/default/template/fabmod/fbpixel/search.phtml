@@ -1,0 +1,48 @@
+<?php
+$helper = Mage::helper("fabmod_fbpixel");
+if (!$helper->isFbPxEnabled()) {
+  return;
+}
+$quote = Mage::getSingleton('checkout/cart')->getQuote();
+$products = $quote->getAllItems();
+$quoteData = $quote->getData();
+if($quoteData['grand_total']){
+  $grandTotal = $quoteData['grand_total'];
+}
+else {
+  $grandTotal = 0;
+}
+$query = Mage::helper('catalogsearch')->getQueryText();
+$category='';
+if($_GET['cat']!=''){
+  $category = Mage::getModel('catalog/category')->load($_GET['cat'])->getName();
+}
+$products = Mage::getBlockSingleton('catalog/product_list')->getLoadedProductCollection();
+$ids = '';
+
+foreach ($products as $item) {
+			if ($ids !== '') {
+			 $ids .= ', ';
+			}
+			$ids .= "'" . $item->getId() . "'";
+	}
+
+?>
+<script>
+(function(){
+  var fabmodFbpixelTrack = {
+    value : <?php echo $grandTotal ; ?>,
+    content_type     : 'product',
+    currency : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',
+    search_string : '<?php echo $query ; ?>'
+  };
+
+<?php if($category!=''){ ?>
+  fabmodFbpixelTrack['content_category'] = '<?php echo $category; ?>';
+<?php } ?>
+<?php if (count($products)>0){ ?> 
+ fabmodFbpixelTrack['content_ids'] = [<?php echo $ids ; ?>];  
+<?php } ?>
+  fbq('track', 'Search', fabmodFbpixelTrack);
+}());
+</script>

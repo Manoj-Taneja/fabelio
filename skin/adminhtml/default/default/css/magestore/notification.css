@@ -1,0 +1,26 @@
+
+.notification-inventory-global .label {
+    color: #eb5e00;
+}
+
+.notification-inventory-global span {
+    width:90%;
+    float:left;
+    margin: 0 0 0 50px;
+}
+
+.notification-inventory-global strong{
+    margin: 5px 0 0 50px;
+    float: left;
+}
+.notification-inventory-global{
+    background: url("images/error_msg_icon.gif") no-repeat scroll 27px 5px #fff9e9;   
+    border-top: 1px solid #eee2be;
+    color: #444;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0;
+    width: 100%;
+    position: relative;
+    margin: -10px 0 10px 0;
+}

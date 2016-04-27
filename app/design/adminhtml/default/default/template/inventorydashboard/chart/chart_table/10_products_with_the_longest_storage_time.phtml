@@ -1,0 +1,99 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+
+
+<?php $warehouses = Mage::getModel('inventoryplus/warehouse')->getCollection()->addFieldToFilter('status', 1); ?>
+<?php
+    $cookie = Mage::getSingleton('core/cookie');
+    $warehouseId = $cookie->get($chart->getReportCode().$id.'chart_warehouse_id');
+?> 
+<?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventoryreports')):?>
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("inventoryreportsadmin/adminhtml_supplier/product", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<?php endif;?>
+<div style="width: 100%; float:left; margin-top: 5px;">
+                            <label style="float:left; line-height: 28px; font-size: 14px;"><?php echo $this->__('Select warehouse')?></label>
+                            <ul id="<?php echo $chart->getReportCode();?>_ul" style="float: left; margin-left: 5px; width: 150px; padding: 5px; background: none repeat scroll 0% 0% #20374D; color: white; font-size: 14px;cursor: pointer;">
+                                <?php if(!$warehouseId || $warehouseId==0):?>
+                                <li onclick="selectWarehouse('<?php echo $chart->getReportCode()?>_<?php echo $id?>_select')"><?php echo $this->__('All warehouses'); ?> <span style="float:right">&#8711;</span>
+                                        <ul style="display:none" id="<?php echo $chart->getReportCode()?>_<?php echo $id?>_select">
+                                            <?php foreach ($warehouses as $warehouse): ?>
+                                            <li onmouseout="this.style.fontStyle = 'normal'; this.style.fontWeight = 'normal'" onmousemove="this.style.fontStyle = 'italic'; this.style.fontWeight = 'bold'" onclick="changeWarehouse('<?php echo $chart->getReportCode() ?>','<?php echo $chart->getReportCode() ?>_chart_content',<?php echo $warehouse->getId();?>,<?php echo $id?>);"><?php echo $warehouse->getWarehouseName();?></li>
+                                            <?php endforeach; ?>                                            
+                                        </ul>
+                                    </li>
+                                <?php else:?>
+                                    <?php $warehouses = $warehouses->addFieldToFilter('warehouse_id', array('neq'=>$warehouseId));?>
+                                    
+                                    <li onclick="selectWarehouse('<?php echo $chart->getReportCode()?>_<?php echo $id?>_select')"><?php echo Mage::getModel('inventoryplus/warehouse')->load($warehouseId)->getWarehouseName(); ?> <span style="float:right">&#8711;</span>
+                                        <ul style="display:none" id="<?php echo $chart->getReportCode()?>_<?php echo $id?>_select">
+                                            <li onmouseout="this.style.fontStyle = 'normal'; this.style.fontWeight = 'normal'" onmousemove="this.style.fontStyle = 'italic'; this.style.fontWeight = 'bold'" onclick="changeWarehouse('<?php echo $chart->getReportCode() ?>','<?php echo $chart->getReportCode() ?>_chart_content',0,<?php echo $id?>);"><?php echo $this->__('All warehouses'); ?>
+                                            <?php foreach ($warehouses as $warehouse): ?>
+                                                <li onmouseout="this.style.fontStyle = 'normal'; this.style.fontWeight = 'normal'" onmousemove="this.style.fontStyle = 'italic'; this.style.fontWeight = 'bold'" onclick="changeWarehouse('<?php echo $chart->getReportCode() ?>','<?php echo $chart->getReportCode() ?>_chart_content',<?php echo $warehouse->getId();?>,<?php echo $id?>);"><?php echo $warehouse->getWarehouseName();?></li>
+                                            <?php endforeach; ?>                                            
+                                        </ul>
+                                    </li>
+                                <?php endif;?>
+                                    
+                                
+                            </ul>
+                            
+                            
+</div>
+                            
+
+
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px; margin: 0 auto; overflow: auto;">
+    <div text-anchor="middle" class="highcharts-title" zIndex="4" style="color: #333333;font-size: 18px;fill: #333333;text-align: center;padding-bottom: 10px;" >
+        <tspan><?php echo $chart->getName() ?></tspan>
+    </div>
+    <table style="width: 100%;">
+        <thead class="thead-dashboard-table">
+            <tr>
+                <th style="text-align: center;"><?php echo $this->__('Product') ?></th>
+                <th style="text-align: center; min-width:50px"><?php echo $this->__('Qty') ?></th>
+                <th style="text-align: center; min-width:50px"><?php echo $this->__('Warehousing Time (Days)') ?></th>
+            </tr>
+        </thead>
+        <tbody class="tbody-dashboard-table">            
+            <?php     
+               $resource = Mage::getSingleton('core/resource');        
+                $readConnection = $resource->getConnection('core_read');
+                $cookie = Mage::getSingleton('core/cookie');
+              
+
+                if(!$warehouseId || $warehouseId==0){
+                    $sql = 'SELECT * FROM '.$resource->getTableName('inventoryplus/warehouse_product').' WHERE total_qty > 0 ORDER BY updated_at ASC LIMIT 10'; 
+                }else{
+                    $sql = 'SELECT * FROM '.$resource->getTableName('inventoryplus/warehouse_product').' WHERE warehouse_id = '.$warehouseId.' and total_qty > 0 ORDER BY updated_at ASC LIMIT 10'; 
+                }
+
+                $results = $readConnection->query($sql);
+                $i =0;
+                foreach($results as $result):             
+                    $updateTime = strtotime($result['updated_at']);
+                    $currentTime = strtotime(now());
+                   
+                    if($updateTime){                         
+                        $wahousingTime = ($currentTime - $updateTime);    
+                        $days = intval($wahousingTime/86400);  
+                    }else{
+                        $wahousingTime = $currentTime;  
+                        $days = intval($wahousingTime/86400);  
+                    }
+                    
+                          
+                    $hours = intval($wahousingTime/3600);
+                    $minutes = intval($wahousingTime/60);
+                    $product = Mage::getModel('catalog/product')->load($result['product_id']);
+                ?>
+                    <tr class="<?php if($i%2 != 0){ echo 'td-dashboard-table'; } ?>">
+                        <td style="text-align: left;   padding: 0 0 0 5px;"><?php echo $product->getName() ?></td>  
+                        <td><?php echo $result['total_qty']; ?></td>
+                        <td><?php echo $days ?></td>
+                    </tr>
+                <?php $i++; endforeach;  ?>
+        </tbody>
+    </table>
+</div>

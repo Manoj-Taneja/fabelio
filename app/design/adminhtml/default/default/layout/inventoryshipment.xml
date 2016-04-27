@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventoryshipment
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<layout version="0.1.0">
+    <inventoryshipmentadmin_adminhtml_inventoryshipment_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventoryshipment/adminhtml_inventoryshipment" name="inventoryshipment" />
+        </reference>
+    </inventoryshipmentadmin_adminhtml_inventoryshipment_index>
+    
+    <inventoryshipmentadmin_adminhtml_shipment_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <update handle="adminhtml_sales_order_shipment_new" />
+    </inventoryshipmentadmin_adminhtml_shipment_new>
+    <inventoryshipmentadmin_adminhtml_shipment_view>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <update handle="adminhtml_sales_order_shipment_view" />
+    </inventoryshipmentadmin_adminhtml_shipment_view>
+
+    <inventoryshipmentadmin_adminhtml_order_view>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <update handle="adminhtml_sales_order_view" />   
+        <reference name="sales_order_tabs">
+            <action method="removeTab">
+                <name>order_invoices</name>
+            </action>     
+            <action method="removeTab">
+                <name>order_creditmemos</name>
+            </action>     
+            <action method="removeTab">
+                <name>order_history</name>
+            </action>     
+            <action method="removeTab">
+                <name>order_transactions</name>
+            </action>       
+            <block type="inventoryshipment/adminhtml_activetab" name="inventoryshipment_tab"/>
+        </reference>
+    </inventoryshipmentadmin_adminhtml_order_view>    
+    <inventoryshipmentadmin_adminhtml_order_addcomment>
+        <block type="adminhtml/sales_order_shipment_view_comments" name="shipment_comments">
+            <block type="adminhtml/sales_order_comments_view"  name="order_comments" template="sales/order/comments/view.phtml"></block>
+        </block>
+    </inventoryshipmentadmin_adminhtml_order_addcomment>
+</layout>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Naya_OpenGraph</name>
+    <version>1.0.1</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">Open Software License (OSL)</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Add Open Graph tags in your product pages and generate previews when your content is shared on Facebook.</summary>
+    <description>This extension includes Open Graph tags in your product page HTML and allow the Facebook Crawler to generate previews when your content is shared on Facebook.</description>
+    <notes>Links fixed</notes>
+    <authors><author><name>Damir Perkosan</name><user>dperkosan</user><email>dperkosan@gmail.com</email></author></authors>
+    <date>2014-10-09</date>
+    <time>08:27:57</time>
+    <contents><target name="magecommunity"><dir name="Naya"><dir name="Base"><dir name="Helper"><file name="Data.php" hash="c8e570f1b43c26fc283c671d08500b73"/></dir><dir name="etc"><file name="config.xml" hash="f8e52dc85832a20709958cca13402daa"/><file name="system.xml" hash="19d728b32254cae1eb3b0a89b0b3a1f4"/></dir></dir><dir name="OpenGraph"><dir name="Block"><file name="Opengraph.php" hash="2f451cd81a18124aa3e12acf088462af"/></dir><dir name="Helper"><file name="Data.php" hash="66b291fc9ebb4645e7644664889c08c1"/></dir><dir name="etc"><file name="adminhtml.xml" hash="7add2998ef7062992916c05979b51b8e"/><file name="config.xml" hash="0da1f3c1869617520147d00e95a8377a"/><file name="system.xml" hash="36f183140a4e93cd92d570c8aa1732cf"/></dir></dir></dir></target><target name="magelocale"><dir><dir name="en_US"><file name="Naya_Base.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/><file name="Naya_OpenGraph.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Naya_Base.xml" hash="5a34d072400c7079ce8f79e3d288b7e8"/><file name="Naya_OpenGraph.xml" hash="f98cd6beae4d1d723a7ee5ab6938569d"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="naya_opengraph.xml" hash="f06d365927c458f5ff18798bca659fe5"/></dir><dir name="template"><dir name="naya"><dir name="opengraph"><file name="products.phtml" hash="439f0f9cb57efae7f41a687cde92a44f"/></dir></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

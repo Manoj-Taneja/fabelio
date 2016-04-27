@@ -1,0 +1,8 @@
+<?php
+    $adminId = Mage::getSingleton('admin/session')->getUser()->getId();
+    $warehouseId = 0;
+    $warehouse = Mage::helper('inventoryplus/stock')->getWarehouse();
+    if($warehouse)
+        $warehouseId = $warehouse->getId();
+?>
+<input type="hidden" id="stock_warehouse_id" name="warehouse_id" value="<?php echo $warehouseId ?>" />

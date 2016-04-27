@@ -1,0 +1,38 @@
+Transaction Failed.,交易失敗。
+helloPay :: ERROR FETCHING TRANSACTION EVENTS!,helloPay::錯誤獲取交易事項！
+Thank you. Your transaction is under process. We will place order after transaction is confirmed,謝謝。您的交易正在處理。交易確認後，我們會下訂單
+Customer successfully returned from helloPay,從客戶成功helloPay返回
+Customer was redirected to helloPay,客戶被重定向到helloPay
+General contact' email will be used if left empty,如果留空總聯絡的電子郵件將被使用
+AUTHENTICATE,認證
+Customer successfully returned from,從客戶成功返回
+Customer was redirected to,客戶被重定向到
+Customer was returned from .,客戶從返回。
+DEFERRED,遞延
+Debug,調試
+Enabled,啟用
+Error occured,發生了錯誤
+Live,生活
+Mode,模式
+New order status,新的訂單狀態
+Order,訂購
+Order total amount does not match protx gross total amount,訂單總金額不匹配protx總金額總值
+PAYMENT,付款
+Payment Action,支付行動
+Payment from Specific countries,從具體國家的付款
+Payment from applicable countries,從適用國家支付
+"Please <a href=""%s"">continue shopping</a>.","請 <a href=""%s"">繼續購物</a>."
+Standard,helloPay標準
+Simulator,模擬器
+Sort order,排序
+Store name will be used if left empty,如果留空店鋪名稱將被使用
+Test,測試
+Title,標題
+Transaction Description,交易說明
+Vendor email,供應商郵件
+Vendor email notification,供應商的電子郵件通知
+Vendor encrypted password,供應商加密的密碼
+Vendor name,供應商名稱
+You will be redirected to website when you place an order.,當你下訂單，你將被重定向到網站。
+There was an error while creating new purchase. Please contact support team.,在創建新的採購有一個錯誤。請聯繫技術支持團隊。
+You will be redirected to helloPay in a few seconds.,你會在幾秒鐘內被重定向到helloPay。

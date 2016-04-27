@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorylowstock
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<layout version="0.1.0">
+   
+    <inventoryplusadmin_adminhtml_inventory_menu>
+        <reference name="head">                      
+            <action method="addCss">
+                <stylesheet>css/magestore/notification.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="notifications" >  
+            <block type="inventorylowstock/adminhtml_notification" name="inventory_lowstock" as="inventory_lowstock" template="inventorylowstock/notifications.phtml"></block>
+        </reference>
+    </inventoryplusadmin_adminhtml_inventory_menu>
+    <inventorylowstockadmin_adminhtml_notificationlog_view>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />        
+    </inventorylowstockadmin_adminhtml_notificationlog_view>
+    <inventorylowstockadmin_adminhtml_notificationlog_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorylowstock/adminhtml_notificationlog" name="inventorylowstock_notificationlog" />
+        </reference>
+    </inventorylowstockadmin_adminhtml_notificationlog_index>
+    
+    <inventorylowstockadmin_adminhtml_notificationlog_products>
+        <block type="core/text_list" name="root">                       
+            <block type="inventorylowstock/adminhtml_notificationlog_edit_tab_products" name="notificationlog.edit.tab.products"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>notificationlog.edit.tab.products</grid_block_name>
+                    <data_callback>getSelectedProducts</data_callback>
+                    <hidden_input_name>sendstock_products</hidden_input_name>
+                    <reload_param_name>oproducts</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>qty</input_name>   
+                </action>
+            </block>
+        </block>
+    </inventorylowstockadmin_adminhtml_notificationlog_products>
+    <inventorylowstockadmin_adminhtml_notificationlog_productsgrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorylowstock/adminhtml_notificationlog_edit_tab_products" name="notificationlog.edit.tab.products"/>
+        </block>
+    </inventorylowstockadmin_adminhtml_notificationlog_productsgrid>
+    
+    <inventorylowstockadmin_adminhtml_notificationlog_product>
+        <block type="core/text_list" name="root">
+            <block type="core/template" name="inventorylowstock_details" template="inventorylowstock/detail.phtml" />
+            <block type="inventorylowstock/adminhtml_notificationlog_edit_tab_products" name="inventorylowstock.edit.tab.product"/>
+        </block>
+    </inventorylowstockadmin_adminhtml_notificationlog_product>    
+    <inventorylowstockadmin_adminhtml_notificationlog_productgrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorylowstock/adminhtml_notificationlog_edit_tab_products" name="inventorylowstock.edit.tab.product"/>
+        </block>
+    </inventorylowstockadmin_adminhtml_notificationlog_productgrid>
+</layout>

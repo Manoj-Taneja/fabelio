@@ -1,0 +1,602 @@
+<?php /** */ ?>
+<?php if ($this->isActive()):
+    ?>
+
+
+<!--Tatvic Enhanced eCommerce Section end -->
+    <script type="text/javascript">
+
+        if (typeof(jQuery) == 'undefined') {
+            document.write("<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></scr" + "ipt>");
+        }
+    </script> 
+
+    <?php if (!Mage::getStoreConfigFlag('tatvic_uaee/ecommerce/gtmid')) { ?>			
+        <!-- Google Tag Manager -->
+        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-T55T8X"
+                          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <script>(function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'});
+                var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                        '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-T55T8X');
+
+        </script> 
+        <!-- End Google Tag Manager -->
+    <?php } ?>
+    <script type="text/javascript">
+
+        (function(i, s, o, g, r, a, m) {
+            i["GoogleAnalyticsObject"] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, "script", "//www.google-analytics.com/analytics.js", "ga");
+
+        ga('create', '<?php echo $this->getAccountId(); ?>', '<?php echo $this->getRequest()->getHttpHost() ?>');
+
+
+        ga("require", "displayfeatures");
+        ga('send', 'pageview');
+        ga("require", "ec", "ec.js");
+
+        var $t_jQuery = jQuery.noConflict();
+
+    <?php
+// if ($this->getBrandAttr() !== '') {
+    if ($this->getBrandAttr() != '') {
+        $brand_code = $this->getBrandAttr();
+    } else {
+        $brand_code = '';
+    }
+
+    function t_getBrandValue($product, $t_brand_code) {
+
+        if (isset($t_brand_code)) {
+
+            $t_brand = $product->getResource()->getAttribute($t_brand_code);
+            if ($t_brand) {
+                return addslashes(trim($t_brand->getFrontend()->getValue($product)));
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+    
+    $brandAtt = $this->getBrandAttr();
+
+    if ($brandAtt == "") {
+        $brandAtt = "";
+        $getProductBrand = 'getBrand';
+    }
+    else
+        $getProductBrand = 'get' . strtolower($brandAtt);
+    ?>
+        //tvc_threshold = '<?php echo $this->getThreshold(); ?>';
+        //exec_tvc_t_sth = true;
+
+    <?php
+    $_SESSION["limit"] = Mage::getBlockSingleton('catalog/product_list_toolbar')->getLimit();
+    $_SESSION["direction"] = Mage::getBlockSingleton('catalog/product_list_toolbar')->getCurrentDirection();
+    $_SESSION["order"] = Mage::getBlockSingleton('catalog/product_list_toolbar')->getCurrentOrder();
+    $page = $this->getRequest()->getParam('p');
+    if ($page != "") {
+        $_SESSION["page"] = $page;
+    } else {
+        $_SESSION["page"] = 1;
+    }
+    ?>
+
+    <?php
+    $routeName = Mage::app()->getRequest()->getRouteName();
+    $identifier = Mage::getSingleton('cms/page')->getIdentifier();
+    if ($routeName == 'cms' && $identifier == 'home') :
+        $currentCategoryId = Mage::getSingleton('catalog/layer')->getCurrentCategory()->getId();
+
+        //installation calling function...
+
+        if ($this->getHomeId() != '') :
+            ?>
+                var homeObject = {};
+            <?php
+            $category = Mage::getSingleton('catalog/category');
+            $category->load($this->getHomeId());
+            $collection = $category->getProductCollection();
+            $collection->addAttributeToSelect('*')->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
+            $products = $collection->getItems();
+            $catName = $category->getName();
+            $catIds = "";
+            $position = 1;
+            ?>
+            <?php
+            foreach ($products as $_product) {
+                ?>
+                <?php
+                $cats = $_product->getCategoryIds();
+                foreach ($cats as $category_id) {
+                    $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+                    $catIds.=$_cat->getName() . ",";
+                }
+                if ($this->getHomeId() != '2') {
+                    $myurl = $_product->getProductUrl();
+                    $dvs = explode('/', $myurl);
+                    $len = sizeof($dvs);
+                    $ele = $dvs[$len - 1];
+                    $catName = str_replace(' ', '-', $catName);
+                    $ele = strtolower($catName) . '/' . $ele;
+                    $dvs[$len - 1] = $ele;
+                    $P_url = implode('/', $dvs);
+                } else {
+                    $P_url = $_product->getProductUrl();
+                }
+
+                $inStock = Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($_product)->getIsInStock();
+                ?>
+                <?php
+                if ($_product->getVisibility() != 1 && $inStock != 0) :
+                    $product_sku = $_product->getSku();
+                    if ($product_sku == ""):
+                        $product_sku = $_product->getId();
+                    endif;
+                    ?>
+                        t_product_url_2 = "<?php echo trim(Mage::getUrl($_product->getUrlPath()), "/") ?>";
+                        homeObject['<?php echo $P_url; ?>'] = {'sku': '<?php echo addslashes($product_sku); ?>',
+                            'Name': '<?php echo addslashes($_product->getName()); ?>',
+                            'id': '<?php echo $_product->getId(); ?>',
+                            'Price': '<?php echo $_product->getFinalPrice(); ?>',
+                            'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                            'position': '<?php echo $position; ?>',
+                            'brand': '<?php echo addslashes(t_getBrandValue($_product, $brand_code)); ?>',
+                            'url2': t_product_url_2,
+                            'visibility': '<?php echo $_product->getVisibility(); ?>',
+                            'instock': '<?php echo $inStock; ?>',
+                            'stock': '<?php echo Mage::getSingleton("cataloginventory/stock_item")->loadByProduct($_product->getId())->getQty(); ?>'
+
+                        }
+
+                    <?php $catIds = "";
+                    $position++;
+                endif;
+            } $_SESSION["page"] = 1; ?>
+                exec_tvc_t_hi = true;
+
+
+
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if (strpos($this->getRequest()->getPathInfo(), 'checkout/cart/') !== false) : ?>
+
+            var cartProducts = {};
+
+        <?php
+        $cart = Mage::getSingleton('checkout/cart')->getQuote();
+        $catIds = "";
+
+        foreach ($cart->getAllItems() as $item) {
+            ?>
+            <?php
+            $cats = $item->getProduct()->getCategoryIds();
+            foreach ($cats as $category_id) {
+                $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+                $catIds.=$_cat->getName() . ",";
+            }
+
+            $_item = $item->getProduct()->getId();
+            $_resource = $item->getProduct()->getResource();
+            $optionValue = $_resource->getAttributeRawValue($_item, $this->getBrandAttr(), Mage::app()->getStore());
+            $product_sku = $item->getProduct()->getSku();
+            if ($product_sku == ""):
+                $product_sku = $_item;
+            endif;
+            $productId = $item->getProduct()->getId();
+            $_product = Mage::getSingleton('catalog/product')->load($productId);
+            ?>
+
+                cartProducts['<?php echo $item->getProduct()->getProductUrl(); ?>'] = {'sku': '<?php echo addslashes($product_sku); ?>',
+                    'Name': '<?php echo addslashes($item->getProduct()->getName()); ?>',
+                    'id': '<?php echo $item->getProduct()->getId(); ?>',
+                    'qty': '<?php echo $item->getQty(); ?>',
+                    'Price': '<?php echo $item->getProduct()->getFinalPrice(); ?>',
+                    'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                    'brand': '<?php echo addslashes(t_getBrandValue($_product, $brand_code)); ?>'
+                }
+
+            <?php
+            $catIds = "";
+        }
+        ?>
+            ga('set', '&cu', '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>');
+            exec_tvc_t_dc = true;
+
+    <?php endif; ?>
+
+    <?php if (Mage::app()->getRequest()->getControllerName() === "category"): ?>
+
+            var catProductList = {};
+
+        <?php
+        $_helper = $this->helper('catalog/output');
+        $_category_detail = Mage::registry('current_category');
+        $catId = $_category_detail->getId();
+        $catName = $_category_detail->getName();
+        $category = Mage::getSingleton('catalog/category')->load($catId);
+        $collection = $category->getProductCollection()->addAttributeToSelect('*')->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
+        $catIds = "";
+        $position = 1;
+        $products = $collection->getItems();
+        ?>
+
+        <?php
+        foreach ($products as $product) {
+            ?>
+
+            <?php
+            $cats = $product->getCategoryIds();
+            foreach ($cats as $category_id) {
+                $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+                $catIds.=$_cat->getName() . ",";
+            }
+
+            $inStock = Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($product)->getIsInStock();
+            ?>
+
+            <?php
+            if ($product->getVisibility() != 1 && $inStock != 0) :
+                $product_sku = $product->getSku();
+                if ($product_sku == ""):
+                    $product_sku = $product->getId();
+                endif;
+                ?>
+                    t_cat_url = "<?php echo $product->getProductUrl(); ?>";
+                    t_product_url_2 = "<?php echo trim(Mage::getUrl($product->getUrlPath()), "/"); ?>";
+                    catProductList[t_cat_url] = {'sku': '<?php echo addslashes($product_sku); ?>',
+                        'Name': '<?php echo addslashes($product->getName()); ?>',
+                        'price': '<?php echo $product->getFinalPrice(); ?>',
+                        'id': '<?php echo $product->getId(); ?>',
+                        'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                        'position': '<?php echo $position; ?>',
+                        //'brand':'<?php echo addslashes($product->$getProductBrand()); ?>',
+                        'brand': '<?php echo addslashes(t_getBrandValue($product, $brand_code)); ?>',
+                        'url2': t_product_url_2,
+                        'visibility': '<?php echo $product->getVisibility(); ?>',
+                        'instock': '<?php echo $inStock; ?>',
+                        'stock': "<?php echo Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($product->getId())->getQty(); ?>"
+
+                    }
+
+
+                <?php $catIds = "";
+                $position++;
+                $_SESSION["page"] = 1;
+            endif;
+        } ?>
+            catName = "<?php echo $catName; ?>";
+
+            exec_tvc_t_c = true;
+
+
+
+
+    <?php endif; ?>
+
+
+
+    <?php
+    if (strpos($this->getRequest()->getPathInfo(), '/catalogsearch/result/') !== false):
+
+        $_q = addslashes(Mage::app()->getRequest()->getQuery('q'));
+        ?>
+
+            var catalogSearch = {};
+
+        <?php
+        $position = 1;
+
+        $_Products = Mage::getSingleton('catalog/product')
+                        ->getCollection()
+                        ->addAttributeToSelect('*')
+                        ->addAttributeToFilter(
+                                array(
+                                    array('attribute' => 'name', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'price', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'description', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'url_key', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'sku', 'like' => '%' . $_q . '%'),
+                                    array('attribute' => 'entity_id', 'like' => '%' . $_q . '%')
+                                )
+                        )->addAttributeToSort($_SESSION["order"], $_SESSION["direction"])->setPageSize($_SESSION["limit"])->setCurPage($_SESSION["page"]);
+
+        $catIds = "";
+        ?>
+
+        <?php
+        foreach ($_Products as $_product) {
+            ?>
+
+            <?php
+            $cats = $_product->getCategoryIds();
+            foreach ($cats as $category_id) {
+                $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+                $catIds.=$_cat->getName() . ",";
+            }
+            $inStock = Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($_product)->getIsInStock();
+            ?>
+            <?php
+            if ($_product->getVisibility() > 2 && $inStock != 0) :
+                $product_sku = $_product->getSku();
+                if ($product_sku == ""):
+                    $product_sku = $_product->getId();
+                endif;
+                ?>
+                    t_product_url_2 = "<?php echo trim(Mage::getUrl($_product->getUrlPath()), "/"); ?>";
+                    catalogSearch['<?php echo $_product->getProductUrl(); ?>'] = {'sku': '<?php echo addslashes($product_sku); ?>',
+                        'Name': '<?php echo addslashes($_product->getName()); ?>',
+                        'price': '<?php echo $_product->getFinalPrice(); ?>',
+                        'id': '<?php echo $_product->getId(); ?>',
+                        'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                        'position': '<?php echo $position; ?>',
+                        'brand': '<?php echo addslashes(t_getBrandValue($_product, $brand_code)); ?>',
+                        'url2': t_product_url_2,
+                        'visibility': '<?php echo $_product->getVisibility(); ?>',
+                        'instock': '<?php echo $inStock; ?>',
+                        'stock': "<?php echo Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($_product->getId())->getQty(); ?>"
+                    }
+
+
+
+                <?php $catIds = "";
+                $position++;
+            endif;
+        } $_SESSION["page"] = 1; ?>
+            exec_tvc_t_cs = true;
+
+    <?php endif;
+    ?>
+
+    <?php if ($this->getProduct()): ?>
+
+            var productObject = {};
+
+        <?php
+        if (isset($_COOKIE['tvc_metadata'])) {
+
+            $tvc_metadata = array(
+                'plugin_version' => '2.0.3',
+                'current_pkg' => Mage::getDesign()->getPackageName(),
+                'current_theme' => Mage::getDesign()->getTheme('frontend'),
+                'Plugin_data' => array('checkout_url' => Mage::getStoreConfig('tatvic_uaee/ecommerce/checkout_url'),
+                    'success_url' => Mage::getStoreConfig('tatvic_uaee/ecommerce/success_url'),
+                    'Homepage_ID' => Mage::getStoreConfig('tatvic_uaee/ecommerce/home_id'),
+                    'code_of_brand' => Mage::getStoreConfig('tatvic_uaee/ecommerce/brand'),
+                    'Uninstall_mail' => Mage::getStoreConfig('tatvic_uaee/general/uninstallMail'),
+                    'Install_mail' => Mage::getStoreConfig('tatvic_uaee/general/installMail')
+            ));
+
+            //==============================
+            ?>var tvc_metadata = <?php echo json_encode($tvc_metadata); ?>;
+
+            <?php
+        }//end cookie block
+
+        $sku_id = $this->getProduct()->getId();
+        $product = Mage::getSingleton('catalog/product')->load($sku_id);
+
+        $catIds = "";
+        $product_sku = $product->getSku();
+        if ($product_sku == ""):
+            $product_sku = $sku_id;
+        endif;
+        ?>
+        <?php
+        $cats = $this->getProduct()->getCategoryIds();
+        foreach ($cats as $category_id) {
+            $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+            $catIds.=$_cat->getName() . ",";
+        }
+        ?>
+                    productObject = {
+                        'sku': '<?php echo addslashes($product_sku); ?>',
+                        'Name': '<?php echo addslashes($this->getProduct()->getName()) ?>',
+                        'Price': '<?php echo $this->getProduct()->getFinalPrice() ?>',
+                        'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                        'brand': '<?php echo addslashes(t_getBrandValue($this->getProduct(), $brand_code)); ?>',
+                        'visibility': '<?php echo $this->getProduct()->getVisibility(); ?>',
+                        'instock': "<?php echo Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($sku_id)->getIsInStock(); ?>",
+                        'stock': "<?php echo Mage::getSingleton('cataloginventory/stock_item')->loadByProduct($sku_id)->getQty(); ?>"
+                    }
+                    ga('set', '&cu', '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>');
+                    exec_tvc_t_ppv = true;
+
+        <?php $catIds = "";
+    endif; ?>
+
+
+    <?php if ($this->isCheckout() && !$this->isEcommerce()):
+        ?>
+
+                    var cartObject = {};
+
+
+        <?php
+        $cart = Mage::getSingleton('checkout/cart')->getQuote();
+
+        if ($this->helper('customer')->isLoggedIn()):
+            ?>
+                        var checkoutStep = 2;
+                        var LoggedIn = true;
+
+        <?php else : ?>
+                        var checkoutStep = 1;
+
+                        var LoggedIn = false;
+        <?php
+        endif;
+        $catIds = "";
+        $items = $cart->getAllItems();
+        foreach ($items as $itemId => $item) {
+
+            $productId = $item->getProduct()->getId();
+            $productPrice = $item->getProduct()->getFinalPrice();
+            $productSku = $item->getProduct()->getSku();
+            $productName = $item->getProduct()->getName();
+            $productQty = $item->getQty();
+            $productBrand = $item->getData('brand');
+
+            $_item = $item->getProduct()->getId();
+            $_resource = $item->getProduct()->getResource();
+            $optionValue = $_resource->getAttributeRawValue($_item, $this->getBrandAttr(), Mage::app()->getStore());
+            //echo $optionvalue;
+            $_product = Mage::getSingleton('catalog/product')->load($productId);
+
+            $cats = $item->getProduct()->getCategoryIds();
+            foreach ($cats as $category_id) {
+                $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+
+                $catIds.=$_cat->getName() . ",";
+            }
+            $product_sku = $item->getProduct()->getSku();
+            if ($product_sku == ""):
+                $product_sku = $_item;
+            endif;
+            ?>
+
+                        cartObject['<?php echo $item->getProduct()->getProductUrl(); ?>'] = {
+                            'sku': '<?php echo addslashes($product_sku) ?>',
+                            'Name': '<?php echo addslashes($productName) ?>',
+                            'Price': '<?php echo $productPrice ?>',
+                            'qty': '<?php echo $productQty ?>',
+                            'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                            'brand': '<?php echo addslashes(t_getBrandValue($_product, $brand_code)); ?>'
+                        }
+
+            <?php $catIds = "";
+        }
+        ?>
+                    exec_tvc_t_cobj = true;
+
+
+
+    <?php endif; ?>
+    <?php if ($this->isEcommerce()): ?>
+
+        <?php
+
+        //$_order = $this->getOrder();
+        //Mage::getModel('sales/order')->load($orderId);
+        $_order = Mage::getSingleton('sales/order')->load(Mage::getSingleton('checkout/session')->getLastOrderId());
+        $order = Mage::getSingleton('sales/order')->load($_order->getData($this->getTransactionIdField()));
+        $items = $order->getAllItems();
+        $data = array();
+        $i = 0;
+        ?>
+
+                    ga('set', '&cu', '<?php echo $_order->getOrderCurrencyCode(); ?>');
+                    var orderObject = {};
+        <?php
+        $catIds = "";
+        foreach ($items as $itemId => $item) {
+            ?>
+            <?php
+            $cats = $item->getProduct()->getCategoryIds();
+            foreach ($cats as $category_id) {
+                $_cat = Mage::getSingleton('catalog/category')->load($category_id);
+                $catIds.=$_cat->getName() . ",";
+            }
+            $product_sku = $item->getSku();
+            if ($product_sku == ""):
+                $product_sku = $item->getId();
+            endif;
+
+            $productId = $item->getProduct()->getId();
+            $_product = Mage::getSingleton('catalog/product')->load($productId);
+            ?>
+
+                        orderObject['<?php echo $i ?>'] = {
+                            'sku': '<?php echo addslashes($product_sku); ?>',
+                            'Name': '<?php echo addslashes($item->getName()); ?>',
+                            'Price': '<?php echo $item->getProduct()->getFinalPrice(); ?>',
+                            'qty': '<?php echo $item->getQtyToInvoice(); ?>',
+                            'qty1': '<?php echo intVal($item->getQtyOrdered()); ?>',
+                            'categories': '<?php echo addslashes(trim($catIds, ",")); ?>',
+                            'brand': '<?php echo addslashes(t_getBrandValue($_product, $brand_code)) ?>'
+                        }
+            <?php
+            $catIds = "";
+            $data[$i]['name'] = $item->getName();
+
+            $data[$i]['price'] = $item->getProduct()->getFinalPrice();
+
+            $data[$i]['sku'] = $item->getSku();
+
+            $data[$i]['id'] = $item->getProductId();
+
+            $data[$i]['qty'] = $item->getQtyToInvoice();
+
+            $data[$i]['brand'] = $item->getProduct()->$getProductBrand();
+            ?>
+
+
+
+            <?php
+            $i++;
+        }
+        $catIds = "";
+        ?>
+                    transactionObject = {};
+                    transactionObject = {
+                        'tid': '<?php echo $_order->getData($this->getTransactionIdField()) ?>',
+                        'aid': '<?php echo addslashes(Mage::app()->getStore()->getName()) ?>',
+                        'revenue': '<?php echo $_order->getGrandTotal() ?>',
+                        'tax': '<?php echo $_order->getTaxAmount() ?>',
+                        'shipping': '<?php echo $_order->getShippingInclTax() ?>',
+                        'ccode': '<?php echo addslashes($_order->getCouponCode()); ?>'
+                    }
+                    //t_oid = '<?php echo $_order->getIncrementId(); // ?>';
+                    //exec_tvc_t_thnx = true;
+
+                    for (item in orderObject) {
+                        ga('ec:addProduct', {
+                            'id': orderObject[item]['sku'],
+                            'name': orderObject[item]['Name'],
+                            'category': orderObject[item]['categories'],
+                            'brand': orderObject[item]['brand'],
+                            'price': orderObject[item]['Price'],
+                            'quantity': orderObject[item]['qty']
+                        });
+                    }
+
+                    ga('ec:setAction', 'purchase', {
+                        'id': transactionObject['tid'],
+                        'affiliation': transactionObject['aid'],
+                        'revenue': transactionObject['revenue'],
+                        'tax': transactionObject['tax'],
+                        'shipping': transactionObject['shipping'],
+                        'coupon': transactionObject['ccode']    // User added a coupon at checkout.
+                    });
+
+                    ga("send", "event", "Enhanced-Ecommerce", "load", "order_confirmation", {"nonInteraction": 1});
+
+
+                    //replace with exec_tvc_t_thnx
+
+
+    <?php endif; ?>
+    </script>
+
+    <!--Tatvic Enhanced eCommerce Section end -->
+    <?php endif;
+?>

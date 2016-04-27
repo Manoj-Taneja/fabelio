@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+    <name>Tiny_Compresss_Images</name>
+    <version>1.0.1</version>
+    <stability>stable</stability>
+    <license uri="https://www.gnu.org/licenses/gpl-2.0.html">GPL v2 or later</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Speed up your webshop. Optimize your JPEG and PNG images automatically with TinyPNG. </summary>
+    <description>Make your webshop faster by compressing your JPEG and PNG images.&#xD;
+&#xD;
+This plugin automatically optimizes your images by integrating with the popular image compression services TinyJPG and TinyPNG.</description>
+    <notes>Handle errors from service</notes>
+    <authors><author><name>TinyPNG</name><user>TinyPNG</user><email>info@tinypng.com</email></author></authors>
+    <date>2015-05-15</date>
+    <time>13:56:57</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="Tiny_CompressImages.xml" hash="13fbe2b1d6381daadcf798266785a451"/></dir></target><target name="magelib"><dir name="TinyCompress"><file name="README.md" hash="4ae1886316de0c8dea5d1990b9649cd4"/><file name="cacert.pem" hash="d7f7dd7e3ede3e323fc0e09381f16caf"/><file name="class-tiny-compress-curl.php" hash="7ecabcea793ae179063c1dc93a2509a9"/><file name="class-tiny-compress-fopen.php" hash="ade5462599afcb9d7b49aca1982a148c"/><file name="class-tiny-compress.php" hash="e74709f18b1efd623e5c3945b8cbcf47"/><file name="class-tiny-exception.php" hash="9a9ae877854ee523d68c1ad9c875c319"/><file name="class-tiny-php.php" hash="7ab90f953a98a6ff2becc0d5aaea3f66"/><dir name="config"><file name="tinypng-api.ini" hash="c876771cfd9609aa517fc6a677f0d329"/></dir></dir></target><target name="magecommunity"><dir name="Tiny"><dir name="CompressImages"><dir name="Model"><file name="Observer.php" hash="890f0300645e8002bc28715a7b514bd3"/><dir name="Product"><file name="Image.php" hash="d022a2c075571e90919716b49602aefc"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="ec3a27c4fca2924c2bcace7cf2a33fb4"/><file name="config.xml" hash="af64144c88706151e633a178475a46fd"/><file name="system.xml" hash="77bf25c48a20ea171b11776beaa7165b"/></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

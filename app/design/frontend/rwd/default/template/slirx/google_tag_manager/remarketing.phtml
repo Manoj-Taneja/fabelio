@@ -1,0 +1,26 @@
+<?php
+/**
+ * @author     Karazey Sergey <karazey.sergey@gmail.com>
+ * @copyright  2014 Karazey Sergey
+ * @created    10:00 27/06/2014
+ * @license    http://opensource.org/licenses/OSL-3.0 Open Software License v. 3.0 (OSL-3.0)
+ */
+?>
+
+<?php
+$helper = Mage::helper('slirx_google_tag_manager');
+if ($helper->isActive() && $helper->isActiveRemarketing()):
+    $remarketingData = $this->getRemarketingData();
+    ?>
+    <?php if ($remarketingData !== false) : ?>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            try {
+                dataLayer.push(<?= $remarketingData ?>);
+            }
+            catch (err) {
+            }
+        });
+    </script>
+<?php endif; ?>
+<?php endif; ?>

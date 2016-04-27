@@ -1,0 +1,57 @@
+<?php
+/**
+ *
+ * @author  R. Dale Owen   @mediotype
+ * @var $this Mage_Checkout_Block_Cart
+ */
+$loggedIn = Mage::getSingleton('customer/session')->isLoggedIn();
+?>
+<script type="text/javascript">
+    //<![CDATA[
+<?php foreach($this->getItems() as $item): ?>
+    <?php $product = $item->getProduct() ?>
+    <?php
+            $impressionData = array(
+                "id" => $product->getId(),
+                "name" => $product->getName(),
+                "price" => $item->getPrice(),
+                "quantity" => $item->getQty()
+                );
+            if($product->getManufacturer()){
+                $impressionData['brand'] =$product->getManufacturer();
+            }
+        ?>
+    ga('ec:addProduct', <?php echo json_encode($impressionData) ?>);
+
+<?php endforeach ?>
+<?php if($loggedIn): ?>
+    ga('ec:setAction','checkout', {
+        'step': 1,
+        'option':'logged in'
+    });
+<?php else: ?>
+    var register = $('onepage-guest-register-button');
+    register.originonclick = register.onclick;
+    register.onclick = function() {
+        var guestTypes = $$('#checkout-step-login input[name=checkout_method]');
+        var guestType = undefined;
+        guestTypes.each(function(method){
+            if(method.checked) {
+                guestType = method;
+            }
+        });
+        ga('ec:setAction','checkout', {
+            'step': 1,
+            'option':guestType.value
+        });
+        register.onclick = register.originonclick;
+        ga('send', 'event', 'Checkout', 'Option','Guest Checkout',{
+            'hitCallback': function() {
+                register.click(register.originonclick);
+            }
+        });
+    };
+<?php endif; ?>
+
+    //]]>
+</script>

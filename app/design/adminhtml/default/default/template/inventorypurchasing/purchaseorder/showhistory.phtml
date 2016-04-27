@@ -1,0 +1,69 @@
+<?php 
+    $purchaseOrderHistoryId = $this->getRequest()->getParam('purchaseOrderHistoryId');
+    $purchaseOrderHistory = $this->getPurhcaseOrderHistory($purchaseOrderHistoryId);
+    $purchaseOrderHistoryContent = $this->getPurchaseOrderContentByHistoryId($purchaseOrderHistoryId);
+?>
+<div class="content-header">
+    <h3 class="icon-head head-adminhtml-purchaseorder"><?php echo $this->__('CHANGE HISTORY')?></h3>
+</div>
+<div>
+    <?php   echo $this->__('Action Owner: ').'<strong>'.$purchaseOrderHistory->getCreateBy().'</strong>'; ?>
+    <br />
+    <?php   echo $this->__('Time Stamp: ').'<strong>'.date('Y-m-d H:i:s',Mage::getModel('core/date')->timestamp($purchaseOrderHistory->getTimeStamp())).'</strong>';?>
+</div>
+<br />
+<?php if(count($purchaseOrderHistoryContent)): ?>
+    <div class="grid">
+        <div class="hor-scroll" style="max-height:300px;overflow-y:auto;">
+            <table cellspacing="0" id="purchase_order_history_id_table" class="data">
+                <colgroup>
+                    <col>
+                    <col width="280">
+                    <col width="280">
+                </colgroup>
+                <thead>
+                    <tr class="headings">
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title"><?php echo $this->__('Field Name') ?></span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('Old Value'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('New Value'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                    </tr>   
+                </thead>    
+                <tbody>
+                    <?php $i = 0 ?>
+                    <?php foreach($purchaseOrderHistoryContent as $content): ?>
+                        <?php $i++ ?>
+                        <tr class="even pointer">
+                            <td class=" ">
+                                <?php echo $content->getData('field_name') ?>
+                            </td>
+                            <td class=" ">
+                                <?php echo $content->getData('old_value') ?>                                
+                            </td>
+                            <td class=" last">
+                                <?php echo $content->getData('new_value') ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php else: ?>
+    <?php echo $this->__('Not found any purchase order history!') ?>
+<?php endif; ?>

@@ -1,0 +1,72 @@
+<?php
+/**
+* zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    base_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+?>
+<?php
+    $_landingPages = $this->getLandingPageCollection();
+    $_helper = $this->helper('zeon_landingpage');
+    $processor = Mage::helper('zeon_landingpage')->getBlockTemplateProcessor();
+    $title = $_helper->getDefaultTitle() ? $_helper->getDefaultTitle() : $this->__('Bestsellers');
+?>
+<div class="page-title">
+    <h1><?php echo $title ?></h1>
+</div>
+<div class="std">
+<?php if($_image = $_helper->getDefaultImage()): ?>
+    <p><img src="<?php echo $_image ?>" alt="<?php echo $title ?>" title="<?php echo $title ?>" /></p>
+<?php endif; ?>
+<?php if($_description = $_helper->getDefaultMetaDescription()): ?>
+    <p><?php echo $processor->filter($_description) ?></p>
+<?php endif; ?>
+</div>
+<?php if(!$_landingPages->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no landing page(s) matching the selection.') ?></p>
+<?php else: ?>
+<?php
+    $iterator = 1;
+    $column = 1;
+    $columns = $_helper->getColumnCount();
+    $count = $_landingPages->count();
+    $itemsPerColumn = ceil($count/$columns);
+?>
+<div class="landing-page page-sitemap">
+    <?php echo $this->getToolbarHtml() ?>
+    <div class="col<?php echo $columns ?>-set">
+    <ul class="sitemap">
+    <div class="col-<?php echo $column ?>">
+    <?php foreach ($_landingPages as $_landingPage): ?>
+        <li><a href="<?php echo $this->getItemUrl($_landingPage) ?>"><?php echo $_landingPage->getTitle() ?></a></li>
+        <?php if($iterator%$itemsPerColumn==0 && $iterator < $count): ?>
+            </div><div class="col-<?php echo ++$column ?>">
+        <?php endif; ?>
+    <?php $iterator++; endforeach; ?>
+    </div>
+    </ul>
+    </div>
+    <?php echo $this->getToolbarHtml() ?>
+</div>
+<?php endif; ?>

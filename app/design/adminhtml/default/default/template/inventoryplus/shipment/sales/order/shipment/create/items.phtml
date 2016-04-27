@@ -1,0 +1,299 @@
+<?php
+$_items = $this->getShipment()->getAllItems();
+Mage::getSingleton('core/session')->unsArrayQtyProductOrderItem();
+?>
+<?php
+$strOrderItemId = '';
+$arrQtyAllProductOrderItem = array();
+foreach ($_items as $_item) {
+    $sku = $_item->getOrderItem()->getSku();
+    $qtyToShip = $_item->getQty();
+    $productId = Mage::getModel("catalog/product")->getIdBySku($sku);
+    if (!$productId) {
+        $productId = $_item->getProductId();
+    }
+    $product = Mage::getModel('catalog/product')->load($productId);
+    $productType = $product->getTypeID();
+    if ($productType == 'simple') {
+        $orderItemId = $_item->getOrderItem()->getId();
+        $strOrderItemId .= $orderItemId . '|';
+        $arrQtyAllProductOrderItem[$productId][$orderItemId] = $qtyToShip;
+    }
+}
+
+Mage::getSingleton('core/session')->setArrayQtyProductOrderItem($arrQtyAllProductOrderItem);
+?>
+<script>
+    var jsonOrderItemId = '<?php echo $strOrderItemId; ?>';
+
+    var arrs = new Array();
+    function checkArray(Arr) {
+        Arr.forEach(function (element, index, array) {
+            //alert("a[" + index + "] = " + element);
+            enableElements('submit-button');
+            if (element == 0) {
+                disableElements('submit-button');
+                breack;
+            }
+            return true;
+        }
+        );
+    }
+    function checkStatusShipment() {
+        var myarr = jsonOrderItemId.split("|");
+        var myarrLength = myarr.length;
+        enableElements('submit-button');
+        myarr.forEach(function (element, index, array) {
+            if (element != '') {
+                if($('check-shipment[items][' + element + ']'))
+                    if ($('check-shipment[items][' + element + ']').value != '') {
+                        var checkStatus;
+
+                            checkStatus = $('check-shipment[items][' + element + ']').value;
+                        //alert(checkStatus);
+                        if (checkStatus == 0 || checkStatus == '') {
+                            myarrLength--;
+                        }
+                    }
+            }
+        }
+        );
+        if (myarrLength < myarr.length) {
+            disableElements('submit-button');
+            return;
+        }
+    }
+    var checkExistNeedTransfer = false;
+    function checkStatusAvailableAOrderItemByEvent(warehouse_id, product_id, qtytoship, order_item_id, order_id, totalQty) {
+        var parameters = {
+            warehouse_id: warehouse_id,
+            product_id: product_id,
+            qty: qtytoship,
+            order_item_id: order_item_id,
+            order_id: order_id,
+            total_qty: totalQty
+        };
+        var url = '<?php echo $this->getUrl('inventoryplusadmin/adminhtml_shipment/checkavailablebyevent'); ?>';
+        var request = new Ajax.Request(url,
+                {
+                    method: 'post',
+                    parameters: parameters,
+                    onSuccess: function (transport) {
+                        if (transport.responseText) {
+                            var result = JSON.parse(transport.responseText);
+                            if (result.avaiable == true) {
+                                $('show_select_barcode_' + order_item_id + '_' + product_id).innerHTML = result.barcode;
+                                checkStatusShipment();
+
+                            } else {
+
+                                $('show_select_barcode_' + order_item_id + '_' + product_id).innerHTML = result.barcode;
+                                disableElements('submit-button');
+
+                            }
+                        }
+                    }
+                }
+        );
+    }
+    function transfersuccess(item_id, product_id, warehouse_id, qtytoship, order_id) {
+        window.location.href = window.location.pathname;
+        ;
+    }
+    function sendNoticeSuccess(item_id) {
+        $("span-shipment[items][" + item_id + "]").innerHTML
+                = '<img src="<?php echo Mage::getDesign()->getSkinUrl('images/error_msg_icon.gif', array("_area" => "adminhtml")); ?> "/>  <span ><?php echo $this->helper('inventoryplus')->__('Notice was successfully sent!'); ?> </span>' +
+                '<input type="hidden" id="check-shipment[items][' + item_id + ']" value="0" />';
+    }
+</script>
+
+
+<div class="grid np">
+    <div class="hor-scroll">
+        <table cellspacing="0" class="data order-tables">
+            <col />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" class="barcode-column" />
+            <?php if (!$this->canShipPartiallyItem()): ?>
+                <col width="20" />
+            <?php endif; ?>
+            <thead>
+                <tr class="headings">
+                    <th><?php echo $this->helper('sales')->__('Product') ?></th>
+                    <th><?php echo $this->helper('sales')->__('Image') ?></th>
+                    <th class="a-center"><?php echo $this->helper('sales')->__('Qty') ?></th>
+                    <th<?php if ($this->isShipmentRegular()): ?> class=""<?php endif; ?>><span class="nobr"><?php echo $this->helper('sales')->__('Qty to Ship') ?></span></th>
+                    <th class="a-center"><div id="select_warehouse_supplier"><?php echo $this->helper('sales')->__('Warehouse') ?></div></th>
+        
+        <?php if(Mage::helper('core')->isModuleEnabled('Magestore_Inventorybarcode')):?>
+            <th class="a-center barcode-column"><div id="select_warehouse_barcode"><?php echo $this->helper('sales')->__('Barcode') ?></div></th>
+        <?php endif;?>
+        
+            <th class="last a-center" style="display:none"><?php echo $this->helper('sales')->__('Checked') ?></th>
+            <?php if (!$this->canShipPartiallyItem()): ?>
+                <th class="a-center "><span class="nobr"><?php echo $this->helper('sales')->__('Ship') ?></span></th>
+            <?php endif; ?>
+
+            </tr>
+            </thead>
+            <?php
+            $_i = 0;
+            foreach ($_items as $_item): if ($_item->getOrderItem()->getIsVirtual() || $_item->getOrderItem()->getParentItem()): continue;
+                endif;
+                $_i++
+                ?>
+                <tbody class="<?php echo $_i % 2 ? 'odd' : 'even' ?>">
+                    <?php echo $this->getItemHtml($_item) ?>
+                    <?php echo $this->getItemExtraInfoHtml($_item->getOrderItem()) ?>
+                </tbody>
+            <?php endforeach; ?>
+        </table>
+    </div>
+</div>
+<br />
+<div class="box-left entry-edit">
+    <div class="entry-edit-head"><h4><?php echo $this->__('Shipment Comments') ?></h4></div>
+    <fieldset>
+        <div id="order-history_form">
+            <span class="field-row">
+                <label class="normal" for="shipment_comment_text"><?php echo Mage::helper('sales')->__('Shipment Comments') ?></label>
+                <textarea id="shipment_comment_text" name="shipment[comment_text]" rows="3" cols="5" style="height:6em; width:99%;"><?php echo $this->getShipment()->getCommentText(); ?></textarea>
+            </span>
+            <div class="clear"></div>
+        </div>
+    </fieldset>
+</div>
+
+<div class="box-right entry-edit">
+    <div class="order-totals">
+        <div class="order-totals-bottom">
+            <p>
+                <label class="normal" for="notify_customer"><?php echo Mage::helper('sales')->__('Append Comments') ?></label>
+                <input id="notify_customer" name="shipment[comment_customer_notify]" value="1" type="checkbox" />
+            </p>
+            <?php if ($this->canSendShipmentEmail()): ?>
+                <p>
+                    <label class="normal" for="send_email"><?php echo Mage::helper('sales')->__('Email Copy of Shipment') ?></label>
+                    <input id="send_email" name="shipment[send_email]" value="1" type="checkbox" />
+                </p>
+            <?php endif; ?>
+            <div class="a-right">
+                <?php echo $this->getChildHtml('submit_button') ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+
+    var sendEmailCheckbox = $('send_email');
+    if (sendEmailCheckbox) {
+        var notifyCustomerCheckbox = $('notify_customer');
+        var shipmentCommentText = $('shipment_comment_text');
+        Event.observe(sendEmailCheckbox, 'change', bindSendEmail);
+        bindSendEmail();
+    }
+    function bindSendEmail()
+    {
+        if (sendEmailCheckbox.checked == true) {
+            notifyCustomerCheckbox.disabled = false;
+        }
+        else {
+            notifyCustomerCheckbox.disabled = true;
+        }
+    }
+   
+<?php if (version_compare(Mage::getVersion(), '1.6.0.0', '>=')): ?>
+        function submitShipment(btn) {
+            var checkbox = $(btn).up('.order-totals').select('#create_shipping_label')[0];
+            if (checkbox && checkbox.checked) {
+                packaging.showWindow();
+            } else if (editForm.submit()) {
+                disableElements('submit-button');
+            }
+        }
+<?php endif; ?>
+
+</script>
+<script type="text/javascript">
+    function checkStatusAvailableAOrderItemByEventDropShip(warehouse_id, product_id, qtytoship, order_item_id, order_id, totalQty) {
+        var parameters = {
+            warehouse_id: warehouse_id,
+            product_id: product_id,
+            qty: qtytoship,
+            order_item_id: order_item_id,
+            order_id: order_id,
+            total_qty: totalQty
+        };
+        var url = '<?php echo $this->getUrl('inventoryplusadmin/adminhtml_shipment/checkavailablebyevent'); ?>';
+        var request = new Ajax.Request(url,
+                {
+                    method: 'post',
+                    parameters: parameters,
+                    onSuccess: function (transport) {
+                        if (transport.responseText) {
+                            var result = JSON.parse(transport.responseText);
+                            if (result.avaiable == true) {
+                                $('show_select_barcode_' + order_item_id + '_' + product_id).innerHTML = result.barcode;
+                                checkStatusShipment();
+
+                            } else {
+                                $('show_select_barcode_' + order_item_id + '_' + product_id).innerHTML = result.barcode;
+                                disableElements('submit-button');
+
+                            }
+
+                        }
+                    }
+                }
+        );
+    }
+
+
+
+
+
+    function changeviewwarehouse(selectSupplier, itemOrdeId)
+    {
+        var itemOrderId = itemOrdeId;
+        var url = '<?php echo $this->getUrl('inventoryplusadmin/adminhtml_warehouse/edit'); ?>';
+        url += 'id/' + $(selectSupplier).value;
+        $('view_warehouse-shipment[items][' + itemOrdeId + ']').href = url;
+    }
+    
+    <?php if(Mage::helper('core')->isModuleEnabled('Magestore_Inventorybarcode')):?>
+        function changebarcode(element,id){
+            var barcode_id = $('barcode-shipment[items]['+id+']').value;
+            if(!barcode_id){
+                checkStatusShipment();
+                return;
+            }
+            var parameters = {
+                barcode_id: barcode_id           
+            };
+            var url = '<?php echo $this->getUrl('inventorybarcodeadmin/adminhtml_shipment/checkbarcode'); ?>';
+            var request = new Ajax.Request(url,
+                    {
+                        method: 'post',
+                        parameters: parameters,
+                        onSuccess: function (transport) {
+                            if (transport.responseText) {
+                                var result = JSON.parse(transport.responseText);
+
+                                if (result.avaiable == true) {                                
+                                    checkStatusShipment();
+
+                                } else {                                
+                                    disableElements('submit-button');
+
+                                }
+                            }
+                        }
+                    }
+            );
+        }
+    <?php endif;?>
+</script>

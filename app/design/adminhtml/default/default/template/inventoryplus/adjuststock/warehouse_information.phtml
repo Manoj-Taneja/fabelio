@@ -1,0 +1,132 @@
+<?php
+$warehouse_id = '';
+if ($adjustStockProducts = Mage::getModel('admin/session')->getData('adjuststock_product_warehouse')) {
+    $warehouse_id = $adjustStockProducts['warehouse_id'];
+}
+if ($this->getRequest()->getParam('id')) {
+    $id = $this->getRequest()->getParam('id');
+    $warehouse_id = Mage::getModel('inventoryplus/adjuststock')->load($id)->getWarehouseId();
+}
+$warehouse = Mage::getModel('inventoryplus/warehouse')->load($warehouse_id);
+$permission = Mage::helper('inventoryplus')->getPermission($warehouse_id, 'can_adjust');
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Stock Adjustment Information') ?></h4>
+    </div>
+    <div id="adjuststock_form" class="fieldset ">
+        <input name="warehouse_id" type="hidden" value="<?php echo $warehouse_id ?>" id="warehouse_id"/>
+        <div style='float:left; width:30%;'>
+            <div>
+                <label for="warehouse">
+                    <strong><?php echo $this->__('Warehouse') ?>:&nbsp;&nbsp;</strong>
+                </label>
+                <a href="<?php echo $this->getUrl('inventoryplusadmin/adminhtml_warehouse/edit', array('id' => $warehouse_id)) ?>" title="<?php $this->__('View warehouse') ?>">
+                    <?php echo $warehouse->getWarehouseName() ?>
+                </a>
+            </div><br />
+            <div>
+                <?php echo $warehouse->getStreet() ?>
+                <?php if ($warehouse->getState()): ?>
+                    <?php echo ' - ' . $warehouse->getState() ?>
+                <?php endif ?>
+                <?php if ($warehouse->getCity()): ?>
+                    <?php echo ' - ' . $warehouse->getCity() ?><br />
+                <?php endif ?>
+                <?php echo Mage::getModel('directory/country')->load($warehouse->getCountryId())->getName() ?>
+            </div>  
+        </div>
+        <div style="float:left;">
+            <?php if ($this->getRequest()->getParam('id')): ?>
+                <?php $id = $this->getRequest()->getParam('id') ?>
+                <?php $adjustStock = Mage::getModel('inventoryplus/adjuststock')->load($id) ?>
+                <?php $helper = Mage::helper('inventoryplus');?>
+                <lable for="warehouse"><?php echo '<strong>' . $this->__('Status: ') . '</strong>' . $helper->getStatusLabel($adjustStock->getStatus()); ?></lable>
+                <br />
+                <lable for="warehouse"><?php echo '<strong>' . $this->__('Created by: ') . '</strong>' . $adjustStock->getCreatedBy() ?></lable>
+                <br />
+                <?php $date = new Zend_Date();?>
+                <?php $date->setLocale(Mage::app()->getLocale()->getLocaleCode()); ?>
+                <?php $date_adjust = $date->setDate($adjustStock->getCreatedAt(),'yyyy/MM/dd');?>
+                <lable for="warehouse"><?php echo '<strong>' . $this->__('Created on: ') . '</strong>' . Mage::helper('core')->formatDate($date_adjust,'medium'); ?></lable>
+                <br /><br />
+            <?php endif ?>
+
+            <lable for="warehouse"><strong><?php echo $this->__('Reason(s) for adjusting stock')?><?php if ($this->getRequest()->getParam('id')) echo ':' ?><?php echo ' '?></strong>
+                <?php if (!$this->getRequest()->getParam('id')): ?>
+                    <span class="required">*</span>
+                <?php endif;?>
+            </lable>
+            <br />
+            <?php if (($this->getRequest()->getParam('id') && !$permission) || ($this->getRequest()->getParam('id') && Mage::getModel('inventoryplus/adjuststock')->load($id)->getStatus()==1)): ?>
+                <?php echo nl2br($adjustStock->getReason()) ?>
+            <?php else: ?>
+                <textarea id="reason" name="reason" title="Reason(s) to adjust stock" style="width:350px; height:50px;" rows="2" cols="15" class="required-entry  textarea"><?php if ($this->getRequest()->getParam('id') && Mage::getModel('inventoryplus/adjuststock')->load($id)->getStatus()==0){ echo nl2br($adjustStock->getReason()); }?></textarea>
+            <?php endif ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<?php if (!$this->getRequest()->getParam('id')): ?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Import Products to Adjust Stock') ?></h4>
+        </div>
+        <div id="adjuststock_form" class="fieldset ">
+            <?php //import product form ?>
+            <div style="float:left;">
+                <div>
+                    <label for="fileToUpload">
+                        <?php echo $this->__('Please choose a CSV file to import') ?>
+                    </label><br />
+                    <input type="file" name="fileToUpload[]" id="fileToUpload" onchange="fileSelected();" enctype="multipart/form-data"/>
+                    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" id="form_key"/>
+                    <button style="" onclick="uploadFile()" class="scalable task" type="button" id="Upload"><span><?php echo $this->__('Import') ?></span></button>
+                </div>
+                <div class="clear"></div>
+                <div id="fileName">
+                </div>
+                <div id="fileSize">
+                </div>
+                <div id="fileType">
+                </div>
+                <div id="progressNumber">
+                </div>
+            </div>
+            <div id="messages" style="float: left;padding-left: 20px;width:60%;">
+                <ul class="messages">
+                    <li class="notice-msg">
+                        <ul>
+                            <li>
+                                <?php echo $this->__('"If you want to adjust stock of a warehouse by importing loads of products, the structure of CSV file is as follows:') ?><br />                                                                       
+                                <?php $example = "SKU: SKU of product need adjusting<br />" ?>                                   
+                                <?php $example .= "QTY: Quantity of product need adjusting<br />" ?>                                                                  
+                                <?php echo "<h3><b>SKU,QTY</b></h3>" ?>
+                                <div style="padding-left: 20px;" ?>
+                                    <?php echo $example ?>
+                                </div>
+                            </li>
+                            <li>
+                                <div style="float:left;">
+                                    <b><?php echo $this->__('Example file') ?> (<a href="<?php echo Mage::getBaseUrl('media') . 'inventoryplus/csv/import_product_to_adjuststock.csv'; ?>"><?php echo $this->__('Download') ?></a>)</b>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+<?php endif; ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend">
+            <?php if($this->getRequest()->getParam('id')): ?>
+                <?php echo $this->__('Products of Stock Adjustment') ?>
+            <?php else: ?>
+                <?php echo $this->__('Choose Products for Stock Adjustment') ?>
+            <?php endif ?>
+        </h4>
+    </div>
+</div>

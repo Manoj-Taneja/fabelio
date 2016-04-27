@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorypurchasing
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<layout version="0.1.0">
+    <inventorypurchasingadmin_adminhtml_supplier_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorypurchasing/adminhtml_supplier" name="supplier" />
+        </reference>
+    </inventorypurchasingadmin_adminhtml_supplier_index>
+    <inventorypurchasingadmin_adminhtml_supplier_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_supplier_new>
+    <inventorypurchasingadmin_adminhtml_supplier_edit>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_supplier_edit>
+    <inventorypurchasingadmin_adminhtml_supplier_product>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier" name="csv_form" template="inventorypurchasing/supplier/importproduct.phtml" />
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_products" name="inventorypurchasing.supplier.edit.tab.products"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>inventorypurchasing.supplier.edit.tab.products</grid_block_name>
+                    <data_callback>getSelectedRelatedProducts</data_callback>
+                    <hidden_input_name>supplier_products</hidden_input_name>
+                    <reload_param_name>supplier_products</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>cost</input_name>
+                    <input_name>tax</input_name>
+                    <input_name>discount</input_name>
+                    <input_name>supplier_sku</input_name>
+                </action>
+            </block>
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_product>
+    <inventorypurchasingadmin_adminhtml_supplier_productgrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_products" name="inventorypurchasing.supplier.edit.tab.products"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_productgrid>
+    <inventorypurchasingadmin_adminhtml_supplier_history>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_history" name="inventorypurchasing.supplier.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_history>
+    
+    <inventorypurchasingadmin_adminhtml_supplier_historygrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_history" name="inventorypurchasing.supplier.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_historygrid>
+    
+    <inventorypurchasingadmin_adminhtml_supplier_returnorder>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_returnorder" name="inventorypurchasing.supplier.edit.tab.returnorder"/> 		
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_returnorder>
+    
+    <inventorypurchasingadmin_adminhtml_supplier_returnordergrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_returnorder" name="inventorypurchasing.supplier.edit.tab.returnorder"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_returnordergrid>
+    
+    <inventorypurchasingadmin_adminhtml_supplier_purchaseorder>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_purchaseorder" name="inventorypurchasing.supplier.edit.tab.purchaseorder"/> 		
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_purchaseorder>
+    <inventorypurchasingadmin_adminhtml_supplier_purchaseordergrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_supplier_edit_tab_purchaseorder" name="inventorypurchasing.supplier.edit.tab.purchaseorder"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_supplier_purchaseordergrid>
+    
+    <!-- Manage Shipping Method -->
+    <inventorypurchasingadmin_adminhtml_shippingmethods_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorypurchasing/adminhtml_shippingmethod" name="inventorypurchasing_shippingmethod" />
+        </reference>
+    </inventorypurchasingadmin_adminhtml_shippingmethods_index>
+    <inventorypurchasingadmin_adminhtml_shippingmethods_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_shippingmethods_new>
+    <inventorypurchasingadmin_adminhtml_shippingmethods_edit>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/inventory/tinybox.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magestore/inventory.css</stylesheet>
+            </action>
+        </reference>
+    </inventorypurchasingadmin_adminhtml_shippingmethods_edit>
+    
+    <inventorypurchasingadmin_adminhtml_shippingmethods_history>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_shippingmethod_edit_tab_history" name="inventorypurchasing.shippingmethod.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_shippingmethods_history>
+    
+    <inventorypurchasingadmin_adminhtml_shippingmethods_historygrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_shippingmethod_edit_tab_history" name="inventorypurchasing.shippingmethod.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_shippingmethods_historygrid>
+    
+    <!-- Manage Payment Terms -->
+    <inventorypurchasingadmin_adminhtml_paymentterms_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorypurchasing/adminhtml_paymentterm" name="inventorypurchasing_paymentterm" />
+        </reference>
+    </inventorypurchasingadmin_adminhtml_paymentterms_index>
+    
+    <inventorypurchasingadmin_adminhtml_paymentterms_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_paymentterms_new>
+    <inventorypurchasingadmin_adminhtml_paymentterms_edit>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/inventory/tinybox.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magestore/inventory.css</stylesheet>
+            </action>
+        </reference>
+    </inventorypurchasingadmin_adminhtml_paymentterms_edit>
+    
+    <inventorypurchasingadmin_adminhtml_paymentterms_history>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_paymentterm_edit_tab_history" name="inventorypurchasing.paymentterm.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_paymentterms_history>
+    
+    <inventorypurchasingadmin_adminhtml_paymentterms_historygrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_paymentterm_edit_tab_history" name="inventorypurchasing.paymentterm.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_paymentterms_historygrid>
+    
+    <!-- Inventory Purchaseorder -->
+    <inventorypurchasingadmin_adminhtml_purchaseorders_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="inventorypurchasing_purchaseorder" />
+        </reference>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_index>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_purchaseorders_new>
+
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_returnorder>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_returnorder" name="inventorypurchasing.purchaseorder.edit.tab.returnorder"/> 		
+            
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_returnorder>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_returnordergrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_returnorder" name="inventorypurchasing.purchaseorder.edit.tab.returnorder"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_returnordergrid>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_product>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="csv_form" template="inventorypurchasing/purchaseorder/importproduct.phtml" />
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_products" name="inventorypurchasing.purchaseorder.edit.tab.products"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>inventorypurchasing.purchaseorder.edit.tab.products</grid_block_name>
+                    <data_callback>getSelectedRelatedProducts</data_callback>
+                    <hidden_input_name>purchaseorder_products</hidden_input_name>
+                    <reload_param_name>purchaseorder_products</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>qty_order</input_name>
+                </action>
+            </block>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_product>
+    <inventorypurchasingadmin_adminhtml_purchaseorders_productgrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_products" name="inventorypurchasing.purchaseorder.edit.tab.products"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_productgrid>
+   
+	
+    <inventorypurchasingadmin_adminhtml_purchaseorders_delivery>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="information" template="inventorypurchasing/purchaseorder/delivery_information.phtml" />
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_delivery" name="inventorypurchasing.purchaseorder.edit.tab.delivery"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_delivery>
+    <inventorypurchasingadmin_adminhtml_purchaseorders_newdelivery>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_purchaseorders_newdelivery>
+    <inventorypurchasingadmin_adminhtml_purchaseorders_newreturnorder>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorypurchasingadmin_adminhtml_purchaseorders_newreturnorder>
+    <inventorypurchasingadmin_adminhtml_purchaseorders_deliverygrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_delivery" name="inventorypurchasing.purchaseorder.edit.tab.delivery"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_deliverygrid>
+	
+    <inventorypurchasingadmin_adminhtml_purchaseorders_preparedelivery>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="delivery_button" template="inventorypurchasing/purchaseorder/delivery.phtml" />
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="csv_form" template="inventorypurchasing/purchaseorder/importproduct_newdelivery.phtml" />
+            <block type="inventorypurchasing/adminhtml_purchaseorder_editdelivery_tab_delivery" name="inventorypurchasing.purchaseorder.edit.tab.preparedelivery"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>inventorypurchasing.purchaseorder.edit.tab.preparedelivery</grid_block_name>
+                    <data_callback>getSelectedProducts</data_callback>
+                    <hidden_input_name>delivery_products</hidden_input_name>
+                    <reload_param_name>isproducts</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>qty_delivery</input_name>
+                </action>
+            </block>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_preparedelivery>
+    <inventorypurchasingadmin_adminhtml_purchaseorders_preparedeliverygrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_editdelivery_tab_delivery" name="inventorypurchasing.purchaseorder.edit.tab.preparedelivery"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_preparedeliverygrid>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_preparenewreturnorder>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="returnorder_time_button" template="inventorypurchasing/purchaseorder/return_order_selected_time.phtml" />
+            <block type="inventorypurchasing/adminhtml_purchaseorder" name="return_order_csv_form" template="inventorypurchasing/purchaseorder/importproduct_newreturnorder.phtml" />
+            <block type="inventorypurchasing/adminhtml_purchaseorder_returnorder_tab_returnorder" name="inventorypurchasing.purchaseorder.edit.tab.preparenewreturnorder"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>inventorypurchasing.purchaseorder.edit.tab.preparenewreturnorder</grid_block_name>
+                    <data_callback>getSelectedProducts</data_callback>
+                    <hidden_input_name>returnorder_products</hidden_input_name>
+                    <reload_param_name>isproducts</reload_param_name>
+                </action>
+                <action method="addColumnInputName">
+                    <input_name>qty_return</input_name>
+                </action>
+            </block>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_preparenewreturnorder>
+    <inventorypurchasingadmin_adminhtml_purchaseorders_preparenewreturnordergrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_returnorder_tab_returnorder" name="inventorypurchasing.purchaseorder.edit.tab.preparenewreturnorder"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_preparenewreturnordergrid>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_edit>        
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/inventory/tinybox.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magestore/inventory.css</stylesheet>
+            </action>
+        </reference>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_edit>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_history>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_history" name="inventorypurchasing.purchaseorder.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_history>
+    
+    <inventorypurchasingadmin_adminhtml_purchaseorders_historygrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorypurchasing/adminhtml_purchaseorder_edit_tab_history" name="inventorypurchasing.purchaseorder.edit.tab.history"/>
+        </block>
+    </inventorypurchasingadmin_adminhtml_purchaseorders_historygrid>
+    
+	<!-- email send to supplier -->
+    <inventorypurchasingadmin_email_sendtosupplier>
+        <block type="adminhtml/template" name="inventory_send_email_to_supplier" template="inventorypurchasing/email/sendtosupplier.phtml" />
+    </inventorypurchasingadmin_email_sendtosupplier> 
+    
+</layout>

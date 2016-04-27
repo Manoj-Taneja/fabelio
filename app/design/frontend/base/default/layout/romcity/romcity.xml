@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addJs"><script>eadesign/romcity/field.js</script></action>
+        </reference>
+    </default>
+    <checkout_onepage_index>
+        <reference name="checkout.onepage.billing">
+            <action method="setTemplate">
+                <template>romcity/checkout/onepage/billing.phtml</template>
+            </action>
+            <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+            <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+        </reference>
+        <reference name="checkout.onepage.shipping">
+            <action method="setTemplate">
+                <template>romcity/checkout/onepage/shipping.phtml</template>
+            </action>
+        </reference>
+    </checkout_onepage_index>
+
+    <customer_address_form>
+        <reference name="customer_address_edit">
+            <action method="setTemplate">
+                <template>romcity/customer/address/edit.phtml</template>
+            </action>
+        </reference>
+    </customer_address_form>
+</layout>

@@ -1,0 +1,42 @@
+<?php
+/**
+* zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    base_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+?>
+<?php
+    $_landingPage = $this->getLandingPage();
+    $processor = Mage::helper('zeon_landingpage')->getBlockTemplateProcessor();
+?>
+<div id="messages_landingpage_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo $this->htmlEscape($_landingPage->getTitle()) ?></h1>
+</div>
+<div class="category-description std">
+    <p><?php echo $processor->filter($_landingPage->getShortDescription()) ?></p>
+    <p><?php echo $processor->filter($_landingPage->getDescription()) ?></p>
+</div>
+<?php echo $this->getChildHtml('featured_product_list') ?>
+<?php echo $this->getChildHtml('product_list') ?>

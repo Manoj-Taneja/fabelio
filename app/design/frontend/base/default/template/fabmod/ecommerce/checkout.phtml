@@ -1,0 +1,127 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$quote = Mage::getSingleton('checkout/cart')->getQuote();
+                $products = $quote->getAllItems();
+                $ids = '';
+                foreach ($products as $item) {
+                    $categories = $item->getProduct()->getCategoryIds();
+                    if ($ids !== '') {
+                        $ids .= ', ';
+                    }
+                    $ids .= "{'name':'".$item->getName()."','id':'" . $item->getProduct()->getId() . "','price':'".$item->getPrice()."','category':'".Mage::getModel('catalog/category')->load($categories[0])->getName()."','quantity':".$item->getQty()."}";
+                }
+if (Mage::getSingleton('customer/session')->isLoggedIn()){
+?>
+
+  <script type="text/javascript"> 
+  dataLayer.push({
+        'event': 'checkout',
+        'ecommerce': {
+        'checkout': {
+        'actionField': {'step': 2,'option' : 'Login'},
+        'products' : [<?php echo $ids ; ?>]
+                     }
+                 }           
+        });
+</script>
+<?php } else { ?>
+  <script type="text/javascript"> 
+  dataLayer.push({
+        'event': 'checkout',
+        'ecommerce': {
+        'checkout': {
+        'actionField': {'step': 2,'option' : 'Guest'},
+        'products' : [<?php echo $ids ; ?>]
+                     }
+                 }           
+        });
+</script>
+<?php } ?>
+<script type="text/javascript">
+jQuery(function($){ 
+    $('#billing-buttons-container .button').on('click', function(e){
+       if(billingForm.validator.validate()){
+         dataLayer.push({
+          'event': 'checkout',
+          'ecommerce': {
+          'checkout': {
+          'actionField': {'step': 3},
+          'products' : [<?php echo $ids ; ?>]
+                      }
+                       }           
+                   });
+      if (document.getElementById('billing:use_for_shipping_yes').checked){
+        dataLayer.push({
+          'event': 'checkout',
+          'ecommerce': {
+          'checkout': {
+          'actionField': {'step': 4,'option' : 'Use Billing Address'},
+          'products' : [<?php echo $ids ; ?>]
+                      }
+                       }           
+        });
+         } 
+       }
+   });
+    $('#shipping-buttons-container .button').on('click', function(e){
+       if(shippingForm.validator.validate()){
+          if (document.getElementById('shipping:same_as_billing').checked){
+            dataLayer.push({
+              'event': 'checkout',
+              'ecommerce': {
+              'checkout': {
+              'actionField': {'step': 4,'option' : 'Use Billing Address'},
+              'products' : [<?php echo $ids ; ?>]
+                          }
+                           }           
+                   });
+          } else {
+             dataLayer.push({
+                'event': 'checkout',
+                'ecommerce': {
+                'checkout': {
+                'actionField': {'step': 4,'option' :'Do not Use Billing Address'},
+                'products' : [<?php echo $ids ; ?>]
+                          }
+                           }           
+                       });
+          }
+          
+       }
+   });
+    $('#payment-buttons-container .fab-btn-primary').on('click', function(e){
+    if(payment.validate()){
+      var option=  jQuery("input[name='payment[method]']:checked").val();
+    
+       dataLayer.push({
+              'event': 'checkout',
+              'ecommerce': {
+              'checkout': {
+              'actionField': {'step': 5,'option' :option },
+              'products' : [<?php echo $ids ; ?>]
+                          }
+                           }           
+       });          
+    }
+   });
+});
+
+function ecommerceReview(){
+  try {
+    dataLayer.push({
+              'event': 'checkout',
+              'ecommerce': {
+              'checkout': {
+              'actionField': {'step': 6},
+              'products' : [<?php echo $ids ; ?>]
+                          }
+                           }           
+                   });          
+  }
+  catch(e){
+      return;  }
+}
+</script>

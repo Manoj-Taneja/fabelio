@@ -1,0 +1,106 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ */
+?>
+<div class="page-title">
+	
+	<?php if ($_POST['transactionStatus'] == 'PENDING'): ?>
+		<h1><?php echo 'Transaksi Anda Masih Dalam Proses' ?></h1>
+	<?php elseif ($_POST['transactionStatus'] == 'APPROVED'): ?>
+	    <h1><?php echo 'Order Sukses' ?></h1>
+	<?php elseif ($_POST['transactionStatus'] == 'DECLINED'): ?>
+	    <h1><?php echo 'Transaksi Anda Telah Gagal' ?></h1>
+	<?php elseif ($_POST['transactionStatus'] == 'SCRUBBED'): ?>
+	    <h1><?php echo 'Transaksi Ditolak' ?></h1>
+	<?php elseif ($_POST['transactionStatus'] == 'ERROR'): ?>
+	    <h1><?php echo 'Koneksi Error Dengan Partner Bank/Acquirer' ?></h1>
+	<?php elseif ($_POST['transactionStatus'] == 'CANCEL'): ?>
+	    <h1><?php echo 'Pemegang Kartu Tidak Menyelesaikan Transaksi' ?></h1>
+	<?php endif; ?>
+</div>
+<?php $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId() ?>
+<!-- If MIGS transaction status is PENDING -->
+<?php if ($_POST['transactionStatus'] == 'PENDING'): ?>
+	<h2 class="sub-title"><?php echo $this->__('Order masih dalam proses!') ?></h2>
+	
+	<p><?php echo $this->__('Mohon maaf order Anda masih dalam proses karena status transaksi masih Pending.') ?></p>
+	
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+	    <?php $viewOrder = Mage::getBaseUrl().'sales/order/view/order_id/'.Mage::getSingleton('checkout/session')->getLastOrderId() ?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', '<a href="'.$viewOrder.'">'.$orderId.'</a>') ?></p>
+	<?php  else :?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', $this->escapeHtml($orderId)) ?></p>
+	<?php endif;?>
+	
+<!--If order has been paid and MIGS transaction status is APPROVE-->
+<?php elseif ($_POST['transactionStatus'] == 'APPROVED'): ?>
+	<h2 class="sub-title"><?php echo $this->__('Terima kasih!') ?></h2>
+	
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+		<?php $viewOrder = Mage::getBaseUrl().'sales/order/view/order_id/'.Mage::getSingleton('checkout/session')->getLastOrderId() ?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', '<a href="'.$viewOrder.'">'.Mage::getSingleton('checkout/session')->getLastRealOrderId().'</a>') ?></p>
+	<?php  else :?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', $this->escapeHtml($orderId)) ?></p>
+	<?php endif;?>
+	    <p><?php echo $this->__('Anda akan menerima email konfirmasi order yang berisi mengenai detail order, silahkan cek email Anda. Jika tidak ada, mohon cek folder spam/junk, jika tidak ada juga, silahkan hubungi kami.') ?></p>
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+	    <p>
+	    	<?php $printUrl = Mage::getBaseUrl().'sales/order/print/order_id/'.Mage::getSingleton('checkout/session')->getLastOrderId() ?>
+	        <?php echo $this->__('Klik <a href="'.$printUrl.'" onclick="this.target=\'_blank\'">disini untuk print</a> detail order Anda.') ?>
+	        <?php echo $this->getChildHtml() ?>
+	    </p>
+	<?php endif;?>
+	
+<!-- If MIGS transaction status is DECLINE or SCRUBBED-->
+<?php elseif ($_POST['transactionStatus'] == 'DECLINED' || $_POST['transactionStatus'] == 'SCRUBBED'): ?>
+	<h2 class="sub-title"><?php echo $this->__('Order Gagal!') ?></h2>
+	
+	<p><?php echo $this->__('Mohon maaf order Anda Gagal.') ?></p>
+	
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+	    <?php $viewOrder = Mage::getBaseUrl().'sales/order/view/order_id/'.Mage::getSingleton('checkout/session')->getLastOrderId() ?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', '<a href="'.$viewOrder.'">'.$orderId.'</a>') ?></p>
+	<?php  else :?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', $this->escapeHtml($orderId)) ?></p>
+	<?php endif;?>
+
+<!-- If MIGS transaction status is ERROR-->
+<?php elseif ($_POST['transactionStatus'] == 'ERROR'): ?>
+	<h2 class="sub-title"><?php echo $this->__('Tidak dapat melakukan transaksi!') ?></h2>
+	
+	<p><?php echo $this->__('Mohon maaf order Anda tidak dapat diproses karena tidak dapat terhubung dengan Bank / Acquirer.') ?></p>
+	
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+	    <?php $viewOrder = Mage::getBaseUrl().'sales/order/view/order_id/'.Mage::getSingleton('checkout/session')->getLastOrderId() ?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', '<a href="'.$viewOrder.'">'.$orderId.'</a>') ?></p>
+	<?php  else :?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', $this->escapeHtml($orderId)) ?></p>
+	<?php endif;?>
+	
+<!-- If MIGS transaction status is CANCEL-->
+<?php elseif ($_POST['transactionStatus'] == 'CANCEL'): ?>
+	<h2 class="sub-title"><?php echo $this->__('Order Batal!') ?></h2>
+	
+	<p><?php echo $this->__('Order Anda telah dibatalkan.') ?></p>
+	
+	<?php if($this->helper('customer')->isLoggedIn()): ?>
+	    <?php $viewOrder = Mage::getBaseUrl().'sales/order/view/order_id/'.Mage::getSingleton('checkout/session')->getLastOrderId() ?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', '<a href="'.$viewOrder.'">'.$orderId.'</a>') ?></p>
+	<?php  else :?>
+	    <p><?php echo $this->__('Order ID Anda adalah: %s.', $this->escapeHtml($orderId)) ?></p>
+	<?php endif;?>
+	
+<!-- If order not paid -->
+<?php else: ?>
+	<h2 class="sub-title"><?php echo $this->__('Anda tidak memiliki order!') ?></h2>
+	
+	<p><?php echo $this->__('Mohon maaf, Anda tidak memiliki order.') ?></p>
+	
+<?php endif; ?>
+
+<div class="buttons-set">
+    <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+</div>

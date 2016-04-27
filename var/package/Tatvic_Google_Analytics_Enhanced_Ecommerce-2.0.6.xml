@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Tatvic_Google_Analytics_Enhanced_Ecommerce</name>
+    <version>2.0.6</version>
+    <stability>stable</stability>
+    <license>Tatvic</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>#Minor Bug Fixes</summary>
+    <description>Integration between Google Analytics and Magento</description>
+    <notes>Integration between Google Analytics and Magento</notes>
+    <authors><author><name>Divyesh</name><user>dvs</user><email>divyesh@tatvic.com</email></author></authors>
+    <date>2015-06-29</date>
+    <time>12:03:25</time>
+    <contents><target name="magecommunity"><dir name="Tatvic"><dir name="Uaee"><dir name="Block"><file name="Uaee.php" hash="63cc48642c9352dd3e1e91d49c45e4cd"/><file name="Uaee.php" hash="63cc48642c9352dd3e1e91d49c45e4cd"/></dir><dir name="Helper"><file name="Data.php" hash="439f09975392babfd79df03e516a5045"/><file name="Data.php" hash="439f09975392babfd79df03e516a5045"/></dir><dir name="Model"><dir name="System"><dir name="Config"><dir name="Source"><file name="Addto.php" hash="7cb95dcf8f2d0a923d344a3bca967ef6"/><file name="Addto.php" hash="7cb95dcf8f2d0a923d344a3bca967ef6"/></dir></dir></dir></dir><dir name="etc"><file name="config.xml" hash="6145676fbeeaa2872300667b2589c819"/><file name="system.xml" hash="e1042977c59c835243e1e017294acdf7"/><file name="config.xml" hash="6145676fbeeaa2872300667b2589c819"/><file name="system.xml" hash="e1042977c59c835243e1e017294acdf7"/></dir><dir name="sql"><dir name="tatvic_uaee_setup"><file name="mysql4-install-1.0.0.php" hash="6267ac5101cea1efa4dfeee26ae83a03"/><file name="mysql4-install-1.0.0.php" hash="6267ac5101cea1efa4dfeee26ae83a03"/></dir></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="tatvic_uaee.xml" hash="cd5ab16cf828ecfdb395bb9e4768b177"/></dir><dir name="template"><dir name="tatvic"><dir name="uaee"><file name="uaee.phtml" hash="52c08ef51c4a26385c297c0f4ebc2f0f"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Tatvic_Uaee.xml" hash="cd9f7e6a80b3e83efe0f190cd3f4f997"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>7.0.0</max></php></required></dependencies>
+</package>

@@ -1,0 +1,47 @@
+<?php if($this->isSupplier()): ?>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo Mage::helper('customer')->__('Supplier Products Sales') ?></h4></div>
+    <fieldset>
+        <table cellspacing="2" class="box-left">
+            <tr>
+                <td><strong><?php echo $this->__('Grant Total:') ?></strong></td>
+                <td><?php echo Mage::helper('core')->currency($this->getGrandTotal(), true, false); ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Net Income:') ?></strong></td>
+                <td><?php echo Mage::helper('core')->currency(Mage::helper('marketplace/profits')->calculateNetIncome($this->getSupplierId(), $this->getGrandTotal())); ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Profit:') ?></strong></td>
+                <td><?php echo Mage::helper('core')->currency(Mage::helper('marketplace/profits')->calcuateStoreIncome($this->getSupplierId(), $this->getGrandTotal())); ?></td>
+            </tr>
+        </table>
+        <table class="box-right" cellspacing="2">
+            <tr>
+                <td><strong><?php echo $this->__('Total Ordered Items:') ?></strong></td>
+                <td>
+                    <a href="<?php echo Mage::helper("adminhtml")->getUrl("adminhtml/suppliers/soldProducts", array('id' => $this->getSupplierId())); ?>" id="customer_info_tabs_ordered_products" name="ordered_products" title="Sold Products" class="tab-item-link ajax">
+                        <strong><?php echo number_format($this->getItemCount()); ?></strong>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Canceled Items:') ?></strong></td>
+                <td><?php echo number_format($this->getCanceledItemCount()) ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Refunded Items:') ?></strong></td>
+                <td><?php echo number_format($this->getRefundedItemCount()); ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Pending Items:') ?></strong></td>
+                <td><?php echo number_format($this->getPendingItemCount()) ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Completed Items:') ?></strong></td>
+                <td><?php echo number_format($this->getCompletedItemCount()) ?></td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<?php endif; ?>

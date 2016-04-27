@@ -1,0 +1,113 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php $days = Mage::helper('inventorydashboard')->getDateRangeByDay(10); ?>
+<?php $from = $days['from'] ?>
+<?php $to = $days['to'] ?>
+
+<?php     
+    $timezoneLocal = Mage::app()->getStore()->getConfig(Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE);
+    $from->setTimezone($timezoneLocal);
+    $to->setTimezone($timezoneLocal);
+    $dates = array();
+    $datas = array();
+    while($from->compare($to) < 0){
+        $d = $from->toString('yyyy-MM-dd');
+        $from->addDay(1);
+        $dates[] = $d;
+    }
+    $categories = '[';
+    $series['total']['name'] = $this->__('Grand Total %s',Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol());
+    $series['total']['data'] = '[';    
+    $series['item']['name'] = $this->__('Qty');
+    $series['item']['data'] = '[';    
+    $i = 0;
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    foreach($dates as $date){
+        $start = $date.' 00:00:00';
+        $end = $date.' 23:59:59';
+        $results = '';
+        $sql = 'SELECT `grand_total`,`total_item_count` from '.$resource->getTableName('sales/order').' WHERE 
+                                            (`created_at` >= \''.$start.'\')
+                                        and (`created_at` <= \''.$end.'\')
+                                        and (`status` != "closed")
+                                        and (`status` != "canceled")'; 
+        $results = $readConnection->query($sql);
+        $grandTotal = 0;
+        $items = 0;
+        if($results){
+            foreach($results as $result){
+                $grandTotal += $result['grand_total'];
+                $items += $result['total_item_count'];
+            }
+        }
+        if($i != 0){
+            $categories .= ',';
+            $series['total']['data'] .= ',';
+            $series['item']['data'] .= ',';
+        }
+//        $categories .= '\''.$date.'\'';
+        $categories .= '\''.date('M d',  strtotime($date)).'\'';
+        $series['total']['data'] .= $grandTotal;     
+        $series['item']['data'] .= $items;     
+        $i++;        
+    }
+    $categories .= ']';
+    $series['total']['data'] .= ']';
+    $series['item']['data'] .= ']';
+    $baseCurrency = '$';
+//    zend_debug::dump($series);die();
+?>
+                            
+<script type="text/javascript">
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({
+        title: {
+            text: '<?php echo $chart->getName() ?>',
+            x: -20 //center
+        },
+        subtitle: {
+//            text: 'Source: WorldClimate.com',
+//            x: -20
+        },
+        xAxis: {
+            categories: <?php echo $categories ?>
+        },
+        yAxis: {
+            title: {
+                text: '<?php echo $this->__('Grand Total/Total Qty') ?>'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+//        legend: {
+//            layout: 'vertical',
+//            align: 'right',
+//            verticalAlign: 'middle',
+//            borderWidth: 0
+//        },
+        series: [
+            <?php $count = 0 ?>
+            <?php foreach($series as $serie): ?>
+                <?php if(!$count == 0) echo ',' ?>
+                <?php $count++ ?>    
+                {
+                    name: '<?php echo $serie['name'] ?>',
+                    data: <?php echo $serie['data'] ?>
+                }
+            <?php endforeach; ?>
+        ]
+    });
+});
+</script>
+
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("adminhtml/sales_order", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px;  margin: 30px auto 0;"></div>

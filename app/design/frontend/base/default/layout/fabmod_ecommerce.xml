@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+  <default>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/default.phtml" />
+    </reference>
+  </default>
+  
+  <checkout_onepage_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/checkout.phtml" />
+    </reference>
+  </checkout_onepage_index>
+
+  <catalog_product_view>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/product.phtml" />
+    </reference>
+  </catalog_product_view>
+
+  <catalog_category_view>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/category.phtml" />
+    </reference>
+  </catalog_category_view>
+
+  <checkout_cart_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/cart.phtml" />
+    </reference>
+  </checkout_cart_index>
+
+  <checkout_onepage_success>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/purchase.phtml" />
+    </reference>
+  </checkout_onepage_success>
+  
+  <catalogsearch_result_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ecommerce/search.phtml" />
+    </reference>
+</catalogsearch_result_index>
+
+</layout>

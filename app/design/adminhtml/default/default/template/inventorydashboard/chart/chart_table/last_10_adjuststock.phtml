@@ -1,0 +1,55 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px; margin: 0 auto; overflow: auto;">
+    <div text-anchor="middle" class="highcharts-title" zIndex="4" style="color: #333333;font-size: 18px;fill: #333333;text-align: center;padding-bottom: 10px;" >
+        <tspan><?php echo $chart->getName() ?></tspan>
+    </div>
+    <span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo  Mage::helper("adminhtml")->getUrl("inventoryplusadmin/adminhtml_adjuststock/", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+    <table style="width: 100%;">
+        <thead class="thead-dashboard-table">
+            <tr>
+                <th style="text-align: center;"><?php echo $this->__('Date') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Warehouse') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Product Adjusted') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Qty after Adjusting') ?></th>
+            </tr>
+        </thead>
+        <tbody class="tbody-dashboard-table">            
+            <?php     
+                $adjustStockCollection = Mage::getModel('inventoryplus/adjuststock')->getCollection()
+                                                ->addFieldToFilter('status','1')
+                                                ->setPageSize(10);
+                $resource = Mage::getSingleton('core/resource');        
+                $readConnection = $resource->getConnection('core_read');
+                $i = 0;
+                foreach($adjustStockCollection as $adjustStock){
+                    $results = '';
+                    $sql = 'SELECT count(`adjuststock_id`) as `totalproduct`, sum(`adjust_qty`) as `totalqty` from '.$resource->getTableName('erp_inventory_adjuststock_product').' WHERE 
+                                                        (`adjuststock_id` = \''.$adjustStock->getId().'\')
+                                                    group by `adjuststock_id`';         
+                    $results = $readConnection->query($sql);        
+                    $items = 0;
+                    $qties = 0;
+                    if($results){
+                        foreach($results as $result){
+                            $items += $result['totalproduct'];
+                            $qties += $result['totalqty'];
+                        }
+                    }
+                ?>
+                    <tr class="<?php if($i%2 != 0){ echo 'td-dashboard-table'; } ?>">                        
+                        <td><?php echo Mage::helper('core')->formatDate($adjustStock->getCreatedAt(), 'medium', false) ?></td>
+                        <td><?php echo $adjustStock->getWarehouseName() ?></td>
+                        <td><?php echo $items ?></td>
+                        <td><?php echo $qties ?></td>
+                    </tr>
+                <?php
+                    $i++;
+                }                
+            ?>
+        </tbody>
+    </table>
+</div>

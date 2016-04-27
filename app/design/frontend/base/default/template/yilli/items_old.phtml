@@ -1,0 +1,141 @@
+<?php
+$orderIncrementId = $this->getTest();
+
+//echo '<p>the template works</p>'.$orderId;
+$subtotal =0;
+
+			
+$order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+
+$orderItems = $order->getItemsCollection();
+$orderid = $order->getId();
+?>
+<table class="frc" width="100%" height='80px'cellpadding="0" cellspacing="0" style="text-shadow: #8aa3c6 0px 1px 0px;color:#595959;font-family: Sans-serif; font-size:12px;border-bottom:1px solid #CCCCCC;font-size:14px;font-weight:bold">
+<tr>
+
+<td align='left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pesanan Anda</td>
+<td >&nbsp;</td>
+
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+</tr> 
+<tr>
+<td align='left'><span style="white-space:nowrap;color:">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order ID: <a href='http://fabelio.com/index.php/sales/order/view/order_id/<?php echo $orderid ;?>'><span style='color:#3377ff'><?php echo $orderIncrementId; ?></span></span></a></td>
+<td >&nbsp;</td>
+
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+</tr> 
+<tr>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+<td >&nbsp;</td>
+</tr> 
+	
+<?php
+foreach ($orderItems as $item){
+	
+    $product_id = $item->product_id;
+    $product_sku = $item->sku;
+    $product_price = $item->getPrice();
+    $product_qty = $item->getQtyOrdered()*1;
+	$subtotal =$subtotal + ($product_price*$product_qty);
+    $product_name = $item->getName();
+    $_product = Mage::getModel('catalog/product')->load($product_id);
+		$product_img = Mage::helper('catalog/image')->init($_product, 'small_image')->resize(150, 150);
+
+    $cats = $_product->getCategoryIds();
+    $category_id = $cats[0]; // just get the first id
+    $category = Mage::getModel('catalog/category')->load($category_id);
+    $category_name = $category->getName();
+	
+	echo 
+	'<tr><td float="left">     <table><tr><td><img  src="'.$product_img.'"></td><td><span style="font-size:14px;white-space:nowrap;">'.$product_name.'</span></td></tr></table>    </td>'.
+	'<td float="left" style="white-space:nowrap;"> x '.$product_qty.'</td>'.
+	'<td float="left"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  </td>'.
+	'<td float="left"> &nbsp;  </td>'.
+	'<td float="left"> &nbsp;  </td>'.
+	'<td><table><tr><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td >&nbsp;</td><td float="left" ><span style="white-space:nowrap;font-size:15px;"> Rp '.number_format(($product_price*$product_qty),2,".",".").'</span></td></tr></table></td></tr>'
+
+	      ;
+}
+
+?>
+<tr>
+	<td align='left'>&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td> 
+	<td align='left'>&nbsp;</td>
+	<td>
+		<table>
+			<tr>
+				<td >Subtotal</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>				<td ><span style="white-space:nowrap; font-size:15px;">Rp&nbsp;<?php echo  number_format($subtotal,2,".","."); ?></span></td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td> 
+	<td>
+		<table>
+			<tr>
+				<td >Shipping</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+
+				<td ><?php echo  $ShippingCost; ?>&nbsp;GRATIS</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+<td colspan='6'> <hr> </td>
+</tr>
+<tr>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td>
+	<td >&nbsp;</td> 
+	<td>
+		<table>
+			<tr>
+				<td ><span style='color:#cc0000;font-size:15px;white-space:nowrap;'>Grand Total</span></td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td >&nbsp;</td>
+				<td ><span style='color:#cc0000;font-size:15px;white-space:nowrap;'>Rp <?php echo  number_format($subtotal,2,".","."); ?>&nbsp;</span></td>
+			</tr>
+		</table>
+	</td>
+</tr>
+	
+</table>

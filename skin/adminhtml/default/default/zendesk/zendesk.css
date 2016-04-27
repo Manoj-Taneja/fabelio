@@ -1,0 +1,87 @@
+/**
+ * Zendesk Magento integration
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to The MIT License (MIT) that is bundled with
+ * this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @copyright Copyright (c) 2012 Zendesk (www.zendesk.com)
+ * @license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
+ */
+
+ul.tabs a.zendesk-section,
+ul.tabs a.zendesk-section:hover {
+    border-bottom: 1px solid #BEBEBE;
+    padding: 0.5em 0.5em 0 1.5em;
+    text-indent: -9999px;
+}
+
+ul.tabs a.zendesk-section.active, 
+ul.tabs a.zendesk-section.active:hover {
+    background: none repeat scroll 0 0 white;
+}
+
+ul.tabs a.zendesk-section span,
+ul.tabs a.zendesk-section:hover span { 
+    background:url(zendesk-tab.png) no-repeat 0 0;
+    overflow:hidden; 
+    padding:0; 
+    width:120px; 
+    height:22px;
+}
+
+h3.zendesk-header {
+    background: url(http://cdn.zendesk.com/images/zendesk-logo.png) no-repeat scroll 0 0 transparent;
+    height: 65px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -9999px;
+    width: 200px;
+}
+
+button.zendesk span {
+    background-image: url("button.png");
+    padding-left: 16px;
+}
+.grid tr.headings th.col-1 {
+    width: 100%;
+}
+.grid tr.headings th.col-2 {
+    width: 50%;
+}
+.grid tr.headings th.col-3 {
+    width: 33.33%;
+}
+.grid tr.headings th.col-4 {
+    width: 25%;
+}
+.grid tr.headings th.col-5 {
+    width: 20%;
+}
+.grid tr.headings th.col-6 {
+    width: 16.66%;
+}
+.grid tr.headings th.col-7 {
+    width: 14.28%;
+}
+.grid tr.headings th.col-8 {
+    width: 12.5%;
+}
+.grid tr.filter .range input {
+    min-width: 61px !important;
+}
+div.entry-edit-head .fright {
+    float: right;
+}
+#tickets_grid_tab_content tbody .zendesk-grid-tr:hover,
+#zendesk_create_customer_search_grid_table tbody tr:hover,
+#zendesk_create_order_search_grid_table tbody tr:hover, 
+#zendesk_tab_tickets_grid_all_table .zendesk-grid-tr:hover {
+    background: #fcf5dd;
+}
+#zendesk_create_order_search_grid_table tr.filter .range .range-line {
+    min-width: 124px;
+}

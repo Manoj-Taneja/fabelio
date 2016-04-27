@@ -1,0 +1,584 @@
+<!-- dashboard tabs -->
+
+<div class="section-head screen">
+    <ul class="ui-sortable" id="ulTabs">
+        <?php
+        $tabs = Mage::getModel('inventorydashboard/tabs')->getCollection()
+                ->setOrder('position', 'ASC');
+        $tabId = '';
+        ?>
+        <?php if ($tabs->getSize()): ?>
+            <?php $i = 0 ?>
+            <?php foreach ($tabs as $tab): ?>
+                <?php $selected = '' ?>
+                <?php if ($this->getRequest()->getParam('tab_id')): ?>
+                    <?php if ($tab->getId() == $this->getRequest()->getParam('tab_id')): ?>
+                        <?php $selected = 'selected' ?>
+                        <?php $tabId = $tab->getId() ?>
+                    <?php endif ?>
+                <?php else: ?>
+                    <?php if ($i == 0): ?>
+                        <?php $selected = 'selected' ?>
+                        <?php $tabId = $tab->getId() ?> 
+                    <?php endif ?>
+                <?php endif ?>
+                <?php $i++ ?>
+                <li class="<?php echo $selected ?>" data-item-id="<?php echo $tab->getId() ?>" title="<?php echo $tab->getName() ?>">                    
+                    <b></b>
+                    <?php if ($selected): ?>
+                        <a><?php echo $tab->getName() ?></a>
+                    <?php else: ?>
+                        <a href="<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/index', array('tab_id' => $tab->getId())) ?>">
+                            <?php echo $tab->getName() ?>
+                        </a>
+                    <?php endif ?>                        
+                </li>
+
+            <?php endforeach ?>    
+        <?php endif ?>
+
+        <li class="add"><a href="#" onclick="addDashboard();
+                return false;" class="add-dash gradient" title="<?php echo $this->__('Create new dashboard') ?>"><i class="add-dash-icon"></i></a></li>
+        <li id="" class="setting" style="float:right;">
+            <a onclick="editDashboard();
+                    return false;" title="<?php echo $this->__('Edit this dashboard') ?>" data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-success="" data-ajax-update="#dvSettings" href="javascript:void(0)">
+                <span style="background-position: -58px -1540px; float: left; height: 18px; width: 18px; display: block;" class="sprite"></span>
+            </a>
+        </li>
+        <?php if ($tabId): ?>
+            <li class="add-chart" style="float:right;"><a href="javascript:void(0)" onclick="addDashboardChart();
+                        return false;" class=""  title="<?php echo $this->__('Add a new chart to this dashboard') ?>" style="float:right;"><i class="add-dash-icon"></i><b><?php echo $this->__('Add New Chart') ?></b></a></li>
+                    <?php endif ?>
+        <br class="clear">
+    </ul>
+    <script type="text/javascript">
+        function addDashboard()
+        {
+            if ($('add_tab')) {
+                if (document.getElementById('add_tab').style.display == 'none') {
+//                    document.getElementById('add_tab').style.display='block'; 
+                    $_('#add_tab').fadeIn(2000);
+                    if ($('add_tab_chart')) {
+                        if (document.getElementById('add_tab_chart').style.display == 'block'
+                                || document.getElementById('add_tab_chart').style.display == '') {
+//                            document.getElementById('add_tab_chart').style.display='none'; 
+                            $_('#add_tab_chart').fadeOut(2000);
+                        }
+                    }
+                    if ($('edit_tab')) {
+                        if (document.getElementById('edit_tab').style.display == 'block'
+                                || document.getElementById('edit_tab').style.display == '') {
+//                            document.getElementById('edit_tab').style.display='none'; 
+                            $_('#edit_tab').fadeOut(2000);
+                        }
+                    }
+                    if ($('edit_item_form')) {
+                        $('edit_item_form').innerHTML = '';
+                    }
+                } else {
+//                    document.getElementById('add_tab').style.display='none'; 
+                    $_('#add_tab').fadeOut(2000);
+                }
+            }
+        }
+        function addDashboardChart()
+        {
+            if ($('add_tab_chart')) {
+                if (document.getElementById('add_tab_chart').style.display == 'none') {
+//                    document.getElementById('add_tab_chart').style.display='block';
+                    $_('#add_tab_chart').fadeIn(2000);
+                    if ($('add_tab')) {
+                        if (document.getElementById('add_tab').style.display == 'block'
+                                || ocument.getElementById('add_tab').style.display == '') {
+//                            document.getElementById('add_tab').style.display='none'; 
+                            $_('#add_tab').fadeOut(2000);
+                        }
+                    }
+                    if ($('edit_tab')) {
+                        if (document.getElementById('edit_tab').style.display == 'block'
+                                || document.getElementById('edit_tab').style.display == '') {
+//                            document.getElementById('edit_tab').style.display='none'; 
+                            $_('#edit_tab').fadeOut(2000);
+                        }
+                    }
+                    if ($('edit_item_form')) {
+                        $('edit_item_form').innerHTML = '';
+                    }
+                } else {
+//                    document.getElementById('add_tab_chart').style.display='none';
+                    $_('#add_tab_chart').fadeOut(2000);
+                }
+            }
+        }
+
+        function editDashboard()
+        {
+            if ($('edit_tab')) {
+                if (document.getElementById('edit_tab').style.display == 'none') {
+//                    document.getElementById('edit_tab').style.display='block';
+                    $_('#edit_tab').fadeIn(2000);
+                    if ($('add_tab_chart')) {
+                        if (document.getElementById('add_tab_chart').style.display == 'block'
+                                || document.getElementById('add_tab_chart').style.display == '') {
+//                            document.getElementById('add_tab_chart').style.display='none';
+                            $_('#add_tab_chart').fadeOut(2000);
+                        }
+                    }
+                    if ($('add_tab')) {
+                        if (document.getElementById('add_tab').style.display == 'block'
+                                || document.getElementById('add_tab').style.display == '') {
+//                            document.getElementById('add_tab').style.display='none';
+                            $_('#add_tab').fadeOut(2000);
+                        }
+                    }
+                    if ($('edit_item_form')) {
+                        $('edit_item_form').innerHTML = '';
+                    }
+                } else {
+//                    document.getElementById('edit_tab').style.display='none';
+                    $_('#edit_tab').fadeOut(2000);
+                }
+            }
+        }
+    </script>
+</div>
+<div class="clear"></div>
+<!-- add new dashboard form -->
+<div class="form-dropdown screen" id="add_tab" style="display:none;">
+    <form method="post" id="add_tab_form" action="<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savetab') ?>">
+        <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>" />
+        <div class="field-table">
+            <div class="field-row">
+                <label style="width:210px;"></label>
+                <h3><?php echo $this->__('New Dashboard Information') ?></h3>
+            </div>
+            <div class="field-row">
+                <label for="DashboardName"><?php echo $this->__('Dashboard name') ?></label>
+                <div>
+                    <input type="text" value="" style="width:410px;" name="dashboard_name" maxlength="50" id="dashboard_name" />                                        
+                </div>
+            </div>            
+            <div class="submit-row">
+                <label></label>
+                <div>
+                    <button type="button" onclick="submitAddTabForm(this);" style="width:80px;height:32px;float:left; margin-right: 14px;" class="" value="Add">
+                        <span><?php echo $this->__('Add') ?></span>
+                    </button>
+                    <a class="button-grey cancel" onclick="addDashboard();
+                            return false;"><?php echo $this->__('Cancel') ?></a>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function submitAddTabForm(element) {
+                if (!$('dashboard_name') || !$('dashboard_name').value || $('dashboard_name').value == '' || $('dashboard_name').value == '') {
+                    alert('<?php echo $this->__('Please fill in Dashboard Name to create a new dashboard.') ?>');
+                } else {
+                    element.addClassName('button-grey');
+                    element.disable();
+                    $('add_tab_form').submit();
+                }
+            }
+        </script>
+    </form>
+</div>
+<!-- end dashboards tab -->
+
+<!-- add new chart -->
+<div class="form-dropdown screen" id="add_tab_chart" style="display:none;">
+    <form method="post" id="add_chart_form" action="<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savechart', array('tab_id' => $tabId)) ?>">        
+        <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>" />
+        <div class="field-table" style="background-color: #f7f7f7;">
+            <div style="padding-left:30px;">
+                <ul class="field-row">
+                    <label style="width:210px;font-size: 15px;"></label>
+                    <h3><?php echo $this->__('New Chart Information') ?></h3>
+                </ul>
+                <br/>
+                <ul class="field-row clear">
+                    <li>
+                        <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Chart Name') ?><span class="required">*</span></label>
+                    </li>
+                    <li>
+                        <input class="required-entry input-text required-entry" type="text" value="" style="width:410px;" name="chart_name" maxlength="50" id="chart_name" />                                        
+                    </li>
+                </ul>          
+                <br/>
+                <ul class="field-row clear">
+                    <li>
+                        <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Report Type') ?><span class="required">*</span></label>
+                    </li>                
+                    <li>                        
+                        <select name="report_type" id="report_type" onchange="changeSelectChartType();" class="required-entry required-entry select">
+                            <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType(); ?>
+                            <option value=""><?php echo $this->__('Please select a report type') ?></option>
+                            <?php if ($reportTypes): ?>
+                                <?php foreach ($reportTypes as $reportType): ?>
+                                    <option value="<?php echo $reportType['report_code'] ?>"><?php echo $this->__($reportType['name']) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif ?>
+                        </select>
+                    </li>
+                </ul>        
+                <br/>
+                <ul class="field-row clear">
+                    <li>
+                        <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Chart Type') ?><span class="required">*</span></label>
+                    </li>
+                    <li>
+                        <ul id="select_chart_type">
+                            <?php echo $this->__('Please select a report type first.') ?>
+                        </ul>                    
+                    </li>
+                </ul>        
+                <br/>
+                <ul class="submit-row clear">
+                    <label></label>
+                    <li>
+                        <button type="button" onclick="submitAddChartForm();" style="width:80px;height:32px;float:left; margin-right: 14px;" class="" value="Add">
+                            <span><?php echo $this->__('Add') ?></span>
+                        </button>
+                        <a class="button-grey cancel" onclick="addDashboardChart();
+                                return false;"><?php echo $this->__('Cancel') ?></a>
+                    </li>
+                </ul>
+                <script type="text/javascript">
+                    function changeSelectChartType() {
+                        if ($('report_type') && $('report_type').value) {
+                            var reportType = $('report_type').value;
+                            var changeSelectChartTypeUrl = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/changecharttype', array('_secure' => true)) ?>';
+                            changeSelectChartTypeUrl += 'report_code/' + reportType;
+                            new Ajax.Request(changeSelectChartTypeUrl, {
+                                method: 'get',
+                                parameters: '',
+                                onFailure: '',
+                                onSuccess: function (transport) {
+                                    if (transport.status == 200) {
+                                        var stringre = transport.responseText;
+                                        if ($('select_chart_type'))
+                                            $('select_chart_type').innerHTML = stringre;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    changeSelectChartType();
+                </script>           
+            </div>
+        </div>
+        <script type="text/javascript">
+            function submitAddChartForm() {
+                var add_chart_form = new varienForm('add_chart_form', '');
+                if (add_chart_form.validate()) {
+                    $('add_chart_form').submit();
+                } else {
+
+                }
+            }
+        </script>
+    </form>
+</div>
+
+<!-- end new chart -->
+
+<!-- edit dashboard form -->    
+<?php if ($tabId): ?>    
+    <?php $dashboardTab = Mage::getModel('inventorydashboard/tabs')->load($tabId) ?>    
+    <?php if ($dashboardTab && $dashboardTab->getId()): ?>
+        <div class="form-dropdown screen" id="edit_tab" style="display:none;">            
+            <form method="post" id="edit_tab_form" action="<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savetab', array('tab_id' => $tabId)) ?>">                
+                <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>" />
+                <div class="field-table">
+                    <div class="field-row">
+                        <label style="width:210px;"></label>
+                        <h3><?php echo $this->__('Edit dashboard "%s"', $dashboardTab->getName()) ?></h3>
+                    </div>
+                    <div class="field-row">
+                        <label for="DashboardName"><?php echo $this->__('Dashboard Name (*)') ?></label>
+                        <div>
+                            <input type="text" value="<?php echo $dashboardTab->getName() ?>" style="width:410px;" name="dashboard_name" maxlength="50" id="edit_dashboard_name" />                                        
+                        </div>
+                    </div>            
+                    <div class="submit-row">
+                        <label></label>
+                        <div>
+                            <button type="button" onclick="submitEditTabForm();" style="width:80px;height:32px;float:left; margin-right: 14px;" class="" value="Add">
+                                <span><?php echo $this->__('Save') ?></span>
+                            </button>
+                            <a class="button-grey cancel" onclick="editDashboard();
+                                            return false;"><?php echo $this->__('Cancel') ?></a>
+                            <a onclick="deleteDashboard();
+                                            return false;" style="clear:both;line-height:50px;display:block;width: 200px;" href="#" data-ajax-update="#" class="delete">
+                                [<?php echo $this->__('Delete this dashboard') ?>]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function submitEditTabForm() {
+                        if (!$('edit_dashboard_name') || !$('edit_dashboard_name').value || $('edit_dashboard_name').value == '' || $('edit_dashboard_name').value == '') {
+                            alert('<?php echo $this->__('Please fill in Dashboard Name to create a new dashboard.') ?>');
+                        } else {
+                            $('edit_tab_form').submit();
+                        }
+                    }
+
+                    function deleteDashboard() {
+                        var r = confirm('<?php echo $this->__('Are you sure you want to delete this dashboard?') ?>');
+                        if (r == true) {
+                            setLocation('<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/deletetab', array('tab_id' => $tabId)) ?>');
+                        }
+                    }
+                </script>
+            </form>
+        </div>
+    <?php endif ?>
+<?php endif ?>
+<!-- end edit dashboard form -->
+
+
+<!-- end edit item form -->
+<div id="edit_item_form"></div>
+<!-- edit item form -->
+
+
+<!-- items show -->
+<div class="dash-content-area">
+    <!-- column 1 -->
+    <div class="column" style="width:34%" data-col="1">
+        <div class="sortable  ui-sortable">       
+            <?php
+            $itemColumn1s = Mage::getModel('inventorydashboard/items')->getCollection()
+                    ->addFieldToFilter('tab_id', $tabId)
+                    ->addFieldToFilter('item_column', 1)
+                    ->setOrder('item_row', 'ASC');
+            ?>
+            <?php if (count($itemColumn1s->getSize())): ?>
+                <?php foreach ($itemColumn1s as $itemColumn1): ?>
+                    <div id="data-view-id-<?php echo $itemColumn1->getId() ?>" class="inventory-view-item" data-view-id="<?php echo $itemColumn1->getId() ?>" data-view-type="" data-loaded="true">
+                        <div id="ui-id-<?php echo $itemColumn1->getId() ?>" class="options move" title="<?php echo $this->__('Drag and drop the chart to change its position.') ?>">
+                            <b><?php echo $itemColumn1->getName() ?></b>
+                            <a href="#" onclick="deleteChart('<?php echo $itemColumn1->getId() ?>');
+                                            return false;" title="<?php echo $this->__('Delete chart') ?>" class="edit screen" data-ajax-method="DELETE"  data-ajax-delete="true">
+                                <i class="sprite" style="background-position: 8px -3135px"></i>
+                            </a>                            
+                            <a href="#" onclick="editItem('<?php echo $itemColumn1->getId() ?>');
+                                            return false;" title="<?php echo $this->__('Edit chart') ?>" class="edit screen">
+                                <i class="sprite" style="background-position: 7px -3102px"></i>
+                            </a>                    
+                        </div>
+
+                     
+                            
+                               
+                       
+                        
+                            <?php echo $this->getLayout()->createBlock('adminhtml/template')->setIdBox($itemColumn1->getId())->setTemplate('inventorydashboard/chart/' . $itemColumn1->getChartCode() . '/' . $itemColumn1->getReportCode() . '.phtml')->toHtml() ?>                   
+                    </div>
+                    
+                <?php endforeach ?>
+            <?php endif ?>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- column 2 -->
+    <div class="column" style="width:33%" data-col="2">
+        <div class="sortable  ui-sortable">
+            <?php
+            $itemColumn2s = Mage::getModel('inventorydashboard/items')->getCollection()
+                    ->addFieldToFilter('tab_id', $tabId)
+                    ->addFieldToFilter('item_column', '2')
+                    ->setOrder('item_row', 'ASC');
+            ?>
+            <?php if ($itemColumn2s->getSize()): ?>
+                <?php foreach ($itemColumn2s as $itemColumn2): ?>
+                    <div id="data-view-id-<?php echo $itemColumn2->getId() ?>" class="inventory-view-item" data-view-id="<?php echo $itemColumn2->getId() ?>" data-view-type="" data-loaded="true">
+                        <div id="ui-id-<?php echo $itemColumn2->getId() ?>" class="options move" title="<?php echo $this->__('Drag and drop the chart to change its position.') ?>">
+                            <b><?php echo $itemColumn2->getName() ?></b>
+                            <a href="#" onclick="deleteChart('<?php echo $itemColumn2->getId() ?>');
+                                            return false;" title="<?php echo $this->__('Delete chart') ?>" class="edit screen" data-ajax-method="DELETE"  data-ajax-delete="true">
+                                <i class="sprite" style="background-position: 8px -3135px"></i>
+                            </a>                            
+                            <a href="#" onclick="editItem('<?php echo $itemColumn2->getId() ?>');
+                                            return false;" title="<?php echo $this->__('Edit chart') ?>" class="edit screen">
+                                <i class="sprite" style="background-position: 7px -3102px"></i>
+                            </a>                    
+                        </div>     
+                       
+                        <?php echo $this->getLayout()->createBlock('adminhtml/template')->setIdBox($itemColumn2->getId())->setTemplate('inventorydashboard/chart/' . $itemColumn2->getChartCode() . '/' . $itemColumn2->getReportCode() . '.phtml')->toHtml() ?>                        
+                    </div>
+                <?php endforeach ?>
+            <?php endif ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <!-- column 3 -->
+    <div class="column" style="width:33%" data-col="3">
+        <div class="sortable last ui-sortable">
+            <?php
+            $itemColumn3s = Mage::getModel('inventorydashboard/items')->getCollection()
+                    ->addFieldToFilter('tab_id', $tabId)
+                    ->addFieldToFilter('item_column', '3')
+                    ->setOrder('item_row', 'ASC');
+            ?>
+            <?php if ($itemColumn3s->getSize()): ?>
+                <?php foreach ($itemColumn3s as $itemColumn3): ?>
+                    <div id="data-view-id-<?php echo $itemColumn3->getId() ?>" class="inventory-view-item" data-view-id="<?php echo $itemColumn3->getId() ?>" data-view-type="" data-loaded="true">
+                        <div id="ui-id-<?php echo $itemColumn3->getId() ?>" class="options move" title="<?php echo $this->__('Drag and drop the chart to change its position.') ?>">
+                            <b><?php echo $itemColumn3->getName() ?></b>
+                            <a href="#" onclick="deleteChart('<?php echo $itemColumn3->getId() ?>');
+                                            return false;" title="<?php echo $this->__('Delete chart') ?>" class="edit screen" data-ajax-method="DELETE"  data-ajax-delete="true">
+                                <i class="sprite" style="background-position: 8px -3135px"></i>
+                            </a>                            
+                            <a href="#" onclick="editItem('<?php echo $itemColumn3->getId() ?>');
+                                            return false;" title="<?php echo $this->__('Edit chart') ?>" class="edit screen">
+                                <i class="sprite" style="background-position: 7px -3102px"></i>
+                            </a>                    
+                        </div>
+                        
+                        <?php echo $this->getLayout()->createBlock('adminhtml/template')->setIdBox($itemColumn3->getId())->setTemplate('inventorydashboard/chart/' . $itemColumn3->getChartCode() . '/' . $itemColumn3->getReportCode() . '.phtml')->toHtml() ?>                        
+                    </div>
+                <?php endforeach ?>
+            <?php endif ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+    function editItem(itemId) {
+        if (itemId) {
+            if ($('edit_item_form')) {
+                if ($('add_tab_chart')) {
+                    if (document.getElementById('add_tab_chart').style.display == 'block'
+                            || document.getElementById('add_tab_chart').style.display == '') {
+//                            document.getElementById('add_tab_chart').style.display='none';
+                        $_('#add_tab_chart').fadeOut(2000);
+                    }
+                }
+                if ($('edit_tab')) {
+                    if (document.getElementById('edit_tab').style.display == 'block'
+                            || document.getElementById('edit_tab').style.display == '') {
+//                        document.getElementById('edit_tab').style.display='none'; 
+                        $_('#edit_tab').fadeOut(2000);
+                    }
+                }
+                if ($('add_tab')) {
+                    if (document.getElementById('add_tab').style.display == 'block'
+                            || document.getElementById('add_tab').style.display == '') {
+//                        document.getElementById('add_tab').style.display='none';
+                        $_('#add_tab').fadeOut(2000);
+                    }
+                }
+                var editItemTypeUrl = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/edititemform', array('_secure' => true)) ?>';
+                editItemTypeUrl += 'item_id/' + itemId;
+                new Ajax.Request(editItemTypeUrl, {
+                    method: 'get',
+                    parameters: '',
+                    onFailure: '',
+                    onSuccess: function (transport) {
+                        if (transport.status == 200) {
+                            var stringre = transport.responseText;
+                            $('edit_item_form').innerHTML = stringre;
+                        }
+                    }
+                });
+            }
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function changeEditSelectChartType() {
+        if ($('edit_report_type') && $('edit_report_type').value) {
+            var reportType = $('edit_report_type').value;
+            var changeSelectChartTypeUrl = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/changecharttype', array('_secure' => true)) ?>';
+            changeSelectChartTypeUrl += 'report_code/' + reportType;
+            new Ajax.Request(changeSelectChartTypeUrl, {
+                method: 'get',
+                parameters: '',
+                onFailure: '',
+                onSuccess: function (transport) {
+                    if (transport.status == 200) {
+                        var stringre = transport.responseText;
+                        if ($('edit_select_chart_type'))
+                            $('edit_select_chart_type').innerHTML = stringre;
+                    }
+                }
+            });
+        }
+    }
+
+    function submitEditChartForm() {
+        var edit_chart_form = new varienForm('edit_chart_form', '');
+        if (edit_chart_form.validate()) {
+            $('edit_chart_form').submit();
+        }
+    }
+
+    function cancelEditChartForm() {
+        if ($('edit_item_form'))
+            $('edit_item_form').innerHTML = '';
+    }
+
+    function deleteChart(id) {
+        var r = confirm('<?php echo $this->__('Are you sure you want to delete this chart?') ?>');
+        if (r == true) {
+            var deleteChartUrl = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/deleteitem', array('_secure' => true)) ?>';
+            deleteChartUrl += 'item_id/' + id;
+            new Ajax.Request(deleteChartUrl, {
+                method: 'get',
+                parameters: '',
+                onFailure: '',
+                onSuccess: function (transport) {
+                    if ($('data-view-id-' + id))
+                        $('data-view-id-' + id).style.display = 'none';
+                }
+            });
+        }
+    }
+</script> 
+
+<script type="text/javascript" src="<?php echo $this->getJsUrl() ?>magestore/adminhtml/inventory/dashboard/lib/_JSSettings.js"></script>
+<script src="<?php echo $this->getJsUrl() ?>magestore/adminhtml/inventory/dashboard/lib/js_002"></script>
+<script src="<?php echo $this->getJsUrl() ?>magestore/adminhtml/inventory/dashboard/lib/dashboards"></script>
+
+<script type="text/javascript">
+    var saveViewPositions = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/saveviewposition') ?>';
+    var saveTabPositions = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savetabposition') ?>';
+    var form_key_dashboard = '<?php echo $this->getFormKey() ?>';
+</script>
+<script type="text/javascript">
+    var $sd = new InventoryDashboard.Views.Dashboards();
+    $sd.isShare = false;
+    $sd.backgroundColour = '#808080';
+    $sd.init();
+
+ function changeWarehouse(code,content,warehouse_id,box_id) {
+                            var parameters = {code: code, warehouse_id: warehouse_id, box_id: box_id}
+                            var request = new Ajax.Request('<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/changeWarehouse') ?>', {
+                                parameters: parameters,
+                                onSuccess: function (transport) {
+                                    if (transport.status == 200) {
+                                        var json = JSON.parse(transport.responseText);
+                                        var response = json.success;
+                                        if(response)
+                                            window.location.reload();
+                                        
+                                    }
+                                },
+                                onFailure: ''
+                            });
+                        }
+ function selectWarehouse(id){
+        if($(id).style.display == 'block' || $(id).style.display == ''){
+            $(id).style.display = 'none';
+        }else{
+            $(id).style.display = 'block';
+        }
+    }
+</script>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+<!--
+Hellopay Failure Response Review
+-->
+<hellopay_standard_failure>
+    <reference name="root">
+        <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+    </reference>
+    <reference name="content">
+        <block type="hellopay/standard_failure" name="hellopay_standard_failure" template="hellopay/standard/failure.phtml">
+        </block>
+    </reference>
+</hellopay_standard_failure>
+
+</layout>

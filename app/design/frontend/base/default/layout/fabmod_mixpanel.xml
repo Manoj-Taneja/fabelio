@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+  <default>
+    <reference name="head">
+      <block type="core/template" template="fabmod/mixpanel/default.phtml" />
+    </reference>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/identify.phtml" />
+    </reference>
+  </default>
+  
+  <checkout_onepage_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/checkout.phtml" />
+    </reference>
+  </checkout_onepage_index>
+
+  <catalog_product_view>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/product.phtml" />
+    </reference>
+  </catalog_product_view>
+
+  <catalog_category_view>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/category.phtml" />
+    </reference>
+  </catalog_category_view>
+
+  <checkout_cart_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/cart.phtml" />
+    </reference>
+  </checkout_cart_index>
+
+  <checkout_onepage_success>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/purchase.phtml" />
+    </reference>
+  </checkout_onepage_success>
+  
+  <catalogsearch_result_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/search.phtml" />
+    </reference>
+</catalogsearch_result_index>
+  <cms_index_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/mixpanel/home.phtml" />
+    </reference>
+  </cms_index_index>
+
+</layout>

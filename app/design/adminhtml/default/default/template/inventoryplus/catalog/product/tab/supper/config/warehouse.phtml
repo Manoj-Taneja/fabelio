@@ -1,0 +1,257 @@
+
+<?php /* select warehouse */ ?>
+<tr>
+    <td class="label"><label for="inventory_warehouse_product"><?php echo Mage::helper('catalog')->__('Select Warehouse for Product') ?></label></td>
+    <td>
+        <?php $_htmlId = 'inventory_select_warehouse'; ?>
+        <?php $_htmlClass = ''; ?>
+        <?php $_htmlName = 'inventory_select_warehouse'; ?>
+        <?php $warehouses = Mage::getModel('inventoryplus/warehouse')->getCollection(); ?>
+        <table cellspacing="0" class="form-list">
+            <tbody>
+                <tr>
+                    <td class="label"></td>
+                    <td colspan="10" class="grid tier">
+                        <table cellspacing="0" class="data border" id="tiers_table">      
+                            <col width="350" />  
+                            <col width="350" />  
+                            <col width="1" />
+                            <thead>
+                                <tr class="headings">
+                                    <th><?php echo Mage::helper('inventoryplus')->__('Select Warehouse for Product') ?></th> 
+                                    <th><?php echo Mage::helper('inventoryplus')->__('Physical Qty') ?></th> 
+                                    <th class="last"><?php echo Mage::helper('inventoryplus')->__('Action') ?></th>
+                                </tr>
+                            </thead>
+                            <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="a-right">
+                                        <button style="" onclick="<?php echo $_htmlId ?>Control.addItem()" class="scalable add" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Add Warehouse') ?>" id=""><span><span><span><?php echo Mage::helper('inventoryplus')->__('Add Warehouse') ?></span></span></span></button>                    
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            //<![CDATA[
+            var <?php echo $_htmlId ?>RowTemplate = '<tr>'
+                + '<td>'
+                + '<select class="required-entry select validation-passed" onchange="checkexit(this,{{index}},\'warehouse\')" id="<?php echo $_htmlId ?>[{{index}}][warehouse_id]" name="<?php echo $_htmlId ?>[{{index}}][warehouse_id]">'
+                + '<option value=""><?php echo $this->__('Choose Warehouse') ?></option>'
+                <?php foreach ($warehouses as $warehouse): ?>
+                    + '<option value="<?php echo $warehouse->getId(); ?>"><?php echo $warehouse->getWarehouseName(); ?></option>'                
+                <?php endforeach; ?>
+                + '</select>'
+                + '</td>'
+                + '<td>'
+                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][qty]" name="<?php echo $_htmlId ?>[{{index}}][qty]" />'                        
+                + '</td>'
+                + '<td>'
+                + '<button onclick="return <?php echo $_htmlId ?>Control.deleteItem(event);" id="removeatribute_warehouse" class="scalable delete icon-btn delete-product-option" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Delete Warehouse Select'); ?>"><span><?php echo $this->__('Delete') ?></span></button>'
+                + '</td>'
+                + '</tr>';
+
+                var <?php echo $_htmlId ?>Control = {
+                    template: new Template(<?php echo $_htmlId ?>RowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+                    itemsCount: 0,
+                    addItem: function() {
+                        var data = {
+                            warehouse_id: '',
+                            qty: '',
+                            index: this.itemsCount++
+                        };
+                        if(arguments.length >= 2) {
+                            data.warehouse_id = arguments[0];                   
+                            data.qty = arguments[1];                   
+                        }
+                        Element.insert($('<?php echo $_htmlId ?>_container'), {
+                            bottom: this.template.evaluate(data)
+                        });
+                        $('inventory_select_warehouse[' + data.index + '][warehouse_id]').value = data.warehouse_id;
+                        $('inventory_select_warehouse[' + data.index + '][qty]').value = data.qty;
+                    },
+                    disableElement: function(el) {
+                        el.disabled = true;
+                        el.addClassName('disabled');
+                    },
+                    deleteItem: function(event) {
+                        var tr = Event.findElement(event, 'tr');
+                        if (tr) {
+                            Element.select(tr, '.delete').each(function(elem) {
+                                elem.value = '1'
+                            });
+                            Element.select(tr, ['input', 'select']).each(function(elem) {
+                                elem.remove()
+                            });
+                            Element.hide(tr);
+                            Element.addClassName(tr, 'no-display template');
+                        }
+                        return false;
+                    }
+                };
+                function checkexit(element,j,type){
+                    var count = <?php echo count($warehouses) ?>;
+                    for(i=0; i<count;i++){                 
+                        if(type=='warehouse'){      
+                            if(i!=j){
+                                if($('inventory_select_warehouse['+i+'][warehouse_id]'))
+                                    if(element.value && element.value==$('inventory_select_warehouse['+i+'][warehouse_id]').value)
+                                    {        
+                                        alert('<?php echo $this->__('This attibute was selected.')?>');
+                                        element.value = '';
+                                    }
+                            }
+                        }                                    
+                    }
+                }    
+            <?php $firstWarehouse = Mage::getModel('inventoryplus/warehouse')->getCollection()->getFirstItem() ?>
+            <?php if($firstWarehouse->getId()): ?>
+                <?php echo $_htmlId ?>Control.addItem('<?php echo $firstWarehouse->getId() ?>','');          
+            <?php endif ?>
+        </script>
+    </td>
+</tr>
+ <?php /* select supplier */ ?>
+    <?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorypurchasing')): ?>            
+                   <tr>
+                    <td class="label"><label for="inventory_supplier_product"><?php echo Mage::helper('catalog')->__('Select Supplier for Product') ?></label></td>
+                    <td>
+                        <?php $_htmlId = 'inventory_select_supplier'; ?>
+                        <?php $_htmlClass = ''; ?>
+                        <?php $_htmlName = 'inventory_select_supplier'; ?>
+                        <?php $suppliers = Mage::getModel('inventorypurchasing/supplier')->getCollection(); ?>
+                        <table cellspacing="0" class="form-list">
+                            <tbody>
+                                <tr>
+                                    
+                                    <td colspan="10" class="grid tier">
+                                        <table cellspacing="0" class="data border" id="tiers_table">      
+                                            <col width="350" />  
+                                            <col width="350" />  
+                                            <col width="1" />
+                                            <thead>
+                                                <tr class="headings">
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Select supplier for Product') ?></th> 
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Cost') ?></th> 
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Tax (%)') ?></th> 
+						    <th><?php echo Mage::helper('inventoryplus')->__('Discount (%)') ?></th> 
+						    <th><?php echo Mage::helper('inventoryplus')->__('Supplier SKU') ?></th> 
+                                                    <th class="last"><?php echo Mage::helper('inventoryplus')->__('Action') ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="a-right">
+                                                        <button style="" onclick="<?php echo $_htmlId ?>Control.addItem()" class="scalable add" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Add supplier') ?>" id=""><span><span><span><?php echo Mage::helper('inventoryplus')->__('Add supplier') ?></span></span></span></button>                    
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            var <?php echo $_htmlId ?>RowTemplate = '<tr>'
+                                + '<td>'
+                                + '<select class="required-entry select validation-passed" onchange="checkexit(this,{{index}},\'supplier\')" id="<?php echo $_htmlId ?>[{{index}}][supplier_id]" name="<?php echo $_htmlId ?>[{{index}}][supplier_id]">'
+                                + '<option value=""><?php echo $this->__('Choose supplier') ?></option>'
+                                <?php foreach ($suppliers as $supplier): ?>
+                                    + '<option value="<?php echo $supplier->getId(); ?>"><?php echo $supplier->getSupplierName(); ?></option>'                
+                                <?php endforeach; ?>
+                                + '</select>'
+                                + '</td>'
+                                 + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][cost]" name="<?php echo $_htmlId ?>[{{index}}][cost]" />'   
+				+ '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][tax]" name="<?php echo $_htmlId ?>[{{index}}][tax]" />'   
+				+ '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][discount]" name="<?php echo $_htmlId ?>[{{index}}][discount]" />'   
+                                + '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][supplier_sku]" name="<?php echo $_htmlId ?>[{{index}}][supplier_sku]" />'   
+                                + '</td>'
+                                + '<td>'
+                                + '<button onclick="return <?php echo $_htmlId ?>Control.deleteItem(event);" id="removeatribute_supplier" class="scalable delete icon-btn delete-product-option" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Delete supplier Select'); ?>"><span><?php echo $this->__('Delete') ?></span></button>'
+                                + '</td>'
+                                + '</tr>';
+
+                                var <?php echo $_htmlId ?>Control = {
+                                    template: new Template(<?php echo $_htmlId ?>RowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+                                    itemsCount: 0,
+                                    addItem: function() {
+                                        var data = {
+                                            supplier_id: '',
+                                            qty: '',
+                                            index: this.itemsCount++
+                                        };
+                                        if(arguments.length >= 2) {
+                                            data.supplier_id = arguments[0];                   
+                                            data.qty = arguments[1];                   
+                                        }
+                                        Element.insert($('<?php echo $_htmlId ?>_container'), {
+                                            bottom: this.template.evaluate(data)
+                                        });
+                                        $('inventory_select_supplier[' + data.index + '][supplier_id]').value = data.supplier_id;
+                                        $('inventory_select_supplier[' + data.index + '][tax]').value = data.qty;
+                                        $('inventory_select_supplier[' + data.index + '][discount]').value = data.qty;
+                                    },
+                                    disableElement: function(el) {
+                                        el.disabled = true;
+                                        el.addClassName('disabled');
+                                    },
+                                    deleteItem: function(event) {
+                                        var tr = Event.findElement(event, 'tr');
+                                        if (tr) {
+                                            Element.select(tr, '.delete').each(function(elem) {
+                                                elem.value = '1'
+                                            });
+                                            Element.select(tr, ['input', 'select']).each(function(elem) {
+                                                elem.remove()
+                                            });
+                                            Element.hide(tr);
+                                            Element.addClassName(tr, 'no-display template');
+                                        }
+                                        return false;
+                                    }
+                                };
+                                function checkexit(element,j,type){
+                                    var count = <?php echo count($suppliers) ?>;
+                                    for(i=0; i<count;i++){                 
+                                        if(type=='supplier'){      
+                                            if(i!=j){
+                                                if($('inventory_select_supplier['+i+'][supplier_id]'))
+                                                    if(element.value && element.value==$('inventory_select_supplier['+i+'][supplier_id]').value)
+                                                    {        
+                                                        alert('<?php echo $this->__('This attibute was selected.')?>');
+                                                        element.value = '';
+                                                    }
+                                            }
+                                        }                                    
+                                    }
+                                }    
+                            <?php $firstsupplier = Mage::getModel('inventorypurchasing/supplier')->getCollection()->getFirstItem() ?>
+                            <?php if($firstsupplier->getId()): ?>
+                                <?php echo $_htmlId ?>Control.addItem('<?php echo $firstsupplier->getId() ?>','');          
+                            <?php endif ?>
+                        </script>
+                    </td>
+                </tr>
+    <?php endif ?>
+                
+               

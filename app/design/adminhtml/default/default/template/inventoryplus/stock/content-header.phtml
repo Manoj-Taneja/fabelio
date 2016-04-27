@@ -1,0 +1,81 @@
+<?php echo $this->getFormInitScripts() ?>
+<div class="content-header">
+    <?php echo $this->getHeaderHtml() ?>
+    <p class="form-buttons"><?php echo $this->getButtonsHtml('header') ?></p>
+</div>
+<?php if(Mage::helper('core')->isModuleEnabled('Magestore_Inventorywarehouse')): ?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Select Warehouse') ?></h4>
+        </div>
+        <div id="date_picker_form" class="fieldset ">
+            <div  class="input-box">
+                <?php $allWarehouses = Mage::helper('inventoryplus/warehouse')->getAllWarehouseName();?>
+                <?php if(count($allWarehouses)): ?>
+                    <?php echo $this->__('Please select a warehouse to view stock') ?><br />
+                    <div>
+                        <label for="warehouse">
+                            <strong><?php echo $this->__('Warehouse') ?>:&nbsp;&nbsp;</strong>
+                        </label>
+						<?php $i = 0 ?>
+                        <select name="select_warehouse" id="select_warehouse" onchange="return switchWarehouse(this);">
+							<?php if($i==0): ?>
+                                    <?php $selected = "selected=\"selected\"" ?>
+							<?php endif ?>
+							<?php $i++ ?>
+							<option <?php echo $selected ?> value="0">
+                                    <?php echo $this->__('All Warehouse') ?>
+                            </option>
+                            <?php foreach($allWarehouses as $warehouseId => $warehouseName): ?>
+                                <?php $selected = '' ?>
+                                <?php if(Mage::getModel('admin/session')->getData('stock_warehouse_id')): ?>
+                                    <?php if(Mage::getModel('admin/session')->getData('stock_warehouse_id')==$warehouseId): ?>
+                                        <?php $selected = "selected=\"selected\"" ?>
+                                    <?php endif ?>
+                                <?php elseif($i==0): ?>
+                                    <?php $selected = "selected=\"selected\"" ?>
+                                <?php endif ?>
+                                <?php $i++ ?>
+                                <option <?php echo $selected ?> value="<?php echo $warehouseId ?>">
+                                    <?php echo $warehouseName; ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                    <script type="text/javascript">
+                        function switchWarehouse(obj) {
+                            var url = '<?php echo $this->getUrl('inventoryplusadmin/adminhtml_stock/changewarehouse') ?>';
+                            var warehouseParam = obj.value ? 'warehouse_id/' + obj.value + '/' : '';
+                            url += warehouseParam;
+                            var request = new Ajax.Request(url, {
+                                method: 'get',
+                                parameters: '',
+                                onFailure: '',
+                                onSuccess: function(transport) {
+                                   if (transport.status == 200) {    
+                                       if($('stock_warehouse_id'))
+                                           $('stock_warehouse_id').value = obj.value;
+                                      $('stock_tabs_product_section').addClassName('notloaded');
+                                      stock_tabsJsTabs.showTabContent($('stock_tabs_product_section'));
+                                   }
+                                }
+                             }); 
+                        }
+                    </script>
+                <?php else: ?>
+                    <?php echo $this->__('You do not have permission to view stock') ?>
+                <?php endif ?>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+<?php echo $this->getFormHtml() ?>
+<?php if ($this->hasFooterButtons()): ?>
+    <div class="content-footer">
+        <p class="form-buttons"><?php echo $this->getButtonsHtml('footer') ?></p>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+    editForm = new varienForm('edit_form', '<?php echo $this->getValidationUrl() ?>');
+</script>
+<?php echo $this->getFormScripts() ?>

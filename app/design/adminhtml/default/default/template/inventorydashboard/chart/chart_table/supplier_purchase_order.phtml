@@ -1,0 +1,68 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php     
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    $results = '';
+    $sql = 'SELECT `supplier_id`,count(`supplier_id`) as `total_time`,sum(`total_products`) as `totalproduct`,sum(`total_amount`/`change_rate`) as `totalamount` FROM '.$resource->getTableName('erp_inventory_purchase_order').' group by `supplier_id`';     
+    $results = $readConnection->query($sql);
+    $supplierPurchase = array();
+    if($results){
+        foreach($results as $result){            
+            $supplierPurchase[$result['supplier_id']]['totaltime'] = $result['total_time'];
+            $supplierPurchase[$result['supplier_id']]['totalproduct'] = $result['totalproduct'];
+            $supplierPurchase[$result['supplier_id']]['totalamount'] = $result['totalamount'];
+        }
+    }    
+
+?>
+                            
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px; margin: 0 auto; overflow: auto;">
+    <div text-anchor="middle" class="highcharts-title" zIndex="4" style="color: #333333;font-size: 18px;fill: #333333;text-align: center;padding-bottom: 10px;" >
+        <tspan><?php echo $chart->getName() ?></tspan>
+    </div>
+<?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventoryreports')):?>
+   <span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("inventoryreportsadmin/adminhtml_supplier/inventorybysupplier", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<?php endif;?>
+    <table style="width: 100%;">
+        <thead class="thead-dashboard-table">
+            <tr>
+                <th style="text-align: center;"><?php echo $this->__('Supplier') ?></th>                
+                <th style="text-align: center;"><?php echo $this->__('Total Orders') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Total Qty Requested') ?></th>
+                <th style="text-align: center;"><?php echo $this->__('Total Value') ?></th>
+            </tr>
+        </thead>
+        <tbody class="tbody-dashboard-table">            
+            <?php     
+                $supplierCollection = Mage::getModel('inventorypurchasing/supplier')->getCollection();
+                $i = 0;    
+                foreach($supplierCollection as $supplier){
+                    $totalTime = 0;
+                    $totalProducts = 0;
+                    $totalAmount = 0;                    
+                    if(isset($supplierPurchase[$supplier->getId()]['totaltime'])){
+                        $totalTime = $supplierPurchase[$supplier->getId()]['totaltime'];                                                                
+                    }
+                    if(isset($supplierPurchase[$supplier->getId()]['totalproduct'])){
+                        $totalProducts = $supplierPurchase[$supplier->getId()]['totalproduct'];                                                                
+                    }
+                    if(isset($supplierPurchase[$supplier->getId()]['totalamount'])){
+                        $totalAmount = $supplierPurchase[$supplier->getId()]['totalamount'];                                                                
+                    }
+                ?>
+                    <tr class="<?php if($i%2 != 0){ echo 'td-dashboard-table'; } ?>">
+                        <td><?php echo $supplier->getSupplierName() ?></td>                        
+                        <td><?php echo $totalTime ?></td>
+                        <td><?php echo $totalProducts ?></td>
+                        <td><?php echo Mage::helper('core')->currency($totalAmount) ?></td>
+                    </tr>
+                <?php
+                    $i++;
+                }           
+            ?>
+        </tbody>
+    </table>
+</div>

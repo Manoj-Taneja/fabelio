@@ -1,0 +1,13 @@
+
+<div class="entry-edit" style="margin-top: 10px">
+    <div id="qty_guide_form-head" style="cursor: pointer;" class="entry-edit-head" onclick="Fieldset.toggleCollapse('qty_guide_form');
+         ">
+        <label class="icon-question"><?php echo $this->__('About quantity types') ?></label>
+    </div>
+    <div id="qty_guide_form" class="fieldset" style="display:none">
+        <p><?php echo $this->__("<b>Physical Qty</b> : The real quantity of each product in your physical warehouse. <br>"
+                . "             <b>Available Qty</b> : The quantity of each product in Catalog allocated in your virtual warehouse.  <br>"
+                . "             <b>On Hold Qty</b> : The quantity allocated in 'not shipped' sales orders <br><br>"
+                . "             <b>Summary : Physical Qty. = Available Qty. + On Hold Qty.</b>"); ?></p>
+    </div>
+</div>

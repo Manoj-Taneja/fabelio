@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    
+    <catalog_category_default>
+        <reference name="head">
+            <action method="addItem" ifconfig="attributeswatches/settings/jquery">
+                <type>skin_js</type>
+                <name>attributeswatches/jquery-1.9.1.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>attributeswatches/attributeswatches.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>attributeswatches/attributeswatches.css</name>
+                <params/>
+            </action>
+        </reference>
+    </catalog_category_default>
+
+    
+    <catalog_category_layered>
+        <reference name="head">
+            <action method="addItem" ifconfig="attributeswatches/settings/jquery">
+                <type>skin_js</type>
+                <name>attributeswatches/jquery-1.9.1.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>attributeswatches/attributeswatches.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>attributeswatches/attributeswatches.css</name>
+                <params/>
+            </action>
+        </reference>
+    </catalog_category_layered>
+
+
+    <catalogsearch_result_index>
+        <reference name="head">
+            <action method="addItem" ifconfig="attributeswatches/settings/jquery">
+                <type>skin_js</type>
+                <name>attributeswatches/jquery-1.9.1.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>attributeswatches/attributeswatches.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>attributeswatches/attributeswatches.css</name>
+                <params/>
+            </action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <catalogsearch_advanced_result>
+        <reference name="head">
+            <action method="addItem" ifconfig="attributeswatches/settings/jquery">
+                <type>skin_js</type>
+                <name>attributeswatches/jquery-1.9.1.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>attributeswatches/attributeswatches.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>attributeswatches/attributeswatches.css</name>
+                <params/>
+            </action>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addItem" ifconfig="attributeswatches/settings/jquery">
+                <type>skin_js</type>
+                <name>attributeswatches/jquery-1.9.1.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>jquery-plugins/cloudzoom/jquery-migrate-1.2.1.js</name>
+            </action>
+            <action method="addItem" ifconfig="attributeswatches/lightbox/enabled">
+                <type>skin_js</type>
+                <name>jquery-plugins/fancybox/jquery.fancybox.js</name>
+            </action>
+            <action method="addItem" ifconfig="attributeswatches/lightbox/enabled">
+                <type>skin_js</type>
+                <name>jquery-plugins/fancybox/jquery.mousewheel.js</name>
+            </action>
+            <action method="addItem" ifconfig="attributeswatches/lightbox/enabled">
+                <type>skin_css</type>
+                <name>jquery-plugins/fancybox/jquery.fancybox.css</name>
+            </action>
+            
+            <action method="addItem" ifconfig="attributeswatches/cloudzoom/enabled">
+                <type>skin_js</type>
+                <name>jquery-plugins/cloudzoom/cloudzoom.js</name>
+            </action>
+            <action method="addItem" ifconfig="attributeswatches/cloudzoom/enabled">
+                <type>skin_css</type>
+                <name>jquery-plugins/cloudzoom/cloudzoom.css</name>
+            </action>
+            
+            <!--action method="addItem" ifconfig="attributeswatches/carousel/enabled">
+                <type>skin_js</type>
+                <name>jquery-plugins/flexslider/jquery.flexslider.js</name>
+            </action>
+            <action method="addItem" ifconfig="attributeswatches/carousel/enabled">
+                <type>skin_css</type>
+                <name>jquery-plugins/flexslider/flexslider.css</name>
+            </action-->
+            
+            <action method="addItem" ifconfig="attributeswatches/carousel/enabled">
+                <type>skin_js</type>
+                <name>jquery-plugins/bxslider/jquery.bxslider.js</name>
+            </action>
+            <action method="addItem" ifconfig="attributeswatches/carousel/enabled">
+                <type>skin_css</type>
+                <name>jquery-plugins/bxslider/jquery.bxslider.css</name>
+            </action>
+
+                        
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>attributeswatches/attributeswatches.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>attributeswatches/attributeswatches.css</name>
+                <params/>
+            </action>
+        </reference>
+        <reference name="product.info">
+            <remove name="media"/>
+            <block type="catalog/product_view_media" name="product.info.media" as="media" template="attributeswatches/catalog_product_view_media.phtml"/>
+        	<block type="catalog/product_view_media" name="product.info.media_static" as="media_static" template="attributeswatches/catalog_product_view_media_static.phtml"/>
+        </reference>
+    </catalog_product_view>
+
+    <review_product_list>
+        <reference name="head">
+            <action method="addItem" ifconfig="attributeswatches/settings/jquery">
+                <type>skin_js</type>
+                <name>attributeswatches/jquery-1.9.1.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>attributeswatches/attributeswatches.js</name>
+                <params/>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>attributeswatches/attributeswatches.css</name>
+                <params/>
+            </action>
+        </reference>
+    </review_product_list>
+
+    
+
+
+    <PRODUCT_TYPE_configurable translate="label" module="catalog">
+        <reference name="product.info.options.wrapper">
+            <block type="catalog/product_view_type_configurable" name="product.info.options.configurable" as="options_configurable" before="-">
+                <action method="setTemplate">
+                    <template>attributeswatches/catalog_product_view_type_options_configurable.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </PRODUCT_TYPE_configurable>
+
+
+
+</layout> 

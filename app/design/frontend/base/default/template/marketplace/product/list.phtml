@@ -1,0 +1,107 @@
+<?php $_items = $this->getItems(); ?>
+<?php $status = $this->getRequest()->getParam('status', 'all'); ?>
+<div class="container-fluid main-container  vendor-container">
+    <h1><?php echo $this->__('List of All Products') ?></h1>
+    <div class="jumbotron">
+        <div class="row">
+            <form name="report_filter" id="report_filter" action="<?php echo Mage::getUrl('*/*/*') ?>" method="get" enctype="multipart/form-data">
+                <div class="col-sm-5">
+                    <input name="name" id="name" type="text" placeholder="Search by Name" value="<?php echo $this->getRequest()->getParam('name'); ?>" class="form-control input-text">
+                </div>
+                <div class="col-sm-5">
+                    <select name="status" id="status">
+                        <option value=""><?php echo $this->__("Search by Status"); ?></option>
+                        <option value="active"><?php echo $this->__("Active"); ?></option>
+                        <option value="pending"><?php echo $this->__("Pending"); ?></option>
+                        <option value="inactive"><?php echo $this->__("Inactive"); ?></option>
+                        <option value="disapproved"><?php echo $this->__("Disapproved"); ?></option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <input type="submit" name="submit" class="btn btn-primary btn-small" value="<?php echo $this->__('Filter') ?>" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <th><?php echo $this->__('ID') ?></th>
+            <th><?php echo $this->__('Name') ?></th>
+            <th><?php echo $this->__('SKU') ?></th>
+            <th><?php echo $this->__('Product Price') ?></th>
+            <th><?php echo $this->__('Qty Available') ?></th>
+            <th><?php echo $this->__('Status') ?></th>
+            <th colspan="<?php echo Mage::helper('supplierfrontendproductuploader')->canEditProducts() ? '3' : '2' ?>"><?php echo $this->__('Actions') ?></th>
+            </thead>
+            <tbody>
+            <?php if($_items->count()): ?>
+                <?php foreach($_items AS $_item): ?>
+                    <?php $item = Mage::getModel('catalog/product')->load($_item->getEntityId()); ?>
+                    <tr class="item<?php echo ($item->isSalable() && $item->getSupplierActivedProduct() == 1) ? ' success': '' ?>">
+                        <td><?php echo $item->getId(); ?></td>
+                        <td><?php echo $item->getName(); ?><?php echo $item->getAdminProductNote() ? ' <span class="badge pull-right badge-important" data-toggle="tooltip" data-placement="top" title="'.$item->getAdminProductNote().'">!</span>' : "" ?></td>
+                        <td><?php echo $item->getSku(); ?></td>
+                        <td><?php echo Mage::helper('core')->currency($item->getFinalPrice()); ?></td>
+                        <td><?php echo number_format(Mage::getModel('cataloginventory/stock_item')->loadByProduct($item)->getQty()) ?></td>
+                        <td><?php echo $this->getStatusLabel($item->getData('frontendproduct_product_status')); ?></td>
+                        <?php if($item->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) : ?>
+                            <td>
+                                <a class="btn" href="<?php echo Mage::getUrl('marketplace/product/associatedProducts', array('id' => $item->getId())) ?>"><?php echo $this->__("Associated Products"); ?></a>
+                            </td>
+                        <?php endif;?>
+                        <?php if(Mage::helper('supplierfrontendproductuploader')->canEditProducts()) : ?>
+                            <td>
+                                <?php if($item->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) : ?>
+                                    <a href="<?php echo Mage::getUrl('marketplace/product/editConfigurable', array('id' => $item->getId())); ?>" class="btn btn-warning"><?php echo $this->__('Edit'); ?></a>
+                                <?php else : ?>
+                                    <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/edit', array('id' => $item->getId())); ?>" class="btn btn-warning"><?php echo $this->__('Edit'); ?></a>
+                                <?php endif; ?>
+                            </td>
+                        <?php endif; ?>
+                        <?php if(!in_array($item->getData('frontendproduct_product_status'), array(Cminds_Supplierfrontendproductuploader_Model_Product::STATUS_PENDING, Cminds_Supplierfrontendproductuploader_Model_Product::STATUS_DISAPPROVED))) : ?>
+                            <td>
+                                <?php if($item->getSupplierActivedProduct() == 0) : ?>
+                                    <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/active', array('id' => $item->getId())); ?>" class="btn btn-success"><?php echo $this->__('Activate'); ?></a>
+                                <?php elseif($item->getSupplierActivedProduct() == 1): ?>
+                                    <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/deactive', array('id' => $item->getId())); ?>" class="btn btn-danger"><?php echo $this->__('Deactivate'); ?></a>
+                                <?php endif; ?>
+                            </td>
+                        <?php endif; ?>
+                        <td>
+                            <a href="<?php echo $item->getProductUrl() ?>" class="btn btn-primary" target="_blank"><?php echo $this->__('Preview'); ?></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <td colspan="7"><?php echo $this->__("No results"); ?></td>
+            <?php endif; ?>
+            </tbody>
+            <tfoot>
+            <th><?php echo $this->__('ID') ?></th>
+            <th><?php echo $this->__('Name') ?></th>
+            <th><?php echo $this->__('SKU') ?></th>
+            <th><?php echo $this->__('Product Price') ?></th>
+            <th><?php echo $this->__('Qty Available') ?></th>
+            <th><?php echo $this->__('Active') ?></th>
+            <th colspan="<?php echo Mage::helper('supplierfrontendproductuploader')->canEditProducts() ? '3' : '2' ?>"><?php echo $this->__('Actions') ?></th>
+            </tfoot>
+        </table>
+    </div>
+        <?php
+        echo $this->getLayout()->createBlock('core/template')
+            ->setTemplate('supplierfrontendproductuploader/product/pagination.phtml')
+            ->setCollection($_items)
+            ->toHtml() ?>
+    </div>
+</div>
+<div class="slideshow-container"><div class="slideshow"></div></div>
+<script>
+    jQuery(document).ready(function () {
+        if(jQuery("[data-toggle=tooltip]").length) {
+            jQuery("[data-toggle=tooltip]").tooltip().on('hidden.bs.popover', function(){
+                jQuery(this).show();
+            });
+        }
+    });
+</script>

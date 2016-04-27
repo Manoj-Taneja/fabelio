@@ -1,0 +1,108 @@
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.dropdown-toggle').dropdown();
+    });
+</script>
+<?php $supplier = Mage::helper('marketplace')->getLoggedSupplier(); ?>
+<?php if($supplier->getData('rejected_notfication_seen') === '0'): ?>
+    <?php $c = Mage::getModel('customer/customer')->load($supplier->getId());
+    $c->setRejectedNotificationSeen(1)->save(); ?>
+    <ul class="messages"><li><?php echo Mage::helper('marketplace')->__('Your Supplier profile changes were rejected by admin.'); ?></li>
+        <?php if($supplier->getData('supplier_remark')): ?>
+            <li><strong><?php echo Mage::helper('marketplace')->__('Admin message'); ?> :</strong> <?php echo $supplier->getData('supplier_remark');  ?></li>
+        <?php endif; ?>
+    </ul>
+    <?php $supplier->setData('rejected_notfication_seen', 1)->save(); ?>
+<?php endif; ?>
+<div class="navbar navbar-inverse navbar-fixed-top  vendor-container" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only"><?php echo $this->__("Toggle navigation"); ?></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="padding: 0 70px"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+            <li<?php echo (!in_array(Mage::app()->getRequest()->getActionName(), array('create', 'list', 'edit', 'view', 'ordered', 'products')) && !in_array(Mage::app()->getRequest()->getControllerName(), array('reports', 'order', 'settings'))) ? ' class="active"' : '' ?>><a href="<?php echo Mage::getUrl('supplierfrontendproductuploader') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Home'); ?></a></li>
+            <li<?php echo (Mage::app()->getRequest()->getActionName() == 'create' && Mage::app()->getRequest()->getControllerName() == 'product') ? ' class="active"' : '' ?>>
+            <?php if(Mage::helper('marketplace')->canCreateConfigurable()): ?>
+                <a href="<?php echo Mage::getUrl('marketplace/product/chooseType') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Add a Product'); ?></a>
+            <?php else : ?>
+                <a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/create') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Add a Product'); ?></a>
+            <?php endif; ?>
+            </li>
+            <?php if(Mage::helper('marketplace')->csvImportEnabled()): ?>
+                <li class="dropdown<?php echo (Mage::app()->getRequest()->getControllerName() == 'import' || Mage::app()->getRequest()->getActionName() == 'product') ? ' active' : '' ?>">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <?php echo Mage::helper('marketplace')->__('Import'); ?> <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo Mage::getUrl('marketplace/import/products') ?>"><?php echo Mage::helper('marketplace')->__('Products'); ?></a></li>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <li<?php echo (Mage::app()->getRequest()->getActionName() == 'list') ? ' class="active"' : '' ?>><a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/list') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Product List'); ?><?php if($this->hasMarkedProducts()): ?><span class="badge pull-right badge-important"><?php echo $this->getMarkedProductCount(); ?></span><?php endif; ?>
+            <li<?php echo (Mage::app()->getRequest()->getControllerName() == 'order' || Mage::app()->getRequest()->getControllerName() == 'shipment') ? ' class="active"' : '' ?>><a href="<?php echo Mage::getUrl('marketplace/order') ?>"><?php echo Mage::helper('marketplace')->__('Orders'); ?></a></li>
+            <li class="dropdown<?php echo (Mage::app()->getRequest()->getControllerName() == 'settings') ? ' active' : '' ?>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <?php echo Mage::helper('marketplace')->__('Settings'); ?> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <?php if(Mage::helper('marketplace')->supplierPagesEnabled()): ?>
+                        <li><a href="<?php echo Mage::getUrl('marketplace/settings/profile') ?>"><?php echo Mage::helper('marketplace')->__('My Profile Page'); ?></a></li>
+                    <?php endif; ?>
+                    <li><a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/settings/notifications') ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Notifications'); ?></a></li>
+                    <?php if(Mage::getStoreConfig('marketplace_configuration/presentation/change_shipping_costs')): ?>
+                        <li><a href="<?php echo Mage::getUrl('marketplace/settings/shipping') ?>"><?php echo Mage::helper('marketplace')->__('Shipping Methods'); ?></a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+            <li class="dropdown<?php echo (Mage::app()->getRequest()->getControllerName() == 'reports' || Mage::app()->getRequest()->getActionName() == 'ordered') ? ' active' : '' ?>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <?php echo Mage::helper('marketplace')->__('Reports'); ?> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+
+                    <li><a href="<?php echo Mage::getUrl('marketplace/reports/orders') ?>"><?php echo Mage::helper('marketplace')->__('Orders'); ?></a></li>
+                    <li class="menu-item fix-dropdown">
+                        Products
+                    </li>
+                    <li class="menu-item fix-dropdown-children">
+                        <a href="<?php echo Mage::getUrl('marketplace/reports/bestsellers') ?>"><b>- </b><?php echo Mage::helper('marketplace')->__('Bestsellers'); ?></a>
+                    </li>
+                    <li class="fix-dropdown-children"><a href="<?php echo Mage::getUrl('supplierfrontendproductuploader/product/ordered') ?>"><b>- </b><?php echo Mage::helper('supplierfrontendproductuploader')->__('Ordered Items'); ?></a></li>
+                    <li class="menu-item fix-dropdown-children">
+                        <a href="<?php echo Mage::getUrl('marketplace/reports/mostViewed') ?>"><b>- </b><?php echo Mage::helper('marketplace')->__('Most Viewed'); ?></a>
+                    </li>
+                    <li class="menu-item fix-dropdown-children">
+                        <a href="<?php echo Mage::getUrl('marketplace/reports/lowStock') ?>"><b>- </b><?php echo Mage::helper('marketplace')->__('Low Stock'); ?></a>
+                    </li>
+                    <!--                    <li class="menu-item dropdown dropdown-submenu">-->
+<!--                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products</a>-->
+<!--                            <ul class="dropdown-menu">-->
+<!--                                <li class="menu-item">-->
+<!--                                    <a href="--><?php //echo Mage::getUrl('marketplace/reports/bestsellers') ?><!--">--><?php //echo Mage::helper('marketplace')->__('Bestsellers'); ?><!--</a>-->
+<!--                                </li>-->
+<!--                                <li><a href="--><?php //echo Mage::getUrl('supplierfrontendproductuploader/product/ordered') ?><!--">--><?php //echo Mage::helper('supplierfrontendproductuploader')->__('Ordered Items'); ?><!--</a></li>-->
+<!--                                <li class="menu-item">-->
+<!--                                    <a href="--><?php //echo Mage::getUrl('marketplace/reports/mostViewed') ?><!--">--><?php //echo Mage::helper('marketplace')->__('Most Viewed'); ?><!--</a>-->
+<!--                                </li>-->
+<!--                                <li class="menu-item">-->
+<!--                                    <a href="--><?php //echo Mage::getUrl('marketplace/reports/lowStock') ?><!--">--><?php //echo Mage::helper('marketplace')->__('Low Stock'); ?><!--</a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+                </ul>
+            </li>
+            <?php if(Mage::helper('marketplace')->supplierPagesEnabled()): ?>
+                <li><a href="<?php echo Mage::getUrl('marketplace/supplier/view', array('id' => Mage::getSingleton('customer/session')->getId())) ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('My Supplier Page'); ?></a></li>
+            <?php endif; ?>
+            <li><a href="<?php echo Mage::getUrl() ?>"><?php echo Mage::helper('supplierfrontendproductuploader')->__('Back to Home Page'); ?></a></li>
+        </ul>
+        </div>
+    </div>
+</div>

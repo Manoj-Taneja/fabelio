@@ -1,0 +1,3 @@
+<?php if($this->isCreatedBySupplier() && $this->canShowSoldBy()) : ?>
+    <p><?php echo $this->__("by"); ?> <a href="<?php echo Mage::helper("marketplace")->getSupplierPageUrl($this->getProduct()); ?>"><?php echo $this->getProductSupplierName(); ?></a></p>
+<?php endif; ?>

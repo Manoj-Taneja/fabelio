@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_cache_index>
+        <reference name="head">
+            <action method="addJs"><script>mirasvit/core/amcharts-3.4.5/amcharts.js</script></action>
+            <action method="addJs"><script>mirasvit/core/amcharts-3.4.5/serial.js</script></action>
+        </reference>
+        <reference name="content">
+            <block type="fpc/adminhtml_log" name="fpc_log" template="fpc/log.phtml" after="cache.additional" />
+        </reference>
+    </adminhtml_cache_index>
+</layout>

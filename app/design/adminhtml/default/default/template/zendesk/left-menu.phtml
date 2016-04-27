@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright 2012 Zendesk.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+?>
+<h3>Zendesk</h3>
+<ul class="tabs">
+    <?php if ($this->isAllowed('dashboard')) { ?>
+    <li>
+        <a href="<?php echo $this->getUrl('*/*/index'); ?>" class="tab-item-link<?php if($this->getActiveItem() == "dashboard") echo ' active'; ?>">
+            <span><?php echo $this->__('Dashboard'); ?></span>
+        </a>
+    </li>
+    <?php } ?>
+    <?php if ($this->isAllowed('create')) { ?>
+    <li>
+        <a href="<?php echo $this->getUrl('*/*/create'); ?>" class="tab-item-link<?php if($this->getActiveItem() == "create") echo ' active'; ?>">
+            <span><?php echo $this->__('Create Ticket'); ?></span>
+        </a>
+    </li>
+    <?php } ?>
+    <?php if ($this->isAllowed('launch')) { ?>
+    <li>
+        <a href="<?php echo Mage::getSingleton('adminhtml/url')->getUrl('adminhtml/zendesk/launch'); ?>" target="_blank" class="tab-item-link">
+            <span><?php echo $this->__('Launch Zendesk'); ?></span>
+        </a>
+    </li>
+    <?php } ?>
+    <?php if ($this->isAllowed('settings')) { ?>
+    <li>
+        <a href="<?php echo $this->getUrl('adminhtml/system_config/edit/section/zendesk'); ?>" class="tab-item-link">
+            <span><?php echo $this->__('Configuration'); ?></span>
+        </a>
+    </li>
+    <?php } ?>
+</ul>
+

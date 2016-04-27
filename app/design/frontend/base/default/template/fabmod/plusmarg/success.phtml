@@ -1,0 +1,5 @@
+<?php
+$order = Mage::getSingleton('sales/order')->
+  loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+?>
+<script> window.send && send(<?php echo $order->getGrandTotal(); ?>); </script>

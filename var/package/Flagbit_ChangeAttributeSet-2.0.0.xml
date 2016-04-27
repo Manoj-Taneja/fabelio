@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Flagbit_ChangeAttributeSet</name>
+    <version>2.0.0</version>
+    <stability>stable</stability>
+    <license>GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>In Magento every product has a fixed attibute set. This module enables you to switch it.</summary>
+    <description>In Magento every product has a fixed attribute set that cannot be changed after the products creation. This is in many productive contexts not an acceptable limitation. This module overrides the standard behaviour and makes it possible to change attribute sets after the items creation making Magento even more flexible. :) Fixed 404 Redirect Bug.</description>
+    <notes>In Magento every product has a fixed attibute set. This module enables you to switch it.</notes>
+    <authors><author><name>Flagbit GmbH  Co. KG</name><user>auto-converted</user><email>magento@flagbit.de</email></author></authors>
+    <date>2011-03-14</date>
+    <time>18:22:00</time>
+    <contents><target name="magecommunity"><dir name="Flagbit"><dir name="ChangeAttributeSet"><dir name="controllers"><dir name="Adminhtml"><dir name="Catalog"><file name="ProductController.php" hash="570196bb060a10c735da6ea6ed148f73"/></dir></dir></dir><dir name="etc"><file name="config.xml" hash="337448ff175a567af045f03d5ce92067"/></dir><dir name="Model"><file name="Observer.php" hash="9b948ae7eb6edcd56767d708fd1ef954"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Flagbit_ChangeAttributeSet.xml" hash="90087134613f57e05ebc216a6e576d4a"/></dir></target></contents>
+    <compatible/>
+    <dependencies/>
+</package>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+    <name>Magefast_ProductBreadcrumbs</name>
+    <version>1.0.1</version>
+    <stability>stable</stability>
+    <license>AFL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Breadcrumbs for Product page, with categories link</summary>
+    <description>Add breadcrumbs for Product page, if customers go to Product page by current link.&amp;#xD;&#xD;
+Good for improve Google result page.</description>
+    <notes>Add localization uk_UA, ru_RU.&#xD;
+Small fix for Observer.&#xD;
+</notes>
+    <authors><author><name>Alex</name><user>alexhost</user><email>magento@magefast.com</email></author></authors>
+    <date>2015-06-03</date>
+    <time>19:53:01</time>
+    <contents><target name="mage"><dir name="app"><dir name="code"><dir name="community"><dir name="Magefast"><dir name="ProductBreadcrumbs"><dir name="Helper"><file name="Data.php" hash="10df491f7cb0244637c15bebd59be9c0"/></dir><dir name="Model"><file name="Observer.php" hash="86d916ac57e13cf5b3d8fee4a08c42db"/></dir><dir name="etc"><file name="config.xml" hash="7be5f5a238648c1c5a63db697e790ac0"/><file name="system.xml" hash="55b5246448b7c92e5c493bc9d76edf0f"/></dir></dir></dir></dir><dir name="local"><dir name="Magefast"><dir name="RemoveCrumbs"><dir name="Block"><dir name="Html"><file name="Breadcrumbs.php" hash="f2ac7bfd76bcccd9bb774bf971e0e911"/></dir></dir><dir name="Helper"><file name="Data.php" hash="4d7a688a276acd82309ed56a7f8e7584"/></dir><dir name="etc"><file name="config.xml" hash="3afcc96685c1a34584861135b763bc9e"/></dir></dir></dir></dir></dir><dir name="etc"><dir name="modules"><file name="Magefast_ProductBreadcrumbs.xml" hash="d2eeb802b3e2d341c260d48d869d45f9"/><file name="Magefast_RemoveCrumbs.xml" hash="9d65e88f7956ed10f31413863abab01a"/></dir></dir><dir name="locale"><dir name="uk_UA"><file name="Magefast_ProductBreadcrumbs.csv" hash="8e0a05e802cac514ef6bd989b702bf24"/></dir><dir name="ru_RU"><file name="Magefast_ProductBreadcrumbs.csv" hash="b7afd0f0b9f9434eceb828bd5e38c9f0"/></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

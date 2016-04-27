@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <block type="tatvic_uaee/uaee" name="tatvic_google_universial_analytics" template="tatvic/uaee/uaee.phtml" />
+        </reference>
+       
+    </default>
+</layout>

@@ -1,0 +1,38 @@
+Transaction Failed.,Transaksi gagal.
+helloPay :: ERROR FETCHING TRANSACTION EVENTS!,helloPay :: kesalahan saat mengambil ACARA TRANSAKSI!
+Thank you. Your transaction is under process. We will place order after transaction is confirmed,Terima kasih. transaksi Anda dalam proses. Kami akan menempatkan pesanan setelah transaksi dikonfirmasi
+Customer successfully returned from helloPay,Pelanggan berhasil kembali dari helloPay
+Customer was redirected to helloPay,Pelanggan dialihkan ke helloPay
+'General contact' email will be used if left empty,'Kontak Umum' email akan digunakan jika dibiarkan kosong
+AUTHENTICATE,membuktikan
+Customer successfully returned from ,Pelanggan berhasil kembali dari
+Customer was redirected to ,Pelanggan dialihkan ke
+Customer was returned from .,Pelanggan yang kembali dari.
+DEFERRED,TANGGUHAN
+Debug,Debug
+Enabled,Diaktifkan
+Error occured,kesalahan terjadi
+Live,Hidup
+Mode,Mode
+New order status,status pesanan baru
+Order ,Memesan
+Order total amount does not match protx gross total amount,Agar jumlah total tidak sesuai protx jumlah total gross
+PAYMENT,PEMBAYARAN
+Payment Action,Aksi pembayaran
+Payment from Specific countries,Pembayaran dari negara Tertentu
+Payment from applicable countries,Pembayaran dari negara yang berlaku
+"Please <a href=""%s"">continue shopping</a>.","Silahkan <a href=""%s"">lanjutkan Belanja</a>."
+ Standard,helloPay Standar
+Simulator,simulator
+Sort order,urutan
+Store name will be used if left empty,Nama toko akan digunakan jika dibiarkan kosong
+Test,Uji
+Title,Judul
+Transaction Description,transaksi Keterangan
+Vendor email,Vendor email
+Vendor email notification,Vendor pemberitahuan email
+Vendor encrypted password,Vendor password terenkripsi
+Vendor name,Nama pedagang
+You will be redirected to  website when you place an order.,Anda akan diarahkan ke situs saat Anda melakukan pemesanan.
+There was an error while creating new purchase. Please contact support team.,Terjadi kesalahan saat membuat pembelian baru. Hubungi tim dukungan.
+You will be redirected to helloPay in a few seconds.,Anda akan diarahkan ke helloPay dalam beberapa detik.

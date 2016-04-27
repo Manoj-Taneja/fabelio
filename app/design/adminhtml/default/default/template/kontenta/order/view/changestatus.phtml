@@ -1,0 +1,42 @@
+<?php echo $this->getChildHtml('order_info')?>
+<?php if($this->canChangeStatus()):?>
+	<?php $_order = $this->getOrder() ?>
+	<div class="" style="width: 48.5%">
+		<div class="entry-edit">
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-account">
+					<?php echo Mage::helper('sales')->__('Change order status')?>
+				</h4>
+			</div>
+			<div class="fieldset">
+				<?php $status_array = Mage::getSingleton('sales/order_config')->getStatuses()?>	
+				<table cellspacing="0" class="form-list">
+					<tr>
+						<td class="label"><label for="status">Order Status</label></td>
+						<td class="value">
+							<form action="<?php echo $this->getStatusChangeUrl(); ?>" method="post" id="ord_form">
+								<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+								<input type="hidden" name="token" value="<?php echo $this->getToken(); ?>" />  
+								<div class="">
+									<select name="status" style="width:58%; float:left; display:inline;" class="input-text" type="dropdown">
+										<?php foreach($status_array as $statusLabel=>$status):?>
+											<?php if($this->getOrder()->getStatus() == $statusLabel):?>
+												<option value=<?php echo $statusLabel ?> selected><?php echo $status ?></option>
+											<?php else:?>
+												<option value=<?php echo $statusLabel ?>><?php echo $status ?></option>
+											<?php endif;?>
+										<?php endforeach;?>
+									</select>
+									<button onclick="editForm.submit()" style="float:left;margin:0 9px 0;">Change</button>  
+								</div> 
+							</form>
+							<script type="text/javascript">
+								editForm = new varienForm('ord_form');
+							</script>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+<?php endif;?>

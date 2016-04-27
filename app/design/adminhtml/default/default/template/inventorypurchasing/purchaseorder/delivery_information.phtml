@@ -1,0 +1,43 @@
+<?php
+$purchaseOrderId = $this->getRequest()->getParam('id');
+$supplierId = $this->getRequest()->getParam('supplier_id');
+$purchaseOrder = Mage::getModel('inventorypurchasing/purchaseorder')->load($purchaseOrderId);
+if ($supplierId) {
+    $supplierInfo = Mage::helper('inventorypurchasing/supplier')->getSupplierInfoBySupplierId($supplierId);
+}
+if (!$supplierId) {
+    $supplierInfo = Mage::helper('inventorypurchasing/purchaseorder')->getSupplierInfoByPurchaseOrderId($purchaseOrderId);
+}
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Delivery Information') ?></h4>
+    </div>
+    <div id="" class="fieldset">
+        <div style="float:left; width:48%;">
+            <label for="">
+                <?php echo $this->__('Purchase products from supplier:') ?>
+            </label><br />
+            <a href="<?php echo $this->getUrl('inventorypurchasingadmin/adminhtml_supplier/edit', array('id' => $purchaseOrder->getSupplierId())) ?>">
+                <b><?php echo $purchaseOrder->getSupplierName() ?></b>
+            </a>
+            <?php echo $supplierInfo ?>
+        </div>
+        <div style="float:left;">
+            <label for="">
+                <?php echo $this->__('To Warehouse:') ?>
+            </label><br />
+            <?php
+            $warehouseIds = $purchaseOrder->getWarehouseId();
+            $warehouseIds = explode(',', $warehouseIds);
+            ?>
+            <?php foreach ($warehouseIds as $warehouseId): ?>
+                <?php $warehouseModel = Mage::getModel('inventoryplus/warehouse')->load($warehouseId); ?>
+                <a href="<?php echo $this->getUrl('inventoryplusadmin/adminhtml_warehouse/edit', array('id' => $warehouseId)) ?>">
+                    <b><?php echo $warehouseModel->getWarehouseName() ?></b>
+                </a><br />
+            <?php endforeach ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div> 

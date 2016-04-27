@@ -1,0 +1,43 @@
+<?php
+$_results = $this->getResults();
+?>
+<div class="content-header">
+  <h3 >Validator</h3>
+  <p class="content-buttons form-buttons">
+    <button type="button" class="scalable back" onclick="setLocation('<?php echo $this->getBackUrl() ?>')"><span><span>Back</span></span></button>
+  </p>
+</div>
+<div class="grid">
+  <table class="data" cellspacing="0">
+    <thead>
+      <tr class="headings">
+        <th>Test</th>
+        <th>Status</th>
+        <th>How to fix</th>
+      </tr>
+    </thead>
+    <?php foreach ($_results as $_result): ?>
+    <tr>
+      <td><?php echo $_result[1] ?></td>
+      <td width="100px">
+        <?php if ($_result[0] == Mirasvit_MstCore_Helper_Validator_Abstract::SUCCESS): ?>
+          <div class="grid-severity-notice"><span>Success</span></div>
+        <?php elseif ($_result[0] == Mirasvit_MstCore_Helper_Validator_Abstract::WARNING): ?>
+          <div class="grid-severity-major"><span>Warning</span></div>
+        <?php elseif ($_result[0] == Mirasvit_MstCore_Helper_Validator_Abstract::INFO): ?>
+          <div class="grid-severity-major"><span>Info</span></div>
+        <?php else: ?>
+          <div class="grid-severity-critical"><span>Failed</span></div>
+        <?php endif ?>
+      </td>
+      <td>
+        <?php if (is_array($_result[2])): ?>
+          <?php echo implode($_result[2], '<br>') ?>
+        <?php else: ?>
+          <?php echo $_result[2] ?>
+        <?php endif ?>
+      </td>
+    </tr>
+    <?php endforeach ?>
+  </table>
+</div>

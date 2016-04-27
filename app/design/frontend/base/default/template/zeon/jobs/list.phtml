@@ -1,0 +1,73 @@
+<?php
+/**
+ * zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    base_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+?>
+<?php
+$_jobsCollection = $this->getJobsCollection();
+$processor = Mage::helper('zeon_jobs')->getBlockTemplateProcessor();
+?>
+<div id="messages_jobs_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<?php if ($_category = $this->getCurrentCategory()): ?>
+    <div class="page-title category-title">
+        <h1><?php echo $this->htmlEscape($_category->getTitle()) ?></h1>
+    </div>
+    <div class="category-description std">
+        <?php echo $processor->filter($_category->getDescription()) ?>
+    </div>
+<?php else: ?>
+    <div class="page-title category-title">
+        <h1><?php echo $this->__('Jobs') ?></h1>
+    </div>
+<?php endif; ?>
+<?php if (!$_jobsCollection->count()): ?>
+    <p class="note-msg"><?php echo $this->__('There are no jobs matching the selection.') ?></p>
+<?php else: ?>
+    <div class="category-products">
+        <?php echo $this->getToolbarHtml() ?>
+        <?php $_iterator = 0; ?>
+        <ol class="products-list" id="jobs-list">
+            <?php foreach ($_jobsCollection as $_job): ?>
+                <li class="item<?php if (++$_iterator == sizeof($_jobsCollection)): ?> last<?php endif; ?>" style="margin-top:5px;">
+                    <?php // Job description ?>
+                    <div class="jobs-shop">
+                        <div class="f-fix">
+                            <?php $_jobNameStripped = $this->stripTags($_job->getTitle(), null, true); ?>
+                            <h2 class="product-name">
+                                <a href="<?php echo $this->getUrl('careers/' . $_job->getIdentifier()) ?>" title="<?php echo $_jobNameStripped; ?>"><?php echo $this->htmlEscape($_job->getTitle()) ?></a>
+                            </h2>
+                            <div class="desc std">
+                                <?php echo $processor->filter($_job->getShortDescription()) ?>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <script type="text/javascript">decorateList('jobs-list', 'none-recursive')</script>
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,99 @@
+
+<?php
+$orderIncrementId = $this->getTest();
+//$order = Mage::getModel('sales/order');
+
+
+			
+$order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+
+
+
+$subtotal =0;
+
+			
+
+$orderItems = $order->getItemsCollection();
+?>
+ <table class="frc" width="100%" height='80px'cellpadding="0" cellspacing="0" style="text-shadow: #8aa3c6 0px 1px 0px;color:#595959;font-family: Sans-serif; font-size:12px;border-bottom:1px solid #CCCCCC;font-size:14px;font-weight:bold">
+
+	<tr>
+		<td class='ordtdsz'align='left'><span class='sfs2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pesanan Anda</span></td>
+	</tr> 
+	<tr>
+		<td align='left'>
+			<span class='sfs2'style="white-space:nowrap;color:">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order ID: <a 'http://fabelio.com/index.php/sales/order/view/order_id/<?php echo $orderid ;?>'><span style='color:#3377ff'><?php echo $orderIncrementId; ?></span></span></a>
+		</td>
+	</tr> 
+<?php
+foreach ($orderItems as $item){
+	
+    $product_id = $item->product_id;
+    $product_sku = $item->sku;
+    $product_price = $item->getPrice();
+    $product_qty = $item->getQtyOrdered()*1;
+	$subtotal =$subtotal + ($product_price*$product_qty);
+    $product_name = $item->getName();
+    $_product = Mage::getModel('catalog/product')->load($product_id);
+		$product_img = Mage::helper('catalog/image')->init($_product, 'small_image')->resize(150, 150);
+
+    $cats = $_product->getCategoryIds();
+    $category_id = $cats[0]; // just get the first id
+    $category = Mage::getModel('catalog/category')->load($category_id);
+    $category_name = $category->getName();
+	
+	
+
+
+?>
+
+
+
+
+
+	
+	<tr>
+		<td>
+			<table class='frc'>
+				<tr>
+					<td class='wid450' width='450px'  >
+						<img  class='ordimg' src="<?php echo $product_img;?>">
+					</td>
+					<td class='wid100' width='100px' ><span class='sfs2' style="font-size:15px;white-space:nowrap;">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product_name; ?> x <?php echo $product_qty; ?><span class='rdn'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</td>
+					<td ><span class='sfs2' style="white-space:nowrap;font-size:15px;">Rp <?php echo number_format(($product_price*$product_qty),0,".",".") ?></span></td>
+				</tr>
+			</table>    
+		</td>
+	</tr>
+
+<?php } ?>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td class='wid450' width='450px'style='font-size:15px;'>&nbsp;</td>
+					<td class='wid100' width='100px'style='font-size:15px;'>Subtotal</td>
+					<td ><span class='sfs2' style="white-space:nowrap; font-size:15px;">Rp <?php echo number_format(($subtotal),0,".",".") ?></span></td>	
+				</tr>
+				<tr>
+									<td class='wid450' width='450px'style='font-size:15px;'>&nbsp;</td>
+					<td class='wid100' width='100px'style='font-size:15px;'>Shipping</td>
+					<td ><span class='sfs2' style="white-space:nowrap; font-size:15px;">Gratis</span></td>	</tr>
+					<tr><td colspan='3'><hr></td></tr>
+								<tr>
+					<td  class='wid450' width='450px'style='font-size:15px;'>&nbsp;</td>				
+					<td class='wid100' width='100px' style='font-size:15px;color:brown'>Grand Total</td>
+					<td ><span class='sfs2' style="white-space:nowrap; font-size:15px;color:brown">Rp <?php echo number_format(($subtotal),0,".",".") ?></span></td>	
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	
+
+
+
+</table>
+
+

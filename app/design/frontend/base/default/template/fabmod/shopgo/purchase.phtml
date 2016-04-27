@@ -1,0 +1,17 @@
+<?php
+$helper = Mage::helper("fabmod_shopgo");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+if ($orderId) {
+    $order = Mage::getModel('sales/order')->loadByAttribute('increment_id', $orderId);
+    $amount = $order->getGrandTotal();
+}
+
+?>
+<!-- Offer Conversion: Fabelio -->
+
+<img src="https://shopback.go2cloud.org/aff_l?offer_id=380&adv_sub=<?php echo $orderId; ?>&amount=<?php echo $amount; ?>" width="1" height="1" />
+
+<!-- // End Offer Conversion -->

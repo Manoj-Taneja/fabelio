@@ -1,0 +1,50 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Rma
+ * @version    1.5.3
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if ($this->getOrder()) : ?>
+    <h4><?php echo $this->__('Items RMA Requested for') ?></h4>
+    <div class="grid">
+        <table class="data border" cellpadding="0" cellspacing="0">
+            <col />
+            <col width="1" />
+            <col width="1" />
+            <thead>
+                <tr class="headings">
+                    <th><?php echo $this->__('Product Name') ?></th>
+                    <th><?php echo $this->__('SKU') ?></th>
+                    <th><?php echo $this->__('Qty') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $requestedItems = $this->getRmaRequest()->getOrderItems() ?>
+                <?php foreach (Mage::helper('awrma')->getItemsHtml($this->getRmaRequest(), array('items' => array_keys($requestedItems))) as $item) : ?>
+                    <?php echo $item ?>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+<?php else : ?>
+    <?php echo $this->__('Couldn\'t load order') ?>
+<?php endif ?>

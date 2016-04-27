@@ -1,0 +1,13 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+?>
+<script type="text/javascript">
+mixpanel.track(
+    "Page Viewed",
+    {"Name":"Home" }
+);
+
+</script>

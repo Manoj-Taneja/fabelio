@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+ <name>Flagbit_FeedReader</name>
+<version>1.1.2</version>
+<stability>stable</stability>
+<license>OSL 3.0</license>
+<channel>community</channel>
+<extends/>
+<summary>A simple feed reader supporting RSS and Atom feeds. Highly customizable and easy to integrate.</summary>
+<description>A simple feed reader supporting RSS and Atom feeds. Highly customizable and easy to integrate. Configuration is done in the default/layout/feedreader.xml. Simply reference the block where you want to create the feed. Feed URI and item count and template can be freely configured.</description>
+<notes>Changed the way to set the cache key, to support magento versions &gt; 1.4</notes>
+<authors><author><name>Flagbit GmbH </name><user>flagbit</user><email>magento@flagbit.de</email></author></authors>
+<date>2012-06-29</date>
+<time>12:40:54</time>
+    <contents><target name="mageskin"><file name="test.php" hash="11F229027B68A895C5618CE1529D4E45"/></target></contents>
+    <compatible/>
+    <dependencies/>
+</package>

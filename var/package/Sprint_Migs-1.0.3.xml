@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+    <name>Sprint_Migs</name>
+    <version>1.0.3</version>
+    <stability>stable</stability>
+    <license uri="http://sprintasia.net">Single Domain License</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>MIGS (MasterCard Internet Gateway Service).</summary>
+    <description>MIGS (MasterCard Internet Gateway Service).</description>
+    <notes>Ver 1.0.3&#xD;
+- Beta Update, upgrade api 1.2&#xD;
+&#xD;
+Ver 1.0.2&#xD;
+- First stable release.&#xD;
+&#xD;
+Ver 1.0.0&#xD;
+- First development release.</notes>
+    <authors><author><name>SprintAsia</name><user>admin</user><email>nazzarilhammi@gmail.com</email></author></authors>
+    <date>2015-09-17</date>
+    <time>06:07:57</time>
+    <contents><target name="magelocal"><dir name="Sprint"><dir name="Migs"><dir name="Block"><dir name="Payment"><dir name="Form"><file name="Migs.php" hash="ba26004b4488804e62dedfc1d9b0d404"/></dir><file name="Redirect.php" hash="6d9420e0b910f9bdf306c40062e31a13"/></dir><file name="Sending.php" hash="f853afd3b21b7abfa4958f5789fb202b"/></dir><dir name="Helper"><file name="Data.php" hash="284a42903772280deee744f4d2f90844"/></dir><dir name="Model"><file name="Migs.php" hash="cad5a59d6dafecbd8b9998a2f78bea2f"/><dir name="Resource"><dir name="Mysql4"><file name="Setup.php" hash="42c8825e56d3fa90677a8d89a81d4f78"/></dir></dir><dir name="System"><dir name="Config"><dir name="Backend"><file name="Links.php" hash="4ec0f35014345ceb94cbe6e164eac459"/></dir><dir name="Source"><file name="View.php" hash="47ac784b6c68b7cc916207ef7660e47f"/></dir></dir></dir></dir><dir name="controllers"><file name="PaymentController.php" hash="5f6982d88c24e40185a1ea8cff7c8269"/><file name="WhatismigsController.php" hash="02f1ecb2259809b8cc3aed0bef1e291c"/></dir><dir name="etc"><file name="config.xml" hash="9a38f4b0fd1f6cb4003dbe6af85a9994"/><file name="system.xml" hash="b7549f9908756a968d2349a86699df14"/></dir><dir name="sql"><dir name="migs_setup"><file name="mysql4-install-1.0.1.php" hash="b207cf769241d7967c83f4f720bfbf77"/><file name="mysql4-upgrade-1.0.0-1.0.1.php" hash="02acf42e9b9d90a51ac1da2220af731a"/></dir></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="migs.xml" hash="34d953065f0ed92b039959b5b8982f76"/></dir><dir name="template"><dir name="migs"><file name="migs.phtml" hash="f2c5c9d2f336124bd3eb067c37559992"/><file name="noidr.phtml" hash="6a9697b4f3352e1161f3b1bacbf1a0f6"/><dir name="payment"><dir name="checkout"><file name="response.phtml" hash="46602bb75299969f00ff22820bc49c46"/></dir><dir name="form"><file name="migs.phtml" hash="c79b83ac6bfc5569abe57ecba7688a1f"/></dir><file name="redirect.phtml" hash="65aceaa5e1087a27d06b329897dd80c7"/></dir></dir></dir></dir></dir></dir></target><target name="mage"><dir name="app"><dir name="etc"><dir name="modules"><file name="Sprint_Migs.xml" hash="d67cefa2c6e08aa0f99fcb4f55017076"/></dir></dir></dir></target><target name="magemedia"><dir name="migs"><file name="logo-mc-visa-jcb.png" hash="cc839dea559b723fec444ba22f4aa9f1"/><file name="logo-mc-visa.png" hash="919bd16934cdaef97424719c29f60ddb"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

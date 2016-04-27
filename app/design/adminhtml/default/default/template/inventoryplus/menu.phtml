@@ -1,0 +1,118 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+;
+?>
+
+<?php if (Mage::app()->getRequest()->getParam('section') == 'inventoryplus' || !Mage::app()->getRequest()->getParam('section')): ?>
+  
+        <style type="text/css">
+            .header{
+                display: none;
+            }
+            div.side-col{
+                margin-right: 0 !important;
+            }
+            div.entry-edit{
+                float:left;
+                width:100%;
+            }
+            #show_main_menu button{
+                float: right;
+                margin: 0;
+                padding: 5px;
+            }    
+            table.actions{
+                float:left;
+                width:100%;
+            }
+            div.grid{
+                float:left;
+                width:100%;
+            }
+            .content-header table{
+                float:left;
+            }
+            .nav-bar{
+                display:none;
+            }
+            .notification-global{
+                display:none;
+            }
+            .notification-inventory-global{
+                display:block;
+            }
+        </style>
+    <?php else: ?>
+        <style type="text/css">
+            .header{
+                display: block;
+            }
+            #inventory-title{display:none;} 
+            .notification-inventory-global{
+                display:none;
+            }
+        </style>
+    <?php endif; ?>
+
+
+    <div id="inventory-title" >
+        <h3>
+            <a  href="<?php echo $this->getUrl('inventoryplusadmin/adminhtml_dashboard/index') ?>" >
+                <?php echo $this->__('<span>Inventory</span> Management'); ?>
+            </a>
+        </h3>    
+        <div id="show_main_menu">
+            <a href="javascript:void(0);" onclick="showmainmenu()"><?php echo $this->__('Show Main Menu'); ?></a>
+        </div>
+    </div>
+
+    <div class="inventory-nav-bar" style="float:left; width: 100%;">
+        <!-- Inventory's menu start -->
+        <?php echo Mage::helper('inventoryplus')->getMenu(Mage::helper('inventoryplus')->getInventoryMenu()); ?>
+        <!-- Inventory's menu end -->
+    </div>
+
+
+    <script type="text/javascript">
+        function showmainmenu() {
+            $$('div.header')[0].style.display = 'block';
+            $$('div.nav-bar')[0].style.display = 'block';
+            for(var i=0;i<$$('div.notification-global').length;i++)
+                $$('div.notification-global')[i].style.display = 'block';
+            
+            $('show_main_menu').innerHTML = ' <a href="javascript:void(0);" class="over" onclick="hidemainmenu()"><?php echo $this->__('Hide Main Menu'); ?></a>';
+        }
+
+        function hidemainmenu() {
+            $$('div.header')[0].style.display = 'none';
+            $$('div.nav-bar')[0].style.display = 'none';
+            for(var i=0;i<$$('div.notification-global').length;i++)
+                $$('div.notification-global')[i].style.display = 'none';
+            
+            $('show_main_menu').innerHTML = ' <a href="javascript:void(0);" onclick="showmainmenu()"><?php echo $this->__('Show Main Menu'); ?></a>';
+        }
+    </script>
+

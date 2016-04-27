@@ -1,0 +1,49 @@
+<div class="row">
+    <ul>
+        <?php $messages = Mage::getSingleton('customer/session')->getMessages(true); ?>
+        <li class="error-msg">
+            <?php foreach($messages->getItems('error') AS $msg): ?>
+                <ul><li><span><?php echo $msg->getCode(); ?></span></li></ul>
+            <?php endforeach; ?>
+        </li>
+        <li class="success-msg">
+            <?php foreach($messages->getItems('success') AS $msg): ?>
+                <ul><li><span><?php echo $msg->getCode(); ?></span></li></ul>
+            <?php endforeach; ?>
+        </li>
+    </ul>
+</div>
+<div class="container vendor-container form-signin">
+    <div class="row">
+        <h2><?php echo $this->__('Log In'); ?></h2>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <div class="login-form">
+                <?php if(Mage::helper('supplierfrontendproductuploader')->noAccessInformation()): ?>
+                    <div class="alert alert-error">
+                        <strong><?php echo $this->__('Sorry') ?>!</strong> <?php echo $this->__('It looks like you are logged in, but you do not have access to this page. Please contact website administrator.') ?>
+                    </div>
+                <?php endif; ?>
+                <form name="login_form" id="login_form" action="<?php echo Mage::getBaseUrl() ?>supplierfrontendproductuploader/login/login/" method="POST">
+                    <fieldset>
+                        <div class="clearfix">
+                            <input type="email" name="email" placeholder="example@example.com" class="input-text required-entry validate-email">
+                        </div>
+                        <div class="clearfix">
+                            <input type="password" name="password" placeholder="Password" class="input-text required-entry">
+                        </div>
+                        <button class="btn btn-primary" type="submit"><?php echo $this->__('Sign In'); ?></button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('login_form');
+    //]]>
+</script>
+
+

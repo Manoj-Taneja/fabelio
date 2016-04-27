@@ -1,0 +1,143 @@
+"Order #","Purchased On","Bill to Name","Ship to Name","G.T. (Base)","G.T. (Purchased)",Status
+ORD-15-08-03-00000233,"Aug 3, 2015 10:08:24 AM","asdasdsdf asdasdasdsdf","asdasdsdf asdasdasdsdf","Rp 3,999,000.00","Rp 3,999,000.00",Canceled
+ORD-15-07-31-00000226,"Jul 31, 2015 4:39:25 PM","Irwan Makdoerah","Irwan Makdoerah","Rp 7,299,000.00","Rp 7,299,000.00",Processing
+ORD-15-07-31-00000219,"Jul 31, 2015 1:00:53 PM","Mira Hassan","Mira Hassan","Rp 11,759,100.00","Rp 11,759,100.00",Processing
+ORD-15-07-31-00000212,"Jul 31, 2015 11:20:12 AM","Mary  Silaban","Mary Silaban","Rp 1,620,000.00","Rp 1,620,000.00",Processing
+ORD-15-07-31-00000205,"Jul 31, 2015 10:17:41 AM","Mary  Silaban","Mary Silaban","Rp 3,749,250.00","Rp 3,749,250.00",Processing
+ORD-15-07-31-00000198,"Jul 31, 2015 8:36:22 AM","Ilham Rusli","Ilham Rusli","Rp 8,199,000.00","Rp 8,199,000.00","Suspected Fraud"
+ORD-15-07-30-00000191,"Jul 30, 2015 1:23:52 PM","Arie Pradono","Arie Pradono","Rp 789,100.00","Rp 789,100.00",Processing
+ORD-15-07-30-00000177,"Jul 30, 2015 10:32:29 AM","Edy Fahyudi","Edy Fahyudi","Rp 4,299,000.00","Rp 4,299,000.00",Processing
+ORD-15-07-30-00000170,"Jul 30, 2015 9:40:51 AM","Anissa Suharsono","Anissa Suharsono","Rp 7,220,750.00","Rp 7,220,750.00",Processing
+ORD-15-07-30-00000163,"Jul 30, 2015 9:12:08 AM","Edy Fahyudi","Edy Fahyudi","Rp 4,299,000.00","Rp 4,299,000.00",Canceled
+ORD-15-07-29-00000156,"Jul 29, 2015 6:48:20 PM","Shana Aiach","Krishnan Menon","Rp 199,000.00","Rp 199,000.00",Processing
+ORD-15-07-29-00000149,"Jul 29, 2015 6:45:37 PM","Himanshu Agarwal","Himanshu Agarwal","Rp 90,000.00","Rp 90,000.00",Complete
+ORD-15-07-29-00000142,"Jul 29, 2015 6:20:04 PM","Nyinyi  Asiah","Nyinyi  Asiah","Rp 298,000.00","Rp 298,000.00",Pending
+ORD-15-07-29-00000135,"Jul 29, 2015 6:11:03 PM","Jung  Lee","Jung  Lee","Rp 10,386,000.00","Rp 10,386,000.00",Pending
+ORD-15-07-29-00000128,"Jul 29, 2015 6:08:38 PM","Jung  Lee","Jung  Lee","Rp 9,360,000.00","Rp 9,360,000.00",Pending
+ORD-15-07-28-00000121,"Jul 28, 2015 7:37:04 PM","Antonius Chandra","Antonius Chandra","Rp 4,752,000.00","Rp 4,752,000.00",Processing
+ORD-15-07-28-00000114,"Jul 28, 2015 2:18:18 PM","Mary  Silaban","Mary Silaban","Rp 9,220,500.00","Rp 9,220,500.00",Processing
+ORD-15-07-27-00000107,"Jul 27, 2015 2:51:11 PM","Denny Darmaji","Denny Darmaji","Rp 6,399,000.00","Rp 6,399,000.00",Processing
+ORD-15-07-26-00000100,"Jul 26, 2015 2:36:19 PM","Azlan Syah","Azlan Syah","Rp 4,999,000.00","Rp 4,999,000.00","Suspected Fraud"
+ORD-15-07-24-00000079,"Jul 25, 2015 3:16:13 AM","cynthia Chaerunnisa","cynthia Chaerunnisa","Rp 575,500.00","Rp 575,500.00",Processing
+ORD-15-07-24-00000072,"Jul 24, 2015 5:27:53 PM","Fitria Meylina","Fitria Meylina","Rp 583,200.00","Rp 583,200.00",Complete
+ORD-15-07-24-00000065,"Jul 24, 2015 5:02:26 PM","Fitria Meylina","Fitria Meylina","Rp 629,000.00","Rp 629,000.00",Canceled
+ORD-15-07-24-00000003,"Jul 24, 2015 11:04:49 AM","Yasmin Soulisa","Yasmin Soulisa","Rp 660,000.00","Rp 660,000.00",Processing
+ORD-15-07-24-00000002,"Jul 24, 2015 9:00:47 AM","Fiona Juliandri","Fiona Juliandri","Rp 200,000.00","Rp 200,000.00",Canceled
+100000192,"Jul 23, 2015 12:49:55 PM","Yasmin Soulisa","Yasmin Soulisa","Rp 4,898,000.00","Rp 4,898,000.00",Processing
+100000191,"Jul 22, 2015 2:21:51 PM","Fitria Meylina","Fitria Meylina","Rp 729,000.00","Rp 729,000.00",Canceled
+100000190,"Jul 22, 2015 11:59:36 AM","Yasmin Soulisa","Yasmin Soulisa","Rp 660,000.00","Rp 660,000.00","Suspected Fraud"
+100000189,"Jul 22, 2015 11:30:53 AM","Yasmin Soulisa","Yasmin Soulisa","Rp 660,000.00","Rp 660,000.00",Pending
+100000188,"Jul 21, 2015 10:28:54 PM","amelia bostonia","amelia bostonia","Rp 10,476,800.00","Rp 10,476,800.00",Processing
+100000187,"Jul 21, 2015 5:19:37 PM","amelia bostonia","amelia bostonia","Rp 9,084,800.00","Rp 9,084,800.00",Pending
+100000186,"Jul 21, 2015 4:37:04 PM","Christian Sutardi","Christian Sutardi","Rp 3,314,150.00","Rp 3,314,150.00",Pending
+100000185,"Jul 21, 2015 11:57:04 AM","Arny Nandiarny ","Arny Nandiarny ","Rp 3,314,150.00","Rp 3,314,150.00",Processing
+100000184,"Jul 20, 2015 1:47:45 PM","adad adwada","adad adwada","Rp 829,000.00","Rp 829,000.00",Pending
+100000183,"Jul 18, 2015 11:24:40 PM","Christian Sutardi","Christian Sutardi","Rp 199,000.00","Rp 199,000.00",Processing
+100000182,"Jul 18, 2015 1:02:22 PM","cristiano ronaldo","cristiano ronaldo","Rp 1,799,000.00","Rp 1,799,000.00",Pending
+100000181,"Jul 16, 2015 8:24:03 AM","yudi prasetya","yudi prasetya","Rp 5,599,000.00","Rp 5,599,000.00",Pending
+100000180,"Jul 15, 2015 3:26:55 PM","stephany testing vt","stephany testing vt","Rp 600,000.00","Rp 600,000.00",Canceled
+100000179,"Jul 15, 2015 3:22:25 PM","stephany testing vt","stephany testing vt","Rp 499,000.00","Rp 499,000.00",Canceled
+100000178,"Jul 15, 2015 4:47:38 AM","Ajie Dewantoro","Ajie Dewantoro","Rp 7,799,000.00","Rp 7,799,000.00",Pending
+100000177,"Jul 14, 2015 11:51:25 AM","Ronald Simatupang","Ronald Simatupang","Rp 4,840,000.00","Rp 4,840,000.00",Processing
+100000176,"Jul 10, 2015 3:48:14 PM","Meily Chandra","Meily Chandra","Rp 4,299,000.00","Rp 4,299,000.00",Canceled
+100000175,"Jul 9, 2015 5:02:15 PM","Krishnan Menon","Krishnan Menon","Rp 829,000.00","Rp 829,000.00",Pending
+100000174,"Jul 8, 2015 12:09:45 AM","cristiano ronaldo","cristiano ronaldo","Rp 9,898,000.00","Rp 9,898,000.00",Pending
+100000173,"Jul 7, 2015 10:52:28 AM","Anissa Suharsono","Anissa Suharsono","Rp 9,942,450.00","Rp 9,942,450.00",Processing
+100000172,"Jul 7, 2015 10:19:20 AM","Akhil J V","Akhil J V","Rp 3,299,000.00","Rp 3,299,000.00",Pending
+100000171,"Jul 6, 2015 11:14:17 AM","Juan Chene","Juan Chene","Rp 2,125,000.00","Rp 2,125,000.00",Processing
+100000170,"Jul 3, 2015 5:00:21 PM","Novita Novita","Novita Novita","Rp 3,374,250.00","Rp 3,374,250.00",Processing
+100000168,"Jul 1, 2015 2:01:30 PM","Himanshu Agarwal","Himanshu Agarwal","Rp 25.00","Rp 25.00",Complete
+100000167,"Jun 29, 2015 6:33:15 PM","Olivia Yulianne","Olivia Yulianne","Rp 1,799,000.00","Rp 1,799,000.00",Pending
+100000166,"Jun 29, 2015 3:05:39 PM","Nanda Nanda","Nanda Nanda","Rp 3,899,000.00","Rp 3,899,000.00",Pending
+100000165,"Jun 29, 2015 2:53:21 PM","Nanda Nanda","Nanda Nanda","Rp 5,699,000.00","Rp 5,699,000.00",Canceled
+100000164,"Jun 29, 2015 1:31:04 PM","silva fauziah","silva fauziah","Rp 1,349,250.00","Rp 1,349,250.00",Complete
+100000163,"Jun 29, 2015 11:27:28 AM","Akhmad Reiza","Akhmad Reiza","Rp 1,799,000.00","Rp 1,799,000.00","Suspected Fraud"
+100000161,"Jun 27, 2015 12:17:37 AM","Jo Reiner Widjaja","Jo Reiner Widjaja","Rp 10,197,750.00","Rp 10,197,750.00",Processing
+100000160,"Jun 26, 2015 8:47:34 PM","Jo Reiner Widjaja","Jo Reiner Widjaja","Rp 13,597,000.00","Rp 13,597,000.00",Pending
+100000159,"Jun 26, 2015 8:38:17 PM","Jo Reiner Widjaja","Jo Reiner Widjaja","Rp 10,197,750.00","Rp 10,197,750.00",Canceled
+100000152,"Jun 25, 2015 3:55:00 PM","Christian Sutardi","Christian Sutardi","Rp 10,000.00","Rp 10,000.00",Processing
+100000151,"Jun 25, 2015 12:22:47 PM","Willy Haryanto","Willy Haryanto","Rp 3,149,250.00","Rp 3,149,250.00",Processing
+100000150,"Jun 25, 2015 9:49:42 AM","Hairudin  Harun","Hairudin  Harun","Rp 5,999,000.00","Rp 5,999,000.00",Processing
+100000149,"Jun 25, 2015 1:26:16 AM","Hairudin  Harun","Hairudin  Harun","Rp 5,999,000.00","Rp 5,999,000.00",Canceled
+100000147,"Jun 24, 2015 6:52:53 PM","Akhmad Reiza","Akhmad Reiza","Rp 799,000.00","Rp 799,000.00","Suspected Fraud"
+100000133,"Jun 23, 2015 1:39:13 PM","Dhita Francis","Dhita Francis","Rp 501,750.00","Rp 501,750.00",Complete
+100000132,"Jun 23, 2015 1:27:24 PM","Dhita Francis","Dhita Francis","Rp 501,750.00","Rp 501,750.00",Canceled
+100000127,"Jun 22, 2015 12:39:34 PM","Akhmad Reiza","Akhmad Reiza","Rp 799,000.00","Rp 799,000.00","Suspected Fraud"
+100000126,"Jun 22, 2015 12:26:44 PM","Krishnan Menon","Krishnan Menon","Rp 799,000.00","Rp 799,000.00",Pending
+100000125,"Jun 21, 2015 2:00:59 AM","Christian Sutardi","Christian Sutardi","Rp 3,899,000.00","Rp 3,899,000.00",Pending
+100000123,"Jun 19, 2015 2:05:23 PM","firman disastra","firman disastra","Rp 9,290,000.00","Rp 9,290,000.00",Canceled
+100000122,"Jun 18, 2015 2:43:45 PM","Antonius Chandra","Antonius Chandra","Rp 6,748,500.00","Rp 6,748,500.00",Processing
+100000121,"Jun 18, 2015 12:03:33 PM","hellooncneg tyo","hellooncneg tyo","Rp 9,290,000.00","Rp 9,290,000.00",Pending
+100000120,"Jun 17, 2015 9:07:48 PM","Puni ANJUNGSARI","Puni ANJUNGSARI","Rp 799,000.00","Rp 799,000.00",Complete
+100000119,"Jun 17, 2015 9:04:45 PM","Puni ANJUNGSARI","Puni ANJUNGSARI","Rp 799,000.00","Rp 799,000.00",Canceled
+100000117,"Jun 16, 2015 5:20:07 PM","Pranaya Nagasaputra","Pranaya Nagasaputra","Rp 1,679,200.00","Rp 1,679,200.00",Complete
+100000116,"Jun 16, 2015 1:38:19 PM","tarra kusnandar","tarra kusnandar","Rp 369,000.00","Rp 369,000.00",Pending
+100000109,"Jun 12, 2015 1:22:16 PM","Christian Sutardi","Christian Sutardi","Rp 10,000.00","Rp 10,000.00","On Hold"
+100000095,"Jun 5, 2015 10:47:19 PM","Murisha Murisha","Murisha Murisha","Rp 2,924,250.00","Rp 2,924,250.00",Complete
+100000092,"Jun 5, 2015 4:48:05 PM","Margareth Theodora","Margareth Theodora","Rp 1,349,250.00","Rp 1,349,250.00",Complete
+100000088,"Jun 5, 2015 2:10:16 PM","Cynthia Chaerunnisa","Cynthia Chaerunnisa","Rp 1,574,250.00","Rp 1,574,250.00",Complete
+100000084,"Jun 5, 2015 1:32:28 PM","Cynthia Chaerunnisa","Cynthia Chaerunnisa","Rp 1,574,250.00","Rp 1,574,250.00",Canceled
+100000074,"Jun 1, 2015 3:44:58 PM","Adityo Nugroho","Adityo Nugroho","Rp 10,000.00","Rp 10,000.00",Processing
+100000073,"Jun 1, 2015 3:43:32 PM","Christian Sutardi","Christian Sutardi","Rp 374,250.00","Rp 374,250.00",Processing
+100000069,"Jun 1, 2015 11:16:12 AM","Akhil J V","Akhil J V","Rp 1,399,100.00","Rp 1,399,100.00",Complete
+100000067,"Jun 1, 2015 10:04:38 AM","Akhil J V","Akhil J V","Rp 1,399,000.00","Rp 1,399,000.00",Pending
+100000066,"Jun 1, 2015 10:04:36 AM","Christian Sutardi","Christian Sutardi","Rp 499,000.00","Rp 499,000.00",Complete
+100000065,"Jun 1, 2015 10:01:16 AM","Akhil J V","Akhil J V","Rp 1,199,000.00","Rp 1,199,000.00",Pending
+100000064,"Jun 1, 2015 9:51:53 AM","Hamid Raza","Hamid Raza","Rp 1,080,000.00","Rp 1,080,000.00",Pending
+100000063,"May 31, 2015 7:15:06 PM","Srinivas Sista","Srinivas Sista","Rp 3,899,000.00","Rp 3,899,000.00",Complete
+100000062,"May 31, 2015 12:47:32 PM","Mayank Gupta","Mayank Gupta","Rp 100.00","Rp 100.00",Complete
+100000061,"May 30, 2015 9:31:56 PM","Christian Sutardi","Christian Sutardi","Rp 10,237,600.00","Rp 10,237,600.00",Complete
+100000060,"May 30, 2015 2:46:55 PM","Krishnan Menon","Krishnan Menon","Rp 100,000.00","Rp 100,000.00",Complete
+100000059,"May 30, 2015 2:44:41 PM","Himanshu Agarwal","Himanshu Agarwal","Rp 100.00","Rp 100.00",Pending
+100000058,"May 30, 2015 1:33:04 PM","Mayank Gupta","Mayank Gupta","Rp 100.00","Rp 100.00",Pending
+100000057,"May 30, 2015 1:27:35 PM","Mayank Gupta","Mayank Gupta","Rp 100.00","Rp 100.00",Pending
+100000056,"May 30, 2015 12:50:00 PM","Himanshu Agarwal","Himanshu Agarwal","Rp 100,000.00","Rp 100,000.00",Pending
+100000055,"May 30, 2015 12:47:25 PM","Harshit Raj","Harshit Raj","Rp 100.00","Rp 100.00",Pending
+100000054,"May 30, 2015 12:44:09 PM","Harshit Raj","Harshit Raj","Rp 2,000,000.00","Rp 2,000,000.00",Pending
+100000053,"May 30, 2015 12:15:20 PM","Mayank Gupta","Mayank Gupta","Rp 3,899,000.00","Rp 3,899,000.00",Pending
+100000052,"May 30, 2015 12:00:22 PM","Mayank Gupta","Mayank Gupta","Rp 100,000.00","Rp 100,000.00",Pending
+100000051,"May 30, 2015 11:47:58 AM","Mayank Gupta","Mayank Gupta","Rp 100.00","Rp 100.00",Pending
+100000050,"May 30, 2015 10:22:20 AM","Krishnan Menon","Krishnan Menon","Rp 1,000,000.00","Rp 1,000,000.00",Pending
+100000049,"May 30, 2015 10:14:18 AM","Krishnan Menon","Krishnan Menon","Rp 100.00","Rp 100.00",Pending
+100000048,"May 30, 2015 9:16:07 AM","Akhil J V","Akhil J V","Rp 100,000.00","Rp 100,000.00",Pending
+100000047,"May 30, 2015 6:19:17 AM","Harshit Raj","Harshit Raj","Rp 20,000.00","Rp 20,000.00",Pending
+100000046,"May 30, 2015 5:56:56 AM","Harshit Raj","Harshit Raj","Rp 1,000,000.00","Rp 1,000,000.00",Pending
+100000045,"May 30, 2015 5:49:01 AM","Harshit Raj","Harshit Raj","Rp 100.00","Rp 100.00",Pending
+100000044,"May 30, 2015 5:47:57 AM","Harshit Raj","Harshit Raj","Rp 100,000.00","Rp 100,000.00",Pending
+100000043,"May 30, 2015 5:46:20 AM","Harshit Raj","Harshit Raj","Rp 100,000.00","Rp 100,000.00",Pending
+100000042,"May 30, 2015 12:23:38 AM","Krishnan Menon","Krishnan Menon","Rp 1,000,000.00","Rp 1,000,000.00",Pending
+100000041,"May 30, 2015 12:22:37 AM","Himanshu Agarwal","Himanshu Agarwal","Rp 1,000,000.00","Rp 1,000,000.00",Pending
+100000040,"May 30, 2015 12:22:27 AM","Krishnan Menon","Krishnan Menon","Rp 10,000.00","Rp 10,000.00",Pending
+100000039,"May 30, 2015 12:20:52 AM","Krishnan Menon","Krishnan Menon","Rp 10,000.00","Rp 10,000.00",Pending
+100000038,"May 30, 2015 12:20:42 AM","Harshit Raj","Harshit Raj","Rp 520,000.00","Rp 520,000.00",Pending
+100000037,"May 30, 2015 12:20:24 AM","Himanshu Agarwal","Himanshu Agarwal","Rp 100.00","Rp 100.00",Pending
+100000036,"May 30, 2015 12:16:28 AM","Krishnan Menon","Krishnan Menon","Rp 7,500.00","Rp 7,500.00",Pending
+100000035,"May 29, 2015 11:40:14 PM","Mayank Gupta","Mayank Gupta","Rp 100,000.00","Rp 100,000.00",Pending
+100000034,"May 29, 2015 11:25:28 PM","Mayank Gupta","Mayank Gupta","Rp 1,610,000.00","Rp 1,610,000.00",Pending
+100000033,"May 29, 2015 11:21:15 PM","Mayank Gupta","Mayank Gupta","Rp 1,610,000.00","Rp 1,610,000.00",Pending
+100000032,"May 29, 2015 10:48:49 PM","Mayank Gupta","Mayank Gupta","Rp 510,000.00","Rp 510,000.00",Pending
+100000031,"May 29, 2015 10:11:21 PM","Qdeola Seihtz","Qdeola Seihtz","Rp 100,000.00","Rp 100,000.00",Processing
+100000026,"May 28, 2015 9:13:01 PM","Harshit Raj","Harshit Raj","Rp 1,000,500.00","Rp 1,000,500.00",Pending
+100000025,"May 28, 2015 8:38:25 PM","Harshit Raj","Harshit Raj","Rp 500,500.00","Rp 500,500.00",Pending
+100000024,"May 28, 2015 8:33:36 PM","Harshit Raj","Harshit Raj","Rp 1,000,500.00","Rp 1,000,500.00",Pending
+100000023,"May 28, 2015 8:31:38 PM","Harshit Raj","Harshit Raj","Rp 10,500.00","Rp 10,500.00",Pending
+100000022,"May 27, 2015 7:10:34 PM","Christian Sutardi","Christian Sutardi","Rp 7,799,000.00","Rp 7,799,000.00",Complete
+100000021,"May 26, 2015 5:56:10 PM","tarra kusnandar","tarra kusnandar","Rp 100,500.00","Rp 100,500.00",Complete
+100000020,"May 26, 2015 3:22:39 PM","Christian Sutardi","Christian Sutardi","Rp 201,000.00","Rp 201,000.00",Complete
+100000019,"May 25, 2015 2:31:12 PM","Krishnan Menon","Krishnan Menon","Rp 201,000.00","Rp 201,000.00",Pending
+100000018,"May 22, 2015 8:14:01 PM","Srinivas Sista","Srinivas Sista","Rp 100,500.00","Rp 100,500.00",Complete
+100000017,"May 22, 2015 8:10:58 PM","Srinivas Sista","Srinivas Sista","Rp 70,500.00","Rp 70,500.00",Pending
+100000016,"May 22, 2015 7:27:21 PM","Srinivas Sista","Srinivas Sista","Rp 571,000.00","Rp 571,000.00",Complete
+100000015,"May 21, 2015 9:50:14 PM","Christian Sutardi","Christian Sutardi","Rp 301,500.00","Rp 301,500.00",Pending
+100000014,"May 21, 2015 9:48:08 PM","test_user user","test_user user","Rp 301,500.00","Rp 301,500.00",Pending
+100000013,"May 21, 2015 8:21:12 PM","test_user user","test_user user","Rp 100,500.00","Rp 100,500.00",Pending
+100000012,"May 21, 2015 8:08:45 PM","Himanshu Agarwal","Himanshu Agarwal","Rp 500,500.00","Rp 500,500.00",Pending
+100000011,"May 21, 2015 7:09:11 PM","Christian Sutardi","Christian Sutardi","Rp 100,500.00","Rp 100,500.00",Complete
+100000009,"May 21, 2015 7:02:10 PM","Christian Sutardi","Christian Sutardi","Rp 100,500.00","Rp 100,500.00",Complete
+100000008,"May 17, 2015 3:20:42 AM","Himanshu Agarwal","Himanshu Agarwal","Rp 1,000,005.00","Rp 1,000,005.00",Complete
+100000007,"May 17, 2015 3:12:36 AM","Himanshu Agarwal","Himanshu Agarwal","Rp 500,005.00","Rp 500,005.00",Pending
+100000006,"May 17, 2015 3:04:43 AM","Mayank Gupta","Mayank Gupta","Rp 1,000,005.00","Rp 1,000,005.00",Pending
+100000005,"May 17, 2015 2:53:20 AM","Mayank Gupta","Mayank Gupta","Rp 1,000,005.00","Rp 1,000,005.00",Pending
+100000004,"May 11, 2015 12:30:30 PM","lalala lalala","lalala lalala","Rp 100,005.00","Rp 100,005.00",Pending
+100000003,"May 10, 2015 5:36:14 PM","Hamid Raza","Hamid Raza","Rp 100,005.00","Rp 100,005.00",Closed
+100000001,"May 10, 2015 5:12:09 PM","qwe`1`` d","qwe`1`` d","Rp 500,005.00","Rp 500,005.00",Pending

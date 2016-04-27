@@ -1,0 +1,84 @@
+<!-- dashboard tabs -->
+<?php if($id = $this->getItemId()): ?>
+    <div class="form-dropdown screen" id="edit_add_tab_chart">
+        <form method="post" id="edit_chart_form" action="<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savechart') ?>">        
+            <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>" />
+            <input type="hidden" name="item_id" value="<?php echo $id ?>" />
+            <?php $item = Mage::getModel('inventorydashboard/items')->load($id) ?>            
+            <div class="field-table" style="background-color: #efefef;">
+                <div style="padding-left:100px;">
+                <ul class="field-row">
+                    <label style="width:210px;font-size: 15px;"></label>
+                    <h3><?php echo $this->__('Edit chart %s',$item->getName()) ?></h3>
+                </ul>
+                <br/>
+                <ul class="field-row clear">
+                    <li>
+                        <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Chart name') ?><span class="required">*</span></label>
+                    </li>
+                    <li>
+                        <input class="required-entry input-text required-entry" type="text" value="<?php echo $item->getName() ?>" style="width:410px;" name="chart_name" maxlength="50" id="chart_name" />                                        
+                    </li>
+                </ul>          
+                <br/>
+                <ul class="field-row clear">
+                    <li>
+                        <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Report Type') ?><span class="required">*</span></label>
+                    </li>                
+                    <li>                        
+                        <select name="report_type" id="edit_report_type" onchange="changeEditSelectChartType();" class="required-entry required-entry select">
+                            <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType(); ?>
+                            <option value=""><?php echo $this->__('Please select Report type') ?></option>
+                            <?php if($reportTypes): ?>
+                                <?php foreach($reportTypes as $reportType): ?>
+                                    <option value="<?php echo $reportType['report_code'] ?>" <?php if($reportType['report_code'] == $item->getReportCode()){ echo 'selected="selected"'; } ?> ><?php echo $this->__($reportType['name']) ?></option>
+                                <?php endforeach; ?>
+                            <?php endif ?>
+                        </select>
+                    </li>
+                </ul>        
+                <br/>
+                <ul class="field-row clear">
+                    <li>
+                        <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Chart Type') ?><span class="required">*</span></label>
+                    </li>
+                    <li>
+                        <ul id="edit_select_chart_type">  
+                            <?php if($item->getReportCode()): ?>
+                                <?php 
+                                    $response = '';
+                                    $resource = Mage::getSingleton('core/resource');
+                                    $readConnection = $resource->getConnection('read_write');
+                                    $reportCode = $item->getReportCode();
+                                    $sql = 'Select distinct(`chart_code`) from '.$resource->getTableName('erp_inventory_dashboard_chart_report').' where `report_code` = \''.$reportCode.'\'';        
+                                    $results = $readConnection->query($sql);
+                                    foreach($results as $result){            
+                                        $image =  Mage::getBaseUrl('media').'inventorydashboard/charttype/'.$result['chart_code'].'.png';       
+                                ?>
+                                        <li style="float:left;margin-right:15px">
+                                            <input <?php if($result['chart_code'] == $item->getChartCode()){ echo 'checked="checked"'; } ?>type="radio" class="radio validate-one-required-by-name validation-passed" value="<?php echo $result['chart_code'] ?>" name="chart_type" title="<?php echo $result['chart_code'] ?>" />
+                                            <label for="chart_pie"><img src ="<?php echo $image ?>" title="<?php echo $result['chart_code'] ?>" /></label>
+                                        </li>
+                                <?php    
+                                    }
+                                ?>
+                            <?php endif ?>
+                        </ul>                    
+                    </li>
+                </ul>        
+                <br/>
+                <ul class="submit-row clear">
+                    <label></label>
+                    <li>
+                        <button type="button" onclick="submitEditChartForm();" style="width:80px;height:32px;float:left; margin-right: 14px;" class="" value="Add">
+                            <span><?php echo $this->__('Save') ?></span>
+                        </button>
+                        <a class="button-grey cancel" onclick="cancelEditChartForm(); return false;"><?php echo $this->__('Cancel') ?></a>
+                    </li>
+                </ul>
+                           
+                </div>
+            </div>            
+        </form>
+    </div>
+<?php endif ?>

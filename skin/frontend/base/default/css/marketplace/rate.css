@@ -1,0 +1,49 @@
+.last.rate-list {
+    float:left;
+}
+
+.last.rate-list:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.last.rate-list:not(:checked) > label {
+    float:right;
+    width: 1.05em;
+    padding: 0;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size: 150%;
+    line-height:1.2;
+    color:#ddd;
+}
+
+.last.rate-list:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.last.rate-list > input:checked ~ label {
+    color: #f70;
+}
+
+.last.rate-list:not(:checked) > label:hover,
+.last.rate-list:not(:checked) > label:hover ~ label {
+    color: gold;
+    text-shadow: blue;
+}
+
+.last.rate-list > input:checked + label:hover,
+.last.rate-list > input:checked + label:hover ~ label,
+.last.rate-list > input:checked ~ label:hover,
+.last.rate-list > input:checked ~ label:hover ~ label,
+.last.rate-list > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+
+.last.rate-list > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}

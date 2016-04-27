@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    //<![CDATA[
+    function check(btn) {
+        new Ajax.Request('<?php echo $this->getAjaxCheckUrl() ?>', {
+            method:     'get',
+            parameters : {
+                id : $(btn).up('tr').id 
+            },
+            onSuccess: function(transport){
+        	   location.reload();
+            }
+        });
+    }
+    //]]>
+</script>
+<?php echo $this->getButtonHtml() ?>

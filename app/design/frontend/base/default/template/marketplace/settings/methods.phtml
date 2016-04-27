@@ -1,0 +1,102 @@
+<?php $methods = $this->getSavedMethods(); ?>
+<div class="container main-container vendor-container">
+    <h1 class="text-center"><?php echo Mage::helper('marketplace')->__('Manage Shipping Methods'); ?></h1>
+    <div class="row">
+        <div class="col-md-12 form-container">
+            <form name="settings_shipping_methods" id="settings_shipping_methods" action="<?php echo Mage::getUrl('marketplace/settings/shippingSave') ?>" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="shipping_method" value="flat_rate"<?php echo $methods->getFlatRateAvailable() == 1 ? ' checked="checked"' : '' ?>> <?php echo $this->__('Flat Rate'); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cont"<?php echo $methods->getFlatRateAvailable() != 1 ? ' style="display:none;"' : '' ?>>
+                            <div class="col-md-6 label-container">
+                                <label for="flat_rate_fee">
+                                    <?php echo $this->__('Handling Fee'); ?>
+                                </label>
+                            </div>
+                            <div class="col-md-6 input-container">
+                                <input type="text" id="flat_rate_fee" name="flat_rate_fee" class="input-text required-entry form-control validate-number" value="<?php echo $methods->getFlatRateFee(); ?>" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="shipping_method" value="table_rate"<?php echo $methods->getTableRateAvailable() == 1 ? ' checked="checked"' : '' ?>> <?php echo $this->__('Table Rate'); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cont"<?php echo $methods->getTableRateAvailable() != 1 ? ' style="display:none;"' : '' ?>>
+                            <div class="col-md-6 label-container">
+                                <label for="table_rate_fee">
+                                    <?php echo $this->__('Default Handling Fee'); ?>
+                                </label>
+                            </div>
+                            <div class="col-md-6 input-container">
+                                <input type="text" id="table_rate_fee" name="table_rate_fee" class="input-text required-entry form-control validate-number" value="<?php echo $methods->getTableRateFee(); ?>" />
+                            </div>
+                            <div class="col-md-6 label-container">
+                                <label for="table_rate_condition">
+                                    <?php echo $this->__('Condition'); ?>
+                                </label>
+                            </div>
+                            <div class="col-md-6 input-container">
+                                <select name="table_rate_condition" id="table_rate_condition">
+                                    <option value="1"<?php echo $methods->getTableRateCondition() == 1 ? ' selected="selected"' : '' ?>><?php echo $this->__("Weight vs. Destination"); ?></option>
+                                    <option value="2"<?php echo $methods->getTableRateCondition() == 2 ? ' selected="selected"' : '' ?>><?php echo $this->__("Price vs. Destination"); ?></option>
+                                    <option value="3"<?php echo $methods->getTableRateCondition() == 3 ? ' selected="selected"' : '' ?>><?php echo $this->__("# of Items vs. Destination"); ?></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 label-container">
+                                <label for="table_rate_file">
+                                    <?php echo $this->__('Upload your file'); ?>
+                                </label>
+                            </div>
+                            <div class="col-md-6 input-container">
+                                <input type="file" id="table_rate_file" name="table_rate_file" class="input-text form-control" value="<?php echo $methods->getTableRateFee(); ?>" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="shipping_method" value="free_shipping"<?php echo $methods->getFreeShipping() == 1 ? ' checked="checked"' : '' ?>> <?php echo $this->__('Free Shipping'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4">
+                        <input type="submit" name="submit" class="btn btn-primary" value="<?php echo $this->__('Save Settings') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('settings_shipping_methods');
+    //]]>
+
+    jQuery(document).on('click', 'input[type="radio"]', function(e){
+        var me = this;
+
+        jQuery('.cont').hide(250, function() {
+            jQuery(me).parent().parent().parent().next().show(250);
+        });
+    });
+</script>

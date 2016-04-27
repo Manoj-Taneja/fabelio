@@ -1,0 +1,8 @@
+<layout>
+    <adminhtml_lpage_edit>
+        <update handle="editor"/>
+    </adminhtml_lpage_edit>
+    <adminhtml_lpage_new>
+        <update handle="editor"/>
+    </adminhtml_lpage_new>
+</layout>

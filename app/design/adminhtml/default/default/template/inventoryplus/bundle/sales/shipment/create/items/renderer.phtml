@@ -1,0 +1,202 @@
+<?php $item = $this->getItem() ?>
+<?php $items = $this->getChilds($item); ?>
+<?php $_count = count($items) ?>
+<?php $_index = 0 ?>
+<?php $_prevOptionId = '' ?>
+<?php
+$orderId = Mage::app()->getRequest()->getParam('order_id');
+$minQty = 0;
+?>
+
+<?php if ($this->getOrderOptions() || $item->getDescription()): ?>
+    <?php $_showlastRow = true ?>
+<?php else: ?>
+    <?php $_showlastRow = false ?>
+<?php endif; ?>
+
+<?php foreach ($items as $_item): ?>
+    <?php
+    $productId = Mage::getModel("catalog/product")->getIdBySku($_item->getSku());
+    if (!$productId) {
+        $productId = $_item->getProductId();
+    }
+    $_product = Mage::getModel('catalog/product')->load($_item->getProductId());
+    $orderItemId = $_item->getOrderItemId();
+    $minQty = $_item->getQty() * 1;
+    if ($minQty < $item->getQty())
+        $minQty = $item->getQty() * 1;
+    $checkAvailable = Mage::helper('inventoryplus/warehouse')->checkTheFirstWarehouseAvailableProduct($productId, $minQty, $orderId);
+    $product = Mage::getModel('catalog/product')->load($productId);
+    $productType = $product->getTypeID();
+    ?>
+    <?php $this->setPriceDataObject($_item) ?>
+    <?php if ($_item->getOrderItem()->getParentItem()): ?>
+        <?php $attributes = $this->getSelectionAttributes($_item) ?>
+        <?php if ($_prevOptionId != $attributes['option_id']): ?>
+            <tr>
+                <td><div class="option-label"><?php echo $attributes['option_label'] ?></div></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td class="last">&nbsp;</td>
+            </tr>
+            <?php $_prevOptionId = $attributes['option_id'] ?>
+        <?php endif; ?>
+    <?php endif; ?>
+    <tr class="<?php echo ( ++$_index == $_count && !$_showlastRow) ? 'border' : '' ?>">
+        <?php if (!$_item->getOrderItem()->getParentItem()): ?>
+            <td><h5 class="title"><?php echo $this->htmlEscape($_item->getName()) ?></h5>
+                <div>
+                    <strong><?php echo $this->helper('sales')->__('SKU') ?>:</strong>
+                    <?php echo implode('<br />', Mage::helper('catalog')->splitSku($this->htmlEscape($_item->getSku()))); ?>
+                </div>
+            </td>
+        <?php else: ?>
+            <td><div class="option-value"><?php echo $this->getValueHtml($_item) ?></div></td>
+        <?php endif; ?>
+        <td class="a-center">
+
+            <?php try { ?>        
+            <?php if($this->helper('catalog/image')->init($_product, 'small_image')):?>
+                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="90" height="90" />
+                <?php endif;?>
+            <?php } catch (Exception $e) {
+                
+            }
+            ?>
+        </td>
+        <td>
+            
+            <?php if ($this->isShipmentSeparately($_item)): ?>
+                <?php echo $this->getColumnHtml($_item, 'qty') ?>
+            <?php endif;?>
+        </td>
+        <td>
+            <?php if ($this->isShipmentSeparately($_item)): ?>
+
+        <?php $maxQty = $_item->getQty() * 1 ?>
+
+                <input type="hidden" value="<?php echo $maxQty ?>" id="shipment[maxitems][<?php echo $_item->getOrderItemId() ?>]" />
+                <input type="text" class="input-text" id="shipment[items][<?php echo $_item->getOrderItemId() ?>]" name="shipment[items][<?php echo $_item->getOrderItemId() ?>]" value="<?php echo $maxQty * 1 ?>" />
+            <?php else: ?>
+                &nbsp;
+    <?php endif; ?>
+        </td>
+        
+        <?php if ($this->isShipmentSeparately($_item)): ?>
+
+            <?php if ($productType != 'bundle'): ?>
+                <td><div id="show_select_warehouse_supplier_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>"><?php echo Mage::helper('inventoryplus/warehouse')->selectboxWarehouseShipmentByPid($productId, $_item->getQty(), $_item->getOrderItemId(), $orderId); ?></div></td>
+                <?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorybarcode')): ?>
+                    <td class="barcode-column"><div id="show_select_barcode_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>"><?php echo Mage::helper('inventorybarcode')->selectboxBarcodeByPid($productId, $_item->getOrderItemId(), $orderId); ?></div></td>
+                <?php endif; ?>
+    <script type="text/javascript">
+        if($$('[name="shipment[items][<?php echo $_item->getOrderItemId() ?>]"]')[0]){
+                     var productId = '<?php echo $productId ?>';
+                    var orderid = '<?php echo $orderId; ?>';
+                    var warehouseId = $("warehouse-shipment[items][<?php echo $_item->getOrderItemId() ?>]").value;
+                    var qtyToShip = $$('[name="shipment[items][<?php echo $_item->getOrderItemId() ?>]"]')[0].value;
+                    var orderItemId = '<?php echo $_item->getOrderItemId() ?>';
+                    checkStatusAvailableAOrderItemByEvent(warehouseId, productId, qtyToShip, orderItemId, orderid, qtyToShip);
+                }
+         Event.observe($("warehouse-shipment[items][<?php echo $_item->getOrderItemId() ?>]"), 'change', function () {
+                    var productId = '<?php echo $productId ?>';
+                    var orderid = '<?php echo $orderId; ?>';
+                    var warehouseId = $("warehouse-shipment[items][<?php echo $_item->getOrderItemId() ?>]").value;
+                    var qtyToShip = $$('[name="shipment[items][<?php echo $_item->getOrderItemId() ?>]"]')[0].value;
+                    var orderItemId = '<?php echo $_item->getOrderItemId() ?>';
+                    checkStatusAvailableAOrderItemByEvent(warehouseId, productId, qtyToShip, orderItemId, orderid, qtyToShip);
+                });
+        </script>
+        <?php else: ?>
+                <td><div id="show_select_only_supplier_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>"><?php echo Mage::helper('inventoryplus/warehouse')->selectboxWarehouseShipmentByPid($productId, $_item->getQty(), $_item->getOrderItemId(), $orderId); ?></div></td>                
+            <script type="text/javascript">
+                if ($('show_select_only_warehouse_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>')) {
+                    $('show_select_only_warehouse_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>').innerHTML = '';
+                }
+                if ($('show_select_only_supplier_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>')) {
+                    $('show_select_only_supplier_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>').innerHTML = '';
+                }
+
+               
+
+            </script>
+        <?php endif; ?>
+
+         
+    <?php else: ?>
+        <?php if ($productType != 'bundle'): ?>
+            <td><div id="show_select_warehouse_supplier_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>"><?php echo Mage::helper('inventoryplus/warehouse')->selectboxWarehouseShipmentByPid($productId, $_item->getQty(), $_item->getOrderItemId(), $orderId); ?></div></td>
+            <?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorybarcode')): ?>
+                <td class="barcode-column"><div id="show_select_barcode_<?php echo $_item->getOrderItemId() ?>_<?php echo $productId ?>"><?php echo Mage::helper('inventorybarcode')->selectboxBarcodeByPid($productId, $_item->getOrderItemId(), $orderId); ?></div></td>
+            <?php endif; ?>
+            <script type="text/javascript">
+                if($$('[name="shipment[items][<?php echo $_item->getOrderItemId() ?>]"]')[0]){
+                    var productId = '<?php echo $productId ?>';
+                    var orderid = '<?php echo $orderId; ?>';
+                    var warehouseId = $("warehouse-shipment[items][<?php echo $_item->getOrderItemId() ?>]").value;
+                    var qtyToShip = $$('[name="shipment[items][<?php echo $_item->getOrderItemId() ?>]"]')[0].value;
+                    var orderItemId = '<?php echo $_item->getOrderItemId() ?>';
+                    checkStatusAvailableAOrderItemByEvent(warehouseId, productId, qtyToShip, orderItemId, orderid, qtyToShip);
+                }
+            Event.observe($("warehouse-shipment[items][<?php echo $_item->getOrderItemId() ?>]"), 'change', function () {
+                var productId = '<?php echo $productId ?>';
+                var orderid = '<?php echo $orderId; ?>';
+                var warehouseId = $("warehouse-shipment[items][<?php echo $_item->getOrderItemId() ?>]").value;
+                var qtyToShip = $$('[name="shipment[items][<?php echo $_item->getOrderItemId() ?>]"]')[0].value;
+                var orderItemId = '<?php echo $_item->getOrderItemId() ?>';
+                checkStatusAvailableAOrderItemByEvent(warehouseId, productId, qtyToShip, orderItemId, orderid, qtyToShip);
+            });
+
+
+        </script>
+            <?php $parentItemId = $_item->getOrderItem()->getParentItem()->getId(); ?>               
+        <?php else: ?>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        <?php endif; ?>
+        
+    <?php endif; ?>
+    
+    </tr>
+<?php endforeach; ?>
+<?php if ($_showlastRow): ?>
+    <tr class="border">
+        <td>
+                <?php if ($this->getOrderOptions($_item->getOrderItem())): ?>
+                <dl class="item-options">
+        <?php foreach ($this->getOrderOptions($_item->getOrderItem()) as $option): ?>
+                        <dt><?php echo $option['label'] ?></dt>
+                        <dd>
+                            <?php if (isset($option['custom_view']) && $option['custom_view']): ?>
+                                <?php echo $option['value']; ?>
+                            <?php else: ?>
+                                <?php echo Mage::helper('core/string')->truncate($option['value'], 55, '', $_remainder); ?>
+                <?php if ($_remainder): ?>
+                                    ... <span id="<?php echo $_id = 'id' . uniqid() ?>"><?php echo $_remainder ?></span>
+                                    <script type="text/javascript">
+                                        $('<?php echo $_id ?>').hide();
+                                        $('<?php echo $_id ?>').up().observe('mouseover', function () {
+                                            $('<?php echo $_id ?>').show();
+                                        });
+                                        $('<?php echo $_id ?>').up().observe('mouseout', function () {
+                                            $('<?php echo $_id ?>').hide();
+                                        });
+                                    </script>
+                                <?php endif; ?>
+                        <?php endif; ?>
+                        </dd>
+                <?php endforeach; ?>
+                </dl>
+            <?php else: ?>
+                &nbsp;
+            <?php endif; ?>
+    <?php echo $this->htmlEscape($_item->getDescription()) ?>
+        </td>
+
+
+    </tr>
+<?php endif; ?>
+
+

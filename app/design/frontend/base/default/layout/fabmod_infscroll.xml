@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+  <catalogsearch_result_index>
+    <reference name="content">
+      <block type="core/template" template="fabmod/infscroll/init.phtml" />
+    </reference>
+  </catalogsearch_result_index>
+
+  <catalog_category_layered>
+    <reference name="content">
+      <block type="core/template" template="fabmod/infscroll/init.phtml" />
+    </reference>
+  </catalog_category_layered>
+
+</layout>

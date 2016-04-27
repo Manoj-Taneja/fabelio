@@ -1,0 +1,42 @@
+<?php
+$helper = Mage::helper("fabmod_fbpixel");
+if (!$helper->isFbPxEnabled()) {
+  return;
+}
+$order = Mage::getSingleton('sales/order')->
+  loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+$_orders = $order->getAllItems();
+$_products = Array();
+foreach($_orders as $_order){
+  $_products[] = $_order->getProduct();
+}
+?>
+<script>
+(function(){
+  var fabmodFbpixelTrack = {
+    value: <?php echo $order->getGrandTotal(); ?>,
+    currency : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',
+    content_type: 'product'
+  };
+  <?php
+  if(count($_products) == 1) {
+    $_product = $_products[0];
+    $categories = $_product->getCategoryIds();
+  ?>
+    fabmodFbpixelTrack['content_name']     = '<?php echo $_product->getName(); ?>';
+    fabmodFbpixelTrack['content_category'] = '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>';
+    fabmodFbpixelTrack['content_ids']      = ['<?php echo $_product->getId(); ?>'];
+  <?php
+  }else{
+    $ids = Array();
+    foreach($_products as $_product){
+      $ids[] = "'" . $_product->getId() . "'";
+    }
+  ?>
+    fabmodFbpixelTrack['content_ids']      = [<?php echo join(', ', $ids); ?>];
+  <?php
+  }
+  ?>
+  fbq('track', 'Purchase', fabmodFbpixelTrack);
+}());
+</script>

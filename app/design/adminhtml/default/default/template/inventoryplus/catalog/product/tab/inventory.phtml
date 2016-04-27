@@ -1,0 +1,748 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+<?php $productId = Mage::app()->getRequest()->getParam('id')?>
+<?php $total_qty = 0;?>
+<?php        
+    if(!$productId){
+        $total_on_hold = 0;
+    } else {
+        $total_on_hold = Mage::helper('inventoryplus/warehouse')->getOnHoldQty($productId,0);    
+    }
+    
+?>
+<?php if($productId != -1) : ?>
+<?php $warehouseproducts = Mage::helper('inventoryplus/warehouse')->getWarehouseByProductId($productId, false); ?>
+	<?php foreach($warehouseproducts as $warehouse_product) :?>
+			<?php	$total_qty += $warehouse_product->getTotalQty();	?>
+	<?php endforeach?>
+<?php endif?>
+
+
+<?php if ($this->isReadonly()): ?>
+    <?php $_readonly = ' disabled="disabled" '; ?>
+<?php else: ?>
+    <?php $_readonly = ''; ?>
+<?php endif; ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('catalog')->__('Inventory') ?></h4>
+    </div>
+    <fieldset>
+
+        <legend><?php echo Mage::helper('catalog')->__('Inventory') ?></legend>
+        <table cellspacing="0" class="form-list" id="table_cataloginventory">
+            <tr>
+                <td class="label"><label for="inventory_manage_stock"><?php echo Mage::helper('catalog')->__('Manage Stock') ?></label></td>
+                <td class="value"><select id="inventory_manage_stock" name="<?php echo $this->getFieldSuffix() ?>[stock_data][manage_stock]" class="select" <?php echo $_readonly; ?>>
+                        <option value="1"><?php echo Mage::helper('catalog')->__('Yes') ?></option>
+                        <option value="0"<?php if ($this->getConfigFieldValue('manage_stock') == 0): ?> selected="selected"<?php endif; ?>><?php echo Mage::helper('catalog')->__('No') ?></option>
+                    </select>
+                    <input type="hidden" id="inventory_manage_stock_default" value="<?php echo $this->getDefaultConfigValue('manage_stock'); ?>" />
+
+                    <?php $_checked = ($this->getFieldValue('use_config_manage_stock') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                    <input type="checkbox" id="inventory_use_config_manage_stock" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_manage_stock]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?>/>
+                    <label for="inventory_use_config_manage_stock" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+                    <?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_manage_stock'), $('inventory_use_config_manage_stock').parentNode);</script><?php endif; ?></td>
+                <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+            </tr>
+
+            <?php if (!$this->getProduct()->isComposite()): ?>
+            <!-- Add Total Quantity Field -->
+		<tr>
+                    <td class="label"><label for="inventory_qty"><?php echo Mage::helper('catalog')->__('Physical Qty') ?><span class="required">*</span></label></td>
+                    <td class="value">
+                        <?php if (!$_readonly): ?>
+                            <input type="hidden" id="original_inventory_physical" name="<?php echo $this->getFieldSuffix() ?>[stock_data][original_inventory_physic]" value="<?php echo $total_qty ?>"/>
+                        <?php endif; ?>
+                        <input type="text" class="input-text required-entry validate-number" <?php
+//                    if (isset($productId)) {
+                        echo 'disabled';
+//                    }
+                    ?>  id="inventory_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][physic]" value="<?php echo $total_qty ?>" <?php echo $_readonly; ?>/>
+                    </td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+<!-- End Add Total Quantity Field -->
+                <tr>
+                    <td class="label"><label for="inventory_qty"><?php echo Mage::helper('catalog')->__('Avail. Qty') ?><span class="required">*</span></label></td>
+                    <td class="value">
+                        <?php if (!$_readonly): ?>
+                            <input type="hidden" id="original_inventory_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][original_inventory_qty]" value="<?php echo $this->getFieldValue('qty') * 1 ?>"/>
+                        <?php endif; ?>
+                        <input type="text" class="input-text required-entry validate-number" <?php
+//                    if (isset($productId)) {
+                        echo 'disabled';
+//                    }
+                    ?>  id="inventory_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][qty]" value="<?php echo $this->getFieldValue('qty') * 1 ?>" <?php echo $_readonly; ?>/>
+                    </td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+
+
+<!-- Add Total On Hold Field -->
+		<tr>
+                    <td class="label"><label for="on_hold_qty"><?php echo Mage::helper('catalog')->__('On Hold Qty') ?><span class="required">*</span></label></td>
+                    <td class="value">
+                        <?php if (!$_readonly): ?>
+                            <input type="hidden" id="original_inventory_onhold" name="<?php echo $this->getFieldSuffix() ?>[stock_data][original_inventory_onhold]" value="<?php echo $total_on_hold ?>"/>
+                        <?php endif; ?>
+                        <input type="text" class="input-text required-entry validate-number" <?php
+//                    if (isset($productId)) {
+                        echo 'disabled';
+//                    }
+                    ?>  id="on_hold_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][onhold]" value="<?php echo $total_on_hold ?>" <?php echo $_readonly; ?>/>
+                    </td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+<!-- End Add Total On Hold Field -->
+
+                <tr>
+                    <td class="label"><label for="inventory_min_qty"><?php echo Mage::helper('catalog')->__('Qty for Item\'s Status to become Out of Stock') ?></label></td>
+                    <td class="value"><input type="text" class="input-text validate-number" id="inventory_min_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][min_qty]" value="<?php echo $this->getFieldValue('min_qty') * 1 ?>" <?php echo $_readonly; ?>/>
+
+                        <?php $_checked = ($this->getFieldValue('use_config_min_qty') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                        <input type="checkbox" id="inventory_use_config_min_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_min_qty]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" <?php echo $_readonly; ?> />
+                        <label for="inventory_use_config_min_qty" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+    <?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_min_qty'), $('inventory_use_config_min_qty').parentNode);</script><?php endif; ?></td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+
+                <tr>
+                    <td class="label"><label for="inventory_min_sale_qty"><?php echo Mage::helper('catalog')->__('Minimum Qty Allowed in Shopping Cart') ?></label></td>
+                    <td class="value"><input type="text" class="input-text validate-number" id="inventory_min_sale_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][min_sale_qty]" value="<?php echo $this->getFieldValue('min_sale_qty') * 1 ?>" <?php echo $_readonly; ?>/>
+
+                        <?php $_checked = ($this->getFieldValue('use_config_min_sale_qty') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                        <input type="checkbox" id="inventory_use_config_min_sale_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_min_sale_qty]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?> />
+                        <label for="inventory_use_config_min_sale_qty" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+    <?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_min_sale_qty'), $('inventory_use_config_min_sale_qty').parentNode);</script><?php endif; ?></td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+
+                <tr>
+                    <td class="label"><label for="inventory_max_sale_qty"><?php echo Mage::helper('catalog')->__('Maximum Qty Allowed in Shopping Cart') ?></label></td>
+                    <td class="value"><input type="text" class="input-text validate-number" id="inventory_max_sale_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][max_sale_qty]" value="<?php echo $this->getFieldValue('max_sale_qty') * 1 ?>" <?php echo $_readonly; ?> />
+
+                        <?php $_checked = ($this->getFieldValue('use_config_max_sale_qty') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                        <input type="checkbox" id="inventory_use_config_max_sale_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_max_sale_qty]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?> />
+                        <label for="inventory_use_config_max_sale_qty" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+    <?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_max_sale_qty'), $('inventory_use_config_max_sale_qty').parentNode);</script><?php endif; ?></td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+
+    <?php if ($this->canUseQtyDecimals()): ?>
+                    <tr>
+                        <td class="label"><label for="inventory_is_qty_decimal"><?php echo Mage::helper('catalog')->__('Qty Uses Decimals') ?></label></td>
+                        <td class="value"><select id="inventory_is_qty_decimal" name="<?php echo $this->getFieldSuffix() ?>[stock_data][is_qty_decimal]" class="select" <?php echo $_readonly; ?>>
+                                <option value="0"><?php echo Mage::helper('catalog')->__('No') ?></option>
+                                <option value="1"<?php if ($this->getFieldValue('is_qty_decimal') == 1): ?> selected="selected"<?php endif; ?>><?php echo Mage::helper('catalog')->__('Yes') ?></option>
+                            </select>
+                        </td>
+                        <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                    </tr>
+    <?php endif; ?>
+
+                <tr>
+                    <td class="label"><label for="inventory_backorders"><?php echo Mage::helper('catalog')->__('Backorders') ?></label></td>
+                    <td class="value"><select id="inventory_backorders" name="<?php echo $this->getFieldSuffix() ?>[stock_data][backorders]" class="select" <?php echo $_readonly; ?>>
+                            <?php foreach ($this->getBackordersOption() as $option): ?>
+                                <?php $_selected = ($option['value'] == $this->getFieldValue('backorders')) ? 'selected="selected"' : '' ?>
+                                <option value="<?php echo $option['value'] ?>" <?php echo $_selected ?>><?php echo $option['label'] ?></option>
+                        <?php endforeach; ?>
+                        </select>
+
+                        <?php $_checked = ($this->getFieldValue('use_config_backorders') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                        <input type="checkbox" id="inventory_use_config_backorders" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_backorders]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?> />
+                        <label for="inventory_use_config_backorders" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+    <?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_backorders'), $('inventory_use_config_backorders').parentNode);</script><?php endif; ?></td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="inventory_notify_stock_qty"><?php echo Mage::helper('catalog')->__('Notify for Quantity Below') ?></label></td>
+                    <td class="value"><input type="text" class="input-text validate-number" id="inventory_notify_stock_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][notify_stock_qty]" value="<?php echo $this->getFieldValue('notify_stock_qty') * 1 ?>" <?php echo $_readonly; ?>/>
+
+                        <?php $_checked = ($this->getFieldValue('use_config_notify_stock_qty') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                        <input type="checkbox" id="inventory_use_config_notify_stock_qty" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_notify_stock_qty]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?>/>
+                        <label for="inventory_use_config_notify_stock_qty" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+                <?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_notify_stock_qty'), $('inventory_use_config_notify_stock_qty').parentNode);</script><?php endif; ?></td>
+                    <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+                </tr>
+<?php endif; ?>
+            <tr>
+                <td class="label"><label for="inventory_enable_qty_increments"><?php echo Mage::helper('catalog')->__('Enable Qty Increments') ?></label></td>
+                <td class="value"><select id="inventory_enable_qty_increments" name="<?php echo $this->getFieldSuffix() ?>[stock_data][enable_qty_increments]" class="select" <?php echo $_readonly; ?>>
+                        <option value="1"><?php echo Mage::helper('catalog')->__('Yes') ?></option>
+                        <option value="0"<?php if ($this->getConfigFieldValue('enable_qty_increments') == 0): ?> selected="selected"<?php endif; ?>><?php echo Mage::helper('catalog')->__('No') ?></option>
+                    </select>
+                    <input type="hidden" id="inventory_enable_qty_increments_default" value="<?php echo $this->getDefaultConfigValue('enable_qty_increments'); ?>" />
+
+                    <?php $_checked = ($this->getFieldValue('use_config_enable_qty_increments') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                    <input type="checkbox" id="inventory_use_config_enable_qty_increments" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_enable_qty_increments]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?>/>
+                    <label for="inventory_use_config_enable_qty_increments" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+<?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_enable_qty_increments'), $('inventory_use_config_enable_qty_increments').parentNode);</script><?php endif; ?></td>
+                <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+            </tr>
+            <tr>
+                <td class="label"><label for="inventory_qty_increments"><?php echo Mage::helper('catalog')->__('Qty Increments') ?></label></td>
+                <td class="value">
+                    <input type="text" class="input-text validate-digits" id="inventory_qty_increments" name="<?php echo $this->getFieldSuffix() ?>[stock_data][qty_increments]" value="<?php echo $this->getFieldValue('qty_increments') * 1 ?>" <?php echo $_readonly; ?>/>
+                    <?php $_checked = ($this->getFieldValue('use_config_qty_increments') || $this->IsNew()) ? 'checked="checked"' : '' ?>
+                    <input type="checkbox" id="inventory_use_config_qty_increments" name="<?php echo $this->getFieldSuffix() ?>[stock_data][use_config_qty_increments]" value="1" <?php echo $_checked ?> onclick="toggleValueElements(this, this.parentNode);" class="checkbox" <?php echo $_readonly; ?>/>
+                    <label for="inventory_use_config_qty_increments" class="normal"><?php echo Mage::helper('catalog')->__('Use Config Settings') ?></label>
+<?php if (!$this->isReadonly()): ?><script type="text/javascript">toggleValueElements($('inventory_use_config_qty_increments'), $('inventory_use_config_qty_increments').parentNode);</script><?php endif; ?></td>
+                <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+            </tr>
+            <tr>
+                <td class="label"><label for="inventory_stock_availability"><?php echo Mage::helper('catalog')->__('Stock Availability') ?></label></td>
+                <td class="value"><select id="inventory_stock_availability" name="<?php echo $this->getFieldSuffix() ?>[stock_data][is_in_stock]" class="select" <?php echo $_readonly; ?>>
+                        <?php foreach ($this->getStockOption() as $option): ?>
+                            <?php $_selected = ($option['value'] == $this->getFieldValue('is_in_stock')) ? 'selected="selected"' : '' ?>
+                            <option value="<?php echo $option['value'] ?>" <?php echo $_selected ?>><?php echo $option['label'] ?></option>
+<?php endforeach; ?>
+                    </select>
+                </td>
+                <td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td>
+            </tr>
+            <?php
+            if (!isset($productId)):
+                ?> 
+    <?php /* select warehouse */ ?>
+            <?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorywarehouse')): ?>   
+                <tr>
+                    <td class="label"><label for="inventory_warehouse_product"><?php echo Mage::helper('catalog')->__('Select Warehouse for Product') ?></label></td>
+                    <td>
+                        <?php $_htmlId = 'inventory_select_warehouse'; ?>
+                        <?php $_htmlClass = ''; ?>
+                        <?php $_htmlName = 'inventory_select_warehouse'; ?>
+                        <?php $warehouses = Mage::getModel('inventoryplus/warehouse')->getCollection(); ?>
+                        <table cellspacing="0" class="form-list">
+                            <tbody>
+                                <tr>
+                                    
+                                    <td colspan="10" class="grid tier">
+                                        <table cellspacing="0" class="data border" id="tiers_table">      
+                                            <col width="350" />  
+                                            <col width="350" />  
+                                            <col width="1" />
+                                            <thead>
+                                                <tr class="headings">
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Select Warehouse for Product') ?></th> 
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Qty') ?></th> 
+                                                    <th class="last"><?php echo Mage::helper('inventoryplus')->__('Action') ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="a-right">
+                                                        <button style="" onclick="<?php echo $_htmlId ?>Control.addItem()" class="scalable add" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Add Warehouse') ?>" id=""><span><span><span><?php echo Mage::helper('inventoryplus')->__('Add Warehouse') ?></span></span></span></button>                    
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            var <?php echo $_htmlId ?>RowTemplate = '<tr>'
+                                + '<td>'
+                                + '<select class="required-entry select validation-passed" onchange="checkexit(this,{{index}},\'warehouse\')" id="<?php echo $_htmlId ?>[{{index}}][warehouse_id]" name="<?php echo $_htmlId ?>[{{index}}][warehouse_id]">'
+                                + '<option value=""><?php echo $this->__('Choose Warehouse') ?></option>'
+                                <?php foreach ($warehouses as $warehouse): ?>
+                                    + '<option value="<?php echo $warehouse->getId(); ?>"><?php echo $warehouse->getWarehouseName(); ?></option>'                
+                                <?php endforeach; ?>
+                                + '</select>'
+                                + '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][qty]" name="<?php echo $_htmlId ?>[{{index}}][qty]" />'                        
+                                + '</td>'
+                                + '<td>'
+                                + '<button onclick="return <?php echo $_htmlId ?>Control.deleteItem(event);" id="removeatribute_warehouse" class="scalable delete icon-btn delete-product-option" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Delete Warehouse Select'); ?>"><span><?php echo $this->__('Delete') ?></span></button>'
+                                + '</td>'
+                                + '</tr>';
+
+                                var <?php echo $_htmlId ?>Control = {
+                                    template: new Template(<?php echo $_htmlId ?>RowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+                                    itemsCount: 0,
+                                    addItem: function() {
+                                        var data = {
+                                            warehouse_id: '',
+                                            qty: '',
+                                            index: this.itemsCount++
+                                        };
+                                        if(arguments.length >= 2) {
+                                            data.warehouse_id = arguments[0];                   
+                                            data.qty = arguments[1];                   
+                                        }
+                                        Element.insert($('<?php echo $_htmlId ?>_container'), {
+                                            bottom: this.template.evaluate(data)
+                                        });
+                                        $('inventory_select_warehouse[' + data.index + '][warehouse_id]').value = data.warehouse_id;
+                                        $('inventory_select_warehouse[' + data.index + '][qty]').value = data.qty;
+                                    },
+                                    disableElement: function(el) {
+                                        el.disabled = true;
+                                        el.addClassName('disabled');
+                                    },
+                                    deleteItem: function(event) {
+                                        var tr = Event.findElement(event, 'tr');
+                                        if (tr) {
+                                            Element.select(tr, '.delete').each(function(elem) {
+                                                elem.value = '1'
+                                            });
+                                            Element.select(tr, ['input', 'select']).each(function(elem) {
+                                                elem.remove()
+                                            });
+                                            Element.hide(tr);
+                                            Element.addClassName(tr, 'no-display template');
+                                        }
+                                        return false;
+                                    }
+                                };
+                                function checkexit(element,j,type){
+                                    var count = <?php echo count($warehouses) ?>;
+                                    for(i=0; i<count;i++){                 
+                                        if(type=='warehouse'){      
+                                            if(i!=j){
+                                                if($('inventory_select_warehouse['+i+'][warehouse_id]'))
+                                                    if(element.value && element.value==$('inventory_select_warehouse['+i+'][warehouse_id]').value)
+                                                    {        
+                                                        alert('<?php echo $this->__('This attibute was selected.')?>');
+                                                        element.value = '';
+                                                    }
+                                            }
+                                        }                                    
+                                    }
+                                }    
+                            <?php $firstWarehouse = Mage::getModel('inventoryplus/warehouse')->getCollection()->getFirstItem() ?>
+                            <?php if($firstWarehouse->getId()): ?>
+                                <?php echo $_htmlId ?>Control.addItem('<?php echo $firstWarehouse->getId() ?>','');          
+                            <?php endif ?>
+                        </script>
+                    </td>
+                </tr>
+                <?php endif;?>
+                <?php /* select supplier */ ?>
+    <?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorypurchasing')): ?>            
+                   <tr>
+                    <td class="label"><label for="inventory_supplier_product"><?php echo Mage::helper('catalog')->__('Select Supplier for Product') ?></label></td>
+                    <td>
+                        <?php $_htmlId = 'inventory_select_supplier'; ?>
+                        <?php $_htmlClass = ''; ?>
+                        <?php $_htmlName = 'inventory_select_supplier'; ?>
+                        <?php $suppliers = Mage::getModel('inventorypurchasing/supplier')->getCollection(); ?>
+                        <table cellspacing="0" class="form-list">
+                            <tbody>
+                                <tr>
+                                    
+                                    <td colspan="10" class="grid tier">
+                                        <table cellspacing="0" class="data border" id="tiers_table">      
+                                            <col width="350" />  
+                                            <col width="350" />  
+                                            <col width="1" />
+                                            <thead>
+                                                <tr class="headings">
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Select supplier for Product') ?></th> 
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Cost') ?></th> 
+                                                    <th><?php echo Mage::helper('inventoryplus')->__('Tax (%)') ?></th> 
+						    <th><?php echo Mage::helper('inventoryplus')->__('Discount (%)') ?></th> 
+						    <th><?php echo Mage::helper('inventoryplus')->__('Supplier SKU') ?></th> 
+                                                    <th class="last"><?php echo Mage::helper('inventoryplus')->__('Action') ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="a-right">
+                                                        <button style="" onclick="<?php echo $_htmlId ?>Control.addItem()" class="scalable add" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Add supplier') ?>" id=""><span><span><span><?php echo Mage::helper('inventoryplus')->__('Add supplier') ?></span></span></span></button>                    
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            var <?php echo $_htmlId ?>RowTemplate = '<tr>'
+                                + '<td>'
+                                + '<select class="required-entry select validation-passed" onchange="checkexit(this,{{index}},\'supplier\')" id="<?php echo $_htmlId ?>[{{index}}][supplier_id]" name="<?php echo $_htmlId ?>[{{index}}][supplier_id]">'
+                                + '<option value=""><?php echo $this->__('Choose supplier') ?></option>'
+                                <?php foreach ($suppliers as $supplier): ?>
+                                    + '<option value="<?php echo $supplier->getId(); ?>"><?php echo $supplier->getSupplierName(); ?></option>'                
+                                <?php endforeach; ?>
+                                + '</select>'
+                                + '</td>'
+                                 + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][cost]" name="<?php echo $_htmlId ?>[{{index}}][cost]" />'   
+				+ '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][tax]" name="<?php echo $_htmlId ?>[{{index}}][tax]" />'   
+				+ '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][discount]" name="<?php echo $_htmlId ?>[{{index}}][discount]" />'   
+                                + '</td>'
+                                + '<td>'
+                                + '<input class="required-entry select validation-passed" id="<?php echo $_htmlId ?>[{{index}}][supplier_sku]" name="<?php echo $_htmlId ?>[{{index}}][supplier_sku]" />'   
+                                + '</td>'
+                                + '<td>'
+                                + '<button onclick="return <?php echo $_htmlId ?>Control.deleteItem(event);" id="removeatribute_supplier" class="scalable delete icon-btn delete-product-option" type="button" title="<?php echo Mage::helper('inventoryplus')->__('Delete supplier Select'); ?>"><span><?php echo $this->__('Delete') ?></span></button>'
+                                + '</td>'
+                                + '</tr>';
+
+                                var <?php echo $_htmlId ?>Control = {
+                                    template: new Template(<?php echo $_htmlId ?>RowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+                                    itemsCount: 0,
+                                    addItem: function() {
+                                        var data = {
+                                            supplier_id: '',
+                                            qty: '',
+                                            index: this.itemsCount++
+                                        };
+                                        if(arguments.length >= 2) {
+                                            data.supplier_id = arguments[0];                   
+                                            data.qty = arguments[1];                   
+                                        }
+                                        Element.insert($('<?php echo $_htmlId ?>_container'), {
+                                            bottom: this.template.evaluate(data)
+                                        });
+                                        $('inventory_select_supplier[' + data.index + '][supplier_id]').value = data.supplier_id;
+                                        $('inventory_select_supplier[' + data.index + '][tax]').value = data.qty;
+                                        $('inventory_select_supplier[' + data.index + '][discount]').value = data.qty;
+                                    },
+                                    disableElement: function(el) {
+                                        el.disabled = true;
+                                        el.addClassName('disabled');
+                                    },
+                                    deleteItem: function(event) {
+                                        var tr = Event.findElement(event, 'tr');
+                                        if (tr) {
+                                            Element.select(tr, '.delete').each(function(elem) {
+                                                elem.value = '1'
+                                            });
+                                            Element.select(tr, ['input', 'select']).each(function(elem) {
+                                                elem.remove()
+                                            });
+                                            Element.hide(tr);
+                                            Element.addClassName(tr, 'no-display template');
+                                        }
+                                        return false;
+                                    }
+                                };
+                                function checkexit(element,j,type){
+                                    var count = <?php echo count($suppliers) ?>;
+                                    for(i=0; i<count;i++){                 
+                                        if(type=='supplier'){      
+                                            if(i!=j){
+                                                if($('inventory_select_supplier['+i+'][supplier_id]'))
+                                                    if(element.value && element.value==$('inventory_select_supplier['+i+'][supplier_id]').value)
+                                                    {        
+                                                        alert('<?php echo $this->__('This attibute was selected.')?>');
+                                                        element.value = '';
+                                                    }
+                                            }
+                                        }                                    
+                                    }
+                                }    
+                            <?php $firstsupplier = Mage::getModel('inventorypurchasing/supplier')->getCollection()->getFirstItem() ?>
+                            <?php if($firstsupplier->getId()): ?>
+                                <?php echo $_htmlId ?>Control.addItem('<?php echo $firstsupplier->getId() ?>','');          
+                            <?php endif ?>
+                        </script>
+                    </td>
+                </tr>
+    <?php endif ?>
+<?php endif; ?>
+        </table>        
+        <script type="text/javascript">
+            //<![CDATA[
+            var cataloginventoryNotManagestockFields = {
+                inventory_min_sale_qty: true,
+                inventory_max_sale_qty: true
+            };
+            function changeManageStockOption()
+            {
+                $$('#table_cataloginventory tr').each(manageStockEach);
+                return true;
+            }
+            function manageStockEach(el)
+            {
+                if ($('inventory_use_config_manage_stock').checked) {
+                    var manageStock = $('inventory_manage_stock_default').value;
+                }
+                else {
+                    var manageStock = $('inventory_manage_stock').value;
+                }
+                if (el == $('inventory_manage_stock').up(1)) {
+                    return;
+                }
+                for(field in cataloginventoryNotManagestockFields) {
+                    if ($(field) && ($(field).up(1) == el)) {
+                        return;
+                    }
+                }
+                if (manageStock == 1) {
+                    el.show();
+                }
+                else {
+                    el.hide();
+                }
+                return;
+            }
+            Event.observe($('inventory_manage_stock'), 'change', changeManageStockOption);
+            Event.observe($('inventory_use_config_manage_stock'), 'change', changeManageStockOption);
+            changeManageStockOption();
+
+            function applyEnableQtyIncrements() {
+                if ($('inventory_use_config_enable_qty_increments').checked) {
+                    var enableQtyIncrements = $('inventory_enable_qty_increments_default').value;
+                }
+                else {
+                    var enableQtyIncrements = $('inventory_enable_qty_increments').value;
+                }
+                if (enableQtyIncrements == 1) {
+                    $('inventory_qty_increments').up('tr').show();
+                } else {
+                    $('inventory_qty_increments').up('tr').hide();
+                }
+            }
+            Event.observe($('inventory_enable_qty_increments'), 'change', applyEnableQtyIncrements);
+            Event.observe($('inventory_use_config_enable_qty_increments'), 'change', applyEnableQtyIncrements);
+            applyEnableQtyIncrements();
+            //]]>
+        </script>
+    </fieldset>
+</div>
+<?php if (isset($productId) && $productId != ''): ?>
+    <div class="entry-edit" style="margin-bottom:15px;">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Warehouse') ?></h4>
+        </div>        
+    <?php if ($warehouseproducts): ?>
+            <div class="grid">
+                <div class="hor-scroll">
+                    <table cellspacing="0" id="warehouseGrid_table" class="data">
+                        <colgroup>
+                            <col width="50" class="a-center">
+                            <col>
+                            <col width="150" class="a-center">
+                            <col width="80" class="a-center">
+                            <col width="100" class="a-center">
+                        </colgroup>
+                        <thead>
+                            <tr class="headings">
+                                <th><span class="nobr a-center"><?php echo $this->__('ID') ?></span></th>
+                                <th>
+                                    <span class="nobr"><?php echo $this->__('Warehouse Name') ?></span>
+                                </th>
+                                <th>
+                                    <span class="nobr a-center"><?php echo $this->__('Physical Qty') ?></span>
+                                </th>
+                                <th>
+                                    <span class="nobr a-center"><?php echo $this->__('Avail. Qty') ?></span>
+                                </th>
+                                <th>
+                                    <span class="nobr a-center"><?php echo $this->__('On Hold Qty') ?></span>
+                                </th>
+                                <th>
+                                    <span class="nobr a-center"><?php echo $this->__('Status') ?></span>
+                                </th>
+                                <th>
+                                    <span class="nobr a-center"><?php echo $this->__('Action') ?></span>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php $i = 0; ?>
+                            <?php foreach ($warehouseproducts as $warehouseproduct): ?>
+            <?php $warehouse = Mage::getModel('inventoryplus/warehouse')->load($warehouseproduct->getWarehouseId()) ?>
+                                <tr class="<?php if ($i % 2 == 0) echo "even"; ?> pointer">
+                                    <td class="a-center">
+            <?php echo $warehouse->getId() ?>
+                                    </td>
+                                    <td class="a-left">
+                                        <a href="<?php echo $this->getUrl('inventoryplusadmin/adminhtml_warehouse/edit', array('id' => $warehouse->getId())) ?>" title="<?php echo $this->__('View Warehouse') ?>">
+            <?php echo $warehouse->getWarehouseName() ?>
+                                        </a>
+                                    </td>
+                                    <td class="a-center">
+            <?php echo $warehouseproduct->getTotalQty() ?>
+                                    </td>
+                                    <td class="a-center">
+            <?php echo $warehouseproduct->getAvailableQty() ?>
+                                    </td>
+                                    <td class="a-center">
+            <a name="url" href="javascript:void(0)" onclick="showcustomer(<?= $productId ?>,<?=$warehouseproduct->getWarehouseId() ?>)">                            
+            <?php echo Mage::helper('inventoryplus/warehouse')->getOnHoldQty($productId,$warehouseproduct->getWarehouseId()) ?>
+            </a>
+                                    </td>
+                                    <td class="a-center">
+                                        <?php $warehouseStatus = array('1' => $this->__('Enable'), '2' => $this->__('Disable')) ?>
+            <?php echo $warehouseStatus[$warehouse->getStatus()] ?>
+                                    </td>
+                                    <td class="a-center">
+                                        <a href="<?php echo $this->getUrl('inventoryplusadmin/adminhtml_warehouse/edit', array('id' => $warehouse->getId())) ?>" title="<?php echo $this->__('View Warehouse') ?>">
+            <?php echo $this->__('View') ?>
+                                        </a>
+                                    </td>
+                                </tr>           
+        <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php else: ?>
+            <?php echo $this->__('No warehouse found!') ?>
+    <?php endif ?>
+    </div>
+    <div class="entry-edit" style="margin-bottom:15px;">
+    <?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorypurchasing')): ?>            
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Supplier') ?></h4>
+            </div>
+            <?php $supplierproducts = Mage::helper('inventorypurchasing/supplier')->getSupplierByProductId($productId) ?>    
+        <?php if ($supplierproducts): ?>
+                <div class="grid">
+                    <div class="hor-scroll">
+                        <table cellspacing="0" id="supplierGrid_table" class="data">
+                            <colgroup>
+                                <col width="50" class="a-center">
+                                <col>
+                                <col width="150" class="a-center">
+                                <!--
+                                <col width="80" class="a-center">
+                                -->
+                                <col width="80" class="a-center">
+                                <col width="80" class="a-center">
+                                <col width="80" class="a-center">
+                                <col width="80" class="a-center">
+                                <col width="100" class="a-center">
+                            </colgroup>
+                            <thead>
+                                <tr class="headings">
+                                    <th><span class="nobr a-center"><?php echo $this->__('ID') ?></span></th>
+                                    <th>
+                                        <span class="nobr"><?php echo $this->__('Supplier Name') ?></span>
+                                    </th>
+                                    <!--
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Last Purchase Order') ?></span>
+                                    </th>
+                                    -->
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Cost') ?></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Tax(%)') ?></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Discount(%)') ?></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Supplier SKU') ?></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Status') ?></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr a-center"><?php echo $this->__('Action') ?></span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $i = 0; ?>
+                                <?php foreach ($supplierproducts as $supplierproduct): ?>
+                <?php $supplier = Mage::getModel('inventorypurchasing/supplier')->load($supplierproduct->getSupplierId()) ?>
+                                    <tr class="<?php if ($i % 2 == 0) echo "even"; ?> pointer">
+                                        <td class="a-center">
+                <?php echo $supplier->getId() ?>
+                                        </td>
+                                        <td class="a-left">
+                                            <a href="<?php echo $this->getUrl('inventorypurchasingadmin/adminhtml_supplier/edit', array('id' => $supplier->getId())) ?>" title="<?php echo $this->__('View Supplier') ?>">
+                <?php echo $supplier->getSupplierName() ?>
+                                            </a>
+                                        </td>
+                                        <!--
+                                        <td class="a-center">
+                <?php echo $supplier->getLastPurchaseOrder() ?>
+                                        </td>
+                                        -->
+                                        <td class="a-center">
+                <?php echo Mage::helper('core')->currency($supplierproduct->getCost()) ?>
+                                        </td>
+                                        <td class="a-center">
+                <?php echo $supplierproduct->getTax() ?>
+                                        </td>
+                                        <td class="a-center">
+                <?php echo $supplierproduct->getDiscount() ?>
+                                        </td>
+                                        <td class="a-center">
+                <?php echo $supplierproduct->getSupplierSku() ?>
+                                        </td>
+                                        <td class="a-center">
+                                            <?php $supplierStatus = array('1' => $this->__('Enable'), '2' => $this->__('Disable')) ?>
+                <?php echo $supplierStatus[$supplier->getSupplierStatus()] ?>
+                                        </td>
+                                        <td class="a-center">
+                                            <a href="<?php echo $this->getUrl('inventorypurchasingadmin/adminhtml_supplier/edit', array('id' => $supplier->getId())) ?>" title="<?php echo $this->__('View Supplier') ?>">
+                <?php echo $this->__('View') ?>
+                                            </a>
+                                        </td>
+                                    </tr>           
+            <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php else: ?>
+                <?php echo $this->__('No supplier found!') ?>
+            <?php endif ?>
+    <?php endif ?>
+    </div>
+<?php endif; ?>
+<?php 
+    $showcustomer_url = Mage::helper('adminhtml')->getUrl('inventoryplusadmin/adminhtml_stock/showcustomer');
+?>
+<script>
+    function showcustomer(productId , warehouseId){            
+                var url = "<?php echo $showcustomer_url ?>"+'product_id/'+productId+'/warehouse_id/'+warehouseId;
+                TINY.box.show(url,1, 800, 400, 1);                
+            }  
+</script>

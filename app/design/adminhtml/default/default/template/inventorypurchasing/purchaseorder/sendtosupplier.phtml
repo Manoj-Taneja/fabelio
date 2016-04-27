@@ -1,0 +1,164 @@
+<?php $purchaseOrderId = $this->getPurchaseorderid(); ?>
+<?php $items = $this->getSqlnews() ?>
+<?php 
+    $purchaseOrder = Mage::getModel('inventorypurchasing/purchaseorder')->load($purchaseOrderId);
+    $currency = $purchaseOrder->getCurrency();
+    $purchaseOrderProducts = Mage::getModel('inventorypurchasing/purchaseorder_product')
+                                        ->getCollection()
+                                        ->addFieldToFilter('purchase_order_id',$purchaseOrderId);
+    $supplierInfo = Mage::helper('inventorypurchasing/purchaseorder')->getSupplierInfoByPurchaseOrderId($purchaseOrderId);
+    $warehouseIds = $purchaseOrder->getWarehouseId();
+    $warehouseIds = explode(',',$warehouseIds);
+    $warehouseCollection = Mage::getModel('inventoryplus/warehouse')
+                                    ->getCollection()
+                                    ->addFieldToFilter('warehouse_id',array('in'=>$warehouseIds));
+    $shippingVia = Mage::helper('inventorypurchasing/purchaseorder')->getShippingMethod();
+    $paymentTerm = Mage::helper('inventorypurchasing/purchaseorder')->getPaymentTerms();
+    $totalBase = $purchaseOrder->getTotalAmount();
+    $taxRate = $purchaseOrder->getTaxRate();
+    $shippingCost = $purchaseOrder->getShippingCost();            
+    $totalWithTaxBase = (1+$taxRate/100)*$totalBase;
+?>
+<table width="100%" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; border-collapse:collapse; table-layout:fixed;">
+    <tr>
+        <td valign="top" style="border:1px solid black; width:32%" >
+            <i><?php echo $this->__('Purchase From') ?></i><br />
+            <strong><?php echo $purchaseOrder->getSupplierName() ?></strong>
+            <?php echo $supplierInfo ?>
+        </td>
+        <td valign="top" style="border:1px solid black;" >
+            <i><?php echo $this->__('Deliver To') ?></i><br />        
+            <?php foreach($warehouseCollection as $warehouse): ?>
+                <strong><?php echo $warehouse->getWarehouseName() ?></strong><br />
+                <?php if($warehouse->getStreet()): ?>
+                    <?php echo $warehouse->getStreet() ?>
+                <?php endif ?>
+                <?php if($warehouse->getState()): ?>
+                    <?php echo ' - '.$warehouse->getStategetState() ?>
+                <?php endif ?>
+                <?php if($warehouse->getCity()): ?>
+                    <?php echo ' - '.$warehouse->getCity() ?><br />
+                <?php endif ?>
+                <?php if($warehouse->getCountryId()): ?>
+                    <?php echo Mage::getModel('directory/country')->load($warehouse->getCountryId())->getName() ?>
+                <?php endif ?><br />
+            <?php endforeach ?>
+        </td>
+        <td valign="top" style="border:1px solid black;" >
+            <i><?php echo $this->__('Purchase Order') ?></i><br />
+            <?php echo $this->__('P.O.No#: ').$purchaseOrder->getId() ?><br />
+            <?php echo $this->__('Order created on: ').date('m-d-Y',strtotime($purchaseOrder->getPurchaseOn())) ?><br />
+            <?php if($purchaseOrder->getShipVia()): ?>
+                <?php echo $this->__('Shipping via: ').$shippingVia[$purchaseOrder->getShipVia()] ?><br />
+            <?php endif ?>
+            <?php if($purchaseOrder->getPaymentTerm()): ?>
+                <?php echo $this->__('Payment term: ').$paymentTerm[$purchaseOrder->getPaymentTerm()] ?>
+            <?php endif ?>
+        </td>
+    </tr>
+</table>
+<br><br>
+<table cellspacing="0" cellpadding="0" border="0" width="650" style="font-family: Arial, Helvetica, sans-serif; border:1px solid #EAEAEA;">
+    <thead>
+        <tr>
+            <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Product') ?></th>
+            <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('SKU') ?></th>
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Qty') ?></th>                                           
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Cost') ?></th>                                           
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Tax(%)') ?></th>                                           
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Discount(%)') ?></th>                                           
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Supplier SKU') ?></th>                                           
+            <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Amount') ?></th>                                           
+        </tr>
+    </thead>
+    
+    <?php $i=0; foreach ($items as $item): ?>            
+        <tbody<?php echo $i%2 ? ' bgcolor="#F6F6F6"' : '' ?>>
+            <tr>
+                <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <strong style="font-size:11px;"><?php echo $this->htmlEscape($item["product_name"]) ?></strong>                        
+                </td>
+                <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <?php echo $this->htmlEscape($item["product_sku"]) ?>
+                </td>
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <?php echo $item["qty"] ?>
+                </td>                                        
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <?php echo Mage::getModel('directory/currency')->load($currency)->formatTxt($item["cost"]) ?>
+                </td>                                        
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <?php echo $item["tax"] ?>
+                </td>                                        
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <?php echo $item["discount"] ?>
+                </td>
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <?php echo $item["supplier_sku"] ?>
+                </td>
+                <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
+                    <span class="price"><?php echo Mage::getModel('directory/currency')->load($currency)->formatTxt($item["cost"]*(1+$item["tax"]/100-$item["discount"]/100)*$item["qty"]) ?></span>                    
+                </td>
+            </tr>
+        </tbody>
+        <?php $i++; ?>
+    <?php endforeach; ?>
+</table>   
+
+<div class="order-totals" style="font-family: Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;float: right;text-align: right;width: 48%;">
+    <table width="100%" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+        <colgroup>
+            <col>
+            <col width="1">
+        </colgroup>        
+        <tbody>
+            <tr class="0">
+                <td class="label">
+                    <strong><?php echo $this->__('Subtotal') ?></strong>
+                </td>
+                <td class="emph">
+                    <strong><span class="price"><?php echo Mage::getModel('directory/currency')->load($currency)->formatTxt($totalBase) ?></span></strong>
+                </td>
+            </tr>
+            <tr class="0">
+                <td class="label">
+                    <strong><?php echo $this->__('Shipping Cost') ?></strong>
+                </td>
+                <td class="emph">
+                    <strong><span class="price"><?php echo Mage::getModel('directory/currency')->load($currency)->formatTxt($shippingCost) ?></span></strong>
+                </td>
+            </tr>
+            <tr class="0">
+                <td class="label">
+                    <strong><?php echo $this->__('Tax') ?></strong>
+                </td>
+                <td class="emph">
+                    <strong><span class="price"><?php echo $purchaseOrder->getTaxRate().'%' ?></span></strong>
+                </td>
+            </tr>
+            <tr class="1">
+                <td class="label">
+                    <strong><?php echo $this->__('Grand Total (excl. Tax)') ?></strong>
+                </td>
+                <td class="emph">
+                    <strong><span class="price"><?php echo Mage::getModel('directory/currency')->load($currency)->formatTxt($totalBase + $shippingCost) ?></span></strong>
+                </td>
+            </tr>
+            <tr class="2">
+                <td class="label">
+                    <strong><?php echo $this->__('Grand Total (incl. Tax)') ?></strong>
+                </td>
+                <td class="emph">
+                    <strong><span class="price"><?php echo Mage::getModel('directory/currency')->load($currency)->formatTxt($totalWithTaxBase + $shippingCost) ?></span></strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="clear:both"></div>
+    <!--<a href="#" onclick="myFunction()"><?php echo $this->__('Print this page') ?></a>
+    <script>
+        function myFunction() {
+            window.print();
+        }
+    </script>-->
+</div>

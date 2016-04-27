@@ -1,0 +1,26 @@
+<?php $product = Mage::registry('current_product');?>
+<?php if ((string)$this->getAppId() != ''): ?>
+<meta property='fb:app_id' content='<?php echo (string)$this->getAppId(); ?>'/>
+<?php endif;?>
+<?php if ((string)$this->getAdminId() != ''): ?>
+<meta property='fb:admins' content='<?php echo (string)$this->getAdminId(); ?>' />
+<?php endif;?>
+<meta property='og:url' content='<?php echo $product->getProductUrl();?>'/>
+<meta property='og:type' content='product'/>
+<meta property='og:title' content='<?php echo trim(strip_tags(str_replace("'", "", $product->getName()))); ?>'/>
+<meta itemprop="name" content="<?php echo trim(strip_tags(str_replace("'", "", $product->getName()))); ?>">
+<meta property='og:description' content='<?php echo trim(strip_tags(str_replace("'", "", $product->getShortDescription()))); ?>'>
+<meta itemprop="description" content="<?php echo trim(strip_tags(str_replace("'", "", $product->getShortDescription()))); ?>">
+<?php foreach ($product->getMediaGallery('images') as $_image): ?>
+<meta property='og:image' content='<?php echo Mage::helper('catalog/image')->init($product, 'image', $_image['file']);?>'/>
+<?php endforeach;?>
+
+<meta name="twitter:card" value="summary_large_image" />
+<meta name="twitter:site" content="@hellofabelio" />
+
+<meta property="og:price:amount" content="<?php echo $product->getFinalPrice(); ?>" />
+<meta property="og:price:currency" content="<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>" />
+
+<meta name="twitter:data1" content="<?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false); ?>">
+<meta name="twitter:label1" content="Price">
+

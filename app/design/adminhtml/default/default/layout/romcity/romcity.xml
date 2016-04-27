@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sales_order_create_index>
+        <reference name="billing_address">
+            <action method="setTemplate">
+                <template>romcity/sales/order/create/form/address.phtml</template>
+            </action>
+        </reference>
+        <reference name="shipping_address">
+            <action method="setTemplate">
+                <template>romcity/sales/order/create/form/ship_address.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+    <adminhtml_sales_order_create_load_block_data>
+        <reference name="billing_address">
+            <action method="setTemplate">
+                <template>romcity/sales/order/create/form/address.phtml</template>
+            </action>
+        </reference>
+        <reference name="shipping_address">
+            <action method="setTemplate">
+                <template>romcity/sales/order/create/form/ship_address.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_create_load_block_shipping_address>
+        <reference name="shipping_address">
+            <action method="setTemplate">
+                <template>romcity/sales/order/create/form/ship_address.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_load_block_shipping_address>
+
+    <adminhtml_sales_order_create_load_block_billing_address>
+        <reference name="billing_address">
+            <action method="setTemplate">
+                <template>romcity/sales/order/create/form/address.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_load_block_billing_address>
+</layout>

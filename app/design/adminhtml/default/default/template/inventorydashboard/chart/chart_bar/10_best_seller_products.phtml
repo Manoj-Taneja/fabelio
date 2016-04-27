@@ -1,0 +1,157 @@
+
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+
+<?php $warehouses = Mage::getModel('inventoryplus/warehouse')->getCollection()->addFieldToFilter('status', 1); ?>
+<?php
+    $cookie = Mage::getSingleton('core/cookie');
+    $warehouseId = $cookie->get($chart->getReportCode().$id.'chart_warehouse_id');
+?> 
+<?php if (Mage::helper('core')->isModuleEnabled('Magestore_Inventoryreports')):?>
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo Mage::helper("adminhtml")->getUrl("inventoryreportsadmin/adminhtml_sales/history", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<?php endif; ?>
+<div style="width: 100%; float:left; margin-top: 5px;">
+                            <label style="float:left; line-height: 28px; font-size: 14px;"><?php echo $this->__('Select warehouse')?></label>
+                            <ul id="<?php echo $chart->getReportCode();?>_ul" style="float: left; margin-left: 5px; width: 150px; padding: 5px; background: none repeat scroll 0% 0% #20374D; color: white; font-size: 14px;cursor: pointer;">
+                                <?php if(!$warehouseId || $warehouseId==0):?>
+                                <li onclick="selectWarehouse('<?php echo $chart->getReportCode()?>_<?php echo $id?>_select')"><?php echo $this->__('All warehouses'); ?> <span style="float:right">&#8711;</span>
+                                        <ul style="display:none" id="<?php echo $chart->getReportCode()?>_<?php echo $id?>_select">
+                                            <?php foreach ($warehouses as $warehouse): ?>
+                                            <li onmouseout="this.style.fontStyle = 'normal'; this.style.fontWeight = 'normal'" onmousemove="this.style.fontStyle = 'italic'; this.style.fontWeight = 'bold'" onclick="changeWarehouse('<?php echo $chart->getReportCode() ?>','<?php echo $chart->getReportCode() ?>_chart_content',<?php echo $warehouse->getId();?>,<?php echo $id?>);"><?php echo $warehouse->getWarehouseName();?></li>
+                                            <?php endforeach; ?>                                            
+                                        </ul>
+                                    </li>
+                                <?php else:?>
+                                    <?php $warehouses = $warehouses->addFieldToFilter('warehouse_id', array('neq'=>$warehouseId));?>
+                                    
+                                    <li onclick="selectWarehouse('<?php echo $chart->getReportCode()?>_<?php echo $id?>_select')"><?php echo Mage::getModel('inventoryplus/warehouse')->load($warehouseId)->getWarehouseName(); ?> <span style="float:right">&#8711;</span>
+                                        <ul style="display:none" id="<?php echo $chart->getReportCode()?>_<?php echo $id?>_select">
+                                            <li onmouseout="this.style.fontStyle = 'normal'; this.style.fontWeight = 'normal'" onmousemove="this.style.fontStyle = 'italic'; this.style.fontWeight = 'bold'" onclick="changeWarehouse('<?php echo $chart->getReportCode() ?>','<?php echo $chart->getReportCode() ?>_chart_content',0,<?php echo $id?>);"><?php echo $this->__('All warehouses'); ?>
+                                            <?php foreach ($warehouses as $warehouse): ?>
+                                                <li onmouseout="this.style.fontStyle = 'normal'; this.style.fontWeight = 'normal'" onmousemove="this.style.fontStyle = 'italic'; this.style.fontWeight = 'bold'" onclick="changeWarehouse('<?php echo $chart->getReportCode() ?>','<?php echo $chart->getReportCode() ?>_chart_content',<?php echo $warehouse->getId();?>,<?php echo $id?>);"><?php echo $warehouse->getWarehouseName();?></li>
+                                            <?php endforeach; ?>                                            
+                                        </ul>
+                                    </li>
+                                <?php endif;?>
+                                    
+                                
+                            </ul>
+                            
+                            
+</div>
+<?php     
+   
+    $categories = '[';
+    
+    $series['item']['name'] = $this->__('Qty');
+    $series['item']['data'] = '[';    
+    $series['grandtotal']['name'] = $this->__('Grand Total %s',Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol());
+    $series['grandtotal']['data'] = '[';    
+    $i = 0;
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+   
+  
+    if(!$warehouseId || $warehouseId==0){
+        $sql = 'SELECT product_id, SUM(subtotal_shipped), SUM(qty_shipped) FROM '.$resource->getTableName('inventoryplus/warehouse_shipment').' GROUP BY product_id ORDER BY SUM(qty_shipped) DESC LIMIT 10'; 
+    }else{
+        $sql = 'SELECT product_id, SUM(subtotal_shipped), SUM(qty_shipped) FROM '.$resource->getTableName('inventoryplus/warehouse_shipment').' WHERE warehouse_id = '.$warehouseId.' GROUP BY product_id ORDER BY SUM(qty_shipped) DESC LIMIT 10'; 
+    }
+     
+    $results = $readConnection->query($sql);
+    
+    foreach($results as $result){
+        if($i != 0){ 
+            $categories .= ',';
+            $series['item']['data'] .= ',';
+            $series['grandtotal']['data'] .= ',';
+        }
+        $product = Mage::getModel('catalog/product')->load($result['product_id']);
+        $categories .= "\"" . str_replace('"', '\'', $product->getName()) . "\"";
+        $series['item']['data'] .= $result['SUM(qty_shipped)'];     
+        $series['grandtotal']['data'] .= $result['SUM(subtotal_shipped)'];     
+        $i++;
+    }
+    
+    $categories .= ']';
+    
+    $series['item']['data'] .= ']';
+    $series['grandtotal']['data'] .= ']';
+    
+    $baseCurrency = '$';
+?>
+                            
+<script type="text/javascript">
+    
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({        
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: '<?php echo $chart->getName() ?>'         
+        },
+//        subtitle: {
+//            text: 'Source: Wikipedia.org'
+//        },
+        xAxis: {
+            categories: <?php echo $categories?>,
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '<?php echo $this->__("Grand Total %s",Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol())?>/<?php echo $this->__('Qty')?>',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' '
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [
+            <?php $count = 0; ?>
+            <?php foreach($series as $serie): ?>
+                <?php if(!$count == 0) echo ','; ?>
+                <?php $count++; ?>    
+                {
+                    name: '<?php echo $serie['name']; ?>',
+                    data: <?php echo $serie['data']; ?>
+                }
+            <?php endforeach; ?>
+        ]
+    });
+});
+
+
+</script>
+
+
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px; margin: 65px auto 0; "></div>

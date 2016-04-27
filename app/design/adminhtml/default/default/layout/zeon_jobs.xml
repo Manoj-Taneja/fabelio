@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+/**
+* zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    default_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_jobs_list_index>
+        <reference name="content">
+            <block type="zeon_jobs/adminhtml_jobs" name="jobs_list" />
+        </reference>
+    </adminhtml_jobs_list_index>
+     <adminhtml_jobs_list_edit>
+        <update handle="editor"/>
+        <reference name="left">
+            <block type="zeon_jobs/adminhtml_jobs_edit_tabs" name="jobs_edit_tabs">
+                <block type="zeon_jobs/adminhtml_jobs_edit_tab_form" name="jobs_edit_tab_form"/>
+                <block type="zeon_jobs/adminhtml_jobs_edit_tab_meta" name="jobs_edit_tab_meta"/>
+                <action method="addTab"><name>information_section</name><block>jobs_edit_tab_form</block></action>
+                <action method="addTab"><name>meta_section</name><block>jobs_edit_tab_meta</block></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="zeon_jobs/adminhtml_jobs_edit" name="jobs_edit_information"/>
+        </reference>
+    </adminhtml_jobs_list_edit>
+    <adminhtml_jobs_list_grid>
+        <remove name="root"/>
+        <block type="zeon_jobs/adminhtml_jobs_grid" name="jobs_grid" output="toHtml"/>
+    </adminhtml_jobs_list_grid>
+    <adminhtml_jobs_category_index>
+        <reference name="content">
+            <block type="zeon_jobs/adminhtml_category" name="jobs_category" />
+        </reference>
+    </adminhtml_jobs_category_index>
+    <adminhtml_jobs_category_edit>
+        <update handle="editor"/>
+        <reference name="left">
+            <block type="zeon_jobs/adminhtml_category_edit_tabs" name="category_edit_tabs">
+                <block type="zeon_jobs/adminhtml_category_edit_tab_form" name="category_edit_tab_form"/>
+                <action method="addTab"><name>information_section</name><block>category_edit_tab_form</block></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="zeon_jobs/adminhtml_category_edit" name="category_edit_information"/>
+        </reference>
+    </adminhtml_jobs_category_edit>
+    <adminhtml_jobs_category_grid>
+        <remove name="root"/>
+        <block type="zeon_jobs/adminhtml_category_grid" name="jobs_category_grid" output="toHtml"/>
+    </adminhtml_jobs_category_grid>
+    <adminhtml_jobs_application_index>
+        <reference name="content">
+            <block type="zeon_jobs/adminhtml_application" name="job_applicantions"/>
+        </reference>
+    </adminhtml_jobs_application_index>
+    <adminhtml_jobs_application_edit>
+        <reference name="left">
+            <block type="zeon_jobs/adminhtml_application_edit_tabs" name="application_edit_tabs">
+                <block type="zeon_jobs/adminhtml_application_edit_tab_form" name="application_edit_tab_form"/>
+                <action method="addTab"><name>information_section</name><block>application_edit_tab_form</block></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="zeon_jobs/adminhtml_application_edit" name="application_edit"/>
+        </reference>
+    </adminhtml_jobs_application_edit>
+    <adminhtml_jobs_application_grid>
+        <remove name="root"/>
+        <block type="zeon_jobs/adminhtml_application_grid" name="jobs_application_grid" output="toHtml"/>
+    </adminhtml_jobs_application_grid>
+</layout>

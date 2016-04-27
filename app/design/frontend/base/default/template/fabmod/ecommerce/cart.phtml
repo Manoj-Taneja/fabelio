@@ -1,0 +1,32 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$quote = Mage::getSingleton('checkout/cart')->getQuote();
+                $products = $quote->getAllItems();
+                $ids = '';
+                foreach ($products as $item) {
+                    $categories = $item->getCategoryIds();
+                    if ($ids !== '') {
+                        $ids .= ', ';
+                    }
+                    $ids .= "{'name':'".$item->getName()."','id':'" . $item->getProduct()->getId() . "','price':'".$item->getPrice()."','category':'".Mage::getModel('catalog/category')->load($categories[0])->getName()."','quantity':".$item->getQty()."}";
+                }
+
+?>
+<script type="text/javascript">
+jQuery(function($){ 
+   $('.btn-checkout').on('click', function(e){
+      dataLayer.push({
+        'event': 'checkout',
+        'ecommerce': {
+        'checkout': {
+        'actionField': {'step': 1,'option' : 'Main Cart'},
+        'products' : [<?php echo $ids ; ?>]
+                     }
+                 }           
+        });
+   });
+});
+</script>

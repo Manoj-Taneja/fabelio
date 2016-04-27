@@ -1,0 +1,46 @@
+<?php
+/**
+ * Sends product view data to Google Enhanced Ecommerce Analytics
+ *
+ * @author      @mediotype
+ * @reference   https://developers.google.com/analytics/devguides/collection/analyticsjs/enhanced-ecommerce
+ * @var         $this Mage_Checkout_Block_Cart
+ */
+$items = $this->getItems();
+?>
+<?php if(count($items) >= 1): ?>
+<script type="text/javascript">
+    //<![CDATA[
+    document.observe('dom:loaded', function(){
+    //change the remove button's onclick for each item in the cart
+    <?php $position = 0 ?>
+    <?php foreach($items as $item): ?>
+    var rButton<?php echo $position ?> = $('shopping-cart-table').down('tbody').down('tr',<?php echo $position ?>).down('.btn-remove');
+    rButton<?php echo $position ?>.originalclick = rButton<?php echo $position ?>.onclick;
+    rButton<?php echo $position ?>.onclick = function() {
+        <?php $product = $item->getProduct() ?>
+        <?php
+            $impressionData = array(
+                "id"        => $product->getId(),
+                "name"      => $product->getName(),
+                "price"     => $item->getPrice(),
+                "quantity"  => $item->getQty()
+                );
+            if($product->getManufacturer()){
+                $impressionData['brand'] =$product->getManufacturer();
+            }
+        ?>
+        ga('ec:addProduct', <?php echo json_encode($impressionData) ?>);
+        ga('ec:setAction', 'remove');
+        ga('send', 'event', 'UX', 'click', 'remove from cart',{
+            'hitCallback': function() {
+            }
+        }); // Send data using an event.
+        rButton<?php echo $position ?>.click(rButton<?php echo $position ?>.originalclick);
+    };
+    <?php $position ++; ?>
+    <?php endforeach; ?>
+    });
+    //]]>
+</script>
+<?php endif; ?>

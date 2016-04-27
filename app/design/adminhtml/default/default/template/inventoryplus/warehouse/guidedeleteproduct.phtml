@@ -1,0 +1,15 @@
+<?php 
+$admin = Mage::getSingleton('admin/session')->getUser();
+$warehouseId = $this->getRequest()->getParam('id');
+if ($warehouseId && Mage::helper('inventoryplus/warehouse')->canEdit($admin->getId(), $warehouseId)):
+?>
+<div class="entry-edit">
+    <div id="warehouse_guide_form-head" style="cursor: pointer;" class="entry-edit-head" onclick="Fieldset.toggleCollapse('warehouse_guide_form');
+         ">
+        <label class="icon-question"><?php echo $this->__('How to delete products in a warehouse') ?></label>
+    </div>
+    <div id="warehouse_guide_form" class="fieldset" style="display:none">
+        <p><?php echo $this->__("Inventory Management extension only allows you to delete products in a warehouse when their Qty is 0. For example, if you want to remove a product in this warehouse, you need to adjust its Qty to 0 first (enter 0 in Total Qty and click Save or Save and Continue Edit), then uncheck the product in the grid below and save again."); ?></p>
+    </div>
+</div>
+<?php endif;?>

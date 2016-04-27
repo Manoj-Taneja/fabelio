@@ -1,0 +1,47 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+if ($helper->isTagsEnabled()) {
+?>
+<script type="text/javascript">
+mixpanel.track(
+    "Page Viewed",
+    {"Name":"Cart" }
+);
+</script>
+<?php }
+if ($helper->isPlusEnabled()){
+?>
+<script type="text/javascript">
+var pmLoaded = setInterval(function() {
+    if (PlusMargin) {
+        clearInterval(pmLoaded);
+        PlusMargin.setCartValue("<?php echo Mage::getSingleton('checkout/cart')->getQuote()->getGrandTotal() ?>");
+    }
+
+}, 1000);
+</script>
+<?php
+}
+?>
+<?php
+if ($helper->isAdwordsEnabled()){
+?>
+<script type="text/javascript">
+var google_conversion_id = 946949897;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "ZW0MCNyozWQQiZ7FwwM";
+var google_conversion_value = 0;
+var google_conversion_currency = "IDR";
+var google_remarketing_only = false;
+/* ]]> */
+</script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" async>
+  </script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/946949897/?value=0.00&currency_code=IDR&label=ZW0MCNyozWQQiZ7FwwM&guid=ON&script=0"/>
+</div>
+</noscript>
+<?php } ?>

@@ -1,0 +1,34 @@
+<?php
+$helper = Mage::helper("fabmod_criteo");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$hashedEmail="";
+if (Mage::getSingleton('customer/session')->isLoggedIn()){
+  $customerEmail = Mage::getSingleton('customer/session')->getCustomer()->getEmail();
+  $hashedEmail = md5($customerEmail);
+}
+$quote = Mage::getSingleton('checkout/cart')->getQuote();
+                $products = $quote->getAllItems();
+                $ids = '';
+                foreach ($products as $item) {
+                    if ($ids !== '') {
+                        $ids .= ', ';
+                    }
+                    $ids .= '{id:"' . $item->getProduct()->getId() . '",price:'.$item->getPrice().',quantity:'.$item->getQty().'}';
+                }
+
+?>
+<script type="text/javascript">
+var dataLayer = dataLayer || [];
+var products_list = [];
+products_list.push(
+   <?php echo $ids; ?>
+);
+
+dataLayer.push({
+  'PageType': 'Basketpage',
+  'HashedEmail': '<?php echo $hashedEmail; ?>', 
+  'ProductBasketProducts': products_list
+});
+</script>

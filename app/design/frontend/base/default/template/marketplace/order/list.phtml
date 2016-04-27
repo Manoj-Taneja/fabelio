@@ -1,0 +1,101 @@
+<?php $_items = $this->getFlatCollection(); ?>
+
+<div class="container main-container vendor-container">
+    <h1 class="text-center"><?php echo $this->__('Orders') ?></h1>
+    <div class="row">
+        <div class="col-md-12">
+            <form name="report_filter" id="report_filter" action="<?php echo Mage::getUrl('*/*/*') ?>" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control input-text" placeholder="Autoincrement ID" name="autoincrement_id" value="<?php echo $this->escapeHtml($this->getRequest()->getPost('autoincrement_id', '')); ?>"/>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control datepicker input-text input-text validate-date" name="from" value="<?php echo $this->escapeHtml($this->getRequest()->getPost('from', '')); ?>" placeholder="From"/>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control datepicker input-text input-text validate-date" name="to" value="<?php echo $this->escapeHtml($this->getRequest()->getPost('to', '')); ?>" placeholder="To"/>
+                    </div>
+                    <div class="col-md-2">
+                        <select name="status"  placeholder="From">
+                            <option value=""> Status</option>
+                            <?php foreach(Mage::getModel('sales/order_status')->getResourceCollection() AS $status): ?>
+                                <option value="<?php echo $status->getStatus() ?>"<?php echo $status->getStatus() ==  $this->getRequest()->getPost('status', '') ? ' selected="selected"' : ""; ?>><?php echo $status->getLabel() ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="submit" name="submit" class="btn btn-primary btn-sm" value="<?php echo $this->__('Filter') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        <div class='table-responsive'>
+            <table class="table table-striped">
+        <thead>
+        <th><?php echo $this->__('Order #') ?></th>
+        <th><?php echo $this->__('Purchased On') ?></th>
+        <th><?php echo $this->__('Bill to Name') ?></th>
+        <th><?php echo $this->__('Ship to Name') ?></th>
+        <th><?php echo $this->__('Subtotal') ?></th>
+        <th><?php echo $this->__('Income') ?></th>
+        <th><?php echo $this->__('Status') ?></th>
+        <th><?php echo $this->__('Actions') ?></th>
+        </thead>
+        <tbody>
+        <?php if($_items->count()): ?>
+            <?php foreach($_items AS $_item): ?>
+                <?php $item = Mage::getModel('sales/order')->load($_item->getOrderId()); ?>
+                <?php $subtotal = $this->calculateSubtotal($item); ?>
+                <tr class="item">
+                    <td>#<?php echo $item->getIncrementId(); ?></td>
+                    <td><?php echo $item->getCreatedAt(); ?></td>
+                    <td><?php echo $this->escapeHtml($item->getBillingAddress()->getFirstname()); ?> <?php echo $this->escapeHtml($item->getBillingAddress()->getLastname()); ?></td>
+                    <td><?php if($item->getShippingAddress()): ?><?php echo $this->escapeHtml($item->getShippingAddress()->getFirstname()); ?> <?php echo $this->escapeHtml($item->getShippingAddress()->getLastname()); ?><?php endif; ?></td>
+                    <td><?php echo Mage::helper('core')->currency($subtotal); ?></td>
+                    <td><?php echo Mage::helper('core')->currency(Mage::helper('marketplace/profits')->calculateNetIncome(Mage::helper('marketplace')->getSupplierId(), $subtotal)); ?></td>
+                    <td><?php echo ucfirst($item->getStatus()); ?></td>
+                    <td>
+                        <a href="<?php echo Mage::getUrl('marketplace/order/view/', array('id' => $_item->getOrderId())) ?>" class="btn btn-primary"><?php echo $this->__('View'); ?></a>
+                        <?php if(!$this->isFullyShipped($_item->getOrderId()) && $item->getState() != 'canceled' && $item->getShippingAddress()): ?>
+                            <a href="<?php echo Mage::getUrl('marketplace/shipment/create/', array('id' => $_item->getOrderId())) ?>" class="btn btn-primary btn-success"><?php echo $this->__('Ship'); ?></a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <td colspan="7"><?php echo $this->__("No results"); ?></td>
+        <?php endif; ?>
+        </tbody>
+        <tfoot>
+        <th><?php echo $this->__('Order #') ?></th>
+        <th><?php echo $this->__('Purchased On') ?></th>
+        <th><?php echo $this->__('Bill to Name') ?></th>
+        <th><?php echo $this->__('Ship to Name') ?></th>
+        <th><?php echo $this->__('Subtotal') ?></th>
+        <th><?php echo $this->__('Income') ?></th>
+        <th><?php echo $this->__('Status') ?></th>
+        <th><?php echo $this->__('Active') ?></th>
+        </tfoot>
+    </table>
+            <?php
+            echo $this->getLayout()->createBlock('core/template')
+                ->setTemplate('marketplace/order/index/pagination.phtml')
+                ->setCollection($_items)
+                ->toHtml() ?>
+            </div>
+            </div>
+        </div>
+</div>
+
+
+<script type="text/javascript">
+    //< ![CDATA[
+    var customForm = new VarienForm('report_filter');
+    //]]>
+    jQuery(document).ready(function($){
+        jQuery('.datepicker').datepicker();
+    });
+</script>

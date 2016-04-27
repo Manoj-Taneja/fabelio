@@ -1,0 +1,42 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Storecredit
+ * @version    1.0.2
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if($this->isCanShow()): ?>
+<p>
+    <label for="aw_storecredit_refund_checkbox"><?php echo Mage::helper('aw_storecredit')->__('Refund to Store Credit') ?></label>
+    <input type="checkbox" name="creditmemo[aw_storecredit_refund_checkbox]" value="1" id="aw_storecredit_refund_checkbox" <?php if($this->isAutoRefund()): ?>checked="checked"<?php endif; ?>>
+    <input type="text" name="creditmemo[aw_storecredit_refund_input]" value="<?php echo $this->getRefundValue() ?>" id="aw_storecredit_refund_input" class="input-text not-negative-amount" style="width: 60px; text-align: right;">
+    <script type="text/javascript">
+        //<![CDATA[
+        function toggleStoreCreditRefundInput() {
+            $('aw_storecredit_refund_input').disabled = !$('aw_storecredit_refund_checkbox').checked;
+        }
+
+        Event.observe($('aw_storecredit_refund_checkbox'), 'change', toggleStoreCreditRefundInput);
+        toggleStoreCreditRefundInput();
+        //]]>
+    </script>
+</p>
+<?php endif; ?>

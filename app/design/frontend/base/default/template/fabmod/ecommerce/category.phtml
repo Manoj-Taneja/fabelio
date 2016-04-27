@@ -1,0 +1,46 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$products = Mage::getBlockSingleton('catalog/product_list')->getLoadedProductCollection();
+$ids = '';
+$i=1;
+$list = Mage::registry('current_category')->getName();
+
+
+$currentCat = Mage::registry('current_category');
+$parentIds = explode('/', $currentCat->getPath());
+array_pop($parentIds);
+array_shift($parentIds);
+$catArray=array();
+foreach ($parentIds as $category_id) {
+  $_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($category_id);
+  array_push($catArray,$_cat->getName());
+}
+array_push($catArray,$list);
+$category = join("/",$catArray);
+
+?>
+<script type="text/javascript">
+dataLayer.push({
+    'event' : 'viewCategory',
+    'ecommerce': {
+          'currencyCode': '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',         
+                'impressions': [
+                      <?php foreach($products as $item) { 
+                      ?>
+                       {
+                                'name': '<?php echo $item->getName(); ?>',       // Name or ID is required.
+                                'id': '<?php echo $item->getId(); ?>',
+                                'price': '<?php echo $item->getFinalPrice(); ?>',
+                                'category' :'<?php echo $category; ?>',
+                                'list' : '<?php if($item->getAttributeText('reporting_category') === NULL ){
+                                          echo $list; } else { echo $item->getAttributeText('reporting_category'); } ?>',
+                                'position': <?php echo $i; ?>
+                       }
+               <?php if(sizeof($products)>$i) { ?> , <?php } ?>
+               <?php $i++; } ?> ]
+                   }
+});
+</script>

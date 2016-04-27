@@ -1,0 +1,35 @@
+<div class="column-widget-container">
+    <div class="mini-dashboard">
+        <div class="dashboard-widget-header">
+            <p><?php echo $this->__('Last 10 Adjust Stock') ?></p>
+        </div>
+        <div class="dashboard-widget-content">
+            <span><?php echo $this->__('Recent Adjust Stock') ?></span>
+            <?php $adjustStocks = $this->getAdjustStockCollection(); ?> 
+            <table>
+                <tr id="table-title">
+                    <td><?php echo $this->__('Date') ?></td>
+                    <td><?php echo $this->__('Warehouses') ?></td>
+                    <td><?php echo $this->__('Created By') ?></td>
+                    <td><?php echo $this->__('Status') ?></td>
+                    <td><?php echo $this->__('Confirm By') ?></td>
+                    <td><?php echo $this->__('Confirm At') ?></td>
+                </tr>
+                <?php foreach ($adjustStocks as $adjustStock): ?> 
+                    <tr>
+                        <?php $date = new Zend_Date(); ?>
+                        <?php $date->setLocale(Mage::app()->getLocale()->getLocaleCode()); ?>
+                        <?php $date_adjust = $date->setDate($adjustStock->getCreatedAt(), 'yyyy/MM/dd'); ?>
+                        <td><?php echo Mage::helper('core')->formatDate($date_adjust, 'medium'); ?></td>
+                        <td><?php echo $adjustStock->getWarehouseName(); ?></td>
+                        <td><?php echo $adjustStock->getCreatedBy(); ?></td>                            
+                        <td><?php echo Mage::helper('inventoryplus')->getStatusLabel($adjustStock->getStatus()); ?></td>
+                        <td><?php echo $adjustStock->getConfirmedBy(); ?></td>
+                        <?php $date_confirm = ($adjustStock->getConfirmedAt()) ? $date->setDate($adjustStock->getConfirmedAt(), 'yyyy/MM/dd') : ''; ?>
+                        <td><?php echo ($date_confirm) ? Mage::helper('core')->formatDate($date_confirm, 'medium') : ''; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+</div>

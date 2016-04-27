@@ -1,0 +1,53 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+if ($orderId) {
+    $order = Mage::getModel('sales/order')->loadByAttribute('increment_id', $orderId);
+    $items = $order->getAllItems();
+    $ids ='';
+    foreach ($items as $item) {
+      $_product= Mage::getSingleton('catalog/product')->load($item->getId());
+      if($_product->getResource()->getAttribute('reporting_category')->getFrontend()->getValue($_product)===NULL){
+        $list = '';
+      } else {
+        $list = $_product->getResource()->getAttribute('reporting_category')->getFrontend()->getValue($_product);
+      }
+      if ($ids !== '') {
+             $ids .= ', ';
+                        }
+       $categories = $item->getProduct()->getCategoryIds();
+       $ids.= "{'name' : '".$item->getName()."','id':'" . $item->getId() . "','category':'".Mage::getModel('catalog/category')->load($categories[0])->getName()."','price':'".$item->getProduct()->getFinalPrice()."','quantity':'".$item->getQtyOrdered()."','list':'".$list."'}";
+    }
+}
+
+?>
+
+
+<script type="text/javascript">
+
+var dataLayer = dataLayer || [];
+  dataLayer.push({
+        'event': 'checkout',
+        'ecommerce': {
+        'checkout': {
+        'actionField': {'step': 7},
+        'products' : [<?php echo $ids ; ?>]
+                     }
+                 }           
+  });
+  dataLayer.push({
+    'event' : 'purchase',
+    'ecommerce': {
+        'purchase': {
+            'actionField': {
+               'id': '<?php echo $orderId; ?>',
+               'revenue' : '<?php echo $order->getGrandTotal(); ?>'
+              },
+             'products' : [<?php echo $ids ; ?>]
+                }
+          }
+        });
+</script>

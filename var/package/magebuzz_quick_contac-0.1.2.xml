@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+    <name>magebuzz_quick_contac</name>
+    <version>0.1.2</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Quick contact allows you to provide very quick contact form for customers to send feedback.</summary>
+    <description>&lt;p&gt;Besides providing qualified services and products, to attract and satisfy more customers, you need to have an excellent support system. Our Quick Contact is one suggestion for you to save time that customers give feedback to you. Using this module, you can provide for customers a very quick and simple contact form to send you their feedback. Moreover, you can show this Quick Contact in both contact page or in sidebar for better convenience.&lt;/p&gt;&#xD;
+&lt;strong&gt;Features&lt;/strong&gt;&#xD;
+&lt;li&gt;Allow to turn on/off Quick contact&lt;/li&gt;&#xD;
+&lt;li&gt;Allow to show quick contact on sidebar (left or right)&lt;/li&gt;&#xD;
+&lt;li&gt;Allow to turn on/off capcha&lt;/li&gt;&#xD;
+&lt;li&gt;Allow to default email template&lt;/li&gt;&#xD;
+</description>
+    <notes>Quick Contact</notes>
+    <authors><author><name>Magebuzz</name><user>magebuzz</user><email>magebuzz@gmail.com</email></author></authors>
+    <date>2014-07-11</date>
+    <time>03:01:47</time>
+    <contents><target name="mageskin"><file name="skinmain.php" hash="116420327344d601319f44efcc2f2009"/></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

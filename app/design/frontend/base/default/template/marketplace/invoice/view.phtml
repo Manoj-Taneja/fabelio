@@ -1,0 +1,104 @@
+<?php $_shipment = $this->getShipment(); ?>
+<?php $_orderResource = $_shipment->getOrder(); ?>
+<?php $_order = Mage::getModel('sales/order')->load($_orderResource->getId()); ?>
+<?php $_items = $_order->getallItems(); ?>
+<?php $_shippingAddress = $_order->getShippingAddress(); ?>
+<?php $_billingAddress = $_order->getBillingAddress(); ?>
+<?php $_trackings = Mage::getResourceModel('sales/order_shipment_track_collection')->addAttributeToSelect('*')->addAttributeToFilter('parent_id',$_shipment->getId()); ?>
+<div class="container-fluid main-container vendor-container">
+<h2 style="text-align: center"><?php echo $this->__('Shipment for Order'); ?> #<?php echo $_order->getIncrementId(); ?></h2>
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="span5">
+                <h3><?php echo $this->__("Order Information"); ?></h3>
+                <p><strong><?php echo $this->__("Order Date"); ?> : </strong> <?php echo date("M d, Y g:i:s A", strtotime($_order->getCreatedAt())); ?></p>
+                <p><strong><?php echo $this->__("Order Status"); ?> : </strong>
+                    <?php if($_order->getStatus() == 'canceled') :?>
+                        <span class="text-danger"><?php echo ucfirst($_order->getStatus()); ?></span>
+                    <?php else : ?>
+                        <?php echo ucfirst($_order->getStatus()); ?>
+                    <?php endif; ?>
+                </p>
+            </div>
+            <div class="span5">
+                <h3><?php echo $this->__("Account Information"); ?></h3>
+                <p><strong><?php echo $this->__("Customer Name"); ?> : </strong> <?php echo $_order->getCustomerFirstname(); ?> <?php echo $_order->getCustomerLastname(); ?></p>
+                <p><strong><?php echo $this->__("Email"); ?> : </strong> <a href="mailto:<?php echo $_order->getCustomerEmail(); ?>"><?php echo $_order->getCustomerEmail(); ?></a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span5">
+            <h3><?php echo $this->__("Billing Address"); ?></h3>
+            <p><?php echo $this->escapeHtml($_billingAddress->getFirstname()); ?> <?php echo $this->escapeHtml($_billingAddress->getLastname()); ?></p>
+            <p><?php echo join(' ', $_billingAddress->getStreet()); ?></p>
+            <p><?php echo $this->escapeHtml($_billingAddress->getCity()); ?> <?php echo $this->escapeHtml($_billingAddress->getRegion()); ?>, <?php echo $_billingAddress->getPostcode(); ?></p>
+            <?php $countryCode = $this->escapeHtml($_billingAddress->getCountry()); ?>
+            <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+            <p><?php echo $this->escapeHtml($country->getName()); ?></p>
+        </div>
+        <div class="span5">
+            <h3><?php echo $this->__("Shipping Address"); ?></h3>
+            <p><?php echo $this->escapeHtml($_shippingAddress->getFirstname()); ?> <?php echo $this->escapeHtml($_shippingAddress->getLastname()); ?></p>
+            <p><?php echo join(' ', $_shippingAddress->getStreet()); ?></p>
+            <p><?php echo $this->escapeHtml($_shippingAddress->getCity()); ?> <?php echo $this->escapeHtml($_shippingAddress->getRegion()); ?>, <?php echo $this->escapeHtml($_shippingAddress->getPostcode()); ?></p>
+            <?php $countryCode = $this->escapeHtml($_shippingAddress->getCountry()); ?>
+            <?php $country = Mage::getModel('directory/country')->loadByCode($countryCode); ?>
+            <p><?php echo $this->escapeHtml($country->getName()); ?></p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2 class="sub-header"><?php echo $this->__("Tracking Codes"); ?></h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><?php echo $this->__('Carrier'); ?></th>
+                    <th><?php echo $this->__('Title'); ?></th>
+                    <th><?php echo $this->__('Number'); ?></th>
+                    <th><?php echo $this->__('Action'); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($_trackings AS $_item) : ?>
+                    <tr>
+                        <td>
+                            <?php echo $this->getCarrierName($_item->getCarrierCode()); ?>
+                        </td>
+                        <td><?php echo $this->escapeHtml($_item->getTitle()); ?></td>
+                        <td><?php echo $this->escapeHtml($_item->getNumber()); ?></td>
+                        <td><a href="<?php echo Mage::getUrl('marketplace/shipment/printLabel/', array('id' => $_item->getId())) ?>" class="btn"><?php echo $this->__('Print Label'); ?></a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="sub-header"><?php echo $this->__("Ordered Items"); ?></h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><?php echo $this->__('Product'); ?></th>
+                    <th><?php echo $this->__('Qty Ordered'); ?></th>
+                    <th><?php echo $this->__('Qty to Ship'); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($_items AS $_item) : ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($_item->getName()); ?></td>
+                        <td><?php echo $_item->getQtyOrdered(); ?></td>
+                        <td><?php echo $_item->getQtyShipped(); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

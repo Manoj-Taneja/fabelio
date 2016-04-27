@@ -1,0 +1,19 @@
+<div class="dashboard-inventory">
+    <div class="content-header">
+        <table cellspacing="0">
+            <tbody><tr>
+                    <td><h3 class="head-dashboard"><?php echo $this->__('Dashboard'); ?></h3></td>
+                </tr>
+            </tbody></table>
+    </div>
+
+    <?php echo $this->getChildHtml('warehouse_shipment') ?> 
+
+    <?php echo $this->getChildHtml('adjuststock') ?>   
+
+    <?php echo $this->getChildHtml('lowstock') ?>   
+
+    <?php echo $this->getChildHtml('dropship') ?>   
+
+
+</div>

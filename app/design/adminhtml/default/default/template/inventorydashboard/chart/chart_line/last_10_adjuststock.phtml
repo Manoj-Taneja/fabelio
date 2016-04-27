@@ -1,0 +1,95 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php     
+    $adjustStockCollection = Mage::getModel('inventoryplus/adjuststock')->getCollection()
+                                    ->addFieldToFilter('status','1')
+                                    ->setPageSize(10);
+    $categories = '[';    
+    $series['item']['name'] = $this->__('Number of Products');
+    $series['item']['data'] = '[';    
+    $series['qty']['name'] = $this->__('Total Qty of Products');
+    $series['qty']['data'] = '[';    
+    $i = 0;
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    foreach($adjustStockCollection as $adjustStock){
+        $results = '';
+        $sql = 'SELECT count(`adjuststock_id`) as `totalproduct`, sum(`adjust_qty`) as `totalqty` from '.$resource->getTableName('erp_inventory_adjuststock_product').' WHERE 
+                                            (`adjuststock_id` = \''.$adjustStock->getId().'\')
+                                        group by `adjuststock_id`';         
+        $results = $readConnection->query($sql);        
+        $items = 0;
+        $qties = 0;
+        if($results){
+            foreach($results as $result){
+                $items += $result['totalproduct'];
+                $qties += $result['totalqty'];
+            }
+        }
+        if($i != 0){
+            $categories .= ',';            
+            $series['item']['data'] .= ',';
+            $series['qty']['data'] .= ',';
+        }
+        $categories .= '\''.date('M d',  strtotime($adjustStock->getCreatedAt())).'\'';        
+        $series['item']['data'] .= $items;     
+        $series['qty']['data'] .= $qties;     
+        $i++;        
+    }
+    $categories .= ']';    
+    $series['item']['data'] .= ']';
+    $series['qty']['data'] .= ']';    
+?>
+                            
+<script type="text/javascript">
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({
+        title: {
+            text: '<?php echo $chart->getName() ?>',
+            x: -20 //center
+        },
+        subtitle: {
+//            text: 'Source: WorldClimate.com',
+//            x: -20
+        },
+        xAxis: {
+            categories: <?php echo $categories ?>
+        },
+        yAxis: {
+            title: {
+                text: '<?php echo $this->__('No. of products/ total Qty. Adjusted') ?>'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+//        legend: {
+//            layout: 'vertical',
+//            align: 'right',
+//            verticalAlign: 'middle',
+//            borderWidth: 0
+//        },
+        series: [
+            <?php $count = 0 ?>
+            <?php foreach($series as $serie): ?>
+                <?php if(!$count == 0) echo ',' ?>
+                <?php $count++ ?>    
+                {
+                    name: '<?php echo $serie['name'] ?>',
+                    data: <?php echo $serie['data'] ?>
+                }
+            <?php endforeach; ?>
+        ]
+    });
+});
+</script>
+
+<span style="width: 100%; float: right;">
+        <a style="text-decoration: none; cursor: pointer; float:right; margin: 10px 10px 0 0" onclick="window.open('<?php echo  Mage::helper("adminhtml")->getUrl("inventoryplusadmin/adminhtml_adjuststock/", array("_secure" => Mage::app()->getStore()->isCurrentlySecure()));?>', '_blank', 'scrollbars=yes, resizable=yes, width=1000, height=600, top=50, left=300')"/><?php echo $this->__('More details')?></a>
+    </span>
+<div id="<?php echo $id ?>" style="min-width: 310px; max-height: 400px;  margin: 30px auto 0;"></div>

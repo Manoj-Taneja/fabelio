@@ -1,0 +1,69 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+?>
+<script type="text/javascript">
+mixpanel.track(
+    "Page Viewed",
+    {"Name":"Category" }
+  );
+</script>
+<?php
+$currentCat = Mage::registry('current_category');
+$parentIds = explode('/', $currentCat->getPath());
+array_pop($parentIds);
+array_shift($parentIds);
+$catArray=array();
+foreach ($parentIds as $category_id) {
+  $_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($category_id);
+  array_push($catArray,$_cat->getName());
+}
+?>
+
+<?php
+if(count($catArray)==1){
+?>
+
+<script type="text/javascript">
+  mixpanel.track(
+    "Category Viewed",
+    {"Name":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName() ?>",
+     "Level":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getLevel() ?>",
+     "Parent Category":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName() ?>",
+     "Sub Category":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName() ?>"
+    }
+);
+</script>
+<?php } ?>
+<?php
+if(count($catArray)==2){
+?>
+
+<script type="text/javascript">
+  mixpanel.track(
+    "Category Viewed",
+    {"Name":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName() ?>",
+     "Level":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getLevel() ?>",
+     "Parent Category":"<?php echo $catArray[1] ?>",
+     "Sub Category":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName() ?>"
+    }
+);
+</script>
+<?php } ?>
+<?php
+if(count($catArray)==3){
+?>
+
+<script type="text/javascript">
+  mixpanel.track(
+    "Category Viewed",
+    {"Name":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getName() ?>",
+     "Level":"<?php echo Mage::getSingleton('catalog/layer')->getCurrentCategory()->getLevel() ?>",
+     "Parent Category":"<?php echo $catArray[1] ?>",
+     "Sub Category":"<?php echo $catArray[2] ?>"
+    }
+);
+</script>
+<?php } ?>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author     Karazey Sergey <karazey.sergey@gmail.com>
+ * @copyright  2014 Karazey Sergey
+ * @created    10:00 27/06/2014
+ * @license    http://opensource.org/licenses/OSL-3.0 Open Software License v. 3.0 (OSL-3.0)
+ */
+-->
+<layout>
+	<default>
+		<reference name="after_body_start">
+			<block type="slirx_google_tag_manager/code" name="google_tag_manager_code" as="gtm_code"
+			       template="slirx/google_tag_manager/code.phtml"/>
+		</reference>
+		<reference name="before_body_end">
+			<block type="slirx_google_tag_manager/remarketing"
+			       name="google_tag_manager_remarketing"
+			       as="gtm_remarketing"
+			       template="slirx/google_tag_manager/remarketing.phtml"/>
+		</reference>
+	</default>
+	<checkout_onepage_success>
+		<reference name="after_body_start">
+			<block type="slirx_google_tag_manager/transactions" name="google_tag_manager_transactions"
+			       as="gtm_transactions" before="google_tag_manager_code"
+			       template="slirx/google_tag_manager/transactions.phtml"/>
+		</reference>
+		<reference name="google_tag_manager_remarketing">
+			<action method="setPageType">
+				<type>purchase</type>
+			</action>
+		</reference>
+	</checkout_onepage_success>
+	<checkout_cart_index>
+		<reference name="google_tag_manager_remarketing">
+			<action method="setPageType">
+				<type>cart</type>
+			</action>
+		</reference>
+	</checkout_cart_index>
+	<cms_index_index>
+		<reference name="google_tag_manager_remarketing">
+			<action method="setPageType">
+				<type>home</type>
+			</action>
+		</reference>
+	</cms_index_index>
+	<catalog_category_view>
+		<reference name="google_tag_manager_remarketing">
+			<action method="setPageType">
+				<type>category</type>
+			</action>
+		</reference>
+	</catalog_category_view>
+	<catalog_product_view>
+		<reference name="google_tag_manager_remarketing">
+			<action method="setPageType">
+				<type>product</type>
+			</action>
+		</reference>
+	</catalog_product_view>
+</layout>

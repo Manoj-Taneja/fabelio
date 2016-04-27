@@ -1,0 +1,18 @@
+<?php
+$helper = Mage::helper("fabmod_fbpixel");
+if (!$helper->isFbPxEnabled()) {
+  return;
+}
+$_product = Mage::registry('current_product');
+$categories = $_product->getCategoryIds();
+?>
+<script>
+fbq('track', 'ViewContent', {
+  content_name     : '<?php echo $_product->getName(); ?>',
+  content_category : '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>',
+  content_ids      : ['<?php echo $_product->getId(); ?>'],
+  content_type     : 'product',
+  value            : <?php echo $_product->getFinalPrice(); ?>,
+  currency         : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>'
+});
+</script>

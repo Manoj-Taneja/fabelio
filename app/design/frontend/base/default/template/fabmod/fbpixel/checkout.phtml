@@ -1,0 +1,76 @@
+<?php
+$helper = Mage::helper("fabmod_fbpixel");
+if (!$helper->isFbPxEnabled()) {
+  return;
+}
+$quote = Mage::getSingleton('checkout/cart')->getQuote();
+$products = $quote->getAllItems();
+$quoteData = $quote->getData();
+$grandTotal = $quoteData['grand_total'];
+$_products = Array();
+foreach($products as $_p){
+  $_products[] = $_p->getProduct();
+}
+?>
+<script>
+(function(){
+  var fabmodFbpixelTrack = {
+    value: <?php echo $grandTotal; ?>,
+    currency : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',
+    content_type: 'product'
+  };
+  <?php
+  if(count($_products) == 1) {
+    $_product = $_products[0];
+    $categories = $_product->getCategoryIds();
+  ?>
+    fabmodFbpixelTrack['content_name']     = '<?php echo $_product->getName(); ?>';
+    fabmodFbpixelTrack['content_category'] = '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>';
+    fabmodFbpixelTrack['content_ids']      = ['<?php echo $_product->getId(); ?>'];
+  <?php
+  }else{
+    $ids = Array();
+    foreach($_products as $_product){
+      $ids[] = "'" . $_product->getId() . "'";
+    }
+  ?>
+    fabmodFbpixelTrack['content_ids']      = [<?php echo join(', ', $ids); ?>];
+  <?php
+  }
+  ?>
+  fbq('track', 'InitiateCheckout', fabmodFbpixelTrack);
+}());
+
+function fabmodFbpixelAddPaymentInfo(){
+  var fabmodFbpixelTrack = {
+    value: <?php echo $grandTotal; ?>,
+    currency : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>',
+    content_type: 'product'
+  };
+  <?php
+  if(count($_products) == 1) {
+    $_product = $_products[0];
+    $categories = $_product->getCategoryIds();
+  ?>
+    fabmodFbpixelTrack['content_category'] = '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>';
+    fabmodFbpixelTrack['content_ids']      = ['<?php echo $_product->getId(); ?>'];
+  <?php
+  }else{
+    $ids = Array();
+    foreach($_products as $_product){
+      $ids[] = "'" . $_product->getId() . "'";
+    }
+  ?>
+    fabmodFbpixelTrack['content_ids']      = [<?php echo join(', ', $ids); ?>];
+  <?php
+  }
+  ?>
+  fbq('track', 'AddPaymentInfo', fabmodFbpixelTrack);
+
+}
+jQuery(function($){
+  $('#checkout-step-payment .fab-btn').on('click', function(e){
+      fabmodFbpixelAddPaymentInfo();
+  });
+});
+</script>

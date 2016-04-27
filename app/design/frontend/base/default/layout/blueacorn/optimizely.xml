@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * This is the layout xml file for BlueAcorn Optimizely. It creates two
+ * blocks within a text_list block that output the sitewide Optimizely script
+ * and the page specific targeting variables.
+ *
+ * @package     BlueAcorn\Optimizely
+ * @version     1.1.0
+ * @author      Blue Acorn, Inc. <code@blueacorn.com>
+ * @copyright   Blue Acorn, Inc. 2014
+ */
+-->
+<layout>
+    <default>
+        <reference name="head">
+            <block type="core/text_list" name="optimizely_head" as="optimizely_head">
+                <block type="blueacorn_optimizely/customVariables" name="optimizely_customer_type" as="optimizely_customer_type"/>
+                <block type="blueacorn_optimizely/sitewideJs" name="optimizely_sidewide" as="optimizely_sidewide"/>
+            </block>
+        </reference>
+    </default>
+</layout>

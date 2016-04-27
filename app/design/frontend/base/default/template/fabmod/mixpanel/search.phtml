@@ -1,0 +1,18 @@
+<?php
+$helper = Mage::helper("fabmod_ecommerce");
+if (!$helper->isTagsEnabled()) {
+  return;
+}
+$products = Mage::getBlockSingleton('catalog/product_list')->getLoadedProductCollection();
+?>
+<script type="text/javascript">
+mixpanel.track(
+    "Page Viewed",
+     {"Name" : "Search"}
+);
+mixpanel.track(
+    "Search Performed",
+    {"Term":"<?php echo Mage::helper('catalogsearch')->getQueryText(); ?>",
+     "No. of Products Displayed" : "<?php echo count($products); ?>" }
+);
+</script>

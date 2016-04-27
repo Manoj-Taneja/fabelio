@@ -1,0 +1,45 @@
+<div class="container-fluid main-container vendor-container">
+<div class="row">
+<div class="col-md-12">
+<h1><?php echo $this->__("Create Product Settings"); ?></h1>
+</div>
+</div>
+<div class="row">
+		<div class="col-sm-4 col-sm-offset-4">
+			<form class="form-horizontal" id="choose_type_form" action='' method="POST">
+
+			    <div class="control-group">
+			      <label class="control-label" for="attribute_set_id"><?php echo $this->__("Attribute Set"); ?></label>
+			      <div class="controls">
+				      	<select class="required-entry" name="attribute_set_id" id="attribute_set_id">
+				    	<?php foreach($this->getAvailableAttributeSets() as $set) : ?>
+					    	<option value="<?php echo $set->getId(); ?>"><?php echo $this->escapeHtml($set->getAttributeSetName()); ?></option>
+					    <?php endforeach; ?>
+						</select>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <label class="control-label" for="type"><?php echo $this->__("Product Type"); ?></label>
+			      <div class="controls">
+			        <select class="" name="type" id="type">
+				      	<?php foreach($this->getProductTypes() AS $type) : ?>
+					    	<option value="<?php echo $type['value']; ?>"><?php echo $this->__($type['label']) ?></option>
+					    <?php endforeach; ?>
+					</select>	
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <div class="controls">
+			        <input class="btn btn-primary" type="submit" value="<?php echo $this->__("Continue")?>"/>
+			      </div>
+			    </div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="slideshow-container"><div class="slideshow"></div></div>
+<script type="text/javascript">
+	//< ![CDATA[
+	new VarienForm('choose_type_form');
+	//]]>
+</script>

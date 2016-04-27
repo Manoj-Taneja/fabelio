@@ -1,0 +1,39 @@
+<div>
+    <?php echo Mage::helper('cminds')->__('Please activate your license key according to the amount of licenses you purchased. <br />
+If you want to move your extension to another site please deactivate first before moving and reactivating. <br />
+In order to activate the extension you have to paste the code and "Save Config".'); ?>
+</div>
+
+<a href="javascript:void();" id="show-hide-button">Show/Hide detailed description</a>
+<script type="text/javascript">
+	document.observe('dom:loaded', function(){
+		$('show-hide-button').observe('click', function(){
+			$('cminds-licensing-instructions').toggle();
+		});
+	});
+</script>
+<div id="cminds-licensing-instructions" style="display:none;">
+    You have two options to get your license key:
+    <ol>
+        <li>
+            <p>
+                You can get your license keys by logging in the <a target="_blank" href="https://www.cminds.com/guest-login/">Cminds Customer Area</a>. <br>
+                If you don't have an account yet. You have to first <a target="_blank" href="https://www.cminds.com/guest-registration/">register</a> using the e-mail you've used for the purchase. <br>
+                Your license key will be available as shown in the screenshot below.
+            </p>
+            <img title="Cminds Customer Area screenshot" alt="Example Cminds Customer Area screenshot" src="https://www.cminds.com/wp-content/plugins/cm-answers-pro/cminds_user_area.png">
+        </li>
+        <li>
+            <p>
+                You can get the license key for your product from the receipt we've sent you by email after your purchase. In the e-mail there's a link to the online version of the receipt. <br>
+                The online receipt should look similar to the screenshot below.
+            </p>
+            <img height="400" title="Example Cminds receipt with license key" alt="Example Cminds receipt" src="https://www.cminds.com/wp-content/plugins/cm-answers-pro/cminds_receipt.png">
+        </li>
+    </ol>
+
+    <p>
+        Your license key should be a string of 32 characters (letters and digits). <br>
+        If there's no license key on the customer page nor online receipt, please <a target="_blank" href="https://plugins.cminds.com/cm-support/">contact support</a>.
+    </p>
+</div>

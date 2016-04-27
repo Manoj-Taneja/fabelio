@@ -1,0 +1,121 @@
+
+#tinybox {
+    background: #fff !important;
+    border: 10px solid #E3E3E3;
+    display: none;
+    padding: 10px;
+    position: absolute;
+    z-index: 2000;
+}
+#tinymask {position:absolute; display:none; top:0; left:0; height:100%; width:100%; background:#000; z-index:1500}
+#tinycontent {position: relative;}
+
+/** dashboard **/
+
+.dashboard-inventory{
+    width: 100%;
+    float:left;
+    padding: 0;
+    margin:10px 0 0 0;
+}
+
+.column-widget-container{
+    width:48%;
+    float:left;
+    margin:10px;   
+}
+.mini-dashboard{
+    width: 100%;
+    float:left;
+    border: 1px solid #cfd9db;
+}
+.dashboard-widget-header{
+    width: 100%;
+    float:left;
+    border-bottom: 1px solid #cfd9db;    
+}
+.dashboard-widget-header p{
+    padding:10px;
+    color: rgba(130, 139, 149, 0.75);
+    margin: 0 !important;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 6px;
+    text-transform: uppercase;
+}
+
+.dashboard-widget-content{
+    width:100%;
+    /*float:left;*/
+}
+
+.dashboard-widget-content span{    
+    float: left;
+    font-size: 24px;
+    margin: 10px;
+}
+.dashboard-widget-content span.price{
+    float: left;
+    font-size: 14px;
+    margin:0 !important;
+}
+
+.dashboard-widget-content table{
+    float: left;
+    margin: 20px 0 0 10px;
+    width: 97%;
+}
+
+.dashboard-widget-content table tr#table-title{
+     color: #828b95;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.dashboard-widget-content table tr#table-title td{
+    border-bottom: 1px solid #cfd9db;
+}
+
+.hidetab{
+    display:none !important;
+}
+
+.icon-question{
+    background:url('images/system-help.png')no-repeat;
+    padding:0 0 0 23px;
+    color: white; 
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.massaction{
+    float:left;
+}
+
+#messages{
+    float:left;
+    width:100%;
+}
+
+
+.notification-inventory-global .label {
+    color: #eb5e00;
+}
+
+.notification-inventory-global span {
+    width:90%;
+    float:left
+}
+
+.notification-inventory-global{
+    background: url("images/error_msg_icon.gif") no-repeat scroll 27px 5px #fff9e9;   
+    border-top: 1px solid #eee2be;
+    color: #444;
+    font-size: 11px;
+    line-height: 16px;
+    margin: -10px 0 0 0;
+    float: left;    
+    position: relative;
+    width: 100%;
+}

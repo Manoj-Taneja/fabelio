@@ -1,0 +1,72 @@
+<?php
+/**
+ * Sends product view data to Google Enhanced Ecommerce Analytics
+ *
+ * @author  Joel Hart @mediotype
+ * @reference   https://developers.google.com/analytics/devguides/collection/analyticsjs/enhanced-ecommerce
+ * @var $this Mediotype_EnhancedEcommerce_Block_Catalog_Product_View
+ */
+$product = $this->getCurrentProduct();
+$current_category = Mage::registry('current_category');
+$type = $product->getTypeId();
+?>
+<script type="text/javascript">
+    //<![CDATA[
+
+    <?php
+        $impressionData = array(
+            "id" => $product->getId(),
+            "name" => $product->getName(),
+            "price" => $product->getPrice()
+            );
+        if($product->getManufacturer()){
+            $impressionData['brand'] =$product->getManufacturer();
+        }
+        if(isset($current_category)){
+            $impressionData['category'] = $current_category->getName();
+
+        }
+    ?>
+    //        'dimension1': 'Member'            // Custom dimension (string).
+    // TODO - integrate once product dimensions config have been created
+
+    ga('ec:addProduct', <?php echo json_encode($impressionData) ?>);
+    ga('ec:setAction', 'detail');
+    //this should only grab this product's add to cart button
+    $$('.product-shop .btn-cart').each(function(item) {
+        item.originonclick = item.onclick;
+        item.onclick = function() {
+            var type = '<?php echo $type ?>';
+            if(type == 'grouped') {
+                $$('.product-shop input.qty').each(function (item) {
+                    var productId = item.name.charAt(item.name.indexOf("[")+1);
+                    var name = item.up('tr').down('td').innerHTML;
+                    if(item.value > 0) {
+                        var productFieldObject = {
+                            'id': productId,                   // Product ID (string).
+                            'name': name,
+                            'parent_id': <?php echo $product->getId() ?>,
+                            'quantity': item.value,
+                            <?php if(isset($current_category)): ?>
+                            'category': '<?php echo $current_category->getName() ?>',
+                            <?php endif; ?>
+                        };
+                    }
+                    ga('ec:addProduct', productFieldObject);
+                });
+            } else {
+                var impObj = <?php echo json_encode($impressionData) ?>;
+                impObj.quantity = $('qty').value;
+                ga('ec:addProduct', impObj);
+            }
+            ga('ec:setAction', 'add');
+            item.onclick = item.originonclick;
+            ga('send', 'event', 'UX', 'click', 'add to cart',{
+                'hitCallback': function() {
+                    item.click(item.originonclick);
+                }
+            });     // Send data using an event.
+        }
+    });
+    //]]>
+</script>

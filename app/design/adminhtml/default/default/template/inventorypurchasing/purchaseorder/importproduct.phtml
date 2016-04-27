@@ -1,0 +1,66 @@
+<?php //if(!Mage::helper('inventory/purchaseorder')->haveDelivery()):  ?>
+<?php if (!$this->getRequest()->getParam('id')): ?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Import Products to Create Purchase Order') ?></h4>
+        </div>
+        <div id="supplier_form" class="fieldset">
+            <div style="float:left;">
+                <div>
+                    <label for="fileToUpload">
+                        <?php echo $this->__('Please choose CSV file to import') ?>
+                    </label><br />
+                    <input type="file" name="fileToUpload[]" id="fileToUpload" onchange="fileSelected();" enctype="multipart/form-data"/>
+                    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" id="form_key"/>
+                    <button style="" onclick="uploadFile()" class="scalable task" type="button" id="Upload"><span><?php echo $this->__('Import') ?></span></button>
+                </div>                    
+                <div class="clear"></div>
+                <div id="fileName">
+                </div>
+                <div id="fileSize">
+                </div>
+                <div id="fileType">
+                </div>
+                <div id="progressNumber">
+                </div>
+            </div>
+            <div id="messages" style="float: left;padding-left: 20px;width:60%;">
+                <ul class="messages">
+                    <li class="notice-msg">
+                        <ul>
+                            <li>
+                                <?php echo $this->__('You can import loads of products to Create Purchase Order for warehouse(s): ') . $this->getWarehouseList() . '.' ?><br />
+                                <?php //echo $this->__('If you want to import products from a CSV file, then in that file, the Qty column(s) will be:') ?>
+                                <?php $warehouseIds = $this->getWarehouseIdsForPurchase() ?>
+                                <?php $warehouseCols = '' ?>
+                                <?php $example = "SKU : SKU of product <br />" ?>
+                                <?php $example .= "COST : Cost price of product <br />" ?>
+                                <?php $example .= "TAX : Tax for product by percentage <br />" ?>
+                                <?php $example .= "DISCOUNT : Discount for product by percentage <br />" ?>
+                                <?php $example .= "SUPPLIER_SKU : SKU of supplier's product<br />" ?>
+                                <?php foreach ($warehouseIds as $warehouseId): ?>
+                                    <?php $example .= "warehouse_" . $warehouseId . ": " . $this->__("Qty ordering for warehouse " . $this->getWarehouseNameById($warehouseId) . "") . "<br />" ?>
+                                    <?php $warehouseCols .= ',' ?>
+                                    <?php $warehouseCols .= " <b>warehouse_" . $warehouseId . "</b>"; ?>
+                                <?php endforeach; ?>
+                                <?php //echo $this->__('So your CSV file will have following columns in total:')?><br />
+                                <?php echo $this->__('The structure of CSV file is as follows:') ?><br />
+                                <?php echo "<h3><b>SKU,COST,TAX,DISCOUNT,SUPPLIER SKU</b>" . $warehouseCols . "</h3>" ?>
+                                <div style="padding-left: 20px;" ?>
+                                    <?php echo $example ?>
+                                </div>
+                            </li>
+                            <li>
+                                <div style="float:left;">                                    
+                                    <b><?php echo $this->__('Example file ') ?><a href="<?php echo Mage::getBaseUrl('media') . 'inventory/csv/import_product_to_purchase_order.csv'; ?>">(<?php echo $this->__('Download') ?>)</a></b>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <?php
+ endif ?>

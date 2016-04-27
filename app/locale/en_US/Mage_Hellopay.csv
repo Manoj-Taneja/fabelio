@@ -1,0 +1,38 @@
+Transaction Failed.,Transaction Failed.
+helloPay :: ERROR FETCHING TRANSACTION EVENTS!,helloPay :: ERROR FETCHING TRANSACTION EVENTS!
+Thank you. Your transaction is under process. We will place order after transaction is confirmed,Thank you. Your transaction is under process. We will place order after transaction is confirmed
+Customer successfully returned from helloPay,Customer successfully returned from helloPay
+Customer was redirected to helloPay,Customer was redirected to helloPay
+'General contact' email will be used if left empty,'General contact' email will be used if left empty
+AUTHENTICATE,AUTHENTICATE
+Customer successfully returned from ,Customer successfully returned from 
+Customer was redirected to ,Customer was redirected to 
+Customer was returned from .,Customer was returned from .
+DEFERRED,DEFERRED
+Debug,Debug
+Enabled,Enabled
+Error occured,Error occured
+Live,Live
+Mode,Mode
+New order status,New order status
+Order ,Order 
+Order total amount does not match protx gross total amount,Order total amount does not match protx gross total amount
+PAYMENT,PAYMENT
+Payment Action,Payment Action
+Payment from Specific countries,Payment from Specific countries
+Payment from applicable countries,Payment from applicable countries
+"Please <a href=""%s"">continue shopping</a>.","Please <a href=""%s"">continue shopping</a>."
+ Standard,helloPay Standard
+Simulator,Simulator
+Sort order,Sort order
+Store name will be used if left empty,Store name will be used if left empty
+Test,Test
+Title,Title
+Transaction Description,Transaction Description
+Vendor email,Vendor email
+Vendor email notification,Vendor email notification
+Vendor encrypted password,Vendor encrypted password
+Vendor name,Vendor name
+You will be redirected to  website when you place an order.,You will be redirected to  website when you place an order.
+There was an error while creating new purchase. Please contact support team.,There was an error while creating new purchase. Please contact support team.
+You will be redirected to helloPay in a few seconds.,You will be redirected to helloPay in a few seconds.

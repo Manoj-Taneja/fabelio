@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Kontenta_Status</name>
+    <version>1.4.2</version>
+    <stability>stable</stability>
+    <license>Commercial License</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>A possibility to change order status</summary>
+    <description>A possibility to change order status (including "Complete" and "Closed" statuses), permissions configuration.</description>
+    <notes>For any questions please contact us admin@skontenta.com.</notes>
+    <authors><author><name>Studion Kontenta Ltd.</name><user>StudioKontenta</user><email>admin@skontenta.com</email></author></authors>
+    <date>2014-08-12</date>
+    <time>12:38:20</time>
+    <contents><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><dir name="kontenta"><file name="status.xml" hash="d01437179c727430a04cbcb497f77652"/></dir></dir><dir name="template"><dir name="kontenta"><dir name="order"><dir name="view"><file name="changestatus.phtml" hash="c16eb91ebfc2a457552253291965f160"/></dir></dir></dir></dir></dir></dir></dir></target><target name="magecommunity"><dir name="Kontenta"><dir name="Status"><dir name="Block"><dir name="Sales"><dir name="Order"><dir name="View"><file name="Changestatus.php" hash="3f2d83ceea30bf25e03598123365c80d"/></dir></dir></dir></dir><dir name="Model"><dir name="Sales"><file name="Order.php" hash="ae34677e3335c61d806d91e52686cb4b"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><dir name="Statuses"><file name="IndexController.php" hash="fae151ba4fb68674eb182e0caa880eda"/></dir></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="5f451eac7662cb5c1bb364a52f1d4a2b"/><file name="config.xml" hash="14154a3ee571a77c6a93420433669aef"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Kontenta_Status.xml" hash="ecfd8a1307910e1fed9858559b46734d"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

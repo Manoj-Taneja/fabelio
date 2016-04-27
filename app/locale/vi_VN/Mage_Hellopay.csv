@@ -1,0 +1,38 @@
+Transaction Failed.,Giao dịch thất bại.
+helloPay :: ERROR FETCHING TRANSACTION EVENTS!,helloPay :: lỗi khi tìm nạp KIỆN GIAO DỊCH!
+Thank you. Your transaction is under process. We will place order after transaction is confirmed,Cảm ơn bạn. Giao dịch của bạn đang trong quá trình. Chúng tôi sẽ đặt hàng sau khi giao dịch được xác nhận
+Customer successfully returned from helloPay,Khách hàng trở thành công từ helloPay
+Customer was redirected to helloPay,Khách hàng đã được chuyển hướng đến helloPay
+General contact' email will be used if left empty,email chung liên lạc 'sẽ được sử dụng nếu để trống
+AUTHENTICATE,xác nhận
+Customer successfully returned from,Khách hàng trở thành công từ
+Customer was redirected to,Khách hàng đã được chuyển hướng đến
+Customer was returned from .,Khách hàng được trả về từ.
+DEFERRED,HOÃN LẠI
+Debug,Debug
+Enabled,Bật
+Error occured,Xảy ra lỗi
+Live,Sống
+Mode,chế độ
+New order status,trạng thái đơn hàng mới
+Order,Gọi món
+Order total amount does not match protx gross total amount,Để tổng số tiền không phù hợp protx tổng số tiền
+PAYMENT,THANH TOÁN
+Payment Action,hành động thanh toán
+Payment from Specific countries,Thanh toán từ các nước cụ thể
+Payment from applicable countries,Thanh toán từ các nước áp dụng
+"Please <a href=""%s"">continue shopping</a>.","Xin vui lòng<a href=""%s"">tiếp tục mua hàng</a>."
+Standard,helloPay chuẩn
+Simulator,Giả lập
+Sort order,Thứ tự sắp xếp
+Store name will be used if left empty,Tên cửa hàng sẽ được sử dụng nếu để trống
+Test,Kiểm tra
+Title,Tiêu đề
+Transaction Description,giao dịch tả
+Vendor email,email nhà cung cấp
+Vendor email notification,email thông báo nhà cung cấp
+Vendor encrypted password,Nhà cung cấp mật khẩu mã hóa
+Vendor name,Tên nhà cung cấp
+You will be redirected to website when you place an order.,Bạn sẽ được chuyển hướng đến trang web khi bạn đặt hàng.
+There was an error while creating new purchase. Please contact support team.,Có lỗi trong khi tạo ra mua mới. Hãy liên hệ với nhóm hỗ trợ.
+You will be redirected to helloPay in a few seconds.,Bạn sẽ được chuyển đến helloPay trong một vài giây.

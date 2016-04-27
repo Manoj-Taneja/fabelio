@@ -1,0 +1,138 @@
+"%d customer has been successfully updated","%d customer has been successfully updated"
+"%d customers have been successfully updated","%d customers have been successfully updated"
+"Action","Action"
+"Add Transaction","Add Transaction"
+"Add Transactions","Add Transactions"
+"Added by admin: %s.","Added by admin: %s."
+"Additional information","Additional information"
+"All links in the email will log a customer in!","All links in the email will log a customer in!"
+"available","available"
+"Back","Back"
+"Balance","Balance"
+"Balance Change","Balance Change"
+"Balance update template","Balance update template"
+"Balance History","Balance History"
+"Cannot remove store credit.","Cannot remove store credit."
+"Change email Balance update subscription","Change email Balance update subscription"
+"Comment","Comment"
+"Comments and Balance Change cannot be empty, at least one customer must be selected","Comments and Balance Change cannot be empty, at least one customer must be selected"
+"Country","Country"
+"Created","Created"
+"CSV","CSV"
+"Current Balance: ","Current Balance: "
+"Current Balance","Current Balance"
+"Customer","Customer"
+"Customers","Customers"
+"Customer ID","Customer ID"
+"Customer Since","Customer Since"
+"Customers not selected","Customers not selected"
+"CMS Page in Customer Area","CMS Page in Customer Area"
+"Date","Date"
+"Display 'Store Credit' in top links","Display 'Store Credit' in top links"
+"Display customer Store Credit Balance in top links","Display customer Store Credit Balance in top links"
+"Email","Email"
+"Email Notification has been saved.","Email Notification has been saved."
+"Enable automatic logging in","Enable automatic logging in"
+"Enter a negative number to subtract from the balance","Enter a negative number to subtract from the balance"
+"Error occurred while saving transaction","Error occurred while saving transaction"
+"Enable Module","Enable Module"
+"Email Sender","Email Sender"
+"Fields","Fields"
+"Group","Group"
+"Gift Card Redeemed","Gift Card Redeemed"
+"General Settings","General Settings"
+"Have a gift card? <a href='%s'>Click here</a> to redeem it.","Have a gift card? <a href='%s'>Click here</a> to redeem it."
+"ID","ID"
+"Invalid State value","Invalid State value"
+"Last Visit","Last Visit"
+"Landing Page","Landing Page"
+"Modified","Modified"
+"Modified On","Modified On"
+"Name","Name",
+"No comments left","No comments left"
+"No Transactions Found","No Transactions Found"
+"Not Subscribed","Not Subscribed"
+"No store credit transactions found","No store credit transactions found"
+"Email Notifications","Email Notifications"
+"Order #%s.","Order #%s."
+"Refunded","Refunded"
+"Order refunded %s <br> Credit Memo %s","Order refunded %s <br> Credit Memo %s"
+"Refund to Store Credit","Refund to Store Credit"
+"Remove","Remove"
+"Redeem Gift Card","Redeem Gift Card"
+"Refund to Store Credit automatically","Refund to Store Credit automatically"
+"Related to website URL, e.g. 'phones/samsung/'. The customer will be browsed to this page after clicking on the 'come back' link in the email.","Related to website URL, e.g. 'phones/samsung/'. The customer will be browsed to this page after clicking on the 'come back' link in the email."
+"Redirects a customer to this CMS page when clicking on the 'Question' icon","Redirects a customer to this CMS page when clicking on the 'Question' icon"
+"Sales","Sales"
+"Save Transaction","Save Transaction"
+"Store Credit","Store Credit"
+"Store Credit and Refund","Store Credit and Refund"
+"Store Credit (%s)","Store Credit (%s)"
+"Store Credit Balance","Store Credit Balance"
+"Store Credit Balance Change","Store Credit Balance Change"
+"Store Credit balance update - %s","Store Credit balance update - %s"
+"Subscribed to Balance Update?","Subscribed to Balance Update?"
+"Subscribed","Subscribed"
+"Store Credit History","Store Credit History"
+"Store Credit is disabled by Admin","Store Credit is disabled by Admin"
+"Subscribe to email Balance update notifications","Subscribe to email Balance update notifications"
+"Settings","Settings"
+"Spent on order %s.","Spent on order %s."
+"Subscribe customers automatically","Subscribe customers automatically"
+"To","To"
+"Total Credit Earned","Total Credit Earned"
+"Transactions","Transactions"
+"Transaction(s) successfully created","Transaction(s) successfully created"
+"The option defines the default Credit Memo behavior","The option defines the default Credit Memo behavior"
+"Balance Update Subscription","Balance Update Subscription"
+"Update Store Credit Balance","Update Store Credit Balance"
+"Update Store Credit","Update Store Credit"
+"Unsubscribed","Unsubscribed"
+"Use Store Credit","Use Store Credit"
+"Used","Used"
+"Visible to customer","Visible to customer"
+"XML","XML"
+"Your current balance is: ","Your current balance is: "
+"You have been subscribed to balance update email notifications.","You have been subscribed to balance update email notifications."
+"You have been unsubscribed from balance update email notifications.","You have been unsubscribed from balance update email notifications."
+"Your account has not been confirmed","Your account has not been confirmed"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

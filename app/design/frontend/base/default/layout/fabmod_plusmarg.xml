@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+  <default>
+    <reference name="head">
+      <block type="core/template" template="fabmod/plusmarg/default.phtml" />
+    </reference>
+  </default>
+
+  <checkout_onepage_success>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/plusmarg/success.phtml" />
+    </reference>
+  </checkout_onepage_success>
+
+</layout>
+

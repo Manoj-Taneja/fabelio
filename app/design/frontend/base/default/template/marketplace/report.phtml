@@ -1,0 +1,79 @@
+<?php $_items = $this->getCollection(); ?>
+<div class="container-fluid main-container vendor-container">
+        <h1><?php echo $this->__($this->getTitle()) ?></h1>
+        <div class="jumbotron">
+            <form name="report_filter" id="report_filter" action="<?php echo Mage::getUrl('*/*/*') ?>" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-2">
+                        <select id="sales_report_period_type" name="period_type" title="Period" class="form-control select">
+                            <option value="day">Day</option>
+                            <option value="month">Month</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control datepicker input-text required-entry" name="from" value="<?php echo $this->getRequest()->getPost('from', ''); ?>" placeholder="From *"/>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control datepicker input-text required-entry" name="to" value="<?php echo $this->getRequest()->getPost('to', ''); ?>" placeholder="To *"/>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" name="submit" class="btn btn-primary btn-sm" value="<?php echo $this->__('Show Report') ?>" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" name="submit" class="btn btn-sm" value="<?php echo $this->__('Export to CSV') ?>" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    <script type="text/javascript">
+        //< ![CDATA[
+        var customForm = new VarienForm('report_filter');
+        //]]>
+        jQuery(document).ready(function($){
+            $('.datepicker').datepicker();
+        });
+    </script>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><?php echo $this->__('Period'); ?></th>
+                <th><?php echo $this->__('Products Name'); ?></th>
+                <th><?php echo $this->__('Price'); ?></th>
+                <th><?php echo $this->__($this->getLastColumnHeader()); ?></th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php $sumItemCount = 0; ?>
+                <?php $sumQtySold = 0; ?>
+                <?php $sumSubtotal = 0; ?>
+                <?php $sumIncome = 0; ?>
+                <?php if($_items->count() > 0): ?>
+                    <?php foreach($_items AS $_item) : ?>
+                        <?php $sumItemCount += $_item->getItemCount(); ?>
+                        <?php $sumQtySold += $_item->getQtyOrdered(); ?>
+                        <?php $sumSubtotal += $_item->getProductPrice(); ?>
+                        <tr>
+                            <td><?php echo $this->getPeriodString($_item->getPeriod()); ?></td>
+                            <td><?php echo $_item->getProductName(); ?></td>
+                            <td><?php echo Mage::helper('core')->currency($_item->getProductPrice()); ?></td>
+                            <td><?php echo number_format($_item->getQtyOrdered()); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+            <?php else : ?>
+                    <tr>
+                        <td colspan="4"><?php echo $this->__('No records found.'); ?></td>
+                    </tr>
+            <?php endif; ?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="info" colspan="2"><?php echo $this->__('Total'); ?></td>
+                <td class="info"><?php echo Mage::helper('core')->currency($sumSubtotal); ?></td>
+                <td class="info"><?php echo $sumQtySold; ?></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

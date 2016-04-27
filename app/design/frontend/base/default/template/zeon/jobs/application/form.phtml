@@ -1,0 +1,107 @@
+<?php
+/**
+ * zeonsolutions inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.zeonsolutions.com/shop/license-community.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * This package designed for Magento Community edition
+ * =================================================================
+ * zeonsolutions does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * zeonsolutions does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   design
+ * @package    base_default
+ * @version    0.0.1
+ * @copyright  @copyright Copyright (c) 2013 zeonsolutions.Inc. (http://www.zeonsolutions.com)
+ * @license    http://www.zeonsolutions.com/shop/license-community.txt
+ */
+?>
+<?php $_job = $this->getJob(); ?>
+<div id="messages_jobs_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo $this->helper('zeon_jobs')->__('Application for the post of %s', $_job->getTitle()) ?></h1>
+</div>
+<div class="form">
+    <form action="<?php echo $this->getFormAction() ?>" id="applicationForm" method="post" enctype="multipart/form-data">
+        <div class="fieldset">
+            <h2 class="legend"><?php echo $this->helper('zeon_jobs')->__('Applicant Information') ?></h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="field">
+                        <label for="job_code"><?php echo $this->helper('zeon_jobs')->__('Job Ref#') ?></label>
+                        <div class="input-box">
+                            <span><?php echo $_job->getJobCode() ?></span>
+                            <input type="hidden" value="<?php echo $_job->getJobCode() ?>" name="job_code" />
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field"><label for="resume" class="required"><em>*</em>
+                            <?php echo $this->helper('zeon_jobs')->__('Resume Title') ?></label><div class="input-box">
+                            <input name="resume_title" id="resume_title" title="<?php echo $this->helper('zeon_jobs')->__('Resume Title') ?>" value="" class="input-text required-entry" type="text" />
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field"><label for="firstname" class="required"><em>*</em>
+                            <?php echo $this->helper('zeon_jobs')->__('First Name') ?></label><div class="input-box">
+                            <input name="firstname" id="firstname" title="<?php echo $this->helper('zeon_jobs')->__('First Name') ?>" value="" class="input-text required-entry validate-alpha" type="text" />
+                        </div>
+                    </div>
+                    <div class="field"><label for="lastname" class="required"><em>*</em>
+                            <?php echo $this->helper('zeon_jobs')->__('Last Name') ?></label><div class="input-box">
+                            <input name="lastname" id="lastname" title="<?php echo $this->helper('zeon_jobs')->__('Last Name') ?>" value="" class="input-text required-entry validate-alpha" type="text" />
+                        </div></div>
+                </li>
+                <li class="fields">
+                    <div class="field"><label for="email" class="required"><em>*</em>
+                            <?php echo $this->helper('zeon_jobs')->__('Email') ?></label><div class="input-box">
+                            <input name="email" id="email" title="<?php echo $this->helper('zeon_jobs')->__('Email') ?>"
+                                   value="" class="input-text required-entry validate-email" type="text" /></div></div>
+                </li>
+                <li class="fields">
+                    <div class="field"><label for="telephone" class="required"><em>*</em>
+                            <?php echo $this->helper('zeon_jobs')->__('Telephone') ?></label><div class="input-box">
+                            <input name="telephone" id="telephone" title="<?php echo $this->helper('zeon_jobs')->__('Telephone') ?>" value="" class="input-text required-entry validate-phoneStrict" type="text" /></div></div>
+                </li>
+                <li>
+                    <label for="covering_letter">
+                        <?php echo $this->helper('zeon_jobs')->__('Covering Letter') ?></label><div class="input-box">
+                        <textarea name="covering_letter" id="covering_letter" title="<?php echo $this->helper('zeon_jobs')->__('Covering Letter') ?>" class="input-text" cols="5" rows="3"></textarea></div>
+                </li>
+                <li>
+                    <label for="upload_resume" class="required"><em>*</em><?php echo $this->helper('zeon_jobs')->__('Upload Resume') ?></label>
+                    <div class="input-box">
+                        <input type="file" name="upload_resume" id="upload_resume"
+                               title="<?php echo $this->helper('zeon_jobs')->__('Upload Resume') ?>" class="input-text required-entry" /></div>
+                </li>
+                <li>
+                    <label>&nbsp;</label><div class="input-box"><span><em>
+                                <?php echo $this->helper('zeon_jobs')->__('You can upload file with these file extensions only<br>(%s)', $this->helper('zeon_jobs')->getAllowedFileExtensions())
+                                ?></em></span></div>
+                </li>
+            </ul>
+        </div>
+        <div class="buttons-set form-buttons btn-only">
+            <button type="submit" class="button" title="<?php echo $this->helper('zeon_jobs')->__('Submit') ?>"><span>
+                    <span><?php echo $this->helper('zeon_jobs')->__('Submit') ?></span></span></button>
+            <button type="button" title="<?php echo $this->__('Cancel') ?>" class="button right" onclick="setLocation('<?php echo $this->getUrl('careers/' . $_job->getIdentifier()) ?>')"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
+        </div>
+        <p class="required"><?php echo $this->helper('zeon_jobs')->__('* Required Fields') ?></p>
+    </form>
+    <script type="text/javascript">
+        //<![CDATA[
+        var applicationForm = new VarienForm('applicationForm', true);
+        //]]>
+    </script>
+</div>

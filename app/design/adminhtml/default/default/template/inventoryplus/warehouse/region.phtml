@@ -1,0 +1,29 @@
+<?php
+	$warehouse = $this->getWarehouse();
+    $canEdit = $this->canEdit();
+	$state ='';
+	$stateId = 0;
+	if ($warehouse->getId()) {
+		$state = $warehouse->getState();
+		$stateId = $warehouse->getStateId();
+	}
+?>
+<div class="input-box">
+	<select <?php if(!$canEdit):?>disabled<?php endif;?> id="state_id" name="state_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+		<option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+	</select>
+	<script type="text/javascript">
+	//<![CDATA[
+		$('state_id').setAttribute('defaultValue',  "<?php echo $stateId; ?>");
+	//]]>
+	</script>
+	<input <?php if(!$canEdit):?>disabled<?php endif;?> type="text" id="state" name="state" value="<?php echo $state ?>" title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+</div>
+<script type="text/javascript">
+//<![CDATA[
+	var countryRegions = <?php echo Mage::helper('directory')->getRegionJson()?>;
+    var newRegionUpdater = new RegionUpdater('country_id', 'state', 'state_id',countryRegions);
+//]]>
+</script>
+
+

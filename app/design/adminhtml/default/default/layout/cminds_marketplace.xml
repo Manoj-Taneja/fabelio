@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<layout version="1.0.0">
+    <adminhtml_customer_edit>
+        <reference name="left">
+            <reference name="customer_edit_tab_view">
+                <block type="marketplace/adminhtml_customer_edit_tab_view_sales" name="products" template="marketplace/customer/tab/view/products.phtml" before="-" />
+            </reference>
+        </reference>
+    </adminhtml_customer_edit>
+
+    <adminhtml_suppliers_soldproducts>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="marketplace/adminhtml_customer_edit_tab_solditems" name="admin.customer.view.edit.solditems" />
+        </block>
+    </adminhtml_suppliers_soldproducts>
+    <adminhtml_suppliers_assignedcategories>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="marketplace/adminhtml_customer_edit_tab_assignedcategories" name="admin.customer.view.edit.assignedcategories" />
+        </block>
+    </adminhtml_suppliers_assignedcategories>
+    <adminhtml_suppliers_shippingcosts>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="marketplace/adminhtml_customer_edit_tab_shippingfees" name="admin.customer.view.edit.shippingfees" />
+        </block>
+    </adminhtml_suppliers_shippingcosts>
+    <adminhtml_suppliers_profile>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadTinyMce"><flag>1</flag></action>
+            <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+            <action method="addJs"><script>lib/flex.js</script></action>
+            <action method="addJs"><script>lib/FABridge.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/browser.js</script></action>
+            <action method="addJs"><script>prototype/window.js</script></action>
+            <action method="addJs"><script>prototype/prototype.js</script></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/magento.css</name></action>
+        </reference>    
+
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="marketplace/adminhtml_customer_edit_tab_profile" name="admin.customer.view.edit.profile" />
+        </block>
+    </adminhtml_suppliers_profile>
+
+
+    <adminhtml_suppliers_rates>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="marketplace/adminhtml_customer_edit_tab_rates" name="admin.customer.view.edit.rates" />
+        </block>
+    </adminhtml_suppliers_rates>
+</layout>

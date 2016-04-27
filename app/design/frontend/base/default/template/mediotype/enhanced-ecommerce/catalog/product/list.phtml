@@ -1,0 +1,161 @@
+<?php
+/**
+ *
+ * @author  R. Dale Owen   @mediotype
+ * @var $this Mage_Catalog_Block_Product_List
+ */
+
+$productCollection = $this->getLoadedProductCollection();
+$helper = $this->helper('catalog/output');
+$current_category = Mage::registry('current_category');
+?>
+<?php if (!$productCollection->count()): ?>
+    <?php //no products were viewed ?>
+<?php else: ?>
+    <?php //create impression objects for all the products ?>
+    <script type="text/javascript">
+        //<![CDATA[
+        <?php $position = 0 ?>
+        <?php foreach ($productCollection as $product): ?>
+        <?php //create php standard class convert to json string ?>
+        <?php
+            $impressionData = array(
+                "id" => $product->getId(),
+                "name" => $product->getName(),
+                "position" => ++$position
+
+                );
+            if($product->getManufacturer()){
+                $impressionData['brand'] =$product->getManufacturer();
+            }
+            if(isset($current_category)){
+                $impressionData['category'] = $current_category->getName();
+                $impressionData['list'] =  "Category View";
+
+            } else {
+                $impressionData['list'] = "Search Results";
+            }
+        ?>
+        ga('ec:addImpression', <?php echo json_encode($impressionData)?>);
+        <?php endforeach; ?>
+
+        //create ga click event for clicking a product
+        //this assumes base magento list links
+        $$('.product-image, .product-name > a').each(function (item) {
+            item.onclick = function () {
+                var nearestLi = item.match('li') ? item : item.up('li');
+                var position = nearestLi.previousSiblings().size();
+
+                var nearestAnchor = nearestLi.down('a');
+                var name = Element.readAttribute(nearestAnchor, 'title');
+
+                var priceDiv = nearestLi.down('div.price-box');
+                var productId = '';
+                var prices = priceDiv.descendants();
+                prices.each(function (price) {
+                    if (!price.hasClassName('price') && !price.hasClassName('regular-price')) {
+                        //not a price, don't need to go further
+                        return;
+                    }
+                    //grab the id of the element
+                    var priceId = Element.readAttribute(price, 'id');
+                    if (priceId == null) {
+                        //didn't have an id to parse
+                        return;
+                    }
+
+                    //now take the id and get the product id off it
+                    var newProductId = (priceId.substr(14)) ? priceId.substr(14) : productId;
+                    if (isNaN(newProductId)) {
+                        //it's not a number so ignore it
+                        return;
+                    }
+                    //now set the new product id
+                    productId = newProductId;
+                });
+
+                var productFieldObject = {
+                    'id': productId,                   // Product ID (string).
+                    'name': name,
+                    <?php if(isset($current_category)): ?>
+                    'category': '<?php echo $current_category->getName() ?>',
+                    <?php endif; ?>
+                    'position': position
+                };
+                ga('ec:addProduct', productFieldObject);
+                ga('ec:setAction', 'click', {list: <?php if($current_category): ?>'Category View'<?php else: ?>'Search Results'<?php endif; ?>});
+                ga('send', 'event', 'UX', 'click', <?php if($current_category): ?>'Category View'
+                <?php else: ?>'Search Results'<?php endif; ?>, {
+                    'hitCallback': function () {
+                        document.location = item.href;
+                    }
+                }
+                )
+                ;
+            };
+        });
+
+        //create ga add event for adding to cart
+        $$('.btn-cart').each(function (item) {
+            item.originonclick = item.onclick;
+
+            // new click handler
+            item.onclick = function (elmn) {
+
+                var nearestLi = item.match('li') ? item : item.up('li');
+                var position = nearestLi.previousSiblings().size();
+
+                var nearestAnchor = nearestLi.down('a');
+                var name = Element.readAttribute(nearestAnchor, 'title');
+
+                var priceDiv = nearestLi.down('div.price-box');
+                var productId = '';
+                var prices = priceDiv.descendants();
+                prices.each(function (price) {
+                    if (!price.hasClassName('price') && !price.hasClassName('regular-price')) {
+                        //not a price, don't need to go further
+                        return;
+                    }
+                    //grab the id of the element
+                    var priceId = Element.readAttribute(price, 'id');
+                    if (priceId == null) {
+                        //didn't have an id to parse
+                        return;
+                    }
+
+                    //now take the id and get the product id off it
+                    var newProductId = (priceId.substr(14)) ? priceId.substr(14) : productId;
+                    if (isNaN(newProductId)) {
+                        //it's not a number so ignore it
+                        return;
+                    }
+                    //now set the new product id
+                    productId = newProductId;
+                });
+
+
+                var productFieldObject = {
+                    'id': productId,                   // Product ID (string).
+                    'name': name,
+                    <?php if(isset($current_category)): ?>
+                    'category': '<?php echo $current_category->getName() ?>',
+                    <?php endif; ?>
+                    'position': position
+                };
+                ga('ec:addProduct', productFieldObject);
+                ga('ec:setAction', 'add', {list: <?php if($current_category): ?>'Category View'<?php else: ?>'Search Results'<?php endif; ?>});
+                item.onclick = item.originonclick;
+                ga('send', 'event', 'UX', 'add', <?php if($current_category): ?>'Category View'
+                <?php else: ?>'Search Results'<?php endif; ?>, {
+                    'hitCallback': function () {
+                        item.click(item.originonclick);
+                    }
+                }
+                )
+                ;
+            };
+
+        });
+        //]]>
+    </script>
+<?php endif; ?>

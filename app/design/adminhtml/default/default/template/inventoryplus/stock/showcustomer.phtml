@@ -1,0 +1,123 @@
+<?php
+    $product_id = $this->getRequest()->getParam('product_id');
+    $product_name = Mage::getModel('catalog/product')
+                        ->load($product_id)
+                        ->getName();
+    $status_arr = Mage::getModel('sales/order_status')->getResourceCollection()->toOptionHash();    
+    $warehouse_id = $this->getRequest()->getParam('warehouse_id');        
+    $warehouse = Mage::getModel('inventoryplus/warehouse')->load($warehouse_id);         
+    $helper = Mage::helper('adminhtml');    
+    $inventory_order_collection = Mage::getModel('inventoryplus/warehouse_order')->getCollection()
+                    ->addFieldToFilter('product_id' , $product_id)                    
+                    ->addFieldToFilter('qty', array('gt' => 0));
+    if($warehouse_id > 0){
+        $inventory_order_collection->addFieldToFilter('warehouse_id' , $warehouse_id);
+    }
+    $order_ids = array();      
+    foreach($inventory_order_collection as $order){
+        $order_ids[] = $order->getOrderId();
+    }                                           
+?>
+<div class="content-header">
+    <h3 class="icon-head head-adminhtml-warehouse"><?php echo $this->__('PRODUCT PENDING HISTORY')?></h3>
+</div>
+<div>
+    <?php   echo $this->__('Product Name: ').'<strong>'.$product_name.'</strong>'; ?>
+   <br />
+   <br />
+</div>
+<?php if(count($inventory_order_collection)): ?>    
+    <div class="grid">
+        <div class="hor-scroll" style="max-height:300px;overflow-y:auto;">
+            <table cellspacing="0" id="warehouse_history_id_table" class="data">
+                <colgroup>
+                    <col>
+                    <col width="280">
+                    <col width="280">
+                </colgroup>
+                <thead>
+                    <tr class="headings">
+                        <th width = "150">
+                            <span class="nobr">
+                                <span class="sort-title"><?php echo $this->__('Created Time') ?></span>
+                            </span>
+                        </th>
+                        <th width = "100">
+                            <span class="nobr">
+                                <span class="sort-title"><?php echo $this->__('#Order') ?></span>
+                            </span>
+                        </th>
+                        
+                        <th width = "150">
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('Customer'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                        
+                        <th width = "100">
+                            <span class="nobr">
+                                <span class="sort-title"><?php echo $this->__('Status') ?></span>
+                            </span>
+                        </th>
+                        
+                        <th>
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('On Hold Qty'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                        
+                         <th>
+                            <span class="nobr">
+                                <span class="sort-title">
+                                    <?php echo $this->__('Warehouse'); ?>
+                                </span>         
+                            </span>
+                        </th>
+                    </tr>   
+                </thead>    
+                <tbody>
+                    <?php $i = 0 ?>
+                    <?php foreach($inventory_order_collection as $warehouseorder): ?>
+                        <?php $i++ ?>
+                        <?php $order = Mage::getModel('sales/order')->load($warehouseorder->getData('order_id'))?>
+                       
+                        <tr class="even pointer">
+                            <td class=" ">
+                                <?php echo Mage::helper('core')->formatDate($order->getData('created_at'), 'medium', false) ?>
+                            </td>                            
+                            <td class=" ">
+                                <?php echo '<a href = "'.$helper->getUrl('adminhtml/sales_order/view',array('order_id' => $order->getEntityId())).'">#'.$order->getIncrementId().'</a>' ?>
+                            </td>                            
+                            <td class=" ">
+                                <?php if($order->getCustomerId()) : ?>
+                                    <?php echo '<a href = "'.$helper->getUrl('adminhtml/customer/edit',array('id' => $order->getCustomerId())).'">'.$order->getData('customer_firstname').' '.$order->getData('customer_lastname').'</a>' ?>                                
+                                <?php else : ?>
+                                    <?php echo $order->getData('customer_firstname').' '.$order->getData('customer_lastname') ?>                               
+                                <?php endif ?>
+                            </td>
+                            
+                            <td class=" ">
+                                <?php echo $status_arr[$order->getStatus()] ?>
+                            </td>
+                           
+                            <td class="">
+                                <?php echo $warehouseorder->getData('qty') ?>
+                            </td>
+                            <td class=" last">
+                                <?php $warehouse = Mage::getModel('inventoryplus/warehouse')->load($warehouseorder->getData('warehouse_id')); ?>
+                                <?php echo $warehouse->getWarehouseName();?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php else: ?>
+    <?php echo $this->__('This product has no on-hold items at the moment.') ?>
+<?php endif; ?>
+
