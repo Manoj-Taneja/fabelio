@@ -242,17 +242,33 @@
             $_item->getBaseRowTotal() + $_item->getBaseTaxAmount() + $_item->getBaseHiddenTaxAmount() + $_item->getBaseWeeeTaxAppliedRowAmount() - $_item->getBaseDiscountAmount(),
             $_item->getRowTotal() + $_item->getTaxAmount() + $_item->getHiddenTaxAmount() + $_item->getWeeeTaxAppliedRowAmount() - $_item->getDiscountAmount()
         ); ?>
-    </td><td class="a-right last">
+    </td>
+    <!-- FAB-69 Fetching a new column in which displaying expected delivery time according to the availabilty in stock -->
+    <!-- FAB-69 Code Started -->
+    <td class="a-right last">
         <?php 
-        $sku = $_item->getSku();  
-        $Deliverytime           = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku)->getDeliverytime(); 
-        $DeliverytimeBackorder  = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku)->getDeliverytimeBackorder();
-        $model = Mage::getModel('catalog/product'); 
-$_product = $model->load($product_id); 
-$stocklevel = (int)Mage::getModel('cataloginventory/stock_item')
-                ->loadByProduct($_product)->getQty();
-        //if($_item->getQty())
-        echo $stocklevel;
+        $_order = $this->getOrder(); 
+        $order_id =  $_order->getId();
+        $sku = $_item->getSku();
+        $resource = Mage::getSingleton('core/resource');
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $tableName = $resource->getTableName('sales_flat_order_item');
+        $query = "select qty_stock from ".$tableName." where order_id='".$order_id."' and sku='".$sku."';";
+        $qty_stock = $readConnection->fetchOne($query);
+        if ($qty_stock >= 0) {
+            $DeliveryTime = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku)->getDeliverytime();
+            $DeliveryTimeArray = explode(":", $DeliveryTime);
+            $counter = count($DeliveryTimeArray);
+            if ($counter > 1) {
+                echo $DeliveryTimeArray[1];
+            } else {
+                echo $DeliveryTimeArray[0];
+            }
+        } else {
+            echo Mage::getModel('catalog/product')->loadByAttribute('sku', $sku)->getDeliverytimeBackorder();
+        }
         ?>
     </td>
+    <!-- FAB-69 Code End -->
 </tr>
