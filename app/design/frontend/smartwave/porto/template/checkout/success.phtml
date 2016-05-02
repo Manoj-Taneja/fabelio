@@ -37,6 +37,7 @@
     <?php  else :?>
         <p><?php echo $this->__('Nomor pesanan Anda: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
     <?php endif;?>
+<p><?php echo $this->__('Customer Service Kemi Akan Menghubungi Anda.') ?></p>
         <p><?php echo $this->__('Anda akan menerima email konfirmasi pemesanan berisi detail pemesanan Anda dan sebuah link untuk mengecek status pembelian.') ?></p>
     <?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
         <p>
