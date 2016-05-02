@@ -39,6 +39,91 @@
 <div class="wrapper">
     <?php echo $this->getChildHtml('global_notices') ?>
     <div class="page">
+    <?php if($_SERVER["SERVER_PROTOCOL"]){ ?>
+        
+        <div class="container">
+<div class="row">
+  <div class="row-height">
+    <div class="col-xs-12 col-sm-1 col-sm-height">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-1 col-sm-height col-sm-top">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-1 col-sm-height col-sm-middle">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+    
+     <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside inside-full-height">
+        <div class="content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<script>
+$(document).ready(function(e) {
+ var bk = $(document).height();
+    $('.content').css('height',bk);
+});
+</script>
+    <?php } ?>    
         <?php echo $this->getChildHtml('header') ?>
         <?php echo $this->getChildHtml('topContainer') ?>
         <div class="main-container col1-layout">
