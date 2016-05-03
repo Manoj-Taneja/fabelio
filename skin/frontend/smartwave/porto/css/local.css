@@ -3590,11 +3590,10 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .inside {
   margin-top: 20px;
   margin-bottom: 20px;
-  background: #ededed;
   background: -webkit-gradient(linear, left top, left bottom,color-stop(0%, #f4f4f4), color-stop(100%, #ededed));
   background: -moz-linear-gradient(top, #f4f4f4 0%, #ededed 100%);
   background: -ms-linear-gradient(top, #f4f4f4 0%, #ededed 100%);
-  background:#ffd6d6;
+  background: rgba(255,214,214,0.8);
 }
 .inside-full-height {
   height: 100%;
@@ -3602,11 +3601,14 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
   margin-bottom: 0;
 }
 
-/ columns of same height styles /
 
+.std {
+position: relative;
+z-index: 999;
+}
 .row-height {
   display: table;
-  table-layout: fixed;
+  
   height: 100%;
   width: 100%;
 }

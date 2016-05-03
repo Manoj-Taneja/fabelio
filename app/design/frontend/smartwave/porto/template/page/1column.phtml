@@ -41,8 +41,8 @@
     <div class="page">
     <?php if($_SERVER["SERVER_PROTOCOL"]){ ?>
         
-        <div class="container">
-<div class="row">
+        <div class="container" style="position:relative;">
+<div class="row" style="position:absolute;width:100%;z-index:999;">
   <div class="row-height">
     <div class="col-xs-12 col-sm-1 col-sm-height">
       <div class="inside inside-full-height">
@@ -118,9 +118,9 @@
 
 
 <script>
-$(document).ready(function(e) {
- var bk = $(document).height();
-    $('.content').css('height',bk);
+jQuery(document).ready(function(e) {
+ var bk = jQuery(document).height();
+    jQuery('.content').css('height',bk);
 });
 </script>
     <?php } ?>    
