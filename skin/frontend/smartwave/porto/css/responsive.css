@@ -775,8 +775,9 @@
     #banner-slider-demo-16 .text-content p a{font-size:9px;padding:5px 11px;margin-left:5px;margin-top:5px}
     
     .sticky-product .add-to-cart{position:static;margin:0;vertical-align:middle;display:inline-block}
+/* FAB-85 code start */
     .card-icon .icon-veritran{width:100%;}
-
+/* FAB-85 code end */
 }
 
 @media (max-width:640px){
