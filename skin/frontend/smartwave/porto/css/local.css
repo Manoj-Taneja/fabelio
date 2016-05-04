@@ -3587,9 +3587,9 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     color: green;
     margin-left: 18px;
 }
-/* FAB-85 payment card icon css */
-.card-icon .icon-veritran{padding:5px; float:right; width:33%;margin-top:0px;}
-.card-icon .float-group{    border: 1px solid #d9d9d9; padding: 5px 0;width:65%;margin-top:0px;}
+/* FAB-85 start code:payment card icon css */
+.card-icon .icon-veritran{padding:5px; float:right; width:30%;margin-top:0px;}
+.card-icon .float-group{    border: 1px solid #d9d9d9; padding: 5px 0;width: 70%;margin-right: 0px;margin-top:0px;}
 .card-icon .float-group img{width:50px;}
 .card-icon p {font-size:13px;font-weight: normal;color: #777;margin:0px;}
-
+/* FAB-85 start end:payment card icon css */
