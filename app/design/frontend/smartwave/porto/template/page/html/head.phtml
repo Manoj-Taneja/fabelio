@@ -42,3 +42,60 @@
 </script>
 
 <!--<?php echo "Porto Magento Theme: v".Mage::getConfig()->getModuleConfig("Smartwave_Porto")->version; ?>-->
+<?php  
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $customer_email = $customer->getEmail();
+}
+$cartProductArray = array();
+$cart = Mage::getModel('checkout/cart')->getQuote();
+foreach ($cart->getAllItems() as $item)
+{
+$productName = $item->getProduct()->getName();
+$productPrice = $item->getProduct()->getPrice();
+$formattedPrice = Mage::helper('core')->currency($productPrice, true, false);
+$productQty = $item->getQty();
+$productId = $item->getId();
+$productSku = $item->getSku();
+$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+$categoryIds = $product->getCategoryIds();
+$productBrandName = $item->getProduct()->getAttributeText('manufacturer');
+$productDescription = $product->getDescription();
+$productImageUrl = Mage::helper('catalog/image')->init($product, 'thumbnail');
+$productUrl = $product->getProductUrl();
+//echo "CategoryId".$categoryIds[0]."Price:".$formattedPrice."Quantity:".$productQty."Name:".$productName."desc:".$productDescription."brandNa$
+$cartProductArray[] = array("id" => $productId,
+                                        "categoryId" => trim($categoryIds[0]),
+                                        "transactionId" => "",
+                                        "price" => trim($formattedPrice),
+                                        "quantity" => trim($productQty),
+                                        "name" => trim($productName),
+                                        "brandName" => trim($productBrandName),
+                                        "desc" => trim($productDescription),
+                                        "imageUrl" => trim($productImageUrl),
+                                        "link" => trim($productUrl));
+}
+global $jsonEncodedCartData;
+$jsonEncodedCartData = json_encode($cartProductArray);
+$session = Mage::getSingleton("core/session");
+$session->setData("sessionJsonEncodedCartData", $jsonEncodedCartData);
+?>
+<!-- FAB-62 Ematic JS---- code start -->
+<script>
+    (function(i,s,o,g,r,a,m){i['EmaticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//api.ematicsolutions.com/v1/ematic.min.js','ematics');
+ 
+    var ematicApikey = "c31fa675f1ad11e5a40a0242ac110015-sg1";
+    var opt = {
+        email: "<?php echo $customer_email ?>",
+        country_iso: "ID",
+        currency_iso: "IDR",
+        language_iso: "IN"
+    };
+    
+    //initialize
+    ematics("create", ematicApikey, opt);
+</script>
+<!-- FAB-62 Ematic JS---- code end -->
