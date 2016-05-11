@@ -3804,8 +3804,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 
     text-align: center;
 
-    width: 100%; font-family: roboto-medium;}
-
+    width: 100%; font-family: roboto-medium;display:block;}
 .business-hotel-inner{float:left; width: 100%; padding: 20px 0;}
 
 .business-hotel-inner .business-hotel-box{float:left; width:24%; padding: 0 20px; margin-right: 1%;}
@@ -4042,7 +4041,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 
 .slider-product-main{position: relative;}
 
-.slider-product-main label{position: absolute; top: 45%; width:100%; text-align: center; font-size: 44px; color: #fff; font-family: roboto-medium;}
+.slider-product-main label{position: absolute; top: 45%; width:100%; text-align: center; font-size: 44px; color: #fff; font-family: roboto-medium;display:block;}
 
 .slider-work-main{float:left; width:50%;}
 
