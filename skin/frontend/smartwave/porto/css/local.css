@@ -1,3 +1,60 @@
+/* FAB-111 code start */
+@font-face {
+
+    font-family: 'roboto-bold';
+
+    src:url('/skin/frontend/smartwave/porto/css/fonts/Roboto-Bold.ttf') format('truetype');
+
+         
+
+    font-weight: normal;
+
+    font-style: normal;
+
+
+
+}
+
+
+
+@font-face {
+
+    font-family: 'roboto-medium';
+
+  
+
+    src:url('/skin/frontend/smartwave/porto/css/fonts/Roboto-Medium.ttf') format('truetype');
+
+        
+
+    font-weight: normal;
+
+    font-style: normal;
+
+
+
+}
+
+
+
+
+
+@font-face {
+
+    font-family: 'roboto-medium-italic';
+
+  
+
+    src: url('/skin/frontend/smartwave/porto/css/fonts/Roboto-MediumItalic.ttf') format('truetype');       
+
+    font-weight: normal;
+
+    font-style: normal;
+
+
+
+}
+/* FAB-111 code end */
 /* Reset ================================================================================= */
 *{outline:none !important}
 html, body{background-color:#fff;font:13px/1 'Roboto',Arial,Helvetica,sans-serif;color:#7d7d7d;text-align:center;font-size: 14px;line-height: 21px}
