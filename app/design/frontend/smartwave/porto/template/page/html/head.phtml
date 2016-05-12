@@ -49,18 +49,28 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 }
 $cartProductArray = array();
 $cart = Mage::getModel('checkout/cart')->getQuote();
+if($cart->getItemsQty())
+{
 foreach ($cart->getAllItems() as $item)
 {
-$productName = $item->getProduct()->getName();
-$productPrice = $item->getProduct()->getPrice();
-$formattedPrice = Mage::helper('core')->currency($productPrice, true, false);
 $productQty = $item->getQty();
-$productId = $item->getId();
-$productSku = $item->getSku();
-$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')
+      ->getParentIdsByChild($item->getProductId());
+if($parentIds)
+{
+$productId = $parentIds[0];
+$product = Mage::getModel('catalog/product')->load($productId);
+}
+else
+{
+$productId = $item->getProductId();
+$product = Mage::getModel('catalog/product')->load($productId);
+}
+$productName = $product->getName();
+$formattedPrice = Mage::helper('core')->currency($product->getPrice(), true, false);
 $categoryIds = $product->getCategoryIds();
 $productBrandName = $item->getProduct()->getAttributeText('manufacturer');
-$productDescription = $product->getDescription();
+$productDescription = "";
 $productImageUrl = Mage::helper('catalog/image')->init($product, 'thumbnail');
 $productUrl = $product->getProductUrl();
 //echo "CategoryId".$categoryIds[0]."Price:".$formattedPrice."Quantity:".$productQty."Name:".$productName."desc:".$productDescription."brandNa$
@@ -75,10 +85,14 @@ $cartProductArray[] = array("id" => $productId,
                                         "imageUrl" => trim($productImageUrl),
                                         "link" => trim($productUrl));
 }
+}
+else{ $cartProductArray = NULL;}
 global $jsonEncodedCartData;
 $jsonEncodedCartData = json_encode($cartProductArray);
+//$jsonEncodedCartData = str_replace('"', '', $jsonEncodedCartData);
 $session = Mage::getSingleton("core/session");
-$session->setData("sessionJsonEncodedCartData", $jsonEncodedCartData);
+$session->setData("sessionCartDataArray", $cartProductArray);
+//print_r($session->getData("sessionCartDataArray"));
 ?>
 <!-- FAB-62 Ematic JS---- code start -->
 <script>

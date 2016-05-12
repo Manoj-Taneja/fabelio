@@ -60,12 +60,11 @@
 </script>
 <?php
 $session = Mage::getSingleton("core/session");
-$cartData = $session->getData("sessionJsonEncodedCartData");
-?>
+$cartData = $session->getData("sessionCartDataArray"); ?>
 <script type="text/javascript">
 jQuery( document ).ready(function() {
  //   console.log( "ready!" );
-var products = '<?php echo $cartData; ?>';
+var products = JSON.parse('<?php echo json_encode($cartData); ?>');
 console.log(products);
 ematics("log", "product", "checkout", products);
 });

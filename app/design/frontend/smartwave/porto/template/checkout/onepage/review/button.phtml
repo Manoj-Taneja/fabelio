@@ -24,14 +24,14 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 $session = Mage::getSingleton("core/session");
-$cartData = $session->getData("sessionJsonEncodedCartData");
+$cartData = $session->getData("sessionCartDataArray");
 ?>
 <button id="place_order_button" type="submit" title="<?php echo $this->__('Place Order') ?>" class="fab-btn fab-btn-primary btn-checkout" onclick="mixpanelReview();ecommerceReview();review.save();"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
 <script>
 
         jQuery("#place_order_button").click( function()
            {
-		var products = '<?php echo $cartData; ?>';
+		var products = JSON.parse('<?php echo json_encode($cartData); ?>');
 		console.log(products);
 		ematics("log", "product", "convert", products);
            }

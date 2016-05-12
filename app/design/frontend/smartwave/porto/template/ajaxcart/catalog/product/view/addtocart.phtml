@@ -21,3 +21,53 @@
         </div>
     </div>
 <?php endif; ?>
+<?php
+$session = Mage::getSingleton("core/session");
+$cartData = $session->getData("sessionCartDataArray");
+$productSku = $_product->getSku(); 
+$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+$categories = $product->getCategoryIds();
+?>
+<script type="text/javascript">
+jQuery(function($){ 
+   jQuery('.add-to-cart-btn').on('click', function(e){
+       if(productAddToCartForm.validator.validate()){
+//alert(products.length);
+var products = jQuery.parseJSON('<?php $session = Mage::getSingleton("core/session"); $cartData = $session->getData("sessionCartDataArray"); echo json_encode($cartData) ?>');      
+//console.log(products);
+var current_product =     
+    [{
+     'id': '<?php echo $_product->getId(); ?>',
+     'categoryId': '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getId(); ?>',
+     'transactionId': '',
+     'price': '<?php echo Mage::helper('core')->currency($product->getPrice(), true, false); ?>',
+     'quantity': jQuery('#qty').val(),
+     'name': '<?php echo $_product->getName(); ?>',
+     'brandName': '<?php echo $product->getAttributeText('manufacturer'); ?>',
+     'desc': '',
+     'imageUrl': '<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>',
+     'link': '<?php echo $product->getProductUrl() ?>' 
+     }];
+var product_already_exist_flag = 0;
+
+if(products.length > 0)
+{
+for(i=0;i<products.length;i++)
+{
+if(products[i]['id']==current_product[0]['id'])
+{ //alert('update product');
+var updated_qty = parseInt(products[i]['quantity']) + parseInt(current_product[0]['quantity']);
+products[i]['quantity'] = updated_qty.toString();
+product_already_exist_flag = 1;
+break;
+}
+}
+}
+if(product_already_exist_flag==0 && products.length > 0){ products.push(current_product[0]);}
+if(product_already_exist_flag==0 && products.length == 0){ products = current_product;}
+console.log(products); 
+ematics("log", "product", "cart", products);
+       }
+     });
+  });
+</script>
