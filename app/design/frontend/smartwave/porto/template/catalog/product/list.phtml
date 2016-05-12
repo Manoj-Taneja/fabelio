@@ -306,12 +306,16 @@
                       $_options = Mage::getModel('attributeswatches/attributeswatches')->getCollection()
                         ->setOrder('value', Varien_Data_Collection::SORT_ORDER_ASC)
                         ->addFieldToFilter('main_table.option_id', array('in' => $_swatches_ids));
-
+                    // FAB-83 code start
+                      $attributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('catalog_product', 'fabric_color');
+                    // FAB-83 code end
                       echo '<ul class="fabric-color-swatches clearfix">';
                       $cnt = 1;
                       foreach($_options as $k=>$ps) {
-                        echo '<li><img src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></li>';
-                        if(++$cnt > 5) break;
+                        // FAB-83 code start
+                          echo '<li><a href="'.$_product->getProductUrl().'#'.$attributeId.'='.$ps['attributeswatches_id'].'"><img src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></a></li>';
+                        // FAB-83 code end
+                          if(++$cnt > 5) break;
                       }
                       if(count($_options)>5){
                         echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
