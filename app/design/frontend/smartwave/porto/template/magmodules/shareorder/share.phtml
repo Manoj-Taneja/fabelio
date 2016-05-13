@@ -71,7 +71,7 @@
                             }
                 
 			$_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(150).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />'; 
-	
+                        preg_replace('/[^A-Za-z0-9\-]/', '', $productName);
 			// Echo products
 			echo '<div class="share"><h3>' . $productTitle . '</h3>'; 
 			echo $_img;
