@@ -4115,3 +4115,91 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 
 
 /* FAB-111 end code */
+/*FAB 70 css starts here*/
+.product-img-big-lat li{border: none !important;}
+.product-price-lat .price-label{display: inline-block !important; color:#767676; margin-top: 0px !important; font-weight: 400 !important; }
+.product-price-lat .price{display: inline-block !important;color:#767676;margin-top: 0px !important;font-weight: 400 !important;}
+.product-price-lat .fa.fa-question-circle{    font-size: 20px;
+    margin: 0 0 0 3px;
+    display: inline-block;
+    color: #474747;
+    cursor: pointer;}
+.question-main:hover .fa.fa-question-circle{color: #ffd41c;}
+.price-box-lat{float:left; width: 100%; margin-top: 10px;}
+.price-box-lat label{color: #d34d32;
+    font-size: 18px;
+    font-weight: bold;}
+.price-box-lat span{color: #444;
+    font-size: 14px;}
+.price-box-lat p{margin:0px;}
+.col1-layout .product-view .product-info{border-bottom: 1px solid #ccc;}
+.popup-hover{position: relative;
+    float: left;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0px 0px 5px #ccc; background: #fff; z-index: 99;}
+.popup-hover:before{position: absolute;
+    content: '';
+    width: 100%;
+    border-bottom: 4px solid #ffd41c;
+    left: 0;
+    top: 0;}
+.popup-hover:after{    position: absolute;
+    content: '';
+    border-bottom: 8px solid #ffd41c;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    top: -15px;
+    right: 50%;}
+.popup-hover-main{position: absolute;
+    right: -124px;
+    top: 28px; display: none;}
+.popup-hover p{font-size: 16px; line-height: 1.4;}
+.question-main{display: inline-block;
+    margin: 0px 0 0 6px;
+    font-size: 18px;
+    cursor: pointer; position: relative;}
+.question-main:hover .popup-hover-main{display: block;}
+.product-price-lat{display: inline-block;}
+.question-lw-main{position: relative; cursor: pointer;}
+.question-lw-main:hover .popup-hover-main-lw{display: block;}
+.popup-hover-main-lw{position: absolute;
+    right: -155px;
+    top: 26px;
+    display: none;}
+.question-lw-main{display: inline-block; font-size: 18px;}
+.popup-hover-lw{position: relative;
+    float: left;
+    width: 310px;
+    padding: 20px;
+    box-shadow: 0px 0px 5px #ccc;
+    background: #fff;
+    z-index: 99;
+}
+.popup-hover-lw p{font-size: 16px; line-height: 1.4;}
+.question-lw-main:hover .fa.fa-question-circle{color: #ffd41c;}
+.popup-hover-lw li{float: left;
+    margin-right: 20px;
+    margin-bottom: 10px;}
+.popup-hover-lw li img{width: 65px;}
+.popup-hover-lw ul{margin-top: 10px;}
+.popup-hover-lw li:nth-child(4n){margin-left: 50px;}
+.popup-hover-lw:before{position: absolute;
+    content: '';
+    width: 100%;
+    border-bottom: 4px solid #ffd41c;
+    left: 0;
+    top: 0;}
+.popup-hover-lw:after{    position: absolute;
+    content: '';
+    border-bottom: 8px solid #ffd41c;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    top: -14px;
+    right: 50%;}
+.hand-craft{float:left; width: 100%;}
+.hand-craft label{color: #ff920f; display: inline-block !important; font-size: 15px;}
+
+/*FAB 70 css ends here*/
