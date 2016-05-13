@@ -52,6 +52,7 @@
                         $productId = $item->getProductId();
 			$_product = Mage::getModel('catalog/product')->load($item->getProductId());
                         $productName = $_product->getName();
+                        $productTitle = $_product->getName();
                         $productType = $_product->getTypeID();
                         
                         # Get parent id of product
@@ -61,7 +62,10 @@
                             $parentId = $arrayOfParentIds[0];
                             $_parent_product = Mage::getModel('catalog/product')->load($parentId);
                             $productUrl = $_parent_product->getProductUrl();
-                                
+                            $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+                            $attributeSetModel->load($_parent_product->getAttributeSetId()); // $product is your product object
+                            $attributeSetName = $attributeSetModel->getAttributeSetName(); 
+                            $productName = $productName." - ".$attributeSetName;
                             }else{
                                 $productUrl = $_product->getProductUrl();
                             }
@@ -69,7 +73,7 @@
 			$_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(150).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />'; 
 	
 			// Echo products
-			echo '<div class="share"><h3>' . $productName . '</h3>'; 
+			echo '<div class="share"><h3>' . $productTitle . '</h3>'; 
 			echo $_img;
 			echo '<div class="buttons">';
                         ?>
