@@ -66,6 +66,9 @@
                             $attributeSetModel->load($_parent_product->getAttributeSetId()); // $product is your product object
                             $attributeSetName = $attributeSetModel->getAttributeSetName(); 
                             //$productName = $productName." - ".$attributeSetName;
+                            $productName = str_replace('(', '', $productName);
+                            $productName = str_replace(')', '', $productName);
+                            
                             }else{
                                 $productUrl = $_product->getProductUrl();
                             }
