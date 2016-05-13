@@ -313,7 +313,7 @@
                       $cnt = 1;
                       foreach($_options as $k=>$ps) {
                         // FAB-83 code start
-                          echo '<li><a class="tooltip" href="'.$_product->getProductUrl().'#'.$attributeId.'='.$ps['attributeswatches_id'].'"><img src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></a></li>';
+                          echo '<li><a href="'.$_product->getProductUrl().'#'.$attributeId.'='.$ps['attributeswatches_id'].'"><img class="tooltip" src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></a></li>';
                         // FAB-83 code end
                           if(++$cnt > 5) break;
                       }
