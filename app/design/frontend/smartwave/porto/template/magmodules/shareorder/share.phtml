@@ -25,39 +25,65 @@
 <?php if($this->getEnabled()): ?>
 
 	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
+	<!--<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
 	  if (d.getElementById(id)) return;
 	  js = d.createElement(s); js.id = id;
 	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
 	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
+	}(document, 'script', 'facebook-jssdk'));</script>-->
 
 	<h2 class="sub-title"><?php echo $this->__('Share your order on social media!'); ?></h2>
 	
 	<?php
+                
 		// Get the product IDs from last order
+                $_helper = $this->helper('catalog/output');
 		$order_id = Mage::getSingleton('checkout/session')->getLastRealOrderId();
 		$order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
+                
+                
+               
+                
 		$items = $order->getAllVisibleItems();		
 		foreach ($items as $item):
 			
 			// Load the product & image
+                        $productId = $item->getProductId();
 			$_product = Mage::getModel('catalog/product')->load($item->getProductId());
+                        $productName = $_product->getName();
+                        $productType = $_product->getTypeID();
+                        
+                        # Get parent id of product
+                        $arrayOfParentIds =  Mage::getSingleton("catalog/product_type_configurable")->getParentIdsByChild($productId);
+                        # Get product url of parent (configurable) product if exists
+                        if(count($arrayOfParentIds) > 0){
+                            $parentId = $arrayOfParentIds[0];
+                            $_parent_product = Mage::getModel('catalog/product')->load($parentId);
+                            $productUrl = $_parent_product->getProductUrl();
+                                
+                            }else{
+                                $productUrl = $_product->getProductUrl();
+                            }
+                
 			$_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(150).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />'; 
 	
 			// Echo products
-			echo '<div class="share"><h3>' . $_product->getName() . '</h3>'; 
+			echo '<div class="share"><h3>' . $productName . '</h3>'; 
 			echo $_img;
 			echo '<div class="buttons">';
-			echo $this->getTwitterImg($_product); 
-			echo $this->getFacebookImg($_product); 
+                        ?>
+			<!-- // Twitter -->
+<a href="javascript:popWin('http://twitter.com/home/?status=<?php echo $productName . ' (' . urlencode($productUrl) . ')'; ?>', 'twitter', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');" title="<?php echo $this->__('Tweet') ?>">Twitter</a>
+<!-- // Facebook -->
+<a href="javascript:popWin('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($productUrl); ?>&t=<?php echo $productName; ?>', 'facebook', 'width=640,height=480,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes');" title="<?php echo $this->__('Share on Facebook') ?>">Facebook</a>
+                        <?php
 			echo '</div></div>';
 			
 		endforeach; 
 	?>	
 	
-	<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
-	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+	<!--<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>-->
 		
 <?php endif; ?>
