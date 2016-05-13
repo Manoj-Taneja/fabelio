@@ -27,10 +27,16 @@
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300italic,300,100italic,100,400italic,500,500italic,700,700italic,900,900italic" type="text/css" media="screen"/>
 <?php endif;?>
 <link href='//fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'/>
-<?php echo $this->getCssJsHtml() ?>
+<!-- FAB-83 code start -->
+<link href='/skin/frontend/smartwave/porto/css/tooltipster.css' rel='stylesheet' type='text/css'/>
+<!-- FAB-83 code end -->
+    <?php echo $this->getCssJsHtml() ?>
 <?php echo $this->getChildHtml() ?>
 <?php echo $this->helper('core/js')->getTranslatorScript() ?>
-<?php echo $this->getIncludes() ?>
+<!-- FAB-83 code start -->
+<script type="text/javascript" src="/skin/frontend/smartwave/porto/js/jquery.tooltipster.min.js"></script>
+<!-- FAB-83 code end -->
+    <?php echo $this->getIncludes() ?>
 <script type="text/javascript">
     wow = new WOW(
       {
@@ -39,6 +45,17 @@
       }
     );
     wow.init();
+    /* FAB-83 code start */
+    jQuery(document).ready(function() {
+            jQuery('.tooltip').tooltipster({
+                animation: 'grow',
+                delay: 200,
+                touchDevices: false,
+                trigger: 'hover'
+                
+            });
+        });
+        /* FAB-83 code end */
 </script>
 
 <!--<?php echo "Porto Magento Theme: v".Mage::getConfig()->getModuleConfig("Smartwave_Porto")->version; ?>-->
