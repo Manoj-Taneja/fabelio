@@ -205,7 +205,23 @@ $_msrp= $_product->getMsrp();
                     <?php echo $_coreHelper->currency($_price + $weeeAmountToDisplay, true, true) ?>
                 </span>
             <?php else: ?>
-<!--                <span class="regular-price 1" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                <?php if(!Mage::registry('current_product')) { ?>
+                <span class="regular-price 1" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php if ($_finalPrice == $_price): ?>
+                        <?php echo $_coreHelper->formatPrice($_price, true) ?>
+                    <?php else: ?>
+                        <?php echo $_coreHelper->formatPrice($_finalPrice, true) ?>
+                    <?php endif; ?>
+                </span>
+                  <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
+                  <p class="old-price rrp-price">
+                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
+                    <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
+                  <?php endif; ?>
+                </span>
+                <?php } else{ ?>
+                <!--                <span class="regular-price 1" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php if ($_finalPrice == $_price): ?>
                         <?php echo $_coreHelper->formatPrice($_price, true) ?>
                     <?php else: ?>
@@ -259,6 +275,7 @@ $_msrp= $_product->getMsrp();
                        </div>
                   <?php endif; ?>
                 </span>
+                <?php } ?>
             <?php endif; ?>
         <?php endif; ?>
     <?php else: /* if ($_finalPrice == $_price): */ ?>
