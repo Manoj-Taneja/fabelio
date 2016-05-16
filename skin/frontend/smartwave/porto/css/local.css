@@ -1107,6 +1107,12 @@ dl#narrow-by-list{margin:0}
 .block-category-nav .category-list ul{padding-left:15px;margin:0;list-style:none}
 .block-category-nav .category-list ul{display:none}
 .block-category-nav .category-list a.plus{position:absolute;right:1px;color:#08c;font-size:16px;line-height:32px}
+/* Added for subcategories */
+.block-category-nav .sub-category-list{list-style:none;padding:0;margin:0}
+.block-category-nav .sub-category-list li{position:relative}
+.block-category-nav .sub-category-list a{color:#777;font-size:13px;line-height:2.5}
+.block-category-nav .sub-category-list ul{padding-left:15px;margin:0;list-style:none}
+.block-category-nav .sub-category-list a.plus{position:absolute;right:1px;color:#08c;font-size:16px;line-height:32px}
 
 
 /* Category Page ========================================================================= */
@@ -4115,3 +4121,14 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 
 
 /* FAB-111 end code */
+
+/* FAB-84 starts code */
+.block-category-nav .sub-category-list a.plus{color:#464646;}
+.block-category-nav .sub-category-list li.current:before{position: absolute; content: '\f0da'; font-family: 'FontAwesome'; left: -10px; top: 6px; font-size: 15px;}
+.block-category-nav .sub-category-list li a.current-font:before{position: absolute; content: '\f0da'; font-family: 'FontAwesome'; left: -10px; top: -2px; font-size: 15px;}
+.block-category-nav .sub-category-list li.sub-current a{font-weight: bold;}
+.block-category-nav .sub-category-list li.current  a.current-font {font-weight: bold;}
+.sub-category-list .sub-categories.current-font{font-weight: bold;}
+.sub-category-list .sub-sub-categories.current-font{font-weight: bold;}
+
+/* FAB-84 end code */
