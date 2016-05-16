@@ -1,46 +1,143 @@
-<?php $_categories = $this->getCurrentChildCategories() ?>
+<?php 
+   /* $currentCategoryId = Mage::registry('current_category')->getId();
+    $parent_category = Mage::getModel('catalog/category')->load($currentCategoryId)->getParentCategory();
+    $parent_data = $parent_category->getData();
+    
+    $parent_category_id= $parent_data['entity_id'];*/
+    
+    //echo "<pre>"; print_r($parent_data); echo "</pre>";
+  //  echo "Current Category : ".$currentCategory;
+    $_categories = $this->getCurrentChildCategories();
+    //var_dump($_categories);
+    //echo "<pre>"; print_r($_categories); echo "</pre>"; 
+    
+             $_helper = Mage::helper("catalog/category"); 
+             $rootCat = Mage::app()->getStore()->getRootCategoryId();
+             $current = Mage::registry('current_category');
+             
+             $category = $this->getCurrentCategory();
+    
+    $path = $category->getPath();
+    
+    $ids = explode('/', $path);
+    //echo "<pre>"; print_r($ids); echo "</pre>";
+    if (isset($ids[2])){
+        $topParent = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($ids[2]);
+    }
+    else{
+        $topParent = null;//it means you are in one catalog root.
+    }
+
+   $_no_of_cats = count($ids);
+    $_sub_sub_parent_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($ids[$_no_of_cats-2]);
+    $_current_cat = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($ids[$_no_of_cats-1]);
+
+    if ($topParent){
+        $name = $topParent->getName();
+        $url = $topParent->getUrl();
+    }
+    
+    $_top_parent = $name;
+
+        
+?>
 <?php $_count = is_array($_categories)?count($_categories):$_categories->count(); ?>
 <?php
-    function getChildrenCategoriesHtml($_category){
-        $children = explode( ",", $_category->getChildren() );
-        $content = '';
-        $content .= '<li class="';
-        if(!$children[0])
-            $content .= 'has-no-children';
-        else
-            $content .= 'has-children';
-        $content .= '">';
-        $content .= '<a href="'.$_category->getUrl().'" ';
-        $content .= '>'.$_category->getName().'</a>';
-        if($children[0]){
-            $content .= '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
-            $content .= '<ul>';
-            foreach($children as $child){
-                $_subcat = Mage::getModel( 'catalog/category' )->load( $child );
-                $content .= getChildrenCategoriesHtml($_subcat);
-            }
-            $content .= '</ul>';
-        }
-        $content .= '</li>';
-        return $content;
+    
+    
+    function show_category_hierarchy($child,$_helper,$rootCat,$top,$_sub_sub_parent_cat,$_current_cat){
+        
+        $_top_parent_sub_categories = $top->getChildrenCategories();
+        $current = Mage::registry('current_category');
+        
+        if(count($_top_parent_sub_categories) > 0):
+                             echo '<ul>';
+                            foreach($_top_parent_sub_categories as $_top_parent_sub_category):
+                                $_top_parent_sub_category_child = $_top_parent_sub_category->getChildrenCategories();
+                               // echo "<pre>"; print_r($_top_parent_sub_category); echo "</pre>";
+                                $_top_parent_sub_child_categories = $_top_parent_sub_category->getChildrenCategories();
+                                if($current->getID()==$_top_parent_sub_category->getID() ):
+                                    $_current_class="current";
+                                    $_current_class_font = "current-font";
+                                else:
+                                    $_current_class="";
+                                    $_current_class_font = "";
+                                endif;
+                                echo '<li class="has-children">';
+                         echo '<a class="sub-categories '.$_current_class_font.'" href="'.$_helper->getCategoryUrl($_top_parent_sub_category).'">'.$_top_parent_sub_category->getName().'</a>';
+                         
+                         //echo "Count : ".count($_top_parent_sub_child_categories);
+                         if(!$_current_class && !isset($_sub_sub_parent_cat) ):
+                             
+                             echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
+                         
+                         elseif(isset($_sub_sub_parent_cat) && $_top_parent_sub_category->getID() == $_sub_sub_parent_cat->getID() && $current->getID()==$_current_cat->getID() ):
+                             
+                             echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
+                             elseif($current->getID()==$_top_parent_sub_category->getID() && count($_top_parent_sub_category_child) > 0):
+                             
+                              echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
+                         elseif(count($_top_parent_sub_child_categories) > 0):
+                            
+                             echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
+                          
+                             else:
+                                
+                             echo '<a href="javascript:void(0)" class="plus"></a>';    
+                         endif;
+                          
+                         //echo $_top_parent_sub_category->getID()."\n";
+                         //echo $_sub_sub_parent_cat->getID()."\n";
+                            $_sub_catagories =  $_top_parent_sub_category->getChildrenCategories();
+                            if(count($_sub_catagories) > 0){
+                                if(!$_current_class && !isset($_sub_sub_parent_cat)):
+                                 echo '<ul style="display:none;">';
+                                elseif(isset($_sub_sub_parent_cat) && $_top_parent_sub_category->getID() == $_sub_sub_parent_cat->getID() && $current->getID()==$_current_cat->getID()):
+                                    
+                                    echo '<ul style="display:block;">';
+                                elseif($current->getID()==$_top_parent_sub_category->getID() && count($_top_parent_sub_category_child) > 0):
+                                    echo '<ul style="display:block;">';
+                                else:
+                                    echo '<ul style="display: none;">';
+                                endif;
+                                foreach($_sub_catagories as $_sub_category):
+                                     if($current->getID()==$_sub_category->getID()):
+                                        $_sub_current_class="sub-current";
+                                        $_sub_current_class_font = "current-font";
+                                    else:
+                                        $_sub_current_class="";
+                                        $_sub_current_class_font="";
+                                    endif;
+                                    echo '<li class="has-children">';
+                                    echo '<a class=" sub-sub-categories '.$_sub_current_class_font.'" href="'.$_helper->getCategoryUrl($_sub_category).'">'.$_sub_category->getName().'</a>';
+                                    echo '</li>';
+                                endforeach;
+                                echo '</ul>';
+                            }
+                                
+                         
+                         
+                         echo '</li>';
+                         endforeach;
+                     endif;
     }
+    
+    
+   
 ?>
-<?php if($_count): ?>
+
+
 <div class="block block-category-nav">
     <div class="block-title">
-        <strong><span><?php echo Mage::registry('current_category')->getName(); ?></span></strong>
+        <strong><span><?php echo $_top_parent ?></span></strong>
     </div>
     <div class="block-content">
-        <ul class="category-list">
-        <?php foreach ($_categories as $_category): ?>
-            <?php
-            if($_category->getIsActive()){
-                echo getChildrenCategoriesHtml($_category);
-            }
-            ?>
-        <?php endforeach ?>
+        <ul class="sub-category-list">
+        <?php show_category_hierarchy($topParent,$_helper,$rootCat,$topParent,$_sub_sub_parent_cat,$_current_cat);?>
         </ul>
     </div>
+</div>
+
 <script type="text/javascript">
     jQuery(function($){
         $(".block.block-category-nav .block-title").click(function(){
@@ -52,7 +149,7 @@
                 $(this).addClass("closed");
             }
         });
-        $(".block.block-category-nav .category-list a.plus").click(function(){
+        $(".block.block-category-nav .sub-category-list a.plus").click(function(){
             if($(this).parent().hasClass("opened")){
                 $(this).parent().children("ul").slideUp();
                 $(this).parent().removeClass("opened");
@@ -63,7 +160,30 @@
                 $(this).children("i.icon-plus-squared").removeClass("icon-plus-squared").addClass("icon-minus-squared");
             }
         });
+        
+        $(".block.block-category-nav .sub-category-list ul li a.sub-sub-categories").hover(function(){
+            
+            
+            if($('.sub-sub-categories').hasClass('current-font')){
+                $('.sub-sub-categories').removeClass('current-font')
+            }
+            if($('.sub-categories').hasClass('current-font')){
+                $('.sub-categories').removeClass('current-font')
+            }
+            $( this ).toggleClass( "current-font" );
+            
+        })
+        
+        $(".block.block-category-nav .sub-category-list ul li a.sub-categories").hover(function(){
+            if($('.sub-categories').hasClass('current-font')){
+                $('.sub-categories').removeClass('current-font')
+            }
+            if($('.sub-sub-categories').hasClass('current-font')){
+                $('.sub-sub-categories').removeClass('current-font')
+            }
+            $( this ).toggleClass( "current-font" );
+            
+        })
     });
 </script>
-</div>
-<?php endif; ?>
+
