@@ -1,15 +1,7 @@
 <?php 
-   /* $currentCategoryId = Mage::registry('current_category')->getId();
-    $parent_category = Mage::getModel('catalog/category')->load($currentCategoryId)->getParentCategory();
-    $parent_data = $parent_category->getData();
-    
-    $parent_category_id= $parent_data['entity_id'];*/
-    
-    //echo "<pre>"; print_r($parent_data); echo "</pre>";
-  //  echo "Current Category : ".$currentCategory;
+ 
     $_categories = $this->getCurrentChildCategories();
-    //var_dump($_categories);
-    //echo "<pre>"; print_r($_categories); echo "</pre>"; 
+   
     
              $_helper = Mage::helper("catalog/category"); 
              $rootCat = Mage::app()->getStore()->getRootCategoryId();
@@ -20,12 +12,12 @@
     $path = $category->getPath();
     
     $ids = explode('/', $path);
-    //echo "<pre>"; print_r($ids); echo "</pre>";
+  
     if (isset($ids[2])){
         $topParent = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($ids[2]);
     }
     else{
-        $topParent = null;//it means you are in one catalog root.
+        $topParent = null;
     }
 
    $_no_of_cats = count($ids);
@@ -49,12 +41,10 @@
         
         $_top_parent_sub_categories = $top->getChildrenCategories();
         $current = Mage::registry('current_category');
-        
         if(count($_top_parent_sub_categories) > 0):
-                             echo '<ul>';
+                             echo "<ul>";
                             foreach($_top_parent_sub_categories as $_top_parent_sub_category):
                                 $_top_parent_sub_category_child = $_top_parent_sub_category->getChildrenCategories();
-                               // echo "<pre>"; print_r($_top_parent_sub_category); echo "</pre>";
                                 $_top_parent_sub_child_categories = $_top_parent_sub_category->getChildrenCategories();
                                 if($current->getID()==$_top_parent_sub_category->getID() ):
                                     $_current_class="current";
@@ -65,46 +55,115 @@
                                 endif;
                                 echo '<li class="has-children">';
                                 if($current->getID()==$_top_parent_sub_category->getID()){
-                                    echo '<a class="sub-categories '.$_current_class_font.'" href="javascript://">'.$_top_parent_sub_category->getName().'</a>';
+                                    echo '<a class="sub-categories current '.$_current_class_font.'" href="javascript://">'.$_top_parent_sub_category->getName().'</a>';
                                 }else{
                                     echo '<a class="sub-categories '.$_current_class_font.'" href="'.$_helper->getCategoryUrl($_top_parent_sub_category).'">'.$_top_parent_sub_category->getName().'</a>';
                                 }
                          
-                         
-                         //echo "Count : ".count($_top_parent_sub_child_categories);
-                         if(!$_current_class && !isset($_sub_sub_parent_cat) ):
-                             
-                             echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
-                         
-                         elseif(isset($_sub_sub_parent_cat) && $_top_parent_sub_category->getID() == $_sub_sub_parent_cat->getID() && $current->getID()==$_current_cat->getID() ):
-                             
-                             echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
-                             elseif($current->getID()==$_top_parent_sub_category->getID() && count($_top_parent_sub_category_child) > 0):
-                             
-                              echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
-                         elseif(count($_top_parent_sub_child_categories) > 0):
-                            
-                             echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
-                          
-                             else:
+                        
+                                switch ($current->getID())
+                                {
+                                    case $top->getID():
+                                      
+                                        $top_parent_childs = $_top_parent_sub_category->getChildrenCategories();
+                                        $_top_parent_sub_category_childs = $_top_parent_sub_category->getChildrenCategories();
+                                        
+                                            if(count($top_parent_childs) > 0):
+                                                echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
+                                            elseif(count($_top_parent_sub_category_childs)==0):
+                                                echo '<a href="javascript:void(0)" class="plus"></a>';
+                                               
+                                            else:
+                                                echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
+                                             
+                                            endif;
+                                        break;
+                                    case $_top_parent_sub_category->getID():
+                                       
+                                        $_top_parent_sub_category_childs = $_top_parent_sub_category->getChildrenCategories();
+                                        
+                                        if(count($_top_parent_sub_category_childs) > 0):
+                                            echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
+                                        elseif(count($_top_parent_sub_category_childs)==0):
+                                             echo '<a href="javascript:void(0)" class="plus"></a>';
+                                        else:
+                                                echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
+                                          
+                                        endif;
+                                        break;
+                                    
+                                    case $_current_cat->getID():
+                                      
+                                        
+                                        $_current_cat_childs = $_current_cat->getChildrenCategories();
+                                        $_top_parent_sub_category_childs = $_top_parent_sub_category->getChildrenCategories();
+                                        if(count($_current_cat_childs)==0 && $_top_parent_sub_category->getID()==$_sub_sub_parent_cat->getID()):
+                                            echo '<a href="javascript:void(0)" class="plus"><i class="icon-minus-squared"></i></a>';
+                                        elseif(count($_top_parent_sub_category_childs) == 0):
+                                            echo '<a href="javascript:void(0)" class="plus"></a>';                                           
+                                           else:
+                                               echo '<a href="javascript:void(0)" class="plus"><i class="icon-plus-squared"></i></a>';
+                                           
+                                        endif;
+                                           break; 
+                                        
+                                    default:
+                                      
+                                        echo '<a href="javascript:void(0)" class="plus"></a>';
+                                        
+                                        
+                                }
+                               
                                 
-                             echo '<a href="javascript:void(0)" class="plus"></a>';    
-                         endif;
-                          
-                         //echo $_top_parent_sub_category->getID()."\n";
-                         //echo $_sub_sub_parent_cat->getID()."\n";
+                                
+                                
+                                
                             $_sub_catagories =  $_top_parent_sub_category->getChildrenCategories();
                             if(count($_sub_catagories) > 0){
-                                if(!$_current_class && !isset($_sub_sub_parent_cat)):
-                                 echo '<ul style="display:none;">';
-                                elseif(isset($_sub_sub_parent_cat) && $_top_parent_sub_category->getID() == $_sub_sub_parent_cat->getID() && $current->getID()==$_current_cat->getID()):
+                                
+                                switch ($current->getID())
+                                {
+                                    case $top->getID():
+                                        $top_parent_childs = $_top_parent_sub_category->getChildrenCategories();
+                                        
+                                            if(count($top_parent_childs) > 0):
+                                               
+                                                 echo '<ul style="display:block;">';
+                                            else:
+                                               
+                                                echo '<ul style="display:none;">';
+                                            endif;
+                                        break;
+                                    case $_top_parent_sub_category->getID():
+                                        
+                                        $_top_parent_sub_category_childs = $_top_parent_sub_category->getChildrenCategories();
+                                        if(count($_top_parent_sub_category_childs) > 0):
+                                            
+                                            echo '<ul style="display:block;">';
+                                            else:
+                                            echo '<ul style="display:none;">';
+                                        endif;
+                                        break;
                                     
-                                    echo '<ul style="display:block;">';
-                                elseif($current->getID()==$_top_parent_sub_category->getID() && count($_top_parent_sub_category_child) > 0):
-                                    echo '<ul style="display:block;">';
-                                else:
-                                    echo '<ul style="display: none;">';
-                                endif;
+                                    case $_current_cat->getID():
+                                        
+                                        $_current_cat_childs = $_current_cat->getChildrenCategories();
+                                        if(count($_current_cat_childs)==0 && $_top_parent_sub_category->getID()==$_sub_sub_parent_cat->getID()):
+                                           
+                                            echo '<ul style="display:block;">';
+                                           else:
+                                            echo '<ul style="display:none;">';
+                                        endif;
+                                           break; 
+                                        
+                                    default:
+                                       
+                                        echo '<ul style="display:none;">';
+                                        
+                                }
+                                
+                               
+                                
                                 foreach($_sub_catagories as $_sub_category):
                                      if($current->getID()==$_sub_category->getID()):
                                         $_sub_current_class="sub-current";
@@ -115,7 +174,7 @@
                                     endif;
                                     echo '<li class="has-children">';
                                     if($current->getID()==$_sub_category->getID()):
-                                        echo '<a class=" sub-sub-categories '.$_sub_current_class_font.'" href="javascript://">'.$_sub_category->getName().'</a>';
+                                        echo '<a class=" sub-sub-categories current '.$_sub_current_class_font.'" href="javascript://">'.$_sub_category->getName().'</a>';
                                     else:
                                         echo '<a class=" sub-sub-categories '.$_sub_current_class_font.'" href="'.$_helper->getCategoryUrl($_sub_category).'">'.$_sub_category->getName().'</a>';
                                     endif;
@@ -129,6 +188,7 @@
                          
                          echo '</li>';
                          endforeach;
+                         echo '</ul>';
                      endif;
     }
     
@@ -142,9 +202,9 @@
         <strong><span><?php echo $_top_parent ?></span></strong>
     </div>
     <div class="block-content">
-        <ul class="sub-category-list">
+        <div class="sub-category-list">
         <?php show_category_hierarchy($topParent,$_helper,$rootCat,$topParent,$_sub_sub_parent_cat,$_current_cat);?>
-        </ul>
+        </div>
     </div>
 </div>
 
@@ -185,11 +245,12 @@
         })
         
         $(".block.block-category-nav .sub-category-list ul li a.sub-categories").hover(function(){
+           
             if($('.sub-categories').hasClass('current-font')){
-                $('.sub-categories').removeClass('current-font')
+               // $('.sub-categories').removeClass('current-font')
             }
             if($('.sub-sub-categories').hasClass('current-font')){
-                $('.sub-sub-categories').removeClass('current-font')
+               // $('.sub-sub-categories').removeClass('current-font')
             }
             $( this ).toggleClass( "current-font" );
             
