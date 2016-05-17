@@ -9,6 +9,11 @@
             <action method="addBodyClass" ifconfig="porto_settings/header/type" condition="11"><classname>side-header</classname></action>
         </reference>
         <reference name="head">
+	    <!-- FAB-62 Ematic JS API Implementation code start-->
+	    <block type="cms/block" name="ematic_head">
+    		<action method="setBlockId"><block_id>ematic_head</block_id></action>
+	    </block>
+	    <!-- FAB-62 Ematic JS API Implementation code end-->
             <action method="addJs"><script>smartwave/jquery/jquery-1.10.2.min.js</script></action>
             <action method="addJs"><script>smartwave/jquery/jquery-noconflict.js</script></action>
             <action method="addJs"><script>smartwave/jquery/jquery-ui-1.10.4.min.js</script></action>
