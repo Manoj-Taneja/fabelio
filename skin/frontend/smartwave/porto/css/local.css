@@ -4131,4 +4131,10 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .sub-category-list .sub-categories.current-font{font-weight: bold;}
 .sub-category-list .sub-sub-categories.current-font{font-weight: bold;}
 
+
+.block-category-nav .sub-category-list li a.current:before{position: absolute; content: '\f0da'; font-family: 'FontAwesome'; left: -10px; top: -2px; font-size: 15px;}
+.block-category-nav .sub-category-list li.current  a.current {font-weight: bold;}
+.sub-category-list .sub-categories.current{font-weight: bold;}
+.sub-category-list .sub-sub-categories.current{font-weight: bold;}
+
 /* FAB-84 end code */
