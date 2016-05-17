@@ -64,7 +64,12 @@
                                     $_current_class_font = "";
                                 endif;
                                 echo '<li class="has-children">';
-                         echo '<a class="sub-categories '.$_current_class_font.'" href="'.$_helper->getCategoryUrl($_top_parent_sub_category).'">'.$_top_parent_sub_category->getName().'</a>';
+                                if($current->getID()==$_top_parent_sub_category->getID()){
+                                    echo '<a class="sub-categories '.$_current_class_font.'" href="javascript://">'.$_top_parent_sub_category->getName().'</a>';
+                                }else{
+                                    echo '<a class="sub-categories '.$_current_class_font.'" href="'.$_helper->getCategoryUrl($_top_parent_sub_category).'">'.$_top_parent_sub_category->getName().'</a>';
+                                }
+                         
                          
                          //echo "Count : ".count($_top_parent_sub_child_categories);
                          if(!$_current_class && !isset($_sub_sub_parent_cat) ):
@@ -109,7 +114,12 @@
                                         $_sub_current_class_font="";
                                     endif;
                                     echo '<li class="has-children">';
-                                    echo '<a class=" sub-sub-categories '.$_sub_current_class_font.'" href="'.$_helper->getCategoryUrl($_sub_category).'">'.$_sub_category->getName().'</a>';
+                                    if($current->getID()==$_sub_category->getID()):
+                                        echo '<a class=" sub-sub-categories '.$_sub_current_class_font.'" href="javascript://">'.$_sub_category->getName().'</a>';
+                                    else:
+                                        echo '<a class=" sub-sub-categories '.$_sub_current_class_font.'" href="'.$_helper->getCategoryUrl($_sub_category).'">'.$_sub_category->getName().'</a>';
+                                    endif;
+                                    
                                     echo '</li>';
                                 endforeach;
                                 echo '</ul>';
@@ -182,6 +192,28 @@
                 $('.sub-sub-categories').removeClass('current-font')
             }
             $( this ).toggleClass( "current-font" );
+            
+        })
+        
+        $(".block.block-category-nav .sub-category-list ul li a.sub-categories").mouseout(function(){
+            
+                $(this).removeClass('current-font')
+            
+            
+               // $('.sub-sub-categories').removeClass('current-font')
+           
+          //  $( this ).toggleClass( "current-font" );
+            
+        })
+        
+        $(".block.block-category-nav .sub-category-list ul li a.sub-sub-categories").mouseout(function(){
+            
+                $(this).removeClass('current-font')
+            
+            
+               // $('.sub-sub-categories').removeClass('current-font')
+           
+          //  $( this ).toggleClass( "current-font" );
             
         })
     });
