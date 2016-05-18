@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Fabmod_Plusmarg>
+      <version>0.0.1</version>
+    </Fabmod_Plusmarg>
+  </modules>
+  <global>
+    <models>
+      <fabmod_plusmarg>
+        <class>Fabmod_Plusmarg_Model</class>
+        <resourceModel>Fabmod_Plusmarg_Model_Resource</resourceModel>
+      </fabmod_plusmarg>
+    </models>
+    <blocks>
+      <fabmod_plusmarg>
+        <class>Fabmod_Plusmarg_block</class>
+      </fabmod_plusmarg>
+    </blocks>
+    <helpers>
+      <fabmod_plusmarg>
+        <class>Fabmod_Plusmarg_Helper</class>
+      </fabmod_plusmarg>
+    </helpers>
+  </global>
+  <frontend>
+    <layout>
+      <updates>
+        <fabmod_plusmarg>
+          <file>fabmod_plusmarg.xml</file>
+        </fabmod_plusmarg>
+      </updates>
+    </layout>
+  </frontend>
+</config>
+

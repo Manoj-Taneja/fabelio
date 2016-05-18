@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Fabmod_Ematics>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Fabmod_Ematics>
+  </modules>
+</config>

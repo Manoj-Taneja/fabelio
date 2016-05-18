@@ -9,4 +9,7 @@ class Fabmod_Mixpanel_Helper_Data extends Mage_Core_Helper_Abstract {
   public function isAdwordsEnabled(){
     return Mage::getStoreConfig("fabmod_mixpanel/adwords/enabled");
   }
+  public function isEmaticsEnabled(){
+    return Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled");
+  }
 }
