@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Fabmod_Ematics>
+      <version>0.0.1</version>
+    </Fabmod_Ematics>
+  </modules>
+  <global>
+    <models>
+      <fabmod_ematics>
+        <class>Fabmod_Ematics_Model</class>
+        <resourceModel>Fabmod_Ematics_Model_Resource</resourceModel>
+      </fabmod_ematics>
+    </models>
+    <blocks>
+      <fabmod_ematics>
+        <class>Fabmod_Ematics_block</class>
+      </fabmod_ematics>
+    </blocks>
+    <helpers>
+      <fabmod_ematics>
+        <class>Fabmod_Ematics_Helper</class>
+      </fabmod_ematics>
+    </helpers>
+  </global>
+  <frontend>
+    <layout>
+      <updates>
+        <fabmod_ematics>
+          <file>fabmod_ematics.xml</file>
+        </fabmod_ematics>
+      </updates>
+    </layout>
+  </frontend>
+</config>
+
