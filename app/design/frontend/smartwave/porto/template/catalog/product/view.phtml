@@ -207,7 +207,7 @@ if($enable_addtocart_sticky){
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
 
                 <div class="product-info" style="float:left;">
-                <div class="product-name" style="position: absolute;right: 196%;z-index: 999; width: 100%;">
+                <div class="product-name" style="position: absolute;right: 196%;z-index:2; width: 100%;">
                       <h1 <?php if($enabled_richsnippets): ?>itemprop="name"<?php endif; ?>><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                       <?php if(!is_null($_product->getAttributeText('manufacturer'))&&$_product->getAttributeText('manufacturer')!=""){?>
                       <p class="manufacturer">Oleh <?php echo $_product->getAttributeText('manufacturer'); ?></p>
