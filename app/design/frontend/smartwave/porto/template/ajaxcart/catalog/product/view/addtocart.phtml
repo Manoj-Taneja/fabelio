@@ -4,6 +4,10 @@
     <div class="add-to-cart">
         <?php if(!$_product->isGrouped()): ?>
         <div class="qty-prod-li clearfix">
+	<div class="hand-craft">
+                <label>Handcrafted Order-</label>
+                <span>Barang ini akan diproduksi dan dikirim dalam <b>4 minggu</b></span>
+            </div>
           <label for="qty" class="pull-left qty-lbl"><?php echo $this->__('Qty:') ?></label>
           <div class="qty-holder pull-right">
             <a href="javascript:void(0)" class="table_qty_dec">-</a>
