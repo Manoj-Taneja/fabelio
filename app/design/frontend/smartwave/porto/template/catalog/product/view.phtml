@@ -151,7 +151,13 @@ if($enable_addtocart_sticky){
 }
 ?>
         <div class="row">
-            <div class="col-sm-8"><!-- test -->
+            <div class="col-sm-8" style="border-right: 1px solid #ccc;"><!-- test -->
+		<!--	<div class="product-name">
+                      <h1 <?php if($enabled_richsnippets): ?>itemprop="name"<?php endif; ?>><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                      <?php if(!is_null($_product->getAttributeText('manufacturer'))&&$_product->getAttributeText('manufacturer')!=""){?>
+                      <p class="manufacturer">Oleh <?php echo $_product->getAttributeText('manufacturer'); ?></p>
+                      <?php } ?>
+                  </div>-->
               <div class="product-img-box" id="fab-prod-img-box">
                 <?php echo $this->getChildHtml('media_static') ?>
               </div>
@@ -160,7 +166,7 @@ if($enable_addtocart_sticky){
             <?php
                 if (Mage::getStoreConfig("porto_settings/product_view/prev_next",$code)){
             ?>
-                <div class="prev-next-products">
+<!--                <div class="prev-next-products">
                     <?php $_prev = Mage::helper('porto')->getPreviousProduct(); ?>
                     <?php $_next = Mage::helper('porto')->getNextProduct(); ?>
                      
@@ -190,7 +196,7 @@ if($enable_addtocart_sticky){
                         </div>
                     </div>
                     <?php endif; ?>
-                </div>
+                </div>-->
             <?php
                 }
             ?>
@@ -200,23 +206,23 @@ if($enable_addtocart_sticky){
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
 
-                <div class="product-info">
-                  <div class="product-name">
+                <div class="product-info" style="float:left;">
+                <div class="product-name" style="position: absolute;right: 196%;z-index: 999; width: 100%;">
                       <h1 <?php if($enabled_richsnippets): ?>itemprop="name"<?php endif; ?>><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                       <?php if(!is_null($_product->getAttributeText('manufacturer'))&&$_product->getAttributeText('manufacturer')!=""){?>
                       <p class="manufacturer">Oleh <?php echo $_product->getAttributeText('manufacturer'); ?></p>
                       <?php } ?>
-                  </div>
+                  </div>  
                   <div <?php if($enabled_richsnippets) echo $helper_richsnippets->getOfferItemscope(); ?>>
                       <?php echo $this->getChildHtml('product_type_data'); ?>
                       <?php echo $this->getTierPriceHtml(); ?>
                       <?php echo $price_properties; ?>
                   </div>
-                  <div class="product-delivery-time">
+<!--                  <div class="product-delivery-time">
                   <?php
                      echo $this->escapeHtml($_product->getDeliverytime()); // Shows module Webshops4All_ShowDeliverytime
                   ?>
-                  </div>
+                  </div>-->
                   <?php echo $this->getChildHtml('extrahint') ?>
                 <?php if($_product->getData('assembly_required')): ?>
                   <div class="assembly-required">
@@ -336,7 +342,7 @@ if($enable_addtocart_sticky){
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="border-right: 1px solid #ccc;">
               <div>
                 <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
                 <div class="product-collateral">
