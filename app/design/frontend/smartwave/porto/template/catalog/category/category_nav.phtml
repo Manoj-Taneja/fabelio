@@ -41,6 +41,12 @@
         
         $_top_parent_sub_categories = $top->getChildrenCategories();
         $current = Mage::registry('current_category');
+        $name = $child->getName();
+        $url = $child->getUrl();
+        
+        echo '<ul>';
+        echo '<li class="top-parent">'.$name.'</li>';
+        echo '</ul>';
         if(count($_top_parent_sub_categories) > 0):
                              echo "<ul>";
                             foreach($_top_parent_sub_categories as $_top_parent_sub_category):
@@ -199,7 +205,7 @@
 
 <div class="block block-category-nav">
     <div class="block-title">
-        <strong><span><?php echo $_top_parent ?></span></strong>
+        <strong><span>Kategori</span></strong>
     </div>
     <div class="block-content">
         <div class="sub-category-list">
