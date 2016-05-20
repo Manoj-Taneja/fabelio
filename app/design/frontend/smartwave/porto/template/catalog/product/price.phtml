@@ -64,7 +64,7 @@ $_msrp= $_product->getMsrp();
     <?php $_weeeTaxAmount = $_store->roundPrice($_store->convertPrice($_weeeTaxAmount)); ?>
     <?php $_weeeTaxAmountInclTaxes = $_store->roundPrice($_store->convertPrice($_weeeTaxAmountInclTaxes)); ?>
 
-    <div class="price-box">
+    <div class="price-box price_align">
     <?php $_convertedPrice = $_store->roundPrice($_store->convertPrice($_product->getPrice())); ?>
     <?php $_price = $_taxHelper->getPrice($_product, $_convertedPrice); ?>
     <?php $_regularPrice = $_taxHelper->getPrice($_product, $_convertedPrice, $_simplePricesTax); ?>
@@ -396,29 +396,33 @@ $_msrp= $_product->getMsrp();
                       </div>
                   </div>
                   <?php endif; ?>
-                <p class="old-price">
+                <p class="old-price space_align">
                     <span class="price original-price" style="text-decoration: none;">Harga Sebelumnya:</span>
-                    <span class="price original-price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" <?php if(Mage::getBlockSingleton('page/html_header')->getIsHomePage()){?> style="margin-bottom:-8px !important;"<?php } ?> >    
+                    <span class="price original-price original_align" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" <?php if(Mage::getBlockSingleton('page/html_header')->getIsHomePage()){?> style="margin-bottom:-8px !important;"<?php } ?> >    
                 <?php echo $_coreHelper->formatPrice($_regularPrice, false) ?>
                 </span>
+                <div class="clearfix"></div>
+                <span class="price special_align" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" <?php if(Mage::registry('current_category')){?> <?php } ?>">
+                    <?php echo $_coreHelper->formatPrice($_finalPrice, false) ?>
+                </span>    
                 <?php if($_finalPrice<$_price){ ?>
-                <span class="price-label special-price-label"><?php echo $this->__('& Pengiriman GRATIS') ?></span>
+                <span class="price-label special-price-label special-price-label-align"><?php echo $this->__('& Pengiriman GRATIS') ?></span>
                 <?php } ?>
             </p>
-                <p class="special-price">
+                <!--<p class="special-price">
                 <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:16px !important; font-weight:500 !important; <?php } ?>">
                     <?php echo $_coreHelper->formatPrice($_finalPrice, false) ?>
                 </span>
-                </p>
+                </p>-->
                 <p class="old-price">
                 <?php if($_finalPrice<$_price){ ?>
                 <span class="price-label special-price-label"><?php echo $this->__('Cicilan mulai dari') ?></span>
                 <?php } ?>
                 </p>
                 <p class="special-price">
-                <span class="special-price-emi" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:16px !important; font-weight:500 !important; <?php } ?>">
+                <span class="special-price-emi" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:18px !important; font-weight:bold; <?php } ?>">
                     
-                </span><span>/bulan&nbsp;</span>
+                </span><span class="bulan_align">/bulan&nbsp;</span>
                 <div class="question-lw-main">
                   <i class="fa fa-question-circle"> </i>
                    <div class="popup-hover-main-lw">
@@ -479,7 +483,7 @@ $_msrp= $_product->getMsrp();
     }
     ?>
     <?php if ($price): ?>
-        <div class="price-box">
+        <div class="price-box price_align">
             <p<?php if ($showMinPrice): ?> class="minimal-price"<?php endif ?>>
                 <?php if ($showMinPrice): ?>
                     <span class="price-label"><?php echo $this->__('Starting at:') ?></span>

@@ -4226,5 +4226,51 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     right: 50%;}
 .hand-craft{float:left; width: 100%;}
 .hand-craft label{color: #ff920f; display: inline-block !important; font-size: 15px;}
-
+.price_align .old-price .price-label {
+    color: #767676;
+    float: left;
+}
+.product-info .price_align .old-price .msrp-price {
+    color: #767676;
+    float: left;
+    font-weight: 400 !important;
+    margin: 10px 6px 0 25px;
+}
+.product-info .price-box.price_align .old-price span.price.original-price {
+    color: #767676;
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+    font-weight: 400;
+    min-width: 130px;
+}
+.product-info .price-box.price_align .old-price span.original_align.original-price {
+    font-size: 18px;
+}
+.product-info .price-box.price_align .old-price .price.special_align {
+    display: inline-block;
+    color: #d70306;
+    font-size: 19px;
+}
+.price-box.price_align .old-price .price-label.special-price-label {
+    display: block;
+    margin: 0;
+    width: 100%;
+}
+.price-box.price_align .old-price.space_align {
+    float: left;
+    margin: 0 0 6px;
+    width: 100%;
+}
+.price-box.price_align .price.special_align {
+    color: #d70306;
+    font-size: 18px;
+}
+.price-box.price_align .special-price-label-align {
+    
+    font-weight: bold;
+}
+.bulan_align {
+    font-weight: bold;
+}
 /*FAB 70 css ends here*/
