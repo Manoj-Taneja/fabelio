@@ -121,9 +121,9 @@ Product.Config.prototype.addParentProductIdToCartForm = function(parentProductId
 
 
 Product.OptionsPrice.prototype.updateSpecialPriceDisplay = function(price, finalPrice, rrp) {
-
     var prodForm = $('product_addtocart_form');
     var specialPriceBox = prodForm.select('p.special-price');
+    var specialPriceEmiBox = prodForm.select('span.special-price-emi');
     var originalPrice = prodForm.select('span.original-price');
     var specialPriceLabel = prodForm.select('span.special-price-label');
     var rrpLabel = prodForm.select('span.rrp-price-label');
@@ -138,9 +138,12 @@ Product.OptionsPrice.prototype.updateSpecialPriceDisplay = function(price, final
         rrpLabel.each(function(x) {x.hide();}); 
         rrpPrice.each(function(x) {x.hide();});
     }
-    if (price == finalPrice) {
-        specialPriceLabel.each(function(x) {x.hide();});
+    if (price == finalPrice) { 
+        //specialPriceLabel.each(function(x) {x.hide();});
         originalPrice.each(function(x) {x.hide();});
+        var EmiPrice = Math.round(finalPrice/12);
+        EmiPrice = EmiPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        specialPriceEmiBox.each(function(x) { jQuery(".special-price-emi").html("Rp "+EmiPrice);});
    //     magentopriceLabel.each(function(x) {x.hide();});
         oldPricePriceBox.each(function(x) {
             x.removeClassName('old-price');
@@ -149,6 +152,9 @@ Product.OptionsPrice.prototype.updateSpecialPriceDisplay = function(price, final
     }else{
         specialPriceLabel.each(function(x) {x.show();});
         originalPrice.each(function(x) {x.show();});
+        var EmiPrice = Math.round(finalPrice/12);
+        EmiPrice = EmiPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        specialPriceEmiBox.each(function(x) { jQuery(".special-price-emi").html("Rp "+EmiPrice);});
         specialPriceBox.each(function(x) {x.show();});
        // magentopriceLabel.each(function(x) {x.show();});
         oldPricePriceBox.each(function(x) {
