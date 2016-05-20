@@ -64,7 +64,7 @@ $_msrp= $_product->getMsrp();
     <?php $_weeeTaxAmount = $_store->roundPrice($_store->convertPrice($_weeeTaxAmount)); ?>
     <?php $_weeeTaxAmountInclTaxes = $_store->roundPrice($_store->convertPrice($_weeeTaxAmountInclTaxes)); ?>
 
-    <div class="price-box price_align">
+    <div class="price-box <?php if(Mage::registry('current_product'))echo 'price_align';?>">
     <?php $_convertedPrice = $_store->roundPrice($_store->convertPrice($_product->getPrice())); ?>
     <?php $_price = $_taxHelper->getPrice($_product, $_convertedPrice); ?>
     <?php $_regularPrice = $_taxHelper->getPrice($_product, $_convertedPrice, $_simplePricesTax); ?>
@@ -204,7 +204,7 @@ $_msrp= $_product->getMsrp();
                       id="product-price-weee-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->currency($_price + $weeeAmountToDisplay, true, true) ?>
                 </span>
-            <?php else: ?>
+            <?php else: if(Mage::registry('current_product')) { ?>
                 <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                 <p class="old-price rrp-price" style="display:inline-block;">
                   <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
@@ -272,7 +272,23 @@ $_msrp= $_product->getMsrp();
                 </span>-->
                   
                 </span>
-            <?php endif; ?>
+            <?php } else {?> 
+              <span class="regular-price 1" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php if ($_finalPrice == $_price): ?>
+                        <?php echo $_coreHelper->formatPrice($_price, true) ?>
+                    <?php else: ?>
+                        <?php echo $_coreHelper->formatPrice($_finalPrice, true) ?>
+                    <?php endif; ?>
+                </span>
+                  <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
+                  <p class="old-price rrp-price">
+                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
+                    <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
+                  <?php endif; ?>
+                </span>  
+                
+                <?php }endif; ?>
         <?php endif; ?>
     <?php else: /* if ($_finalPrice == $_price): */ ?>
         <?php $_originalWeeeTaxAmount = $_weeeHelper->getOriginalAmount($_product); ?>
@@ -438,7 +454,7 @@ $_msrp= $_product->getMsrp();
                         </span>
                     </span>
                 </p>
-            <?php else: ?>
+            <?php else: if(Mage::registry('current_product')) { ?>
                 <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                 <p class="old-price rrp-price" style="display:inline-block;">
                   <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
@@ -497,7 +513,31 @@ $_msrp= $_product->getMsrp();
                       </div>
                   </div>
                 </p>
-            <?php endif; ?>
+            <?php } 
+            else{ ?>
+                <p class="old-price">
+            <span class="price original-price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" <?php if(Mage::getBlockSingleton('page/html_header')->getIsHomePage()){?> style="margin-bottom:-8px !important;"<?php } ?> >
+                    <?php echo $_coreHelper->formatPrice($_regularPrice, false) ?>
+                </span>
+                <?php if($_finalPrice<$_price){ ?>
+                <span class="price-label special-price-label"><?php echo $this->__('Special Price:') ?></span>
+                <?php } ?>
+            </p>
+                <p class="special-price">
+                <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:16px !important; font-weight:500 !important; <?php } ?>">
+                    <?php echo $_coreHelper->formatPrice($_finalPrice, false) ?>
+                </span>
+                </p>
+                  <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
+                  <p class="old-price rrp-price">
+                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
+                    <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
+                  <?php endif; ?>
+            <?php    
+            }
+            
+            endif; ?>
 
         <?php endif; ?>
 
