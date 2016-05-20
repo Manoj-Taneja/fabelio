@@ -4140,6 +4140,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 /* FAB-84 end code */
 
 /*FAB 70 css starts here*/
+.product-img-big-lat{margin-top:75px;}
 .product-img-big-lat li{border: none !important;}
 .product-price-lat .price-label{display: inline-block !important; color:#767676; margin-top: 0px !important; font-weight: 400 !important; }
 .product-price-lat .price{display: inline-block !important;color:#767676;margin-top: 0px !important;font-weight: 400 !important;}
