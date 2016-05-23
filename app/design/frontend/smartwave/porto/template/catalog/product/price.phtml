@@ -207,12 +207,12 @@ $_msrp= $_product->getMsrp();
             <?php else: if(Mage::registry('current_product')) { ?>
                 <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                 <p class="old-price rrp-price" style="display:inline-block;">
-                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
+                  <span class="rrp-price-label price-label"><?php echo rtrim($this->__('MSRP:'),":") ?></span>
                     <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
                     </span>
                   <div class="question-main" style="display:inline-block;">
-                  <i class="fa fa-question-circle"> </i>
+<!--                  <i class="fa fa-question-circle"> </i>-->
                    <div class="popup-hover-main">
                   <div class="popup-hover">
                       <p>Harga tetangga adalah harga rata-rata produk serupa di pasaran yang biasanya terpengaruh oleh biaya eksternal seperti sewa gudang, toko, dan bea cukai.</p>
@@ -244,11 +244,11 @@ $_msrp= $_product->getMsrp();
                 <?php //} ?>
                 </p>
                 <p class="special-price">
-                <span class="special-price-emi" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:18px !important; font-weight:bold; <?php } ?>">
+                <span class="special-price-emi">
                 <?php echo $_coreHelper->formatPrice($_finalPrice/12, false) ?>    
-                </span><span class="bulan_align">/bulan&nbsp;</span>
+                </span><span class="bulan_align"> / bulan&nbsp;</span>
                 <div class="question-lw-main">
-                  <i class="fa fa-question-circle"> </i>
+<!--                  <i class="fa fa-question-circle"> </i>-->
                    <div class="popup-hover-main-lw">
                   <div class="popup-hover-lw">
                       <p>Anda dapat memilih metode cicilan dengan tenor 3, 6 atau 12 bulan pada saat memilih Metode Pembayaran.</p>
@@ -457,12 +457,13 @@ $_msrp= $_product->getMsrp();
             <?php else: if(Mage::registry('current_product')) { ?>
                 <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                 <p class="old-price rrp-price" style="display:inline-block;">
-                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
+                  <span class="rrp-price-label price-label"><?php echo rtrim($this->__('MSRP:'),":"); ?></span>
                     <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
                     </span>
                   <div class="question-main" style="display:inline-block;">
-                  <i class="fa fa-question-circle"> </i>
+<!--                  <i class="fa fa-question-circle"> </i>-->
+                     
                    <div class="popup-hover-main">
                   <div class="popup-hover">
                       <p>Harga tetangga adalah harga rata-rata produk serupa di pasaran yang biasanya terpengaruh oleh biaya eksternal seperti sewa gudang, toko, dan bea cukai.</p>
@@ -471,7 +472,7 @@ $_msrp= $_product->getMsrp();
                   </div>
                   <?php endif; ?>
                 <p class="old-price space_align">
-                    <span class="price original-price" style="text-decoration: none;">Harga Sebelumnya:</span>
+                    <span class="price original-price" style="text-decoration: none;">Harga Sebelumnya</span>
                     <span class="price original-price original_align" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" <?php if(Mage::getBlockSingleton('page/html_header')->getIsHomePage()){?> style="margin-bottom:-8px !important;"<?php } ?> >    
                 <?php echo $_coreHelper->formatPrice($_regularPrice, false) ?>
                 </span>
@@ -494,11 +495,11 @@ $_msrp= $_product->getMsrp();
                 <?php } ?>
                 </p>
                 <p class="special-price">
-                <span class="special-price-emi" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:18px !important; font-weight:bold; <?php } ?>">
+                <span class="special-price-emi">
                  <?php echo $_coreHelper->formatPrice($_finalPrice/12, false) ?>    
-                </span><span class="bulan_align">/bulan&nbsp;</span>
+                </span><span class="bulan_align"> / bulan&nbsp;</span>
                 <div class="question-lw-main">
-                  <i class="fa fa-question-circle"> </i>
+                  
                    <div class="popup-hover-main-lw">
                   <div class="popup-hover-lw">
                       <p>Anda dapat memilih metode cicilan dengan tenor 3, 6 atau 12 bulan pada saat memilih Metode Pembayaran.</p>
@@ -530,7 +531,7 @@ $_msrp= $_product->getMsrp();
                 </p>
                   <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                   <p class="old-price rrp-price">
-                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
+                  <span class="rrp-price-label price-label"><?php echo rtrim($this->__('MSRP:'),":") ?></span>
                     <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
                   <?php endif; ?>

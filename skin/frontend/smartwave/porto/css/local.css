@@ -4149,6 +4149,18 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     display: inline-block;
     color: #474747;
     cursor: pointer;}
+.question-main{background: url('/skin/frontend/smartwave/porto/images/help-modal-black.svg') no-repeat;height: 20px;
+    width: 20px;
+    background-size: 20px; background-position: 0 1px; top:1px;}
+.question-main:hover{background: url('/skin/frontend/smartwave/porto/images/help-modal-yellow.svg') no-repeat;height: 20px;
+    width: 20px;
+    background-size: 20px;background-position: 0 1px;}
+.question-lw-main{background: url('/skin/frontend/smartwave/porto/images/help-modal-black.svg') no-repeat;height: 20px;
+    width: 20px;
+    background-size: 20px; background-position: 0 1px; top:4px;}
+.question-lw-main:hover{background: url('/skin/frontend/smartwave/porto/images/help-modal-yellow.svg') no-repeat;height: 20px;
+    width: 20px;
+    background-size: 20px;background-position: 0 1px;}
 .question-main:hover .fa.fa-question-circle{color: #ffd41c;}
 .price-box-lat{float:left; width: 100%; margin-top: 10px;}
 .price-box-lat label{color: #d34d32;
@@ -4180,7 +4192,10 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .popup-hover-main{position: absolute;
     right: -124px;
     top: 28px; display: none;}
-.popup-hover p{font-size: 16px; line-height: 1.4;}
+.popup-hover p{font-size: 14px;
+    line-height: 1.5;
+    font-family: roboto-medium;
+    color: #464646;}
 .question-main{display: inline-block;
     margin: 0px 0 0 6px;
     font-size: 18px;
@@ -4202,7 +4217,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     background: #fff;
     z-index: 99;
 }
-.popup-hover-lw p{font-size: 16px; line-height: 1.4;}
+.popup-hover-lw p{font-size: 14px; line-height: 1.5; color:#464646; font-family: roboto-medium;}
 .question-lw-main:hover .fa.fa-question-circle{color: #ffd41c;}
 .popup-hover-lw li{float: left;
     margin-right: 20px;
@@ -4224,11 +4239,14 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     border-top: 8px solid transparent;
     top: -14px;
     right: 50%;}
-.hand-craft{float:left; width: 100%;}
-.hand-craft label{color: #ff920f; display: inline-block !important; font-size: 15px;}
+.hand-craft{float:left; width: 100%; margin-top: 10px;}
+.hand-craft label{color: #ff920f; display: inline-block !important; font-size: 16px; font-family: roboto-bold;}
 .price_align .old-price .price-label {
-    color: #767676;
+        color: #464646;
     float: left;
+    font-family: roboto-medium-italic;
+    font-size: 14px;
+    min-width: 105px;
 }
 .product-info .price_align .old-price .msrp-price {
     color: #767676;
@@ -4237,15 +4255,16 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     margin: 10px 6px 0 25px;
 }
 .product-info .price-box.price_align .old-price span.price.original-price {
-    color: #767676;
+       color: #464646;
     display: inline-block;
     float: left;
     font-size: 14px;
-    font-weight: 400;
     min-width: 130px;
+    font-family: roboto-medium-italic;
+    position: relative;
 }
 .product-info .price-box.price_align .old-price span.original_align.original-price {
-    font-size: 18px;
+    font-size: 14px;
 }
 .product-info .price-box.price_align .old-price .price.special_align {
     display: inline-block;
@@ -4256,21 +4275,42 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     display: block;
     margin: 0;
     width: 100%;
+    font-family: roboto-medium;
+    color: #464646;
+    font-size: 14px;
 }
 .price-box.price_align .old-price.space_align {
     float: left;
-    margin: 0 0 6px;
+    margin: 0 0 15px;
     width: 100%;
 }
 .price-box.price_align .price.special_align {
-    color: #d70306;
+    color: #d14836;
     font-size: 18px;
+    font-family: roboto-medium;
+    font-weight: normal !important;
 }
 .price-box.price_align .special-price-label-align {
     
-    font-weight: bold;
+    font-family: roboto-bold;
+    font-size: 14px;
+    color: #464646;
 }
 .bulan_align {
-    font-weight: bold;
+    font-family: roboto-bold;
+    color:#464646;
+    font-size: 14px;
 }
+.price_align .old-price .price.msrp-price{color: #464646 !important;
+    float: left;
+    font-family: roboto-medium-italic;
+    font-size: 14px !important;
+    margin-top: 13px;
+    position: relative;
+}
+.special-price .special-price-emi{font-family: roboto-medium; font-size: 18px; color:#ea442e;}
+.hand-craft span{font-family: roboto-medium; font-size: 14px; color:#464646;}
+.hand-craft span b{font-family: roboto-bold; font-size: 14px; color:#464646;}
+.price_align .old-price .price.msrp-price:before{position: absolute; content: ':'; left:-6px;}
+.product-info .price-box.price_align .old-price span.original_align.original-price:before{position: absolute; content: ':'; left:-6px;}
 /*FAB 70 css ends here*/
