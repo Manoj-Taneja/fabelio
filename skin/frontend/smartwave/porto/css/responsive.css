@@ -1112,8 +1112,8 @@
     height: 250px;}
 .lSSlideOuter{position: relative; display: block !important;}
 .lSPager.lSpg{position:relative;}
-.lSPager.lSpg:before{position: absolute; content: 'Tap image to zoom';color:#c7c7c7; font-size: 13px;top: 18px;
-    left: 89px;}
+/*.lSPager.lSpg:before{position: absolute; content: 'Tap image to zoom';color:#c7c7c7; font-size: 13px;top: 18px;
+    left: 89px;}*/
 
 
      /* FAB-70 code end */
