@@ -1,3 +1,35 @@
+<style>
+    .lSAction>.lSPrev{
+       background-position: 0 0 !important;
+    left: 0;
+    background: url('/skin/frontend/smartwave/porto/images/arrow-left.svg');
+    height: 48px;
+    width: 48px !important;
+    background-size: 40px;
+    background-repeat: no-repeat;
+    }
+    .lSAction>.lSNext{
+        background-position: 0 0 !important;
+    right: 0;
+    background: url('/skin/frontend/smartwave/porto/images/arrow-right.svg');
+    height: 48px;
+    width: 48px !important;
+    background-size: 40px;
+    background-repeat: no-repeat;
+       
+    }
+    .lSAction>a{
+        width: 34px !important;
+    }    
+    .lSSlideOuter img{max-width: 100%;}
+    .lSSlideOuter .lSPager.lSpg>li.active a, .lSSlideOuter .lSPager.lSpg>li:hover a{background-color: #ffd41c !important;}
+    .lSSlideOuter .lSPager.lSpg>li a{background-color: #f2f2f2 !important; height: 12px !important; width: 12px !important;}
+    .lSSlideOuter .lSPager.lSpg{margin-top: 35px !important;position: absolute;
+    bottom: -50px;
+    width: 100%;}
+    .lSSlideOuter{overflow: visible !important;}
+    .lSSlideOuter {display: none;}
+</style>
 <?php
 /**
  * Magento
@@ -32,8 +64,9 @@ $ratio = $ratio_height / $ratio_width;
 ?>
 
 <div class="product-img-box-wrap">
+    
   <?php if (count($this->getGalleryImages()) > 0): ?>
-  <ul class="product-img-big-wrap product-img-big-lat">
+   <ul class="product-img-big-wrap product-img-big-lat visible-lg visible-md hidden-xs">
     <?php
       $imgIdx = 0;
       foreach ($this->getGalleryImages() as $_image):
@@ -59,8 +92,26 @@ $ratio = $ratio_height / $ratio_width;
       $imgIdx++;
       endforeach;
     ?>
-  </ul>
-  <div class="product-img-small-wrap" style="display: none;">
+  </ul> 
+    <ul id="image-gallery" class="gallery list-unstyled cS-hidden hidden-lg hidden-md visible-xs">
+<?php foreach ($this->getGalleryImages() as $_image): ?>
+    <li class="item" data-thumb="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(74); ?>" width="74" height="74" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
+<!--                    <a href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>" class="product-image-link">-->
+                        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>"  alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
+<!--                    </a>                   -->
+                </li>
+<?php endforeach; ?>
+</ul>
+    
+     <div class="popup-img">
+                    <div class="popup-img-inner">
+<img src="" alt="">
+
+<a href="javascript:void(0)" class="close-popup">close</a>
+                    </div>
+</div>
+    
+  <div class="product-img-small-wrap visible-lg visible-md hidden-xs">
     <?php
       $imgIdx = 0;
       foreach ($this->getGalleryImages() as $k=>$_image):
@@ -99,8 +150,71 @@ $ratio = $ratio_height / $ratio_width;
     </a>
   </div>
   <?php endif; ?>
+    <div class="popup-img">
+                    <div class="popup-img-inner">
+<img src="" alt="">
+
+<a href="javascript:void(0)" class="close-popup">close</a>
+                    </div>
 </div>
+</div>
+<link rel="stylesheet"  href="http://www.moodfabrics.com/skin/frontend/moodfabrics/default/css/product_lighslider_mobile.css"/>  
+<script type="text/javascript" src="http://www.moodfabrics.com/skin/frontend/moodfabrics/default/js/product_lightslider.js"></script>
+<script type="text/javascript">
+    jQuery(document).on("click", ".item img", function () {
+    
+	if (jQuery(window).width() < 500) {
+		var tagetImg = jQuery(this).attr('src');
+		jQuery('.popup-img img').attr('src',tagetImg);
+		jQuery('.popup-img').show();
+	} 
+	return false;	
+});
+jQuery(document).on("click", ".popup-img .close-popup", function () {
+	jQuery('.popup-img').hide();
+});
+
+    
+    jQuery(document).ready(function() {
+        jQuery('#image-gallery').lightSlider({
+            gallery:false,
+                item:1,
+                enableTouch:true,
+                slideMargin: 0,
+                speed:500,
+                auto:false,
+                pager:true,
+                loop:true,
+                
+            
+            onSliderLoad: function() {
+                jQuery('#image-gallery').removeClass('cS-hidden');                
+            }  
+        });
+    });   
+   
+</script>
   <script>
+jQuery(document).ready(function(){
+   jQuery("#main-slider-70").owlCarousel({
+
+         autoPlay: false, //Set AutoPlay to 3 seconds
+
+pagination:true,
+
+navigation:true,
+
+        items: 1,
+
+        itemsDesktop: [1199, 1],
+
+        itemsDesktopSmall: [979, 1],
+
+       itemsMobile: [979, 1],
+ navigationText: ["<img src='/skin/frontend/smartwave/porto/images/arrow-left.svg' />", "<img src='/skin/frontend/smartwave/porto/images/arrow-right.svg' />"]
+ 
+});
+});
   (function($){
 
     $(function(){

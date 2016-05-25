@@ -4149,6 +4149,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     display: inline-block;
     color: #474747;
     cursor: pointer;}
+.question-main-mobile{display:none;}
 .question-main{background: url('/skin/frontend/smartwave/porto/images/help-modal-black.svg') no-repeat;height: 20px;
     width: 20px;
     background-size: 20px; background-position: 0 1px; top:1px;}
@@ -4240,7 +4241,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     top: -14px;
     right: 50%;}
 .hand-craft{float:left; width: 100%; margin-top: 10px;}
-.hand-craft label{color: #ff920f; display: inline-block !important; font-size: 16px; font-family: roboto-bold;}
+.hand-craft label{color: #464646; display: inline-block !important; font-size: 16px; font-family: roboto-bold;}
 .price_align .old-price .price-label {
         color: #464646;
     float: left;
@@ -4313,4 +4314,10 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .hand-craft span b{font-family: roboto-bold; font-size: 14px; color:#464646;}
 .price_align .old-price .price.msrp-price:before{position: absolute; content: ':'; left:-6px;}
 .product-info .price-box.price_align .old-price span.original_align.original-price:before{position: absolute; content: ':'; left:-6px;}
+.product-carousel-main {display: none !important;}
+.popup-img{display: none;}
+.product-options dd .input-box select#attribute246{width: 40%;float:right;}
+.product-description_mobile_view{display: none;}
+.border-left-desktop{border-left: 1px solid #ccc;}
+.border-right-desktop{border-right: 1px solid #ccc;}
 /*FAB 70 css ends here*/

@@ -99,8 +99,8 @@ $_product = $this->getProduct();
         var selectedVariant = {};
 
         function selectVariant(ele){
-          ele.value = selectedVariant[ele.id] || ele.options[1].value;
-          ele.options[0].disabled = true;
+        ele.value = selectedVariant[ele.id] || ele.options[1].value;
+        ele.options[0].disabled = true;
           window.spConfig.configureElement(ele);
           !function(_ele){
             setTimeout(function(){
@@ -109,7 +109,7 @@ $_product = $this->getProduct();
           }(ele);
         }
 
-        jQuery(document).ready(function(){
+        jQuery(document).ready(function(){ 
           jQuery('.configurable-option-select').each(function(){
             selectVariant(this);
           });
@@ -406,7 +406,37 @@ jQuery(document).ready(function(){
     
 });
 
+/// Function to add comma ///
+addCommas = function(input){
+  // If the regex doesn't match, `replace` returns the string unmodified
+  return (input.toString()).replace(
+    // Each parentheses group (or 'capture') in this regex becomes an argument 
+    // to the function; in this case, every argument after 'match'
+    /^([-+]?)(0?)(\d+)(.?)(\d+)$/g, function(match, sign, zeros, before, decimal, after) {
 
+      // Less obtrusive than adding 'reverse' method on all strings
+      var reverseString = function(string) { return string.split('').reverse().join(''); };
+
+      // Insert commas every three characters from the right
+      var insertCommas  = function(string) { 
+
+        // Reverse, because it's easier to do things from the left
+        var reversed           = reverseString(string);
+
+        // Add commas every three characters
+        var reversedWithCommas = reversed.match(/.{1,3}/g).join(',');
+
+        // Reverse again (back to normal)
+        return reverseString(reversedWithCommas);
+      };
+
+      // If there was no decimal, the last capture grabs the final digit, so
+      // we have to put it back together with the 'before' substring
+      return sign + (decimal ? insertCommas(before) + decimal + after : insertCommas(before + after));
+    }
+  );
+};
+/// End Function to add comma //
 function enableSwatchesOptions ( select_id ){
     _enable_refresh = false;
     _disable_elements = false;
@@ -415,7 +445,36 @@ function enableSwatchesOptions ( select_id ){
         _disable_elements = true;
         _enable_refresh = true;
     }
+    jQuery("select.configurable-option-select option").each(function(){
+     
+        var option_label = jQuery(this).html();
+        var is_in_string;
+      
+            var option_label_array = option_label.split('[');
+            var number;
+
+            for(var i =0; i <= option_label_array.length; i++){
+                var exploded_string = option_label_array[i];
+                var option_name = option_label_array[0];
+
+                if(exploded_string != undefined){
+                    number = exploded_string.replace(/\D/g, '');
+                    var product_price = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    if(option_name != undefined && product_price != ""){
+                        var final_string  = option_name+" [Rp "+product_price+" ]"; 
+                    }else{
+                        var final_string = option_label;
+                    }
+
+
+                }           
+
+            }
+          
+            jQuery(this).html(final_string);
+    });
     jQuery("#product-options-wrapper dl dd select.super-attribute-select").each(function(){
+       // console.log("+ HI !! +" + jQuery(this).val());
         if( _disable_elements ){
             jQuery(this).closest("dd").find(".product-swatches-container ul li a").removeClass("selected").removeClass("active");
         }
@@ -430,6 +489,7 @@ function enableSwatchesOptions ( select_id ){
             _enable_refresh = false;
             
         }
+        
         if(jQuery(this).attr("id")== "attribute"+select_id) {
             _disable_elements = true;
             _enable_refresh = true;
