@@ -66,7 +66,7 @@ $ratio = $ratio_height / $ratio_width;
 <div class="product-img-box-wrap">
     
   <?php if (count($this->getGalleryImages()) > 0): ?>
-   <ul class="product-img-big-wrap product-img-big-lat visible-lg visible-md hidden-xs">
+   <ul class="product-img-big-wrap product-img-big-lat visible-lg visible-sm visible-md hidden-xs">
     <?php
       $imgIdx = 0;
       foreach ($this->getGalleryImages() as $_image):
@@ -95,9 +95,9 @@ $ratio = $ratio_height / $ratio_width;
   </ul> 
     <ul id="image-gallery" class="gallery list-unstyled cS-hidden hidden-lg hidden-md visible-xs">
 <?php foreach ($this->getGalleryImages() as $_image): ?>
-    <li class="item" data-thumb="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(74); ?>" width="74" height="74" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
+    <li class="item slider_img_mobile" data-thumb="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(74); ?>" width="74" height="74" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
 <!--                    <a href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>" class="product-image-link">-->
-                        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>"  alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
+                        <img class="clickable" src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>"  alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
 <!--                    </a>                   -->
                 </li>
 <?php endforeach; ?>
@@ -111,7 +111,7 @@ $ratio = $ratio_height / $ratio_width;
                     </div>
 </div>
     
-  <div class="product-img-small-wrap visible-lg visible-md hidden-xs">
+  <div class="product-img-small-wrap visible-lg visible-md visible-sm hidden-xs">
     <?php
       $imgIdx = 0;
       foreach ($this->getGalleryImages() as $k=>$_image):
@@ -161,7 +161,7 @@ $ratio = $ratio_height / $ratio_width;
 <link rel="stylesheet"  href="http://www.moodfabrics.com/skin/frontend/moodfabrics/default/css/product_lighslider_mobile.css"/>  
 <script type="text/javascript" src="http://www.moodfabrics.com/skin/frontend/moodfabrics/default/js/product_lightslider.js"></script>
 <script type="text/javascript">
-    jQuery(document).on("click", ".item img", function () {
+    jQuery(document).on("click", ".slider_img_mobile img", function () {
     
 	if (jQuery(window).width() < 500) {
 		var tagetImg = jQuery(this).attr('src');
