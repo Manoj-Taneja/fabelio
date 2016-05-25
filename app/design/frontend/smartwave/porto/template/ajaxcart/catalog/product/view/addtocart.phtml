@@ -21,7 +21,7 @@
 ?>-</label>
                 <span>Barang ini akan diproduksi dan dikirim dalam 
 <?php 
-if($DeliveryTimeNumberOnly[0] >= 3 && $DeliveryTimeNumberOnly[0] < 14) echo "<b>3-13 hari</b>";
+if($DeliveryTimeNumberOnly[0] >= 3 && $DeliveryTimeNumberOnly[0] < 14) echo "<b>".$DeliveryTimeNumberOnly[0]." hari</b>";
 if($DeliveryTimeNumberOnly[0] >= 14 && $DeliveryTimeNumberOnly[0] < 19) echo "<b>2 minggu</b>";
 if($DeliveryTimeNumberOnly[0] >= 19 && $DeliveryTimeNumberOnly[0] < 26) echo "<b>3 minggu</b>";
 if($DeliveryTimeNumberOnly[0] >= 26 && $DeliveryTimeNumberOnly[0] < 33) echo "<b>4 minggu</b>";

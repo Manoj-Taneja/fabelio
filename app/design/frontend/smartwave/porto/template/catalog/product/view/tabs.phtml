@@ -23,7 +23,7 @@
 ?>
 
 <?php if($this->getChildHtml($description['alias'])): ?>
-<div class="product-description">
+<div class="product-description product-des-desktop">
   <h3 class="hidden-xs hidden-sm"><?php echo $description['title']?></h3>
   <h3 class="visible-xs visible-sm"><?php echo $_product->getName(); ?></h3>
   <?php echo $this->getChildHtml($description['alias']); ?>

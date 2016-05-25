@@ -1,3 +1,163 @@
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+<!--<link rel="stylesheet" href="/skin/frontend/smartwave/porto/css/supplierfrontendproductuploader/bootstrap.min.css">-->
+<!--<script src="/skin/frontend/smartwave/porto/js/supplierfrontendproductuploader/bootstrap.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<style>
+    .close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .2;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  filter: alpha(opacity=50);
+  opacity: .5;
+}
+button.close {
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+.modal-open {
+  overflow: hidden;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+.modal.fade .modal-dialog {
+  -webkit-transition: -webkit-transform .3s ease-out;
+       -o-transition:      -o-transform .3s ease-out;
+          transition:         transform .3s ease-out;
+  -webkit-transform: translate(0, -25%);
+      -ms-transform: translate(0, -25%);
+       -o-transform: translate(0, -25%);
+          transform: translate(0, -25%);
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+       -o-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 6px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+}
+.modal-backdrop.fade {
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.modal-backdrop.in {
+  filter: alpha(opacity=50);
+  opacity: .5;
+}
+.modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.modal-header .close {
+  margin-top: -2px;
+}
+.modal-title {
+  margin: 0;
+  line-height: 1.42857143;
+}
+.modal-body {
+  position: relative;
+  padding: 15px;
+}
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+.modal-footer .btn + .btn {
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+.modal-footer .btn-group .btn + .btn {
+  margin-left: -1px;
+}
+.modal-footer .btn-block + .btn-block {
+  margin-left: 0;
+}
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+  }
+  .modal-sm {
+    width: 300px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px;
+  }
+}
+    
+    
+@media (max-width:767px){
+    .breadcrumbs_mobile_view{display: none;}
+}
+</style>
 <?php
 $_helper = $this->helper('catalog/output');
 $helper_richsnippets = $this->helper('porto/richsnippets');
@@ -151,18 +311,32 @@ if($enable_addtocart_sticky){
 }
 ?>
         <div class="row">
-            <div class="col-sm-8" style="border-right: 1px solid #ccc;"><!-- test -->
+            <div class="col-sm-8 border-right-desktop" ><!-- test -->
 		<!--	<div class="product-name">
                       <h1 <?php if($enabled_richsnippets): ?>itemprop="name"<?php endif; ?>><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                       <?php if(!is_null($_product->getAttributeText('manufacturer'))&&$_product->getAttributeText('manufacturer')!=""){?>
                       <p class="manufacturer">Oleh <?php echo $_product->getAttributeText('manufacturer'); ?></p>
                       <?php } ?>
                   </div>-->
-              <div class="product-img-box" id="fab-prod-img-box">
+                
+                
+                
+                
+                
+              <div class="product-img-box slider-70" id="fab-prod-img-box" >
                 <?php echo $this->getChildHtml('media_static') ?>
               </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
             </div>
-            <div class="product-shop col-sm-4">
+            <div class="product-shop col-sm-4 ">
             <?php
                 if (Mage::getStoreConfig("porto_settings/product_view/prev_next",$code)){
             ?>
@@ -271,13 +445,15 @@ if($enable_addtocart_sticky){
                     <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                 <?php endif;?>
                 <?php echo $this->getChildHtml('smartwave_sharetool'); ?>
+                    
 
+                    <div class="product-description_mobile_view">
+                      <h3 class=" visible-xs visible-sm">Description</h3>
+                      <h3 class=" hidden-xs"><?php echo $_product->getName(); ?></h3>
+                      <?php echo $_product->getDescription(); ?>
+                    </div>
 
-
-
-
-
-                <div class="product-page-usp">
+                <div class="product-page-usp hidden-xs ">
                   <div class="contact-fl clearfix">
                     <div class="pull-left">
                       <div class="icon">
@@ -342,11 +518,69 @@ if($enable_addtocart_sticky){
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8" style="border-right: 1px solid #ccc;">
+            <div class="col-sm-8 border-right-desktop" >
               <div>
                 <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
                 <div class="product-collateral">
                     <?php echo $this->getChildHtml('product_additional_data'); ?>
+                </div>
+                  <div class="product-page-usp visible-xs hidden-lg hidden-md">
+                  <div class="contact-fl clearfix">
+                    <div class="pull-left">
+                      <div class="icon">
+                        <img src="/media/icons/usp-chat.png" alt="">
+                      </div>
+                    </div>
+                    <div class="contact-fl-info">
+                      <div>Butuh bantuan? Telepon kami!</div>
+                      <div class="fl-usp-timing">
+                        <?php
+                        $week = date("w");
+                        $from = "09.30";
+                        $to = $week >=1 && $week <=3 ? '21.00' : '18.30';
+                        $currentTime = (int) date('Gis');
+                        if((int) str_replace('.', '', $from.'00') < $currentTime && (int)  str_replace('.', '', $to.'00') > $currentTime){
+                          echo '<span class="fl-usp-timing-open">Hubungi sekarang</span>';
+                        }else{
+                          echo '<span class="fl-usp-timing-close">Tutup</span>';
+                        }
+                        ?>
+                        &#8226; <?php echo $from; ?> - <?php echo $to; ?> WIB
+                      </div>
+                      <div class="fl-contact-no">
+                        <a href="tel:02122775029">(021) 22775029</a>
+                      </div>
+                      <div>Whatsapp Fabelio ke: <a href="tel:081261144200">081261144200</a></div>
+                    </div>
+                  </div>
+                  <?php if($_product->getData('manufacturer') == 167): ?>
+                  <div class="fl-usps clearfix">
+                    <div class="col-md-3 col-sm-6 col-xs-3">
+                      <div class="icon">
+                        <img src="/media/icons/pengiriman-gratis.png" alt="">
+                      </div>
+                      <p>Pengiriman Gratis</p>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-3">
+                      <div class="icon">
+                        <img src="/media/icons/14-hari-pengembalian.png" alt="">
+                      </div>
+                      <p>14 Hari Pengembalian</p>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-3">
+                      <div class="icon">
+                        <img src="/media/icons/garansi-365-hari.png" alt="">
+                      </div>
+                      <p>Garansi 365 Hari</p>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-3">
+                      <div class="icon">
+                        <img src="/media/icons/cicilan-0.png" alt="">
+                      </div>
+                      <p>Cicilan 0%</p>
+                    </div>
+                  </div>
+                  <?php endif; ?>
                 </div>
                 <?php echo $this->getChildHtml('upsell_products'); ?>
               </div>
@@ -580,6 +814,28 @@ src="https://d3643s33l1rfut.cloudfront.net/js/widget?w=BQYHDBEcXkxWQV5cRA"
 </div>
 <script type="text/javascript">
     jQuery(function($){
+        
+        $("#main-slider-70").owlCarousel({
+
+         autoPlay: false, //Set AutoPlay to 3 seconds
+
+pagination:true,
+
+navigation:true,
+
+        items: 1,
+
+        itemsDesktop: [1199, 1],
+
+        itemsDesktopSmall: [979, 1],
+
+       itemsMobile: [979, 1],
+ navigationText: ["<img src='/skin/frontend/smartwave/porto/images/arrow-left.svg' />", "<img src='/skin/frontend/smartwave/porto/images/arrow-right.svg' />"]
+       
+
+  });  
+
+        
         $("body.quickview-index-view .product-info a, body.quickview-index-view .no-rating a, body.quickview-index-view .ratings a").off('click').on("click",function(e){
             window.parent.location.href = $(this).attr("href");
             window.parent.jQuery.fancybox.close();
