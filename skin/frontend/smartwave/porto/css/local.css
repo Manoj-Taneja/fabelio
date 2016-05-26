@@ -1111,7 +1111,7 @@ dl#narrow-by-list{margin:0}
 .block-category-nav .sub-category-list{list-style:none;padding:0;margin:0}
 .block-category-nav .sub-category-list li{position:relative}
 .block-category-nav .sub-category-list a{color:#777;font-size:13px;line-height:2.5}
-.block-category-nav .sub-category-list ul{padding-left:20px;margin:0;list-style:none}
+.block-category-nav .sub-category-list ul{margin:0;list-style:none}
 .block-category-nav .sub-category-list a.plus{position:absolute;right:1px;color:#08c;font-size:16px;line-height:32px}
 
 
@@ -4334,8 +4334,8 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .block.block-layered-nav{
 	margin-top:0;
 }
-.block-category-nav .sub-category-list > ul{
-	padding-left:0;
+.block-category-nav .sub-parent-category.no-child-cat, .block-category-nav ul.sub-parent-category ul{
+	padding-left:20px;
 }
 .block-layered-nav dt, .block-layered-nav .currently .block-subtitle, .katagory-title{
      font-size: 14px;
