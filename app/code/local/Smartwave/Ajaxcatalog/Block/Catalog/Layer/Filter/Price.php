@@ -84,8 +84,8 @@ class Smartwave_Ajaxcatalog_Block_Catalog_Layer_Filter_Price extends Mage_Catalo
 		if($this->isTextBoxEnabled()){
 			$html = '
 				<div class="text-box">
-                                <label class="minPrice" id="minPrice">'.$this->getCurrMinPrice().'</label>
-				<label class="maxPrice" id="maxPrice">'.$this->getCurrMaxPrice().'</label>	
+                                <label class="minPrice" id="minPrice">'.$this->getCurrencySymbol()." ".$this->getCurrMinPrice().'</label>
+				<label class="maxPrice" id="maxPrice">'.$this->getCurrencySymbol()." ".$this->getCurrMaxPrice().'</label>	
 					
 					<input type="hidden" id="amount" class="price-amount" style="background:none; border:none;" value="'.$this->getCurrencySymbol().$this->getCurrMinPrice()." - ".$this->getCurrencySymbol().$this->getCurrMaxPrice().'" />
 
