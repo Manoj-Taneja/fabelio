@@ -84,9 +84,9 @@ class Smartwave_Ajaxcatalog_Block_Catalog_Layer_Filter_Price extends Mage_Catalo
 		if($this->isTextBoxEnabled()){
 			$html = '
 				<div class="text-box">
-					<span>'.$this->__('From').'</span> <input type="text" style="width:100px !important"  name="min" id="minPrice" class="priceTextBox minPrice" value="'.$this->getCurrMinPrice().'" style="'.$textBoxStyle.'" /> 
-					<span>'.$this->__('To').'</span> <input type="text" style="width:100px !important"  name="max" id="maxPrice" class="priceTextBox maxPrice" value="'.$this->getCurrMaxPrice().'" style="'.$textBoxStyle.'" />
-					<input type="button" value="'.$this->getGoBtnText().'" name="go" class="go" style="'.$goBtnStyle.'" />
+                                <label class="minPrice" id="minPrice">'.$this->getCurrMinPrice().'</label>
+				<label class="maxPrice" id="maxPrice">'.$this->getCurrMaxPrice().'</label>	
+					
 					<input type="hidden" id="amount" class="price-amount" style="background:none; border:none;" value="'.$this->getCurrencySymbol().$this->getCurrMinPrice()." - ".$this->getCurrencySymbol().$this->getCurrMaxPrice().'" />
 
 				</div>';
@@ -232,8 +232,10 @@ class Smartwave_Ajaxcatalog_Block_Catalog_Layer_Filter_Price extends Mage_Catalo
 		if($this->isTextBoxEnabled()){
 			$updateTextBoxPriceJs = '
 							// Update TextBox Price
-							$(".minPrice").val(newMinPrice); 
-							$(".maxPrice").val(newMaxPrice);';
+                                                        console.log("newMinPrice : "+newMinPrice);
+                                                        console.log("newMaxPrice : "+newMaxPrice);
+							$("#minPrice").html(newMinPrice); 
+							$("#maxPrice").html(newMaxPrice);';
 		}
 		
 		

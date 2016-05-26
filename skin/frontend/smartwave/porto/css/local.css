@@ -4140,7 +4140,10 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 /* FAB-84 end code */
 
 /*FAB 70 css starts here*/
+<<<<<<< HEAD
 .product-img-big-lat{margin-top:75px;}
+=======
+>>>>>>> FAB-59
 .product-img-big-lat li{border: none !important;}
 .product-price-lat .price-label{display: inline-block !important; color:#767676; margin-top: 0px !important; font-weight: 400 !important; }
 .product-price-lat .price{display: inline-block !important;color:#767676;margin-top: 0px !important;font-weight: 400 !important;}
@@ -4149,6 +4152,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     display: inline-block;
     color: #474747;
     cursor: pointer;}
+<<<<<<< HEAD
 .question-main{background: url('/skin/frontend/smartwave/porto/images/help-modal-black.svg') no-repeat;height: 20px;
     width: 20px;
     background-size: 20px; background-position: 0 1px; top:1px;}
@@ -4161,6 +4165,8 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .question-lw-main:hover{background: url('/skin/frontend/smartwave/porto/images/help-modal-yellow.svg') no-repeat;height: 20px;
     width: 20px;
     background-size: 20px;background-position: 0 1px;}
+=======
+>>>>>>> FAB-59
 .question-main:hover .fa.fa-question-circle{color: #ffd41c;}
 .price-box-lat{float:left; width: 100%; margin-top: 10px;}
 .price-box-lat label{color: #d34d32;
@@ -4192,10 +4198,14 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .popup-hover-main{position: absolute;
     right: -124px;
     top: 28px; display: none;}
+<<<<<<< HEAD
 .popup-hover p{font-size: 14px;
     line-height: 1.5;
     font-family: roboto-medium;
     color: #464646;}
+=======
+.popup-hover p{font-size: 16px; line-height: 1.4;}
+>>>>>>> FAB-59
 .question-main{display: inline-block;
     margin: 0px 0 0 6px;
     font-size: 18px;
@@ -4217,7 +4227,11 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     background: #fff;
     z-index: 99;
 }
+<<<<<<< HEAD
 .popup-hover-lw p{font-size: 14px; line-height: 1.5; color:#464646; font-family: roboto-medium;}
+=======
+.popup-hover-lw p{font-size: 16px; line-height: 1.4;}
+>>>>>>> FAB-59
 .question-lw-main:hover .fa.fa-question-circle{color: #ffd41c;}
 .popup-hover-lw li{float: left;
     margin-right: 20px;
@@ -4239,6 +4253,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     border-top: 8px solid transparent;
     top: -14px;
     right: 50%;}
+<<<<<<< HEAD
 .hand-craft{float:left; width: 100%; margin-top: 10px;}
 .hand-craft label{color: #ff920f; display: inline-block !important; font-size: 16px; font-family: roboto-bold;}
 .price_align .old-price .price-label {
@@ -4378,3 +4393,13 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 	margin-bottom:0;
 }
 /*FAB 59 css ends here*/
+=======
+.hand-craft{float:left; width: 100%;}
+.hand-craft label{color: #ff920f; display: inline-block !important; font-size: 15px;}
+.pop-over-mobile{display: none;}
+
+/*FAB 70 css ends here*/
+
+/*FAB-59 css ends here*/
+/*End FAB-59 css ends here*/
+>>>>>>> FAB-59
