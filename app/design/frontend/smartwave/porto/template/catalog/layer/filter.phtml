@@ -36,11 +36,29 @@
 <?php foreach ($this->getItems() as $_item): ?>
     <li>
         <?php if ($_item->getCount() > 0): ?>
-        <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php echo $_item->getLabel() ?></a>
-        <?php else: echo $_item->getLabel() ?>
-        <?php endif; ?>
-        <?php if ($this->shouldDisplayProductCount()): ?>
-        (<?php echo $_item->getCount() ?>)
+            <form>
+                <span class="check-box">
+                    <input type="checkbox" name="vehicle" onclick='window.location.assign("<?php echo $this->urlEscape($_item->getUrl()) ?>")'/>
+                </span>
+                <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>">
+                    <?php echo $_item->getLabel() ?>
+                    <?php if ($this->shouldDisplayProductCount()): ?>
+                    <span class="count">(<?php echo $_item->getCount() ?>)</span>
+                    <?php endif; ?>
+                </a>
+            </form>
+        <?php else: ?>
+            <form>
+                <span class="check-box">
+                    <input type="checkbox" name="vehicle" onclick='window.location.assign("<?php echo $this->urlEscape($_item->getUrl()) ?>")'/>
+                </span>
+                <span>
+                    <?php echo $_item->getLabel(); ?>
+                    <?php if ($this->shouldDisplayProductCount()): ?>
+                        <span class="count">(<?php echo $_item->getCount() ?>)</span>
+                    <?php endif; ?>
+                </span>
+            </form>
         <?php endif; ?>
     </li>
 <?php endforeach ?>
