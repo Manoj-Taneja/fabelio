@@ -458,8 +458,10 @@ function enableSwatchesOptions ( select_id ){
                 var option_name = option_label_array[0];
 
                 if(exploded_string != undefined){
-                    number = exploded_string.replace(/\D/g, '');
+                    number = exploded_string.replace(/[^\d.-]/g, '');
                     var product_price = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    product_price_array = product_price.split('.');
+                    product_price = product_price_array[0];
                     if(option_name != undefined && product_price != ""){
                         var final_string  = option_name+" [Rp "+product_price+" ]"; 
                     }else{
