@@ -4329,6 +4329,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .price_align .old-price .price.msrp-price:before{position: absolute; content: ':'; left:-6px;}
 .product-info .price-box.price_align .old-price span.original_align.original-price:before{position: absolute; content: ':'; left:-6px;}
 /*FAB 70 css ends here*/
+
 /*FAB 59 css start here*/
 .block.block-layered-nav{
 	margin-top:0;
@@ -4341,7 +4342,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     font-weight: 700;
     color: #464646;
 }
-.block-category-nav .sub-category-list a, .block-layered-nav dd a, .catalog-category-view .block-category-nav .block-title{
+.block-category-nav .sub-category-list a, .block-layered-nav dd a, .catalog-category-view .block-category-nav .block-title, .price-filter-slider .text-box label{
     line-height: 1.5;
     font-size: 14px;
     color: #464646;
@@ -4354,6 +4355,9 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
     font-weight: 700;
 	color: #ffc000;
 	text-decoration:none;
+}
+.ui-slider{
+	margin:5px 5px 5px 8px !important;
 }
 .ui-slider .ui-slider-range {
     background: #ffd41c !important;
@@ -4392,14 +4396,14 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .block-category-nav .sub-category-list li.has-children:last-child ul{
 	margin-bottom:0;
 }
+.price-filter-slider .text-box .minPrice{
+	float:left;	
+}
+.price-filter-slider .text-box .maxPrice{
+	float:right;	
+}
+.block-layered-nav  input[type="checkbox"]{
+	margin-top:0;
+}
 /*FAB 59 css ends here*/
-=======
-.hand-craft{float:left; width: 100%;}
-.hand-craft label{color: #ff920f; display: inline-block !important; font-size: 15px;}
-.pop-over-mobile{display: none;}
 
-/*FAB 70 css ends here*/
-
-/*FAB-59 css ends here*/
-/*End FAB-59 css ends here*/
->>>>>>> FAB-59
