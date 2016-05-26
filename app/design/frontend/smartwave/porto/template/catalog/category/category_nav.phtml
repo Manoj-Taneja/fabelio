@@ -48,8 +48,18 @@
         echo '<li class="top-parent">'.$name.'</li>';
         echo '</ul>';
         if(count($_top_parent_sub_categories) > 0):
-                             echo "<ul class='sub-parent-category'>";
+                            
+                             $i=1;
                             foreach($_top_parent_sub_categories as $_top_parent_sub_category):
+                                
+                                if($i==1):
+                                    $top_parent_childs = $_top_parent_sub_category->getChildrenCategories();
+                                    if(count($top_parent_childs) > 0):
+                                     echo "<ul class='sub-parent-category'>";
+                                    else:
+                                     echo "<ul class='sub-parent-category no-child-cat'>";   
+                                    endif;
+                                endif;
                                 $_top_parent_sub_category_child = $_top_parent_sub_category->getChildrenCategories();
                                 $_top_parent_sub_child_categories = $_top_parent_sub_category->getChildrenCategories();
                                 if($current->getID()==$_top_parent_sub_category->getID() ):
@@ -193,6 +203,7 @@
                          
                          
                          echo '</li>';
+                         $i++;
                          endforeach;
                          echo '</ul>';
                      endif;
