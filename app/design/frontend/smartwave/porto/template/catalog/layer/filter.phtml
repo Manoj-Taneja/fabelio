@@ -49,15 +49,15 @@
             </form>
         <?php else: ?>
             <form>
-                <span class="check-box">
-                    <input type="checkbox" name="vehicle" onclick='window.location.assign("<?php echo $this->urlEscape($_item->getUrl()) ?>")'/>
-                </span>
-                <span>
-                    <?php echo $_item->getLabel(); ?>
+                
+                     <input type="checkbox" name="vehicle" onclick='window.location.assign("<?php echo $this->urlEscape($_item->getUrl()) ?>")'/>
+                
+                
+                    <label><?php echo $_item->getLabel(); ?></label>
                     <?php if ($this->shouldDisplayProductCount()): ?>
                         <span class="count">(<?php echo $_item->getCount() ?>)</span>
                     <?php endif; ?>
-                </span>
+                
             </form>
         <?php endif; ?>
     </li>
