@@ -44,11 +44,11 @@
         $name = $child->getName();
         $url = $child->getUrl();
         
-        echo '<ul>';
+        echo '<ul class="top-parent-category">';
         echo '<li class="top-parent">'.$name.'</li>';
         echo '</ul>';
         if(count($_top_parent_sub_categories) > 0):
-                             echo "<ul>";
+                             echo "<ul class='sub-parent-category'>";
                             foreach($_top_parent_sub_categories as $_top_parent_sub_category):
                                 $_top_parent_sub_category_child = $_top_parent_sub_category->getChildrenCategories();
                                 $_top_parent_sub_child_categories = $_top_parent_sub_category->getChildrenCategories();
