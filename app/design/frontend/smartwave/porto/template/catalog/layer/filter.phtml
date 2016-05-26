@@ -40,8 +40,8 @@
                 
                     <input type="checkbox" name="vehicle" onclick='window.location.assign("<?php echo $this->urlEscape($_item->getUrl()) ?>")'/>
                 
-                <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>">
-                    <label><?php echo $_item->getLabel() ?></label>
+               <label> <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>">
+                    <?php echo $_item->getLabel() ?></label>
                     <?php if ($this->shouldDisplayProductCount()): ?>
                     <span class="count">(<?php echo $_item->getCount() ?>)</span>
                     <?php endif; ?>
