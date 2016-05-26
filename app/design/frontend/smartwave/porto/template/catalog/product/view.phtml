@@ -446,14 +446,7 @@ if($enable_addtocart_sticky){
                 <?php endif;?>
                 <?php echo $this->getChildHtml('smartwave_sharetool'); ?>
                     
-
-                    <div class="product-description_mobile_view">
-                      <h3 class=" visible-xs visible-sm">Description</h3>
-                      <h3 class=" hidden-xs"><?php echo $_product->getName(); ?></h3>
-                      <?php echo $_product->getDescription(); ?>
-                    </div>
-
-                <div class="product-page-usp hidden-xs ">
+                <div class="product-page-usp ">
                   <div class="contact-fl clearfix">
                     <div class="pull-left">
                       <div class="icon">
@@ -511,9 +504,11 @@ if($enable_addtocart_sticky){
                   </div>
                   <?php endif; ?>
                 </div>
-
-
-
+                <div class="product-description_mobile_view">
+                      <h3 class=" visible-xs visible-sm">Description</h3>
+                      <h3 class=" hidden-xs"><?php echo $_product->getName(); ?></h3>
+                      <?php echo $_product->getDescription(); ?>
+                    </div>
               </form>
             </div>
         </div>
@@ -523,64 +518,6 @@ if($enable_addtocart_sticky){
                 <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
                 <div class="product-collateral">
                     <?php echo $this->getChildHtml('product_additional_data'); ?>
-                </div>
-                  <div class="product-page-usp visible-xs hidden-lg hidden-md">
-                  <div class="contact-fl clearfix">
-                    <div class="pull-left">
-                      <div class="icon">
-                        <img src="/media/icons/usp-chat.png" alt="">
-                      </div>
-                    </div>
-                    <div class="contact-fl-info">
-                      <div>Butuh bantuan? Telepon kami!</div>
-                      <div class="fl-usp-timing">
-                        <?php
-                        $week = date("w");
-                        $from = "09.30";
-                        $to = $week >=1 && $week <=3 ? '21.00' : '18.30';
-                        $currentTime = (int) date('Gis');
-                        if((int) str_replace('.', '', $from.'00') < $currentTime && (int)  str_replace('.', '', $to.'00') > $currentTime){
-                          echo '<span class="fl-usp-timing-open">Hubungi sekarang</span>';
-                        }else{
-                          echo '<span class="fl-usp-timing-close">Tutup</span>';
-                        }
-                        ?>
-                        &#8226; <?php echo $from; ?> - <?php echo $to; ?> WIB
-                      </div>
-                      <div class="fl-contact-no">
-                        <a href="tel:02122775029">(021) 22775029</a>
-                      </div>
-                      <div>Whatsapp Fabelio ke: <a href="tel:081261144200">081261144200</a></div>
-                    </div>
-                  </div>
-                  <?php if($_product->getData('manufacturer') == 167): ?>
-                  <div class="fl-usps clearfix">
-                    <div class="col-md-3 col-sm-6 col-xs-3">
-                      <div class="icon">
-                        <img src="/media/icons/pengiriman-gratis.png" alt="">
-                      </div>
-                      <p>Pengiriman Gratis</p>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-3">
-                      <div class="icon">
-                        <img src="/media/icons/14-hari-pengembalian.png" alt="">
-                      </div>
-                      <p>14 Hari Pengembalian</p>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-3">
-                      <div class="icon">
-                        <img src="/media/icons/garansi-365-hari.png" alt="">
-                      </div>
-                      <p>Garansi 365 Hari</p>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-3">
-                      <div class="icon">
-                        <img src="/media/icons/cicilan-0.png" alt="">
-                      </div>
-                      <p>Cicilan 0%</p>
-                    </div>
-                  </div>
-                  <?php endif; ?>
                 </div>
                 <?php echo $this->getChildHtml('upsell_products'); ?>
               </div>

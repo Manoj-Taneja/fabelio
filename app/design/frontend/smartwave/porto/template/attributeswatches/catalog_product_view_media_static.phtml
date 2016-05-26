@@ -181,12 +181,13 @@ jQuery(document).on("click", ".popup-img .close-popup", function () {
                 item:1,
                 enableTouch:true,
                 slideMargin: 0,
-                speed:2000,
-                auto:true,
+                speed:500,
+                auto:false,
                 pager:true,
                 loop:true,
-                
-            
+                mode:'slide',
+                controls:false,
+
             onSliderLoad: function() {
                 jQuery('#image-gallery').removeClass('cS-hidden');                
             }  
