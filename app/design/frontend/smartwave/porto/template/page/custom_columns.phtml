@@ -50,10 +50,19 @@
                         <?php echo $this->getChildHtml('content') ?>
                     </div>
                     <div class="col-left sidebar f-left col-sm-3">
+                        <?php
                         
+                            $_helper = Mage::helper("catalog/category"); 
+                            $rootCat = Mage::app()->getStore()->getRootCategoryId();
+                            $current = Mage::registry('current_category');                           
+                            $data = $current->getData();
+                           
+                        ?>
                         
-                        
-                        <?php echo $this->getChildHtml('left') ?></div>
+                        <div class="mobile-current-category"><?php echo $data["name"]; ?></div>
+                       
+                        <div class="custon-left"> <?php echo $this->getChildHtml('left') ?></div>
+                    </div>
                 </div>
             </div>
         </div>
