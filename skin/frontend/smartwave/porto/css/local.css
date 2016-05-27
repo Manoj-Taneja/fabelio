@@ -4366,7 +4366,11 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .ui-slider, .ui-slider .ui-slider-handle{
 	background:#464646 !important;
 }
-.block-layered-nav dt:before, .block-category-nav .block-title:before, .block-category-nav .sub-category-list a.plus{
+.block-category-nav .sub-category-list a.sub-categories{
+	margin-bottom: 5px;
+    display: inline-block;
+}
+.block-layered-nav dt:before, .block-category-nav .block-title:before{
 	display:none;
 }
 .katagory-title{
@@ -4375,8 +4379,11 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 }
 .block.block-category-nav, .block.block-layered-nav dd.odd{
 	border-bottom: 2px solid #ccc;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.block-category-nav .sub-category-list.no-child-cat a.sub-categories{
+	margin-bottom:0;
 }
 .block.block-layered-nav{
 	marign-top:0;
@@ -4385,7 +4392,7 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 	    margin-bottom: 5px;
     display: block;
 }*/
-.catalog-category-view .block-category-nav .block-title, ul.top-parent-category{
+.catalog-category-view .block-category-nav .block-title, .block-category-nav .sub-category-list ul.top-parent-category{
 	text-transform: capitalize;
 	cursor: inherit;
 	margin-bottom:5px;
@@ -4405,5 +4412,11 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 .block-layered-nav  input[type="checkbox"]{
 	margin-top:0;
 }
+.block-layered-nav dl dt:first-child{
+	margin-bottom:25px;
+}
+
+
+
 /*FAB 59 css ends here*/
 

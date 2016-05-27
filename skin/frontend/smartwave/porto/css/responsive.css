@@ -976,7 +976,7 @@
     /* FAB-111 code end */
 	
 	/* FAB-59 code start */
-	.katagory-title{
+	.katagory-title, .block-category-nav .sub-category-list a.plus, .block-category-nav .sub-category-list li a.current:before, .block-category-nav .sub-category-list li a.current-font:before{
 		display:none;
 	}
 	.sidebar {
@@ -994,17 +994,27 @@
 		-moz-box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
 		box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
 	}
-	.catalog-category-view .block-category-nav .block-title {
+	.catalog-category-view .block-category-nav .block-title, .block-category-nav .sub-category-list ul.top-parent-category li{
 		border-bottom: 1px solid #ccc;
 		font-weight: 700;
 		margin: 0 20px;
 		height: 37px;
 		line-height: 37px;
+		display:block;
 		/*border: 1px solid #ccc;
 		text-align: center;
 		font-weight: 500;
 		height: 40px;
 		line-height: 40px;*/
+	}
+	.block-category-nav .sub-category-list .sub-parent-category.no-child-cat{
+		background: #fff;
+		display: inline-block;
+		margin-top:15px;
+	}
+	.block-category-nav .sub-category-list .sub-parent-category.no-child-cat li{
+    display: block;
+    margin: 0;
 	}
 	.block-category-nav .sub-category-list li.has-children ul{
 		margin-top:10px;
@@ -1012,22 +1022,40 @@
 	.block-category-nav .sub-category-list ul{
 		padding-left:0;
 	}
-	.block-category-nav .sub-category-list > ul > li {
+	.block-category-nav .sub-category-list > ul > li{
 		position: relative;
 		display: inline-block;
 		vertical-align: top;
 		margin: 20px 10px 0px 10px;
 	}
-	.block-category-nav .sub-category-list ul li > ul > li{
+	.block-category-nav .sub-category-list ul li > ul > li, .block-category-nav .sub-category-list .sub-parent-category.no-child-cat> li{
 		border: 1px solid #ccc;
 		border-bottom: transparent;
 		height: 40px;
-		line-height: 40px;
-		padding: 0 20px;
 		background: #fff;
 	}
-	.block-category-nav .sub-category-list ul li > ul > li:last-child{
+	.block-category-nav .sub-category-list ul li > ul > li a, .block-category-nav .sub-parent-category.no-child-cat a{
+	    padding: 0 20px;
+    line-height: 39px;
+    border-left: 2px solid #ffc000;
+    display: block;
+	}
+	.block-category-nav .sub-category-list ul li > ul > li .current-font, .block-category-nav .sub-parent-category.no-child-cat li a.current-font{
+		background: #ffc000;
+		color: #464646;
+	}
+	.block-category-nav .sub-parent-category.no-child-cat  > ul > li {
+		display:block;
+	}
+	.block-category-nav .sub-category-list ul li > ul > li:last-child, .block-category-nav .sub-category-list .sub-parent-category.no-child-cat> li:last-child{
 		border-bottom: 1px solid #ccc;
+	}
+	.block-category-nav .sub-parent-category.no-child-cat, .block-category-nav ul.sub-parent-category ul{
+		padding-left:0;
+	}
+	.block-category-nav .sub-category-list ul li > ul > li a.sub-categories{
+		margin-bottom: 0;
+		font-weight: 700;
 	}
 	/* FAB-59 code end */
 	
