@@ -140,6 +140,7 @@
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="two_column_left"><template>page/2columns-left.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="two_column_right"><template>page/2columns-right.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="three_column"><template>page/3columns.phtml</template></action>
+             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="custom_column"><template>page/custom_columns.phtml</template></action>
         </reference>
         <reference name="page.header">
             <action method="setTemplate"><template>catalog/category/page_header.phtml</template></action>
@@ -147,7 +148,11 @@
         <reference name="left">
             <remove name="tags_popular"/>
             <block type="catalog/navigation" name="catalog.category" before="-" template="catalog/category/category_nav.phtml"/>
-            <block type="cms/block" name="custom_side_block" after="-"><action method="setBlockId"><block_id>porto_left_side_category</block_id></action></block>
+            <block type="cms/block" name="custom_side_block" after="-">
+                <action method="setBlockId">
+                    <block_id>porto_left_side_category</block_id>
+                </action>
+            </block>
         </reference>
         <reference name="after_body_start">
           <block type="cms/block" name="catalog_category_default_after_body_start">
@@ -162,6 +167,7 @@
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="two_column_left"><template>page/2columns-left.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="two_column_right"><template>page/2columns-right.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="three_column"><template>page/3columns.phtml</template></action>
+            <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="custom_column"><template>page/custom_columns.phtml</template></action>
         </reference>
         <reference name="page.header">
             <action method="setTemplate"><template>catalog/category/page_header.phtml</template></action>
