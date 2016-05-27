@@ -976,7 +976,7 @@
     /* FAB-111 code end */
 	
 	/* FAB-59 code start */
-	.katagory-title, .block-category-nav .sub-category-list a.plus, .block-category-nav .sub-category-list li a.current:before, .block-category-nav .sub-category-list li a.current-font:before{
+	.katagory-title, .block-category-nav .sub-category-list a.plus, .block-category-nav .sub-category-list li a.current:before, .block-category-nav .sub-category-list li a.current-font:before, .toolbar, .page-title.category-title{
 		display:none;
 	}
 	.sidebar {
@@ -993,6 +993,7 @@
 		-ms-box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
 		-moz-box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
 		box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+		display:none;
 	}
 	.catalog-category-view .block-category-nav .block-title, .block-category-nav .sub-category-list ul.top-parent-category li{
 		border-bottom: 1px solid #ccc;
