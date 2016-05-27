@@ -75,7 +75,7 @@ $ratio = $ratio_height / $ratio_width;
       <?php
       $image_src = $this->helper('catalog/image')->init($_product, 'thumbnail', $_image->getFile())->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize($ratio_width);
       ?>
-      <a href="<?php echo $image_src; ?>" rel="fancy-zoom" target="_blank" class=" fancy-zoom"><span class="glyphicon glyphicon-search"></span></a>
+      <a href="<?php echo $image_src; ?>" rel="fancy-zoom" target="_blank" class=" fancy-zoom"></a>
       <img <?php echo !$imgIdx? 'src': 'class="lazy-imgsrc" data-imgsrc' ?>="<?php echo $image_src; ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
     </li>
     <?php
@@ -140,7 +140,7 @@ $ratio = $ratio_height / $ratio_width;
       <?php
       $image_src = $this->helper('catalog/image')->init($_product, 'image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize($ratio_width);
       ?>
-      <a href="<?php echo $image_src; ?>" rel="fancy-zoom" target="_blank" class=" fancy-zoom"><span class="glyphicon glyphicon-search"></span></a>
+      <a href="<?php echo $image_src; ?>" rel="fancy-zoom" target="_blank" class=" fancy-zoom"></a>
       <img src="<?php echo $image_src; ?>" alt="<?php echo $this->htmlEscape($this->getImageLabel()) ?>"/>
     </li>
   </ul>
