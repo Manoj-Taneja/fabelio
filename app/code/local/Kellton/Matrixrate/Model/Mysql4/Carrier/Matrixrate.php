@@ -55,8 +55,10 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                     $select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
                    //echo "<pre>"; print_r($select); echo "</pre>";
-                    $dump = $read->getSelect();
-                    var_dump($dump);
+                    $profiler = Mage::getSingleton('core/resource')->getConnection('core_read')->getProfiler();
+                    print_r($profiler->getQueryProfiles());
+                    //$dump = $read->getSelect();
+                    //var_dump($dump);
                     $row = $read->fetchAll($select);
                    echo $item->getSku();
                     echo "<pre>"; print_r($row); echo "</pre>";
