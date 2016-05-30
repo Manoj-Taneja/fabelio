@@ -51,7 +51,7 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                 foreach($items as $key=>$item){
                     
                     $select = $read->select()->from($table);
-                    $select->where($read->quoteInto("sku=?",$item->getSku()));
+                    $select->where("sku=?",$item->getSku());
                     $select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
                    //echo "<pre>"; print_r($select); echo "</pre>";
