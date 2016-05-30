@@ -50,10 +50,10 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                 $final_data_array = array();
                 foreach($items as $key=>$item){
                     $sku = $item->getSku();
-                   echo $query = $query = "SELECT  * from {$table} where sku = '{$sku}'";
-                   // $select = $read->select()->from($table);
-                   // $select->where(quoteInto("sku=?",$item->getSku()));
-                  //  $select->where('website_id=?', $request->getWebsiteId());
+                  // echo $query = $query = "SELECT  * from {$table} where sku = '{$sku}'";
+                    $select = $read->select()->from($table);
+                    $select->where(quoteInto("sku=?",$item->getSku()));
+                    $select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
                    //echo "<pre>"; print_r($select); echo "</pre>";
                    // $profiler = Mage::getSingleton('core/resource')->getConnection('core_read')->getProfiler();
@@ -62,10 +62,10 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                   //  echo "</pre>";
                     //$dump = $read->getSelect();
                     //var_dump($dump);
-                    $row = $read->fetchAll($query);
-                   echo $item->getSku();
-                    echo "<pre>"; print_r($row); echo "</pre>";
-                exit;
+                    $row = $read->fetchAll($select);
+                  // echo $item->getSku();
+                   // echo "<pre>"; print_r($row); echo "</pre>";
+                //exit;
                     if (!empty($row))
                     {
                             // have found a result or found nothing and at end of list!
