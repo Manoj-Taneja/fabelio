@@ -52,5 +52,6 @@
  */
 class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    //This is helper class
     
 }
