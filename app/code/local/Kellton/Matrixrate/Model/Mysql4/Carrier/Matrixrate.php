@@ -55,8 +55,9 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                     $select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
                     $row = $read->fetchAll($select);
-                   
-                    
+                   echo $item->getSku();
+                    echo "<pre>"; print_r($row); echo "</pre>";
+                exit;
                     if (!empty($row))
                     {
                             // have found a result or found nothing and at end of list!
@@ -78,8 +79,7 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                 }       
                 $total_exp_fees = array_sum($express_fee);
                 $total_std_fees = array_sum($standard_fee);
-		echo "<pre>"; print_r($newdata); echo "</pre>";
-                exit;
+		
                 foreach($newdata as $final_data){
                     if($final_data['express_fee_enabled']==1){
                         $final_data['price'] = $total_exp_fees;
