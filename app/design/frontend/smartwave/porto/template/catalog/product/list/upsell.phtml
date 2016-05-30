@@ -96,6 +96,7 @@ $code  = $store->getCode();
                     endif; 
                     endif;
                     ?>
+                    <!-- FAB-70 Code Start -->
                     <?php //echo $this->getPriceHtml($_product, true) ?>
                     <?php echo $this->getLayout()->createBlock('catalog/product_price')
             ->setTemplate('catalog/product/price_product_page.phtml')
@@ -103,6 +104,7 @@ $code  = $store->getCode();
             ->setDisplayMinimalPrice(true)
             ->setIdSuffix($idSuffix='amit')
             ->toHtml(); ?>
+                    <!-- FAB-70 Code End -->
                     <div class="actions">
                         <?php if (Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code) && $this->helper('wishlist')->isAllow()) : ?>
                         <a href="<?php if(Mage::getStoreConfig("ajaxcart/addtolinks/enablecategory", $code)):?>javascript:ajaxWishlist('<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>','<?php echo $_product->getId()?>');<?php else: ?><?php echo $this->helper('wishlist')->getAddUrl($_product) ?><?php endif; ?>" class="addtowishlist" title="<?php echo $this->__('Add to Wishlist') ?>"><i class="icon-wishlist"></i></a>
