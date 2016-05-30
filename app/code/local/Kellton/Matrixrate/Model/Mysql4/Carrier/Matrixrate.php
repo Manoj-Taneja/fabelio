@@ -49,19 +49,20 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                 $standard_fee = array();
                 $final_data_array = array();
                 foreach($items as $key=>$item){
-                    
-                    $select = $read->select()->from($table);
-                    $select->where("sku=?",$item->getSku());
-                    $select->where('website_id=?', $request->getWebsiteId());
+                    $sku = $item->getSku();
+                   echo $query = $query = "SELECT  * from {$table} where sku = '{$sku}'";
+                   // $select = $read->select()->from($table);
+                   // $select->where(quoteInto("sku=?",$item->getSku()));
+                  //  $select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
                    //echo "<pre>"; print_r($select); echo "</pre>";
-                    $profiler = Mage::getSingleton('core/resource')->getConnection('core_read')->getProfiler();
-                    echo "<pre>";
-                    print_r($profiler->getQueryProfiles());
-                    echo "</pre>";
+                   // $profiler = Mage::getSingleton('core/resource')->getConnection('core_read')->getProfiler();
+                   // echo "<pre>";
+                  //  print_r($profiler->getQueryProfiles());
+                  //  echo "</pre>";
                     //$dump = $read->getSelect();
                     //var_dump($dump);
-                    $row = $read->fetchAll($select);
+                    $row = $read->fetchAll($query);
                    echo $item->getSku();
                     echo "<pre>"; print_r($row); echo "</pre>";
                 exit;
