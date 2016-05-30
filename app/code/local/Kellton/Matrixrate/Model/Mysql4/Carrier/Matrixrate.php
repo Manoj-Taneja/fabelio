@@ -50,10 +50,10 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                 $final_data_array = array();
                 foreach($items as $key=>$item){
                     $sku = $item->getSku();
-                  // echo $query = $query = "SELECT  * from {$table} where sku = '{$sku}'";
-                    $select = $read->select()->from($table);
-                    $select->where(quoteInto("sku=?",$item->getSku()));
-                    $select->where('website_id=?', $request->getWebsiteId());
+                  $select = "SELECT  * from {$table} where sku = '{$sku}'";
+                    //$select = $read->select()->from($table);
+                    //$select->where(quoteInto("sku=?",$item->getSku()));
+                    //$select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
                    //echo "<pre>"; print_r($select); echo "</pre>";
                    // $profiler = Mage::getSingleton('core/resource')->getConnection('core_read')->getProfiler();
