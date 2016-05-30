@@ -38,12 +38,12 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
 		$postcode = $request->getDestPostcode();
         $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
        
-		if ($zipRangeSet && is_numeric($postcode)) {
+		/*if ($zipRangeSet && is_numeric($postcode)) {
 			#  Want to search for postcodes within a range
 			$zipSearchString = ' AND '.$postcode.' BETWEEN dest_zip AND dest_zip_to )';		
 		} else {
 			$zipSearchString = $read->quoteInto(" AND ? LIKE dest_zip )", $postcode);
-		}
+		}*/
                 
                 $express_fee = array();
                 $standard_fee = array();
@@ -54,8 +54,9 @@ class Kellton_Matrixrate_Model_Mysql4_Carrier_Matrixrate extends Mage_Core_Model
                     $select->where($read->quoteInto("sku=?",$item->getSku()));
                     $select->where('website_id=?', $request->getWebsiteId());
                     $newdata=array();
-                   echo "<pre>"; print_r($select); echo "</pre>";
-                    var_dump($select);
+                   //echo "<pre>"; print_r($select); echo "</pre>";
+                    $dump = $read->getSelect();
+                    var_dump($dump);
                     $row = $read->fetchAll($select);
                    echo $item->getSku();
                     echo "<pre>"; print_r($row); echo "</pre>";
