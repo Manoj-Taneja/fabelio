@@ -37,6 +37,7 @@ class Kellton_Matrixrate_Block_Adminhtml_System_Config_Form_Field_Exportmatrix e
     
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
+        // Debug
         $this->setElement($element);
 
         $buttonBlock = $this->getLayout()->createBlock('adminhtml/widget_button');
