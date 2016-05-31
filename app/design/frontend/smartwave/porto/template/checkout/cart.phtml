@@ -56,7 +56,7 @@
                                         <button type="button" title="<?php echo $this->__('Continue Shopping') ?>" class="button btn-continue" onclick="setLocation('<?php echo $this->getUrl('') ?>')"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
                                     <?php endif; ?>
                                     <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update Shopping Cart'); ?>" class="button btn-update"><span><span><?php echo $this->__('Update Shopping Cart'); ?></span></span></button>
-                                    <button type="submit" name="update_cart_action" value="empty_cart" title="<?php echo $this->__('Clear Shopping Cart'); ?>" class="button btn-empty" id="empty_cart_button"><span><span><?php echo $this->__('Clear Shopping Cart'); ?></span></span></button>
+                                    <button type="submit" name="update_cart_action" value="empty_cart" title="<?php echo $this->__('Clear Shopping Cart'); ?>" class="button btn-empty" id="empty_cart_button" onclick="ematicEmptyCart();"><span><span><?php echo $this->__('Clear Shopping Cart'); ?></span></span></button>
                                     <!--[if lt IE 8]>
                                     <input type="hidden" id="update_cart_action_container" />
                                     <script type="text/javascript">
@@ -147,10 +147,15 @@ jQuery(function($){
       });
     }, 400);
   }
-  $cart.on('change', '.qty-holder .qty', function(){
+  $cart.on('change', '.qty-holder .qty', function(){ ematicUpdateCart(this);
     updateCart()
   });
-  $cart.on('click', '.table_qty_dec, .table_qty_inc', function(){
+  $cart.on('click', '.table_qty_dec', function(){
+      ematicDecCart(this);
+    updateCart();
+  });
+  $cart.on('click', '.table_qty_inc', function(){
+      ematicIncCart(this);
     updateCart();
   });
 })
