@@ -71,8 +71,6 @@ $session->setData("sessionCartDataArray", $cartProductArray);
     var products = jQuery.parseJSON('<?php $session = Mage::getSingleton("core/session"); $cartData = $session->getData("sessionCartDataArray"); echo json_encode($cartData) ?>');
     function ematic_removed(element)
     {
-        console.log(products);
-        alert('hello');
         var removed_product_name = jQuery(element).parent('.product-details').find('.product-name a').text();
         for(i=0;i<products.length;i++)
         {
