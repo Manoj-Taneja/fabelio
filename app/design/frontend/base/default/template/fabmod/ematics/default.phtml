@@ -132,12 +132,20 @@ $session->setData("sessionCartDataArray", $cartProductArray);
         for(i=0;i<products.length;i++)
         {
             if(updated_product_name.indexOf(products[i]['name']) >= 0)
-            {
-                products[i]['quantity'] = jQuery(element).val();
-                alert(products[i]['quantity']);
-                console.log(products);
-                ematics("log", "product", "cart", products);
-                break;
+            { //alert(jQuery(element).val());
+                if(jQuery(element).val()<=0)
+		{
+			products.splice(i,1);
+                	console.log(products);
+                	ematics("log", "product", "cart", products);
+		}
+		else{
+			products[i]['quantity'] = jQuery(element).val();
+                	//alert(products[i]['quantity']);
+                	console.log(products);
+                	ematics("log", "product", "cart", products);
+                	break;
+		}
             }
         }
         
