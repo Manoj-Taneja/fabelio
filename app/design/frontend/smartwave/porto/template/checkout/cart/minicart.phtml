@@ -25,7 +25,7 @@
                         <span class="price-total"><?php echo $_subtotal ?></span>
                     </div>
                     <div class="actions">
-                        <a class="btn btn-default btn-mini-cart" style="width: 100%;" href="<?php echo $this->getUrl('checkout/cart'); ?>"><i class="icon-basket"></i><?php echo $this->__('View Cart') ?></a>
+                        <a class="btn btn-default btn-mini-cart" style="width: 100%;" href="<?php echo $this->getUrl('checkout/cart'); ?>" onclick="console.log(products);ematics('log', 'product', 'cart', products);"><i class="icon-basket"></i><?php echo $this->__('View Cart') ?></a>
                         <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
                         <!--<a class="btn btn-default btn-mini-checkout" href="<?php echo $this->getCheckoutUrl(); ?>"><i class="icon-right-thin"></i><?php echo $this->__('Checkout') ?></a>-->
                         <?php endif; ?>
