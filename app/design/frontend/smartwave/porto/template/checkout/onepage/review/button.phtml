@@ -24,4 +24,4 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<button type="submit" title="<?php echo $this->__('Place Order') ?>" class="fab-btn fab-btn-primary btn-checkout" id="place-order-button" onclick="ematicConvert();review.save();"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
+<!-- Ematic code starts --> <button type="submit" title="<?php echo $this->__('Place Order') ?>" class="fab-btn fab-btn-primary btn-checkout" id="place-order-button" onclick="if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematicConvert();}review.save();"><span><span><?php echo $this->__('Place Order') ?></span></span></button> <!-- Ematic code ends -->
