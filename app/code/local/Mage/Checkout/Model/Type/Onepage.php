@@ -591,9 +591,13 @@ class Mage_Checkout_Model_Type_Onepage
         $this->getQuote()->getShippingAddress()
             ->setShippingMethod($shippingMethod);
 
-        $this->getCheckout()
+//        $this->getCheckout()
+//            ->setStepData('shipping_method', 'complete', true)
+//            ->setStepData('payment', 'allow', true);
+        
+         $this->getCheckout()
             ->setStepData('shipping_method', 'complete', true)
-            ->setStepData('payment', 'allow', true);
+            ->setStepData('review', 'allow', true);
 
         return array();
     }
@@ -798,6 +802,7 @@ class Mage_Checkout_Model_Type_Onepage
 
         $order = $service->getOrder();
         $items = $order->getAllItems();
+         $flatrate_model = Mage::helper('matrixrate');
         $fh = fopen("/tmp/orderid.txt","w");
         foreach($items as $item)
         {
@@ -809,9 +814,16 @@ class Mage_Checkout_Model_Type_Onepage
             $resource = Mage::getSingleton('core/resource');
             $writeConnection = $resource->getConnection('core_write');
             $tableName = $resource->getTableName('sales_flat_order_item');
-            $query = "update ".$tableName." set qty_stock='".$avail_qty."' where order_id=".$order->getEntityId()." and sku='".$sku."';";
+            $query = "update ".$tableName." set qty_stock='".$avail_qty."' where order_id=".$order->getEntityId()." and sku='".$sku."';";         
             $writeConnection->query($query);
             
+            $shipping_description_array = Mage::getSingleton('core/session')->getShippingDescription();
+            
+            foreach($shipping_description_array as $key=>$val){
+                $shipping_details = $flatrate_model->get_delivery_type($val);
+                $qry_ubt = "update ".$tableName." set day_of_month ='".$shipping_details[0]['delivery_date']."', delivery_type='".$shipping_details[0]['delivery_type']."' where order_id=".$order->getEntityId()." and quote_item_id=".$key.";"; 
+                $writeConnection->query($qry_ubt);
+            }
         }
         
         if ($order) {
