@@ -27,7 +27,8 @@
 /**
  * Shopping cart controller
  */
-class Mage_Checkout_CartController extends Mage_Core_Controller_Front_Action
+require 'Mage/Checkout/controllers/CartController.php';
+class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
 {
     /**
      * Action list where need check enabled cookie
@@ -122,6 +123,8 @@ class Mage_Checkout_CartController extends Mage_Core_Controller_Front_Action
     public function indexAction()
     {
         $cart = $this->_getCart();
+         Mage::getSingleton('core/session')->unsShippingAmount();
+         Mage::getSingleton('core/session')->unsShippingDescription();
         if ($cart->getQuote()->getItemsCount()) {
             $cart->init();
             $cart->save();
