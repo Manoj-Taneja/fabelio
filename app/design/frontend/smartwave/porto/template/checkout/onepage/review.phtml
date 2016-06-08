@@ -1,0 +1,240 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="order-review waD" id="checkout-review-load" style="display:none;">
+    <!-- Content loaded dynamically -->
+    
+</div>
+<?php 
+        $items = Mage::getSingleton('checkout/cart')->getQuote()->getAllItems();
+        $rc = Mage::getResourceSingleton('catalog/product');
+        $_coreHelper = $this->helper('core');
+        $matrixrate_helper = Mage::helper('matrixrate');
+       
+        
+?>
+
+<div id="cart-items-table">
+    <table style="width:100%" border="1">
+            <thead>
+                    <tr>
+                        <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
+                        <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
+                        <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+                        <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Delivery Details') ?></th>
+                        <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
+                    </tr>
+            </thead>
+            <tbody id="response-review-items">
+                <?php foreach($items as $key=>$item): ?>
+                <?php
+                    $product_id = $item->getProductID();
+                    $product = Mage::getModel('catalog/product')->load($product_id);
+                    $product_name = $item->getName();
+                    $product_price = $item->getBaseRowTotal();
+                    $product_qty = $item->getQty();
+                    $product_sku = $item->getSku();
+                    $smallImage = $rc->getAttributeRawValue($product_id, 'thumbnail', Mage::app()->getStore());
+                    $imageModel = Mage::getModel('catalog/product_image');
+                    $imageModel->setDestinationSubdir('thumbnail');
+                    $imageModel->setBaseFile($smallImage);
+                    //$product_image = $imageModel->getUrl();
+                    $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(80);
+                ?>
+                  <tr>
+                     <td align="right">
+                        <img height="80" width="80" src="<?php echo $product_image; ?>" />
+                        <div class="product-title"><?php echo $product_name; ?>
+                        </div>
+                       
+                     </td>
+                     <td align="right">
+                        <!--<div class="discount-price">Rp 4.699.000</div>-->
+                        <div class="main-price">
+                            <?php echo $_coreHelper->formatPrice($product_price, false) ?>
+                            
+                        </div>
+                     </td>
+                     </td>
+                     <td align="right">
+<!--                         <input type="text" maxlength="2" name="product_qty" id="product_qty" value="<?php echo $product_qty; ?>" disabled="disabled" />-->
+                        <select>
+                            <?php for($i=1; $i<=100; $i++):?>
+                           <option value="<?php echo $i; ?>" <?php if($i==$product_qty):?>selected="selected"<?php endif; ?>><?php echo $i; ?></option>
+                           <?php endfor; ?>
+                           
+                        </select>
+                     </td>
+                     <td align="right">
+                        <div>
+                          <?php $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);?>
+                        <?php if(count($delivery_array) > 1):?>
+                            <?php 
+                                foreach($delivery_array as $key=>$val): 
+                                    if($val['price']!="Free"){
+                                        $radio_name = "express-".$product_id;
+                                    }else{
+                                        $radio_name = "standard-".$product_id;
+                                    }
+                                    $shipping_code = "matrixrate_matrixrate_".$val['pk'];
+                             ?>
+                            <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="sp-method-<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?><br>
+                            <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
+                            <?php endforeach; ?>
+                        
+                        </div>
+                         <?php else: ?>
+                         <?php ?>
+                        <div>
+                            <?php foreach($delivery_array as $key=>$val): ?>
+                            <input type="radio" checked="checked" name="standard-<?php echo $product_id; ?>" value="<?php echo $val["pk"]; ?>" rel="shipping_method"/>&nbsp;<?php echo $val['delivery_date']; ?> - Free
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
+
+                     </td>
+                     <td align="right">
+                        <div class="total-price">
+                            <?php
+                                $total_price = $product_qty * $product_price;
+                                echo $_coreHelper->formatPrice($total_price, false);
+                            ?>
+                        </div>
+                     </td>
+                     <!--<td>X</td>-->
+                  </tr>
+                
+                <?php endforeach ?>
+            </tbody>
+            <tfoot id="subtotal_footer">
+               
+                <tr class="first">
+                                <td colspan="4" class="a-right" style="">Subtotal</td>
+                                <td class="a-right last" style="">
+                                    <span class="price"><?php echo $_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="a-right" style="">
+                                    Shipping &amp; Handling     </td>
+                                <td class="a-right last" style="">
+                                    <?php
+                                        $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
+                                        $shipping_amount = array_sum($shipping_amount_array);
+                                    ?>
+                                    <?php echo $_coreHelper->formatPrice($shipping_amount,false); ?>
+                                       </td>
+                            </tr>
+                            <tr class="last">
+                            <td colspan="4" class="a-right" style="">
+                                <strong>Grand Total</strong>
+                            </td>
+                            <td class="a-right last" style="">
+                                <strong>
+                                    <?php 
+                                    $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                    $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                    echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                   ?>
+                                </strong>
+                            </td>
+                            </tr>
+                
+            </tfoot>
+    </table>
+    <div id="checkout-review-submit">
+    
+    <div id="review-buttons-container" class="buttons-set">
+        
+        <button onclick="" class="button btn-checkout" id="go_payment" title="Next Step" type="submit"><span><span>Continue</span></span></button>
+        <span style="display:none;" id="review-please-wait" class="please-wait">
+            <img class="v-middle" title="Loading Next Step..." alt="Loading Next Step..." src="http://local.rnd.com/skin/frontend/default/default/images/opc-ajax-loader.gif"> Loading Next Step...        </span>
+    </div>
+    
+</div>
+</div>
+
+<!--<div style="float:right;"><button id="go_payment" class="fab-btn fab-btn-primary" type="button"><span><span>Continue</span></span></button></div>-->
+
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+        $('#go_payment').click(function(){
+            $(this).hide();
+            $('#review-please-wait').show();
+            var attr_id=$(this).attr('rel');
+            var pk = $(this).val();
+           // console.log(attr_id);
+            var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/goPayment/";
+           // var form_data = $("#order_review_form_"+attr_id).serialize();
+           var form_data ="pk="+pk; 
+            $.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = $.parseJSON(result);
+                    console.log("Result : "+result);
+                    $('#checkout-step-payment').show();
+                    $('#checkout-step-review').hide();
+                    $('#opc-review').addClass('allow');
+                    $(this).show();
+                    $('#review-please-wait').hide();
+                    $('#opc-review').removeClass('active');
+                    $('#opc-payment').addClass('active');
+                    $('#checkout-payment-method-load').html(return_data.update_section.html);
+                    //$('#subtotal_footer').html(return_data.subtotal_string);
+                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+                }
+            });
+        })
+        
+        
+       $('input[type=radio]').click(function(){
+            var attr_id=$(this).attr('rel');
+            var pk = $(this).val();
+           // console.log(attr_id);
+            var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
+           // var form_data = $("#order_review_form_"+attr_id).serialize();
+           var form_data ="pk="+pk; 
+            $.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = $.parseJSON(result);
+                    //console.log("Result : "+result);
+                    $('#subtotal_footer').html(return_data.subtotal_string);
+                    
+                    $('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+                }
+            });
+        })
+       // console.log("!! How are you !!"); 
+       // console.log("!! How are you !!");
+    })
+</script>
