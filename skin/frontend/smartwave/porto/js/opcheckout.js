@@ -36,7 +36,7 @@ Checkout.prototype = {
         this.method = '';
         this.payment = '';
         this.loadWaiting = false;
-        this.steps = ['login', 'billing', 'shipping', 'shipping_method', 'payment', 'review'];
+        this.steps = ['login', 'billing', 'shipping', 'shipping_method', 'review', 'payment'];
         //We use billing as beginning step since progress bar tracks from billing
         this.currentStep = 'billing';
 
@@ -226,13 +226,14 @@ Checkout.prototype = {
 
     setShippingMethod: function() {
         //this.nextStep();
-        this.gotoSection('payment', true);
+        this.gotoSection('review', true);
         //this.accordion.openNextSection(true);
     },
 
     setPayment: function() {
         //this.nextStep();
-        this.gotoSection('review', true);
+       // this.gotoSection('review', true);
+       this.reloadProgressBlock();
         //this.accordion.openNextSection(true);
     },
 
@@ -261,6 +262,11 @@ Checkout.prototype = {
     setStepResponse: function(response){
         if (response.update_section) {
             $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
+            if(response.goto_section=='review' && response.update_section.html!=false){
+                setTimeout(function(){ 
+                   jQuery('#place-order-button').trigger( "click" );
+               }, 1000);
+            }
         }
         if (response.allow_sections) {
             response.allow_sections.each(function(e){
@@ -900,8 +906,7 @@ Review.prototype = {
     },
 
     save: function(){
-        if (checkout.loadWaiting!=false) return;
-        checkout.setLoadWaiting('review');
+        checkout.setLoadWaiting('payment');
         var params = Form.serialize(payment.form);
         if (this.agreementsForm) {
             params += '&'+Form.serialize(this.agreementsForm);
@@ -937,6 +942,7 @@ Review.prototype = {
                 return;
             }
             if (response.success) {
+                //alert(response.success);
                 this.isSuccess = true;
                 window.location=this.successUrl;
             }
