@@ -38,7 +38,7 @@
 ?>
 
 <div id="cart-items-table">
-    <table>
+    <table style="width:100%" border="1">
             <thead>
                     <tr>
                         <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
@@ -65,13 +65,13 @@
                     $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(80);
                 ?>
                   <tr>
-                     <td>
+                     <td align="right">
                         <img height="80" width="80" src="<?php echo $product_image; ?>" />
                         <div class="product-title"><?php echo $product_name; ?>
                         </div>
                        
                      </td>
-                     <td>
+                     <td align="right">
                         <!--<div class="discount-price">Rp 4.699.000</div>-->
                         <div class="main-price">
                             <?php echo $_coreHelper->formatPrice($product_price, false) ?>
@@ -79,7 +79,7 @@
                         </div>
                      </td>
                      </td>
-                     <td>
+                     <td align="right">
 <!--                         <input type="text" maxlength="2" name="product_qty" id="product_qty" value="<?php echo $product_qty; ?>" disabled="disabled" />-->
                         <select>
                             <?php for($i=1; $i<=100; $i++):?>
@@ -88,7 +88,7 @@
                            
                         </select>
                      </td>
-                     <td>
+                     <td align="right">
                         <div>
                           <?php $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);?>
                         <?php if(count($delivery_array) > 1):?>
@@ -116,7 +116,7 @@
                         <?php endif; ?>
 
                      </td>
-                     <td>
+                     <td align="right">
                         <div class="total-price">
                             <?php
                                 $total_price = $product_qty * $product_price;
@@ -165,13 +165,27 @@
                 
             </tfoot>
     </table>
+    <div id="checkout-review-submit">
+    
+    <div id="review-buttons-container" class="buttons-set">
+        
+        <button onclick="" class="button btn-checkout" id="go_payment" title="Next Step" type="submit"><span><span>Continue</span></span></button>
+        <span style="display:none;" id="review-please-wait" class="please-wait">
+            <img class="v-middle" title="Loading Next Step..." alt="Loading Next Step..." src="http://local.rnd.com/skin/frontend/default/default/images/opc-ajax-loader.gif"> Loading Next Step...        </span>
+    </div>
+    
+</div>
 </div>
 
-<div style="float:right;"><button id="go_payment" class="fab-btn fab-btn-primary" type="button"><span><span>Continue</span></span></button></div>
+<!--<div style="float:right;"><button id="go_payment" class="fab-btn fab-btn-primary" type="button"><span><span>Continue</span></span></button></div>-->
+
+
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
         $('#go_payment').click(function(){
+            $(this).hide();
+            $('#review-please-wait').show();
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
            // console.log(attr_id);
@@ -187,6 +201,9 @@
                     console.log("Result : "+result);
                     $('#checkout-step-payment').show();
                     $('#checkout-step-review').hide();
+                    $('#opc-review').addClass('allow');
+                    $(this).show();
+                    $('#review-please-wait').hide();
                     $('#opc-review').removeClass('active');
                     $('#opc-payment').addClass('active');
                     $('#checkout-payment-method-load').html(return_data.update_section.html);
