@@ -249,12 +249,20 @@ Checkout.prototype = {
         var stepIndex = this.steps.indexOf(this.currentStep);
         var section = this.steps[--stepIndex];
         var sectionElement = $('opc-' + section);
-
+        
         //Traverse back to find the available section. Ex Virtual product does not have shipping section
         while (sectionElement === null && stepIndex > 0) {
             --stepIndex;
             section = this.steps[stepIndex];
             sectionElement = $('opc-' + section);
+        }
+       // alert('opc-' + section)
+        if(section=='shipping'){
+            section='review';
+            jQuery('#checkout-step-review').show();
+            jQuery('#go_payment').show();
+            jQuery('#checkout-step-payment').hide();
+            jQuery('#opc-payment').removeClass('active');
         }
         this.changeSection('opc-' + section);
     },
