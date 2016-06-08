@@ -1339,3 +1339,9 @@
     .rating-box .rating{float:left;height:12px;position:absolute;left:0;top:0;overflow:hidden}
     .rating-box .rating:before{font-family:"porto";content:"\e852\20\e852\20\e852\20\e852\20\e852";width:65px;height:12px;color:#ffc600;display:inline;font-size:11px;line-height:12px;white-space:nowrap}
 }
+
+@media (min-width:480px) and (max-width:736px){
+/* Fab-178 starts */
+.mob-tetangga-step .owl-item .item img{max-width:40%;}
+/* Fab-178 ends */
+}
