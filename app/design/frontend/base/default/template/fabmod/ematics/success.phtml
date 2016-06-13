@@ -12,21 +12,6 @@ if ($orderId) {
     foreach ($items as $item) { $categories = $item->getProduct()->getCategoryIds();
 ?>
       <script type="text/javascript">
-//      mixpanel.people.track_charge('<?php echo $item->getProduct()->getFinalPrice(); ?>');
-//      mixpanel.track(
-//        "Product Purchased",
-//       {'Name': '<?php echo $item->getName(); ?>',       // Name or ID is required.
-//        'Id': '<?php echo $item->getId(); ?>',
-//        'Sku': '<?php echo $item->getSku(); ?>',
-//        'Selling Price': '<?php echo $item->getProduct()->getFinalPrice(); ?>',
-//        'Original Price': '<?php echo $item->getPrice(); ?>',
-//        <?php if($item->getManufacturer()!=''){ ?>  
-//         'Designer' : '<?php echo $item->getAttributeText('manufacturer'); ?>',
-//        <?php } ?>
-//        'Quantity' : '<?php echo $item->getQtyOrdered() ?>'
-//     }
-//      );
-
 var products[] = {
       id: "<?php echo $item->getId(); ?>", //required
       categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
