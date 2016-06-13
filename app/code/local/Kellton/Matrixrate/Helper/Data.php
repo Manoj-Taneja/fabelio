@@ -83,35 +83,44 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         return $return_array;
     }
     
-    public function cutt_off_time_calculation($delivery_days){
+    public function cutt_off_time_calculation($delivery_days=''){
         $config_cutt_off_time = Mage::getStoreConfig('carriers/matrixrate/cut_off_time');
         $current_local_time = strtotime(strftime('%X'));
+       
         $cut_off_time = strtotime(strftime($config_cutt_off_time));
         
-        if($delivery_days == 0 && $current_local_time < $cut_off_time){
-            
+        if($delivery_days!='' && $delivery_days == 0  && $current_local_time < $cut_off_time){
+         
              $delivery_date = date('j F');
              
-        }elseif($delivery_days == 0 && $current_local_time > $cut_off_time){
-            
+        }elseif($delivery_days!='' && $delivery_days == 0  && $current_local_time > $cut_off_time){
+          
             $delivery_date = date('j F',strtotime(strftime('%X').'+ 1 day'));
             
-        }elseif($delivery_days == 1 && $current_local_time < $cut_off_time){
-            
+        }elseif($delivery_days!='' && $delivery_days == 1 && $current_local_time < $cut_off_time){
+        
             $delivery_date = date('j F',strtotime(strftime('%X').'+ 1 day'));
-        }
-        else{
-            
+        }elseif($delivery_days!='' && $delivery_days == 1  && $current_local_time > $cut_off_time)
+            {
+         
+            $delivery_date = date('j F',strtotime(strftime('%X').'+ 2 day'));
+        }elseif($delivery_days=='' && $current_local_time < $cut_off_time ){
+            echo "5 \n";
+             $delivery_date = date('j F',strtotime(strftime('%X').'+ 1 day'));
+        }elseif($delivery_days=='' && $current_local_time > $cut_off_time ){
+         
+             $delivery_date = date('j F',strtotime(strftime('%X').'+ 2 day'));
+        }else{
             $delivery_date = date('j F',strtotime(strftime('%X').'+ 1 day'));
         }
         return $delivery_date;
     }
     
-    public function get_delivery_type($id){
+    public function get_delivery_type($id=''){
         $read = Mage::getSingleton('core/resource')->getConnection('core_read');
         $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+        if($id!=''){
         $select = "SELECT  * from {$table} where pk = '{$id}'";
-      // exit;
         $row = $read->fetchAll($select);
         if(count($row) > 0){
             $return_array = array();
@@ -128,10 +137,25 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
                 }
             }
         }else{
-             $delivery_date = $this->cutt_off_time_calculation(1);
+             $delivery_date = $this->cutt_off_time_calculation();
              $return_array['0']['delivery_date'] = $delivery_date;
              $return_array['0']['delivery_type'] = "Standard";
         }
+        }else{
+            $delivery_date = $this->cutt_off_time_calculation();
+            $return_array['0']['delivery_date'] = $delivery_date;
+            $return_array['0']['delivery_type'] = "Standard";
+        }
         return $return_array;
+    }
+    
+    
+    public function give_option_array($id){
+        
+        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+        $select = "SELECT  * from {$table} where pk = '{$id}'";
+        $row = $read->fetchAll($select);
+        return $row;
     }
 }
