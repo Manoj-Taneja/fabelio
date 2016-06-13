@@ -1,4 +1,3 @@
-<script>alert('success page overrided');</script>
 <?php
 $helper = Mage::helper("fabmod_mixpanel");
 $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
@@ -7,24 +6,14 @@ if ($orderId) {
 ?>
 <?php
 
-    if ($helper->isEmaticsEnabled()) { echo "ematic enabled";
+    if ($helper->isEmaticsEnabled()) {
     $items = $order->getAllItems();
-    foreach ($items as $item) { echo "condition and loop successful";  
+    foreach ($items as $item) { 
     $productSku = $item->getProduct()->getSku(); 
-$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+    $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
     $categories = $product->getCategoryIds();
 ?>
       <script type="text/javascript">
- <?php /*         alert(id+'<?php echo $product->getId(); ?>');
-          alert(catid+'<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>');
-          alert(price+'<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice(), true, false); ?>');
-          alert(quantity+'<?php echo $item->getQtyOrdered() ?>');
-          alert(name+'<?php echo $item->getName(); ?>');
-          alert(imageUrl+'<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>');
-          alert(link+'<?php echo $product->getProductUrl() ?>');
-          alert(brand+'<?php echo $product->getAttributeText('manufacturer'); ?>');
-  * 
-  */ ?>
 var products = [{
       id: "<?php echo $item->getId(); ?>", //required
       categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
@@ -41,8 +30,8 @@ var products = [{
 <?php   
 } ?>
       <script>
-      console.log(products);
-            
+        console.log(products);
+        ematics("log", "product", "convert", products);    
       </script>
       
 <?php } }
