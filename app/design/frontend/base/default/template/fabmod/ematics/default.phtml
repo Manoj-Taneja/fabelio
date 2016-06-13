@@ -164,6 +164,54 @@ $session->setData("sessionCartDataArray", $cartProductArray);
         console.log(products);
 	ematics("log", "product", "convert", products);
     }
+  jQuery( document ).ready(function()  {
+        jQuery('#finish_and_checkout').click(function(){
+            alert('finish and checkout');
+            ematics("log", "product", "cart", products);
+        });
+        jQuery('.btn-mini-cart').click(function(){
+            alert('goto popup clicked');
+            ematics("log", "product", "cart", products);
+        });
+        jQuery('.mybag-link').click(function(){
+            alert('cart icon clicked');
+            ematics("log", "product", "cart", products);
+        });
+       jQuery('body').on('click','.product-details .btn-remove', function(){
+        alert('remove clicked');
+        var removed_product_name = jQuery(this).parent('.product-details').find('.product-name a').text();
+        alert(removed_product_name);
+        for(i=0;i<products.length;i++)
+        {
+            if(removed_product_name.indexOf(products[i]['name']) >= 0)
+            {
+                products.splice(i,1);
+                alert('hello ');
+                console.log(products);
+                ematics("log", "product", "cart", products);
+                break;
+            }
+        }
+   });
+   jQuery('.action-td').on('click','.btn-remove2', function(){
+        alert('remove click from ');
+        var removed_product_name = jQuery(this).parents('tr').find('.product-name a').text();
+        alert(removed_product_name);
+        for(i=0;i<products.length;i++)
+        {
+            if(removed_product_name.indexOf(products[i]['name']) >= 0)
+            {
+                products.splice(i,1);
+                alert('hello');
+                console.log(products);
+                ematics("log", "product", "cart", products);
+                break;
+            }
+        }
+   });
+  
+}); 
+
   </script>
 <!-- FAB-62 Ematic JS---- code end -->
 <?php } ?>
