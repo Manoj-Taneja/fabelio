@@ -23,7 +23,7 @@ $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku
           alert(imageUrl+'<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>');
           alert(link+'<?php echo $product->getProductUrl() ?>');
           alert(brand+'<?php echo $product->getAttributeText('manufacturer'); ?>');
-var products[] = {
+var products = [{
       id: "<?php echo $item->getId(); ?>", //required
       categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
       transactionId: "",
@@ -34,7 +34,7 @@ var products[] = {
       desc: "",
       imageUrl: "<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>", //required
       link: "<?php echo $product->getProductUrl() ?>" //required
-  };
+  }];
       </script>
 <?php   
 } ?>
@@ -44,7 +44,4 @@ var products[] = {
       </script>
       
 <?php } }
-else {
 ?>
-      <script>alert('condition false');</script>      
-<?php } ?>
