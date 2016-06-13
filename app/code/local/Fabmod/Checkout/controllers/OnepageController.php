@@ -247,16 +247,20 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         if ($this->_expireAjax()) {
             return;
         }
+        
+            $post_array = $this->getRequest()->getPost();
+            Mage::getSingleton('core/session')->unsShippingAmount();
+            Mage::getSingleton('core/session')->unsShippingDescription();
             $return_array = array();
             $shipping_amount_array = array();
             $shipping_amount = 0;
             $_coreHelper = Mage::helper('core');
             $items = Mage::getSingleton('checkout/session')->getQuote();
             $id=$_POST['pk'];
-            Mage::getSingleton('core/session')->set($shippingPrice);
             $flatrate_model = Mage::getModel('shipping/carrier_flatrate');
-            $result = $flatrate_model->collectRates($items, $id);
-            $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();           
+            $result = $flatrate_model->collectRates($items, $post_array);
+            $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
+            
             $shipping_amount = array_sum($shipping_amount_array);
             Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
             Mage::getSingleton('checkout/session')->getQuote()->setShippingAmount($shipping_amount);
@@ -345,6 +349,10 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
 
             // get section and redirect data
             $redirectUrl = $this->getOnepage()->getQuote()->getPayment()->getCheckoutRedirectUrl();
+           
+            if ($redirectUrl) {
+                $result['redirect'] = $redirectUrl;
+            }
             if (empty($result['error']) && !$redirectUrl) {
                 $this->loadLayout('checkout_onepage_review');
                 $result['goto_section'] = 'review';
@@ -352,9 +360,6 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                     'name' => 'review',
                     'html' => $this->_getReviewNewHtml()
                 );
-            }
-            if ($redirectUrl) {
-                $result['redirect'] = $redirectUrl;
             }
         } catch (Mage_Payment_Exception $e) {
             if ($e->getFields()) {

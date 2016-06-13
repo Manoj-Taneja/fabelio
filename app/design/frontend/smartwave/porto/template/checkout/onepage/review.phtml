@@ -48,10 +48,11 @@
                         <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
                     </tr>
             </thead>
+            <form name="review_form" id="review_form" action="javascript://" method="POST">
             <tbody id="response-review-items">
                 <?php foreach($items as $key=>$item): ?>
                 <?php
-                    $product_id = $item->getProductID();
+                    $product_id = $item->getID();
                     $product = Mage::getModel('catalog/product')->load($product_id);
                     $product_name = $item->getName();
                     $product_price = $item->getBaseRowTotal();
@@ -101,7 +102,7 @@
                                     }
                                     $shipping_code = "matrixrate_matrixrate_".$val['pk'];
                              ?>
-                            <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="sp-method-<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?><br>
+                            <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?><br>
                             <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
                             <?php endforeach; ?>
                         
@@ -110,7 +111,7 @@
                          <?php ?>
                         <div>
                             <?php foreach($delivery_array as $key=>$val): ?>
-                            <input type="radio" checked="checked" name="standard-<?php echo $product_id; ?>" value="<?php echo $val["pk"]; ?>" rel="shipping_method"/>&nbsp;<?php echo $val['delivery_date']; ?> - Free
+                            <input type="radio" checked="checked" name="<?php echo $product_id; ?>" value="0" rel="shipping_method"/>&nbsp;<?php echo $val['delivery_date']; ?> - Free
                             <?php endforeach; ?>
                         </div>
                         <?php endif; ?>
@@ -129,6 +130,7 @@
                 
                 <?php endforeach ?>
             </tbody>
+            </form>
             <tfoot id="subtotal_footer">
                
                 <tr class="first">
@@ -136,17 +138,18 @@
                                 <td class="a-right last" style="">
                                     <span class="price"><?php echo $_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false); ?></span>
                                 </td>
-                            </tr>
+                </tr>
                             <tr>
                                 <td colspan="4" class="a-right" style="">
-                                    Shipping &amp; Handling     </td>
+                                    Shipping &amp; Handling     
+                                </td>
                                 <td class="a-right last" style="">
                                     <?php
                                         $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
                                         $shipping_amount = array_sum($shipping_amount_array);
                                     ?>
                                     <?php echo $_coreHelper->formatPrice($shipping_amount,false); ?>
-                                       </td>
+                                </td>
                             </tr>
                             <tr class="last">
                             <td colspan="4" class="a-right" style="">
@@ -188,10 +191,8 @@
             $('#review-please-wait').show();
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
-           // console.log(attr_id);
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/goPayment/";
-           // var form_data = $("#order_review_form_"+attr_id).serialize();
-           var form_data ="pk="+pk; 
+            var form_data ="pk="+pk; 
             $.ajax({
                 url:post_url,
                 type:'POST',
@@ -207,8 +208,6 @@
                     $('#opc-review').removeClass('active');
                     $('#opc-payment').addClass('active');
                     $('#checkout-payment-method-load').html(return_data.update_section.html);
-                    //$('#subtotal_footer').html(return_data.subtotal_string);
-                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
                 }
             });
         })
@@ -217,24 +216,21 @@
        $('input[type=radio]').click(function(){
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
-           // console.log(attr_id);
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
-           // var form_data = $("#order_review_form_"+attr_id).serialize();
-           var form_data ="pk="+pk; 
+            $("#review_form").submit();
+            var form_data = $("#review_form").serialize();
+            console.log("Review FOrm Data : "+form_data);
             $.ajax({
                 url:post_url,
                 type:'POST',
                 data:form_data,
                 success: function(result){
                     var return_data = $.parseJSON(result);
-                    //console.log("Result : "+result);
                     $('#subtotal_footer').html(return_data.subtotal_string);
                     
                     $('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
                 }
             });
         })
-       // console.log("!! How are you !!"); 
-       // console.log("!! How are you !!");
     })
 </script>

@@ -818,14 +818,20 @@ class Mage_Checkout_Model_Type_Onepage
             $writeConnection->query($query);
             
             $shipping_description_array = Mage::getSingleton('core/session')->getShippingDescription();
-            
+           if(count($shipping_description_array ) >0){
             foreach($shipping_description_array as $key=>$val){
                 $shipping_details = $flatrate_model->get_delivery_type($val);
                 $qry_ubt = "update ".$tableName." set day_of_month ='".$shipping_details[0]['delivery_date']."', delivery_type='".$shipping_details[0]['delivery_type']."' where order_id=".$order->getEntityId()." and quote_item_id=".$key.";"; 
                 $writeConnection->query($qry_ubt);
             }
+           }else{
+                $shipping_details = $flatrate_model->get_delivery_type();
+              $qry_ubt = "update ".$tableName." set day_of_month ='".$shipping_details[0]['delivery_date']."', delivery_type='".$shipping_details[0]['delivery_type']."' where order_id=".$order->getEntityId()." and item_id=".$item->getID().";"; 
+                $writeConnection->query($qry_ubt);
+               
+           }
         }
-        
+       
         if ($order) {
             Mage::dispatchEvent('checkout_type_onepage_save_order_after',
                 array('order'=>$order, 'quote'=>$this->getQuote()));

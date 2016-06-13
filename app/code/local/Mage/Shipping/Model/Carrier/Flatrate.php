@@ -13,13 +13,13 @@ class Mage_Shipping_Model_Carrier_Flatrate
      * @param Mage_Shipping_Model_Rate_Request $data
      * @return Mage_Shipping_Model_Rate_Result
      */
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request, $id='')
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request, $id=array())
     {
         //echo $id;
         if (!$this->getConfigFlag('active')) {
             return false;
         }
- 
+       
         $freeBoxes = 0;
         if ($request->getAllItems()) {
             foreach ($request->getAllItems() as $item) {
@@ -96,35 +96,69 @@ class Mage_Shipping_Model_Carrier_Flatrate
      
     public function get_pro_ship($id)
     {
-        
+       // echo "<pre>"; print_r($id); echo "</pre>";
+        //exit;
+        $matrixrate_helper = Mage::helper('matrixrate');
         Mage::getSingleton('core/session', array('name'=>'frontend'));
         $session = Mage::getSingleton('checkout/session');
-        $shipping_amount_session = Mage::getSingleton('core/session')->getShippingAmount();
-        $shipping_description = Mage::getSingleton('core/session')->getShippingDescription();
-        Mage::getSingleton('core/session')->setShippingAmount('');
-        Mage::getSingleton('core/session')->setShippingDescription('');
+        
+       /// $shipping_amount_session = Mage::getSingleton('core/session')->getShippingAmount();
+        //$shipping_description = Mage::getSingleton('core/session')->getShippingDescription();
+        $shipping_amount_session = array();
+        $shipping_description = array();
         $cart_items = $session->getQuote()->getAllItems();
         $_helper = Mage::helper('catalog/output');
         $read = Mage::getSingleton('core/resource')->getConnection('core_read');
         $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
-        $select = "SELECT  * from {$table} where pk =".$id;
-        $row = $read->fetchAll($select);
+        //$select = "SELECT  * from {$table} where pk =".$id;
+        //$row = $read->fetchAll($select);
         $custom_ship=0;
+        
+       /* $id_rev=array();
+        foreach($id as $key=>$val){
+           $id_rev[$val] = $key; 
+        }*/
+       // echo "<pre>"; print_r($id_rev); echo "</pre>";
+       // exit;
         foreach( $cart_items as $items ){
-            if($items->getSku()==$row['0']['sku']){
+            $item_id = $items->getID();
+           $custom_ship =0;
+            if(array_key_exists($item_id,$id)){
+                $data =  $matrixrate_helper->give_option_array($id[$item_id]);
+                
+               //echo "<pre>"; print_r($data); echo "</pre>";
+                if(count($data) > 0){
+                    $custom_ship =$custom_ship + (($items->getQty())*($data['0']['price'])); 
+                    $shipping_amount_session[$items->getID()]=$custom_ship;
+                    $shipping_description[$items->getID()] = $data['0']['pk'];
+                }else{
+                     $shipping_amount_session[$items->getID()]=0;
+                    $shipping_description[$items->getID()] = '';
+                }
+            }
+            
+           /* if($items->getSku()==$row['0']['sku']){
                 $custom_ship +=($items->getQty())*($row['0']['price']); 
                
                 $shipping_amount_session[$items->getID()]=$custom_ship;
                 $shipping_description[$items->getID()] = $row['0']['pk'];
-                Mage::getSingleton('core/session')->setShippingAmount($shipping_amount_session);
-                Mage::getSingleton('core/session')->setShippingDescription($shipping_description);
-            }
+                
+            }else{
+                $shipping_description[$items->getID()] = 0;
+            }*/
 
         }
+        
+      //  echo "<pre>"; print_r($shipping_description); echo "</pre>";
+      //  exit;
+        Mage::getSingleton('core/session')->setShippingAmount($shipping_amount_session);
+        Mage::getSingleton('core/session')->setShippingDescription($shipping_description);
         $shippingPrice_array = Mage::getSingleton('core/session')->getShippingAmount();
         $shippingPrice = array_sum($shippingPrice_array);
         return $shippingPrice ;
     }
+    
+    
     
     
     public function get_pro_ship_two()
