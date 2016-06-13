@@ -12,6 +12,14 @@ if ($orderId) {
     foreach ($items as $item) { $categories = $item->getProduct()->getCategoryIds();
 ?>
       <script type="text/javascript">
+          alert(id+'<?php echo $item->getId(); ?>');
+          alert(catid+'<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>');
+          alert(price+'<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice(), true, false); ?>');
+          alert(quantity+'<?php echo $item->getQtyOrdered() ?>');
+          alert(name+'<?php echo $item->getName(); ?>');
+          alert(imageUrl+'<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail') ?>');
+          alert(link+'<?php echo $item->getProduct()->getProductUrl() ?>');
+          alert(brand+'<?php echo $item->getProduct()->getAttributeText('manufacturer'); ?>');
 var products[] = {
       id: "<?php echo $item->getId(); ?>", //required
       categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
