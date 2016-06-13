@@ -88,7 +88,7 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $current_local_time = strtotime(strftime('%X'));
        
         $cut_off_time = strtotime(strftime($config_cutt_off_time));
-        
+        var_dump($delivery_days);
         if($delivery_days!='' && $delivery_days == 0  && $current_local_time < $cut_off_time){
          
              $delivery_date = date('j F');
