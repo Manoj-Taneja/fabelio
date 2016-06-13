@@ -16,6 +16,16 @@
     <reference name="after_body_start">
       <block type="core/template" template="fabmod/ematics/cart.phtml" />
     </reference>
-  </checkout_cart_index>	
+  </checkout_cart_index>
+  <checkout_onepage_index>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ematics/checkout.phtml" />
+    </reference>
+  </checkout_onepage_index>
+  <checkout_onepage_success>
+    <reference name="after_body_start">
+      <block type="core/template" template="fabmod/ematics/success.phtml" />
+    </reference>
+  </checkout_onepage_success>	
 </layout>
 

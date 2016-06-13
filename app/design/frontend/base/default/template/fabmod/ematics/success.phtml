@@ -1,0 +1,51 @@
+<script>alert('success page overrided');</script>
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+if ($orderId) {
+    $order = Mage::getModel('sales/order')->loadByAttribute('increment_id', $orderId);
+?>
+<?php
+
+    if ($helper->isEmaticsEnabled()) {
+    $items = $order->getAllItems();
+    foreach ($items as $item) { $categories = $item->getProduct()->getCategoryIds();
+?>
+      <script type="text/javascript">
+//      mixpanel.people.track_charge('<?php echo $item->getProduct()->getFinalPrice(); ?>');
+//      mixpanel.track(
+//        "Product Purchased",
+//       {'Name': '<?php echo $item->getName(); ?>',       // Name or ID is required.
+//        'Id': '<?php echo $item->getId(); ?>',
+//        'Sku': '<?php echo $item->getSku(); ?>',
+//        'Selling Price': '<?php echo $item->getProduct()->getFinalPrice(); ?>',
+//        'Original Price': '<?php echo $item->getPrice(); ?>',
+//        <?php if($item->getManufacturer()!=''){ ?>  
+//         'Designer' : '<?php echo $item->getAttributeText('manufacturer'); ?>',
+//        <?php } ?>
+//        'Quantity' : '<?php echo $item->getQtyOrdered() ?>'
+//     }
+//      );
+
+var products[] = {
+      id: "<?php echo $item->getId(); ?>", //required
+      categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
+      transactionId: "",
+      price: "<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice(), true, false); ?>", //required
+      quantity: "<?php echo $item->getQtyOrdered() ?>", //required
+      name: "<?php echo $item->getName(); ?>", //required
+      brandName: "<?php echo $item->getProduct()->getAttributeText('manufacturer'); ?>", //required
+      desc: "",
+      imageUrl: "<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail') ?>", //required
+      link: "<?php echo $item->getProduct()->getProductUrl() ?>" //required
+  };
+      </script>
+<?php   
+} ?>
+      <script>
+      console.log(products);
+            
+      </script>
+      
+<?php } }
+?>

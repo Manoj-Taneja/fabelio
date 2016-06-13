@@ -10,14 +10,7 @@ $categories = $_product->getCategoryIds();
 ?>
 <script>    
 function fabmodEmaticAddToCart(){
-//  fbq('track', 'AddToCart', {
-//    content_name     : '<?php echo $_product->getName(); ?>',
-//    content_category : '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>',
-//    content_ids      : ['<?php echo $_product->getId(); ?>'],
-//    content_type     : 'product',
-//    value            : <?php echo $_product->getFinalPrice(); ?>,
-//    currency         : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>'
-//  });  
+    
 console.log(products);
 var current_product = [{
       id: "<?php echo $_product->getId() ?>", //required
