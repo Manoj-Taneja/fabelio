@@ -9,28 +9,31 @@ if ($orderId) {
 
     if ($helper->isEmaticsEnabled()) { echo "ematic enabled";
     $items = $order->getAllItems();
-    foreach ($items as $item) { echo "condition and loop successful";  $categories = $item->getProduct()->getCategoryIds();
+    foreach ($items as $item) { echo "condition and loop successful";  
+    $productSku = $item->getProduct()->getSku(); 
+$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+    $categories = $product->getCategoryIds();
 ?>
       <script type="text/javascript">
-          alert(id+'<?php echo $item->getId(); ?>');
+          alert(id+'<?php echo $product->getId(); ?>');
           alert(catid+'<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>');
           alert(price+'<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice(), true, false); ?>');
           alert(quantity+'<?php echo $item->getQtyOrdered() ?>');
           alert(name+'<?php echo $item->getName(); ?>');
-          alert(imageUrl+'<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail') ?>');
-          alert(link+'<?php echo $item->getProduct()->getProductUrl() ?>');
-          alert(brand+'<?php echo $item->getProduct()->getAttributeText('manufacturer'); ?>');
+          alert(imageUrl+'<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>');
+          alert(link+'<?php echo $product->getProductUrl() ?>');
+          alert(brand+'<?php echo $product->getAttributeText('manufacturer'); ?>');
 var products[] = {
       id: "<?php echo $item->getId(); ?>", //required
       categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
       transactionId: "",
-      price: "<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice(), true, false); ?>", //required
+      price: "<?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false); ?>", //required
       quantity: "<?php echo $item->getQtyOrdered() ?>", //required
       name: "<?php echo $item->getName(); ?>", //required
-      brandName: "<?php echo $item->getProduct()->getAttributeText('manufacturer'); ?>", //required
+      brandName: "<?php echo $product->getAttributeText('manufacturer'); ?>", //required
       desc: "",
-      imageUrl: "<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail') ?>", //required
-      link: "<?php echo $item->getProduct()->getProductUrl() ?>" //required
+      imageUrl: "<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>", //required
+      link: "<?php echo $product->getProductUrl() ?>" //required
   };
       </script>
 <?php   
