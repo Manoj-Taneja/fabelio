@@ -7,9 +7,9 @@ if ($orderId) {
 ?>
 <?php
 
-    if ($helper->isEmaticsEnabled()) {
+    if ($helper->isEmaticsEnabled()) { echo "ematic enabled";
     $items = $order->getAllItems();
-    foreach ($items as $item) { $categories = $item->getProduct()->getCategoryIds();
+    foreach ($items as $item) { echo "condition and loop successful";  $categories = $item->getProduct()->getCategoryIds();
 ?>
       <script type="text/javascript">
           alert(id+'<?php echo $item->getId(); ?>');
