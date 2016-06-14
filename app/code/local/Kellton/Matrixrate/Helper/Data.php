@@ -105,7 +105,7 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
          
             $delivery_date = date('j F',strtotime(strftime('%X').'+ 2 day'));
         }elseif($delivery_days=='' && $current_local_time < $cut_off_time ){
-            echo "5 \n";
+            
              $delivery_date = date('j F',strtotime(strftime('%X').'+ 1 day'));
         }elseif($delivery_days=='' && $current_local_time > $cut_off_time ){
          
