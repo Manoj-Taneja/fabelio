@@ -35,7 +35,7 @@ $aspect_ratio = Mage::getStoreConfig("porto_settings/category/aspect_ratio",$cod
 $ratio = ($aspect_ratio || (!$aspect_ratio && Mage::getStoreConfig("porto_settings/category/ratio_width",$code) == 0))?1:(Mage::getStoreConfig("porto_settings/category/ratio_height",$code)/Mage::getStoreConfig("porto_settings/category/ratio_width",$code));
 ?>
 <tr>
-    <td class="action-td"><a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2" onclick="return ematicShoppingCartItemRemoved(this);"></a></td>
+<!-- FAB-62 Ematic code starts -->    <td class="action-td"><a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2" onclick="if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){return ematicShoppingCartItemRemoved(this);}"></a></td> <!-- FAB-62 Ematic code ends -->
     <td class="pr-img-td"><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(80,80*$ratio); ?>" width="80" height="<?php echo 80*$ratio ?>" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></td>
     <td class="product-name-td">
         <h2 class="product-name">
