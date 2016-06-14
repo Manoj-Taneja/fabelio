@@ -24,7 +24,7 @@ var current_product = [{
       imageUrl: "<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>", //required
       link: "<?php echo $product->getProductUrl() ?>" //required
   }]; 
-console.log(current_product);
+//console.log(current_product);
 var product_already_exist_flag = 0;
 if(products!==null)
 {
@@ -42,7 +42,7 @@ if(products!==null)
 }
 //if(product_already_exist_flag==0 && products.length > 0){ alert("new product");products.push(current_product[0]);}
 if(product_already_exist_flag==0){products = current_product;}
-console.log(products); 
+//console.log(products); 
 ematics("log", "product", "cart", products);
 }
 jQuery(function($){

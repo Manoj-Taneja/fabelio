@@ -77,7 +77,7 @@ $session->setData("sessionCartDataArray", $cartProductArray);
             if(removed_product_name.indexOf(products[i]['name']) >= 0)
             {
                 products.splice(i,1);
-                console.log(products);
+                //console.log(products);
                 ematics("log", "product", "cart", products);
                 break;
             }
@@ -92,7 +92,7 @@ $session->setData("sessionCartDataArray", $cartProductArray);
             if(removed_product_name.indexOf(products[i]['name']) >= 0)
             {
                 products.splice(i,1);
-                console.log(products);
+                //console.log(products);
                 ematics("log", "product", "cart", products);
                 break;
             }
@@ -136,13 +136,13 @@ $session->setData("sessionCartDataArray", $cartProductArray);
                 if(jQuery(element).val()<=0)
 		{
 			products.splice(i,1);
-                	console.log(products);
+                	//console.log(products);
                 	ematics("log", "product", "cart", products);
 		}
 		else{
 			products[i]['quantity'] = jQuery(element).val();
                 	//alert(products[i]['quantity']);
-                	console.log(products);
+                	//console.log(products);
                 	ematics("log", "product", "cart", products);
                 	break;
 		}
@@ -161,7 +161,7 @@ $session->setData("sessionCartDataArray", $cartProductArray);
     }
     function ematicConvert(){
         //alert("place order clicked");
-        console.log(products);
+        //console.log(products);
 	//ematics("log", "product", "convert", products);
     }
   jQuery( document ).ready(function()  {
@@ -182,7 +182,7 @@ $session->setData("sessionCartDataArray", $cartProductArray);
             if(removed_product_name.indexOf(products[i]['name']) >= 0)
             {
                 products.splice(i,1);
-                console.log(products);
+                //console.log(products);
                 ematics("log", "product", "cart", products);
                 break;
             }
@@ -195,7 +195,7 @@ $session->setData("sessionCartDataArray", $cartProductArray);
             if(removed_product_name.indexOf(products[i]['name']) >= 0)
             {
                 products.splice(i,1);
-                console.log(products);
+                //console.log(products);
                 ematics("log", "product", "cart", products);
                 break;
             }
