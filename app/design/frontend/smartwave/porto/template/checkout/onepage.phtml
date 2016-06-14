@@ -29,18 +29,34 @@
 </div>
 <script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
-<ol class="opc" id="checkoutSteps">
+
+<ol class="opc accordion-main" id="checkoutSteps">
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-        <div class="step-title">
-            <span class="number"><?php echo $i ?></span>
-            <h2><?php echo $_stepInfo['label'] ?></h2>
-            <a href="#"><?php echo $this->__('Edit') ?></a>
+         <div class="panel panel-default panel-payment panel-payment-active">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+             <div class="col-sm-3 payment-label ">
+            
+                 <a href="#">
+            <?php echo $i ?>.
+     <?php if($_stepId=='login'):?>
+            Log in / Sign Up 
+            <?php else: ?>
+            <?php echo $_stepInfo['label'] ?>
+            <?php endif; ?>
+            <!--<a href="#"><?php //echo $this->__('Edit') ?></a>-->
+                 </a>
+           
+             </div>
+                 </h4>
         </div>
+        
         <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
             <?php echo $this->getChildHtml($_stepId) ?>
         </div>
+         </div>
     </li>
 <?php endforeach ?>
 </ol>

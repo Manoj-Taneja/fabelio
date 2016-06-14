@@ -31,81 +31,58 @@
 * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 */
 ?>
-<?php /* Extensions placeholder */ ?>
-<?php echo $this->getChildHtml('checkout.onepage.login.extra')?>
-<div class="col2-set">
-    <?php echo $this->getChildHtml('login_before')?>
-    <div class="col-1">
-        <h3><?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?><?php echo $this->__('Checkout as a Guest or Register') ?><?php else: ?><?php echo $this->__('Register to Create an Account') ?><?php endif; ?></h3>
-        <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-            <p><?php echo $this->__('Register with us for future convenience:') ?></p>
-        <?php else: ?>
-            <p><strong><?php echo $this->__('Register and save time!') ?></strong><br />
-            <?php echo $this->__('Register with us for future convenience:') ?></p>
-            <ul>
-                <li><?php echo $this->__('Fast and easy check out') ?></li>
-                <li><?php echo $this->__('Easy access to your order history and status') ?></li>
-            </ul>
-        <?php endif; ?>
-        <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-            <ul class="form-list">
-                <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-                <li class="control">
-                    <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" /><label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
-                </li>
-                <?php endif; ?>
-                <li class="control">
-                    <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" /><label for="login:register"><?php echo $this->__('Register') ?></label>
-                </li>
-            </ul>
-            <h4><?php echo $this->__('Register and save time!') ?></h4>
-            <p><?php echo $this->__('Register with us for future convenience:') ?></p>
-            <ul class="ul">
-                <li><?php echo $this->__('Fast and easy check out') ?></li>
-                <li><?php echo $this->__('Easy access to your order history and status') ?></li>
-            </ul>
-        <?php else: ?>
-            <input type="hidden" name="checkout_method" id="login:register" value="register" checked="checked" />
-        <?php endif; ?>
-        <div class="buttons-set">
-            <p class="required">&nbsp;</p>
-            <button type="button" class="button" onclick="checkout.setMethod();"><span><span><?php echo ($this->getQuote()->isAllowedGuestCheckout() ? $this->__('Continue') : $this->__('Register')) ?></span></span></button>
-        </div>
-    </div>
-    <div class="col-2">
-        <h3><?php echo $this->__('Login') ?></h3>
-        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post">
-        <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
-        <fieldset>
-            <h4><?php echo $this->__('Already registered?') ?></h4>
-            <p><?php echo $this->__('Please log in below:') ?></p>
-            <ul class="form-list">
-                <li>
-                    <label for="login-email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
-                    <div class="input-box">
-                        <input type="text" class="input-text required-entry validate-email" id="login-email" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" />
-                    </div>
-                </li>
-                <li>
-                    <label for="login-password" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
-                    <div class="input-box">
-                        <input type="password" class="input-text required-entry" id="login-password" name="login[password]" />
-                    </div>
-                </li>
-                <?php echo $this->getChildHtml('form.additional.info'); ?>
-            </ul>
-        </fieldset>
-        </form>
-        <div class="buttons-set">
-            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-            <button type="submit" class="button" onclick="onepageLogin(this)"><span><span><?php echo $this->__('Login') ?></span></span></button>
-            <a href="<?php echo $this->getUrl('customer/account/forgotpassword') ?>" class=""><?php echo $this->__('Forgot your password?') ?></a>
-        </div>
-    </div>
-</div>
 
-<?php echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
+<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <div class="accordion-inner-content">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <label>Dimulai dengan memasukkan email Anda!</label>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Masukkan email disini" />
+                  </div>
+                  <div class="form-group">
+                    <label class="forget-password-link hidden-lg hidden-md visible-xs" data-toggle="modal" data-target=".forgotpassord-checkout">Lupa Password Anda?</label>
+                  <a href="" class="chkbtn btn-checkout">Lanjutkan</a>
+                  <label class="forget-password-link hidden-xs visible-lg visible-md" data-toggle="modal" data-target=".forgotpassord-checkout">Lupa Password Anda?</label>
+                  </div>
+
+                </div>
+
+                <div class="hidden-lg hidden-md visible-xs mobile-divider">
+                  <span>Atau</span>
+                </div>
+
+                <div class="col-sm-4 border-left-checkout">
+                  <div class="form-group checkout-social-link">
+                    <p>Atau Anda juga bisa menggunakan akun Facebok, Twitter atau Google Anda untuk melanjutkan</p>
+                  </div>
+                  <div class="form-group"> <a href="" class="chkbtn btn-facebook">Login dengan Facebook</a> </div>
+                  <div class="form-group"> <a href="" class="chkbtn btn-twitter">Login dengan Twitter</a> </div>
+                  <div class="form-group"> <a href="" class="chkbtn btn-google">Login dengan Google</a> </div>
+                </div>
+              </div>
+              <div class="modal fade forgotpassord-checkout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <img src="images/icon-password-recover.svg" />
+                      <h2>Dapatkan password Anda kembali!</h2>
+                      <p>Anda hanya butuh memasukkan email Anda dibawah ini, dan kami akan mengirim email
+                        pentunjuk reset password langsung ke inbox Anda. </p>
+                      <input type="email" placeholder="Masukkan email Anda" class="form-control" />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="chkbtn btn-checkout btn-chk-forget">Kirimkan <i class="fa fa-arrow-right"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<?php //echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
 
 <script type="text/javascript">
 //<![CDATA[
