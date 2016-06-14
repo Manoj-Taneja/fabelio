@@ -804,6 +804,7 @@ class Mage_Checkout_Model_Type_Onepage
         $items = $order->getAllItems();
          $flatrate_model = Mage::helper('matrixrate');
         $fh = fopen("/tmp/orderid.txt","w");
+        $shipping_description_array = Mage::getSingleton('core/session')->getShippingDescription();
         foreach($items as $item)
         {
             $sku = $item->getSku();
@@ -816,14 +817,13 @@ class Mage_Checkout_Model_Type_Onepage
             $tableName = $resource->getTableName('sales_flat_order_item');
             $query = "update ".$tableName." set qty_stock='".$avail_qty."' where order_id=".$order->getEntityId()." and sku='".$sku."';";         
             $writeConnection->query($query);
-            
-            $shipping_description_array = Mage::getSingleton('core/session')->getShippingDescription();
-           if(count($shipping_description_array ) >0){
-            foreach($shipping_description_array as $key=>$val){
-                $shipping_details = $flatrate_model->get_delivery_type($val);
-                $qry_ubt = "update ".$tableName." set day_of_month ='".$shipping_details[0]['delivery_date']."', delivery_type='".$shipping_details[0]['delivery_type']."' where order_id=".$order->getEntityId()." and quote_item_id=".$key.";"; 
+            $quote_item_id = $item->getQuoteItemID();
+           if($shipping_description_array[$quote_item_id]!= ''){
+           
+                $shipping_details = $flatrate_model->get_delivery_type($shipping_description_array[$quote_item_id]);
+                $qry_ubt = "update ".$tableName." set day_of_month ='".$shipping_details[0]['delivery_date']."', delivery_type='".$shipping_details[0]['delivery_type']."' where order_id=".$order->getEntityId()." and quote_item_id=".$quote_item_id.";"; 
                 $writeConnection->query($qry_ubt);
-            }
+            
            }else{
                 $shipping_details = $flatrate_model->get_delivery_type();
               $qry_ubt = "update ".$tableName." set day_of_month ='".$shipping_details[0]['delivery_date']."', delivery_type='".$shipping_details[0]['delivery_type']."' where order_id=".$order->getEntityId()." and item_id=".$item->getID().";"; 
