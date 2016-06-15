@@ -631,7 +631,9 @@
     .price_align .old-price .price.msrp-price{margin-left: 2px;}.question-main{display:none !important}.question-main-mobile{background:url('/skin/frontend/smartwave/porto/images/help-modal-black.svg') no-repeat;height:20px;width:20px;background-size:20px;background-position:0 1px;top:1px;display:inline-block}.clickable{cursor:pointer}.question-lw-main{display:none !important}.mobile-pop-top li img{width:65px}.mobile-pop-top li{float:left;margin-right:18px;margin-bottom:10px}.mobile-pop-top .modal-body{display:table !important}.mobile-pop-top .modal-header .close{margin-top:-15px;font-size:27px;width:30px;border-radius:50%;height:30px;margin-right:-26px;background:#f3f3f3;opacity:1;font-weight:normal}.mobile-pop-top .modal-header{min-height:0;padding:0 15px;border-bottom:6px solid #ffd41c}.product-page-usp {margin-top: 15px;}
     
     /* FAB-70 code end */
-
+    /* FAB-178 code starts */
+    .page-artiharga .odd-block {padding: 0px 0 110px 0; } .odd-block img {margin: 0 auto 30px auto;display: inherit;}
+    /* FAB-178 code starts */
 }
 @media (min-width:768px) and (max-width:991px){
     .header-container.type3 .header .switcher-group{position:static;text-align:right;}
