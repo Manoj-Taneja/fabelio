@@ -1,0 +1,70 @@
+<?php
+/*
+ * Adding javascript include
+ */
+if ('front' != Mage::app()->getRequest()->getControllerName()) {
+    ?>
+    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/Ptech/ptech_multi_layer.js"></script> 
+    <?php
+}
+?>
+
+<?php if ($this->canShowBlock()): $state = $this->getStateInfo() ?>
+    <div class="block block-layered-nav">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Shop by') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <?php echo $this->getStateHtml() ?>
+            <?php if ($this->canShowOptions()): ?>
+                <?php
+                //echo "<pre>";
+                //print_r($state);
+                ?>
+                <div class="ptech-filter">
+                    <input type="hidden" id="ptech_multilayer_url" value="<?php echo $this->htmlEscape($state[0]) ?>"/>
+                    <input type="hidden" id="ptech_multilayer_params" value="<?php echo $this->htmlEscape($state[1]) ?>"/> 
+                    <input type="hidden" id="ptech_multilayer_ajax" value="<?php echo $this->htmlEscape($state[2]) ?>"/> 
+                    <dl id="ptech_filters_list">
+                        <?php if ($state[1] AND $this->bNeedClearAll()): ?>
+<!--                            <div class="actions ptech_multilayer_clear_all"><a class="ptech_multilayer_clearall" href="<?php echo $this->htmlEscape($this->getClearAllUrl()) ?>"><?php echo $this->__('Clear All') ?></a></div>            -->
+                        <?php endif ?>
+
+                        <?php $_filters = $this->getFilters() ?>
+                        <?php foreach ($_filters as $_filter): ?>
+                            <?php if ($_filter->getItemsCount() && $_filter->getName()!='Category'): ?>
+                                <dt class="ptech_multilayerdt">
+                                <?php if ($clearUrl = $_filter->getClearUrl()): ?>
+<!--                                    <a id="<?php echo $_filter->getVar() ?>-clear" <?php if (!$this->getIsRemoveLinks()): ?>href="<?php echo $this->htmlEscape($clearUrl) ?>" <?php endif; ?> class="btn-remove ptech_multilayer_clear" title="<?php echo $this->__('Remove This Item') ?>"><?php echo $this->__('Remove This Item') ?></a>-->
+                                <?php endif ?>
+                                <?php echo $this->__($_filter->getName()) ?>
+                                </dt>
+                                <dd <?php echo $this->getHeightStyle() ?> id="ptech_multilayer_init_<?php echo $_filter->getVar() ?>"><?php echo $_filter->getHtml() ?></dd>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </dl>
+                    <script type="text/javascript">
+                        decorateDataList('narrow-by-list');
+                        ptech_multilayer_init();
+                    </script>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="ptech_multilayer_filters" style="display:none"></div>
+    </div>
+<?php endif; ?>
+
+<script type="text/javascript">
+    ptech_multilayer_init();
+</script>
+
+
+
+
+
+
+
+
+
+
+
