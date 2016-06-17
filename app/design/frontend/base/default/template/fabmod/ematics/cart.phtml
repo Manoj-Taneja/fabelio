@@ -1,0 +1,25 @@
+<?php
+   $helper = Mage::helper("fabmod_mixpanel");
+   if ($helper->isEmaticsEnabled()) {
+   ?>
+<script type="text/javascript">
+   jQuery(function($){
+     var $cart = $('.cart');
+     $cart.on('change', '.qty-holder .qty', function(){ 
+       ematicUpdateCart(this);
+     });
+     $cart.on('click', '.table_qty_dec', function(){
+       ematicDecCart(this);
+     });
+     $cart.on('click', '.table_qty_inc', function(){
+       ematicIncCart(this);
+     });
+     $cart.on('click', '#empty_cart_button', function(){
+       ematicEmptyCart();
+     });
+     
+   })
+   
+   //]]>
+</script>
+<?php }
