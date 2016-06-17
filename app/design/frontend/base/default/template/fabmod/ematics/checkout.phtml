@@ -1,0 +1,8 @@
+<?php
+   $helper = Mage::helper("fabmod_mixpanel");
+   if ($helper->isEmaticsEnabled()) {
+   ?>
+<script type="text/javascript">
+   ematics("log", "product", "checkout", products);
+</script>
+<?php } ?>

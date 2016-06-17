@@ -57,11 +57,4 @@
         failure: '<?php echo $this->getUrl('checkout/cart') ?>'}
     );
 //]]>
-jQuery( document ).ready(function() {
-if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>')
-{
-    console.log(products);
-    ematics("log", "product", "checkout", products);
-} 
- });
 </script>
