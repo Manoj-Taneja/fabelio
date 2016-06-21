@@ -1,4 +1,6 @@
 <?php
+global $subcatList;
+$subcatList=array();
 $_categories = $this->getCurrentChildCategories();
 $_helper = Mage::helper("catalog/category");
 $rootCat = Mage::app()->getStore()->getRootCategoryId();
@@ -6,10 +8,17 @@ $current = Mage::registry('current_category');
 $category = $this->getCurrentCategory();
 $path = $category->getPath();
 $ids = explode('/', $path);
+if(count($ids)>4){
+    $topParentNew = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($ids[2]);
+    $_top_parent_sub_categoriesNew = $topParentNew->getChildrenCategories();
+    
+   $subcatList=$_top_parent_sub_categoriesNew;
+}
 
 if (isset($ids[2]))
 	{
 	$topParent = Mage::getModel('catalog/category')->setStoreId(Mage::app()->getStore()->getId())->load($ids[2]);
+    
 	}
   else
 	{
@@ -26,8 +35,10 @@ if ($topParent)
 	$url = $topParent->getUrl();
 	}
 
-$_top_parent = $name; ?>
+$_top_parent = $name; 
 
+    
+?>
 
 
 <?php
@@ -39,7 +50,9 @@ $_count = is_array($_categories) ? count($_categories) : $_categories->count(); 
 
 function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_parent_cat, $_current_cat)
 	{
+    
 	$_top_parent_sub_categories = $top->getChildrenCategories();
+   
 	$current = Mage::registry('current_category');
 	$name = $child->getName();
 	$url = $child->getUrl();
@@ -49,6 +62,7 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
     <li class="top-parent"><span class="mobile-prefix">Kategori</span> ' . $name . '</li>';
 	echo '</ul>';
 	if (count($_top_parent_sub_categories) > 0):
+    
 		$i = 1;
 		foreach($_top_parent_sub_categories as $_top_parent_sub_category):
 			if ($i == 1):
@@ -56,12 +70,17 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
 				if (count($top_parent_childs) > 0):
 					echo "
 <ul class='sub-parent-category'>";
+   
 				else:
 					echo "
     <ul class='sub-parent-category no-child-cat'>";
 				endif;
+    
+   
 			endif;
+    
 			$_top_parent_sub_category_child = $_top_parent_sub_category->getChildrenCategories();
+     
 			$_top_parent_sub_child_categories = $_top_parent_sub_category->getChildrenCategories();
 			if ($current->getID() == $_top_parent_sub_category->getID()):
 				$_current_class = "current";
@@ -80,7 +99,7 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
 				{
 				echo '<a class="sub-categories ' . $_current_class_font . '" href="' . $_helper->getCategoryUrl($_top_parent_sub_category) . '">' . $_top_parent_sub_category->getName() . '</a>';
 				}
-
+                
 			switch ($current->getID())
 				{
 			case $top->getID():
@@ -272,18 +291,17 @@ show_category_hierarchy($topParent, $_helper, $rootCat, $topParent, $_sub_sub_pa
 
 <?php 
 $subcategories = Mage::getModel('catalog/category')->getCategories($current->getId());
-foreach ($subcategories as $subcategory){
-     if($subcategory->hasChildren())
-     {
-         echo "<a href='".$_helper->getCategoryUrl($subcategory)."'>View All ".$subcategory->getName()." >></a><br>";
-         
-     }
-}
+                 global $subcatList;
+                if(count($subcatList)>1){
+                    foreach ( $subcatList as  $subcatL){ 
+                        echo '<a href="'.$subcatL->getUrl().'" class="">View All '.$subcatL->getName().' >></a><br/>';
+                    }
+                }
+                echo '<a href="'.$url.'" class="">View All '.$name.' >></a>';
+
 ?>
 
-                <a href="<?php
-echo $data[" url "]; ?>" class="">View All <?php
-echo $data["name"] ?> >></a>
+                
 
 
 

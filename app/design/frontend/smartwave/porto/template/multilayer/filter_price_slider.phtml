@@ -43,7 +43,7 @@
 
 <?php if ($to != $from) :?> 
 <?php //echo $this->__('Range:')?> 
-<span id="price_range_from<?php echo $this->_filter->getRequestVar()?>"><?php echo $this->getSymbol()?> <?php echo $from?></span><span id="price_range_to<?php echo $this->_filter->getRequestVar()?>"><?php echo $this->getSymbol()?> <?php echo $to?>+</span>
+<span id="price_range_from<?php echo $this->_filter->getRequestVar()?>"><?php echo Mage::helper('core')->currency($from, true, false);?></span><span id="price_range_to<?php echo $this->_filter->getRequestVar()?>"><?php echo Mage::helper('core')->currency($to, true, false);?>+</span>
 <script type="text/javascript">
     var slider = create_price_slider(<?php echo $width.', '.$firstOffset.', '.$secondOffset.', '.$min.', '.$max.',"'.$this->_filter->getRequestVar()?>");
 </script>
