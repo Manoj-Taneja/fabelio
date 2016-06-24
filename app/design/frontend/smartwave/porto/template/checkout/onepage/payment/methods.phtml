@@ -1,0 +1,246 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * One page checkout payment methods
+ *
+ * @var $this Mage_Checkout_Block_Onepage_Payment_Methods
+ */
+?>
+
+<?php
+    $methods = $this->getMethods();
+    $oneMethod = count($methods) <= 1;
+?>
+<div id="collapseFour" class="panel-collapse" role="tabpanel" aria-labelledby="headingFour">
+    <div class="panel-body">
+        <div class="accordion-inner-content">
+            <div class="form-group">
+                    <label>Pilih metode pembayaran Anda</label>
+                  </div>
+            
+            <div><!-- Payment Methods HTML-->
+                <ul class="nav nav-tabs bank-tabs" role="tablist">
+                <?php
+                    $i=1;
+                    foreach ($methods as $_method):
+                    $_code = $_method->getCode();
+                    //var_dump($_code);
+                ?>
+                     
+                    <?php if($_code=='vtweb'):?>
+                     <li class="payment_method" id="payment_method_vtweb" role="presentation" class="active" rel="<?php echo $_code; ?>"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                        <div class="col-sm-2 bank-main">
+                          <div class="bank-logo">
+                            <img src="<?php echo $this->getSkinUrl('images/icon-credit-card.svg'); ?>" />
+                          </div>
+                          <label>Kartu Kredit/Debit</label>
+                        </div>
+                      </a>
+                         
+                     </li>
+                    <?php endif; ?>
+                     
+                    <?php if($_code == 'banktransfer'): ?>
+                       <li class="payment_method" role="presentation" rel="<?php echo $_code; ?>"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" >
+                        <div class="col-sm-2 bank-main">
+                          <div class="bank-logo">
+                            <img src="<?php echo $this->getSkinUrl('images/icon-bank-transfer.svg'); ?>" />
+                          </div>
+                          <label>Bank Transfer</label>
+                        </div>
+
+                      </a>
+                      
+                       </li>
+                    <?php endif; ?>
+                      
+                      <?php if($_code == 'cashondelivery'):?>
+                      <li class="payment_method" role="presentation" rel="<?php echo $_code; ?>"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab" >
+                        <div class="col-sm-2 bank-main">
+                          <div class="bank-logo">
+                            <img src="<?php echo $this->getSkinUrl('images/icon-cod.svg'); ?>" />
+                          </div>
+                          <label>Cash On Delivery</label>
+                        </div>
+                      </a>
+                      
+                      </li>
+                      <?php endif; ?>
+                      
+                      <?php if($_code=='vtwebbni'): ?>
+                      <li class="payment_method" role="presentation" rel="<?php echo $_code; ?>"><a href="#Cicilan" aria-controls="settings" role="tab" data-toggle="tab" >
+                        <div class="col-sm-2 bank-main">
+                          <div class="bank-logo">
+                            <img src="<?php echo $this->getSkinUrl('images/icon-cicilan.svg'); ?>" />
+                          </div>
+                          <label>Cicilan 0%</label>
+                        </div>
+                      </a>
+                      
+                      </li>
+                     
+                      <?php endif; ?>
+                       <li style="display:none;"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->escapeHtml($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" /></li>
+                      <?php if($i==4):?>
+                      <?php break; endif;?>
+                    <?php $i++; ?>
+                      
+                <?php endforeach; ?>
+                </ul>
+            
+       
+<?php if (empty($methods)): ?>
+    <dt>
+        <?php echo $this->__('No Payment Methods') ?>
+    </dt>
+<?php else:?>
+    <div class="tab-content">
+        <?php
+    $j=1;
+    foreach ($methods as $_method):
+       // var_dump($_method);
+        $_code = $_method->getCode();
+?>
+    <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
+    
+        <?php echo $html; ?>
+    
+    <?php endif; ?>
+   <?php if($j==4):?>
+                      <?php break; endif;?>
+    
+    
+<?php $j++; endforeach;
+    endif;
+?>
+        <div role="tabpanel" class="tab-pane" id="Cicilan">
+                          <div class="bank-logo-inner">
+                            <p>
+                              Pilih program cicilan
+                            </p>
+                            <div class="bank-cicilan">
+                              <div class="bank-cicilan-inner" style="width:70%;">
+                                <label>Bank</label>
+                                <select class="">
+                                <option>Pilih bank Anda</option>
+                                <?php foreach($methods as $_method): ?>
+                                <?php $_code = $_method->getCode(); ?>
+                                <option value="<?php echo $_code; ?>"><?php echo $this->escapeHtml($_method->getTitle()) ?></option>
+                                <?php endforeach; ?>
+                                
+                                 
+                                </select>
+
+                              </div>
+                              <img src="<?php echo $this->getSkinUrl('images/bank-mandiri.png'); ?>" width="100" class="hidden-xs" />
+
+                              <div class="bank-cicilan-inner">
+                                <label style="width:35%;">Tenor</label>
+                                <select style="width:65%;">
+                                  <option>Pilih durasi cicilan Anda</option>
+
+                                </select>
+                              </div>
+                              <p>
+                                Silahkan pilih program cicilan Anda beserta waktu tenor yang tersedia.
+                              </p>
+
+                                <div class="payment-gate">
+                                <div class="payment-gate-image">
+                                <img src="<?php echo $this->getSkinUrl('images/sprint@2x.png'); ?>" width="50" />
+                              </div>
+                                <p>
+                                  Kami akan membawa Anda halaman website Sprint (www.sprint.co.id) setelah Anda
+                                  mengkonfirmasi pesananv ini. Kami akan segera menulis email untuk Anda setelah
+                                  Anda selesai melakukan transaksi.
+                                </p>
+                              </div>
+                            </div>
+                          <div class="bank-page-total">
+                            <div class="bank-page-inner">
+                              <label>Grand Total</label>
+                              <span>
+                                   <?php
+                                        $_coreHelper = Mage::helper('core');
+                                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                        $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                        echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                    ?>   
+                              </span>
+                            </div>
+
+                            <div class="bank-page-inner bank-lower-total">
+                              <label>Total Dibayarkan</label>
+                              <span>
+                                   <?php
+                                        $_coreHelper = Mage::helper('core');
+                                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                        $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                        echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                    ?>   
+                              </span>
+                            </div>
+                          </div>
+<!--                          <div class="checkout-item-button">
+                            <a href="" class="chkbtn btn-checkout">Konfirmasi Pesanan</a>
+                          </div>-->
+                        </div>
+                        </div>
+    </div>
+    </div>
+     </div>
+    </div>
+</div>    
+<?php echo $this->getChildChildHtml('additional'); ?>
+<script type="text/javascript">
+    //<![CDATA[
+    <?php echo $this->getChildChildHtml('scripts'); ?>
+    payment.init();
+    <?php if (is_string($oneMethod)): ?>
+    payment.switchMethod('<?php echo $oneMethod ?>');
+        <?php endif; ?>
+    //]]>
+    
+  jQuery(document).ready(function($){
+      
+     $(".bank-detail-check input[type=checkbox]").change(function(){
+        if($(this).is(":checked")){
+            $(this).parents('.bank-detail').addClass("whitebackground");
+        }else{
+            $(this).parents('.bank-detail').removeClass("whitebackground");
+        }
+    });
+    
+    $('li#payment_method_vtweb').addClass('active');
+    $('#p_method_vtweb').trigger('click');
+    $('.payment_method').click(function(){        
+       var p_code = $(this).attr('rel'); 
+       $('#p_method_'+p_code).trigger('click');
+    });
+ });
+</script>
