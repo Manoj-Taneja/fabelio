@@ -24,44 +24,61 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="page-title">
-    <h1><?php echo $this->__('Terima Kasih') ?></h1>
+
+
+<div class="success-main">
+
+  <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" Class="success-icon" alt="" />
+  <h4>Terima Kasih! Pesanan Anda berhasil!</h4>
+  <label>Nomor order Anda : <b><?php
+ // var_dump($this->getOrderId());
+  $lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+  //$order   = Mage::getModel('sales/order')->load($lastOrderId);
+  $orderId = Mage::getModel('sales/order')
+               ->loadByIncrementId($lastOrderId)
+               ->getEntityId();
+
+echo $lastOrderId;    
+
+  ?></b></label>
+  <p>
+    Jika Anda memiliki pertanyaan, silahkan email kami ke hello@fabelio.com atau hubungi kami di 021 1234 1234
+  </p>
+<div class="success-button">
+  <a href="<?php echo Mage::getBaseUrl();?>sales/order/view/order_id/<?php echo $orderId; ?>" class="success-order" >Lihat Order Anda </a>
+  <a href="<?php echo Mage::getBaseUrl();?>" class="success-home">Kembali ke Homepage</a>
 </div>
-<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<div class="form-wrap">
-    <h2 class="sub-title"><?php echo $this->__('Terima kasih atas pembelian Anda!') ?></h2>
 
-    <?php if ($this->getOrderId()):?>
-    <?php if ($this->getCanViewOrder()) :?>
-        <p><?php echo $this->__('Nomor pesanan Anda: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
-    <?php  else :?>
-        <p><?php echo $this->__('Nomor pesanan Anda: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
-    <?php endif;?>
-<p><?php echo $this->__('Customer Service Kemi Akan Menghubungi Anda.') ?></p>
-        <p><?php echo $this->__('Anda akan menerima email konfirmasi pemesanan berisi detail pemesanan Anda dan sebuah link untuk mengecek status pembelian.') ?></p>
-    <?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
-        <p>
-            <?php echo $this->__('Klik <a href="%s" onclick="this.target=\'_blank\'">disini</a> untuk mencetak lembar konfirmasi pemesanan Anda.', $this->getPrintUrl()) ?>
-            <?php echo $this->getChildHtml() ?>
-        </p>
-    <?php endif;?>
-    <?php endif;?>
+<!--<div class="success-social">
+  <label>Share belanjaan Anda!</label>
+  <img src="<?php echo $this->getSkinUrl('images/social-media-facebook.svg'); ?>" />
+  <img src="<?php echo $this->getSkinUrl('images/social-media-twitter.svg'); ?>" />
+</div>-->
 
-    <?php if ($this->getAgreementRefId()): ?>
-        <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
-    <?php endif;?>
 
-    <?php if ($profiles = $this->getRecurringProfiles()):?>
-    <p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
-    <ul class="disc">
-    <?php foreach($profiles as $profile):?>
-    <?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
-        <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
-    <?php endforeach;?>
-    </ul>
-    <?php endif;?>
+<div class="modal fade checkout-delete-main" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
 
-    <div class="buttons-set">
-        <button type="button" class="button" title="<?php echo $this->__('Lanjutkan Berbelanja') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Lanjutkan Berbelanja') ?></span></span></button>
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+        <img src="<?php echo $this->getSkinUrl('images/icon-delete.svg'); ?>" />
+        <label>Apakah Anda yakin ingin menghapus barang Lni?</label>
+        <h4>Batal</h4>
     </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" >Hapus</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+    </div>
+
+<!--<div class="page-title">
+    <h1><?php //echo $this->__('Terima Kasih') ?></h1>
+</div>-->
+<?php //echo $this->getMessagesBlock()->getGroupedHtml() ?>
+

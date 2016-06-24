@@ -24,6 +24,9 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php
+
+?>
 <div class="page-title">
     <h1><?php echo $this->__('Checkout') ?></h1>
 </div>
@@ -34,23 +37,85 @@
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-         <div class="panel panel-default panel-payment panel-payment-active">
-        <div class="panel-heading" role="tab" id="headingOne">
+        <div class="panel panel-default panel-payment  <?php if($this->getActiveStep()==$_stepId):?>panel-payment-active<?php endif;?>">
+        <div class="panel-heading " role="tab" id="headingOne">
+<!--            <div class="step-title">-->
             <h4 class="panel-title">
              <div class="col-sm-3 payment-label ">
             
                  <a href="#">
-            <?php echo $i ?>.
-     <?php if($_stepId=='login'):?>
-            Log in / Sign Up 
+                     <i class="fa fa-check-circle openaccord" id="completed-<?php echo $_stepId?>" style="display:none;"></i>
+                     <?php if($_stepInfo['allow'] && $this->getActiveStep()!=$_stepId): ?>
+            <i class="fa fa-check-circle openaccord"></i>
+            <?php endif; ?>
+            <?php
+            switch($_stepId){
+                case 'login':
+                    echo "1.";
+                    break;
+                case 'billing':
+                    echo "2.";
+                    break;
+                case 'review':
+                    echo "3.";
+                   break;
+                case 'payment':
+                    echo "4.";
+                    break;
+            }
+            ?>
+     <?php if($_stepId=='login'):?>   
+           
+            <?php echo $this->__('Log in / Sign Up'); ?>
             <?php else: ?>
             <?php echo $_stepInfo['label'] ?>
             <?php endif; ?>
+           
+            
+            
             <!--<a href="#"><?php //echo $this->__('Edit') ?></a>-->
                  </a>
            
              </div>
+                <?php if($this->isCustomerLoggedIn() && $_stepId=='login'):?>
+                <?php $customer = Mage::getSingleton('customer/session')->getCustomer();?>
+            <div class="col-sm-7 payment-email openaccord">
+              <label><?php echo $customer->getEmail(); ?></label>
+            </div>
+                <?php endif; ?>
+                <?php if($_stepId=='billing'):?>
+            <div class="col-sm-7 payment-email openaccord">
+                <label id="selected-address-name"></label><br>
+              <label id="selected-address-address"></label>
+            </div>
+                <?php endif; ?>
+            <?php if($_stepId=='review'):?>
+                <div class="col-sm-7 payment-email openaccord">
+                    <label id="cart_totals" style="display:none;">                        
+                <?php
+                    $_coreHelper = Mage::helper('core');
+                    $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                    $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                    echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                ?>   
+                        (<?php echo Mage::helper('checkout/cart')->getItemsCount(); ?> Barang)
+                    </label><br>
+<!--                  <label id="selected-address-address"></label>-->
+                </div>
+            <?php endif; ?>
+                <?php if($_stepInfo['allow'] && $this->getActiveStep()!=$_stepId): ?>
+                <div class="col-sm-2 payment-edit openaccord">
+
+                    <a class="payment-edit-btn" href="#"><?php echo $this->__('Edit') ?></a>
+            </div>
+                <?php endif; ?>
+                
+                <div class="col-sm-2 payment-edit openaccord" id="edit-completed-<?php echo $_stepId;?>" style="display:none;">
+
+                    <a class="payment-edit-btn" href="#"><?php echo $this->__('Edit') ?></a>
+            </div>
                  </h4>
+<!--            </div>--> 
         </div>
         
         <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
@@ -62,7 +127,7 @@
 </ol>
 <script type="text/javascript">
 //<![CDATA[
-    var accordion = new Accordion('checkoutSteps', '.step-title', true);
+    var accordion = new Accordion('checkoutSteps', '.panel-title', true);
     <?php if($this->getActiveStep()): ?>
     accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
     <?php endif ?>
@@ -76,8 +141,13 @@
 jQuery( document ).ready(function() {
 if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>')
 {
-    console.log(products);
+    //console.log(products);
     ematics("log", "product", "checkout", products);
 } 
+jQuery('#edit-completed-billing').click(function(){
+   jQuery('#opc-billing').find('div.panel-payment').addClass('panel-payment-active'); 
+});
  });
+ 
+
 </script>

@@ -138,6 +138,29 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
+    
+    
+    public function addressFormPostAction(){
+         if ($this->_expireAjax()) {
+            return;
+        }
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost('billing', array());
+            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
+
+            if (isset($data['email'])) {
+                $data['email'] = trim($data['email']);
+            }
+            $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
+            
+            echo "<pre>"; print_r($result); echo "</pre>";
+            exit;
+        }
+         
+
+    }
+    
     public function saveBillingAction()
     {
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
@@ -249,6 +272,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         }
         
             $post_array = $this->getRequest()->getPost();
+           // echo "<pre>"; print_r($post_array); echo "</pre>";
+           // exit;
             Mage::getSingleton('core/session')->unsShippingAmount();
             Mage::getSingleton('core/session')->unsShippingDescription();
             $return_array = array();
@@ -271,29 +296,71 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $grandtotal_final = 0;
             $grandtotal_final = $grandtotal + $shipping_amount;
             Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal);
-            $return_html ='<tr class="first">
-                                <td colspan="4" class="a-right" style="">Subtotal</td>
-                                <td class="a-right last" style="">
-                                    <span class="price">'.$_coreHelper->formatPrice($subtotal, false).'</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" class="a-right" style="">
-                                    Shipping &amp; Handling        </td>
-                                <td class="a-right last" style="">
-                                    '.$_coreHelper->formatPrice($shipping_amount, false).'    </td>
-                            </tr>
-                            <tr class="last">
-                            <td colspan="4" class="a-right" style="">
-                                <strong>Grand Total</strong>
-                            </td>
-                            <td class="a-right last" style="">
-                                <strong>'.$_coreHelper->formatPrice($grandtotal_final, false).'</strong>
-                            </td>
-                            </tr>';
+            
+            
+            $return_html .= '
+                  <div class="checkout-total-left">
+                    <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
+                    <div class="form-group  has-feedback">
+                    <input type="text" class="form-control" >
+                    <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
+                  </div>
+
+<!--                  <div class="form-group has-error has-feedback">
+                  <input type="text" class="form-control" >
+                  <i class="fa fa-close form-control-feedback" ></i>
+                </div>-->
+
+                  </div>
+                  <div class="checkout-total-right">
+                      <div class="checkout-total-inner">
+                        <label>Jumlah Belanjaan Anda</label>';
+            
+            $return_html .= '<span>'.$_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false).'</span>';
+         
+            if($shipping_amount > 0){
+            $return_html .='</div><div class="checkout-total-inner">
+                        <label>Ongkos Kirim</label>
+                        <span>'.$_coreHelper->formatPrice($shipping_amount, false).'</span>
+                      </div>';
+            }
+              $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+                $coupon_discount_amount = $totals["discount"]->getValue();
+         $return_html .= '<div class="checkout-total-inner checkout-discount">
+                        <label>Diskon Voucher</label>
+                        <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
+                      </div>';
+            $return_html .='<div class="checkout-total-inner g-total">
+                        <label>Grand Total</label>';
+            $return_html .= '<span>'.$_coreHelper->formatPrice($grandtotal_final, false).'</span>';            
+            
+            
+//            $return_html ='<tr class="first">
+//                                <td colspan="4" class="a-right" style="">Subtotal</td>
+//                                <td class="a-right last" style="">
+//                                    <span class="price">'.$_coreHelper->formatPrice($subtotal, false).'</span>
+//                                </td>
+//                            </tr>
+//                            <tr>
+//                                <td colspan="4" class="a-right" style="">
+//                                    Shipping &amp; Handling        </td>
+//                                <td class="a-right last" style="">
+//                                    '.$_coreHelper->formatPrice($shipping_amount, false).'    </td>
+//                            </tr>
+//                            <tr class="last">
+//                            <td colspan="4" class="a-right" style="">
+//                                <strong>Grand Total</strong>
+//                            </td>
+//                            <td class="a-right last" style="">
+//                                <strong>'.$_coreHelper->formatPrice($grandtotal_final, false).'</strong>
+//                            </td>
+//                            </tr>';
              $shipping_method_html = 'Shipping &amp; Handling - Express '.$_coreHelper->formatPrice($shipping_amount, false).' ';
              $return_array['subtotal_string']=$return_html;
              $return_array['shipping_method']=$shipping_method_html;
+             
+             $return_array['grand_total']=$_coreHelper->formatPrice($grandtotal_final, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
+             
              $return_array_string = json_encode($return_array);
             echo $return_array_string;
             exit;
@@ -452,6 +519,72 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         Mage::dispatchEvent('checkout_onepage_controller_success_action', array('order_ids' => array($lastOrderId)));
         $this->renderLayout();
     }
+    
+    
+    protected function _customerExists($email, $websiteId = null)
+    {
+        $customer = Mage::getModel('customer/customer');
+        if ($websiteId) {
+            $customer->setWebsiteId($websiteId);
+        }
+            $customer->loadByEmail($email);
+        if ($customer->getId()) {
+            return $customer;
+        }
+        return false;
+    }
+    
+    
+    public function customerexistAction(){     
+        
+        
+        if ($this->_expireAjax()) {
+            return;
+        }
+        try{
+            if (!$this->getRequest()->isPost()) {
+                $this->_ajaxRedirectResponse();
+                return;
+            }
+            
+             $data_post = $this->getRequest()->getPost('login',array());
+            
+             $result_data = $this->_customerExists($data_post['username'],1);
+             if(!$result_data){
+                 $result['success'] = false;
+                 $result['error'] = true;
+                 
+             }else{
+                 $result['success'] = true;
+                 $result['error'] = false;
+                 $result['email'] = $result_data->getEmail();
+             }
+            
+        }catch(Mage_Core_Exception $e){
+            $result['error'] = $e->getMessage();
+        }
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        
+    }
+    
+    
+        function couponAction() {
+
+                //$this->loadLayout(‘checkout_onepage_review’);
+
+                $this->couponCode = (string) $this->getRequest()->getParam('coupon_code');
+
+                Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+
+                Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode(strlen($this->couponCode) ? $this->couponCode : '')->collectTotals()->save();
+
+                $result['goto_section'] ='review';
+
+                //$result['update_section'] = array( ‘name’ => ‘review’, ‘html’ => $this->_getReviewHtml() );
+
+                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+
+        }
     
 }
 

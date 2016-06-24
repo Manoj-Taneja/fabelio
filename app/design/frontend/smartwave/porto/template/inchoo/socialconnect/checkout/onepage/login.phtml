@@ -31,7 +31,8 @@
 * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 */
 ?>
-
+<?php echo $this->getChildHtml('checkout.onepage.login.extra')?>
+<?php echo $this->getChildHtml('login_before')?>
 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
               <div class="accordion-inner-content">
@@ -39,14 +40,26 @@
                   <div class="form-group">
                     <label>Dimulai dengan memasukkan email Anda!</label>
                   </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Masukkan email disini" />
+                    <form name="email_form" id="email_form" action="javascript://" method="POST">
+                        <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+                        <input name="context" type="hidden" value="checkout" />
+                  <div class="form-group" id="form_group">
+                    <input type="text" required class="form-control required-entry validate-email" name="login[username]" id="login-email" placeholder="Masukkan email disini" />
+                    <input type="password" required style="display:none;" class="form-control required-entry" name="login[password]" id="login-password" placeholder="password" />
+                     <div class="email-error-show" style="display:none;">
+                         <label>Lupa password Anda? Klik disini </label>
+                    </div>
+
                   </div>
+                       
                   <div class="form-group">
+                      
                     <label class="forget-password-link hidden-lg hidden-md visible-xs" data-toggle="modal" data-target=".forgotpassord-checkout">Lupa Password Anda?</label>
-                  <a href="" class="chkbtn btn-checkout">Lanjutkan</a>
+                  <a href="javascript://" id="email_check_button" class="chkbtn btn-checkout">Lanjutkan</a>
+                  <a href="javascript://" id="email_login_button" class="chkbtn btn-checkout" style="display:none;">Lanjutkan</a>
                   <label class="forget-password-link hidden-xs visible-lg visible-md" data-toggle="modal" data-target=".forgotpassord-checkout">Lupa Password Anda?</label>
                   </div>
+                 </form>
 
                 </div>
 
@@ -54,30 +67,37 @@
                   <span>Atau</span>
                 </div>
 
-                <div class="col-sm-4 border-left-checkout">
+                <div class="col-sm-4 border-left-checkout" id="social_login">
                   <div class="form-group checkout-social-link">
                     <p>Atau Anda juga bisa menggunakan akun Facebok, Twitter atau Google Anda untuk melanjutkan</p>
                   </div>
-                  <div class="form-group"> <a href="" class="chkbtn btn-facebook">Login dengan Facebook</a> </div>
+<!--                  <div class="form-group"> <a href="" class="chkbtn btn-facebook">Login dengan Facebook</a> </div>
                   <div class="form-group"> <a href="" class="chkbtn btn-twitter">Login dengan Twitter</a> </div>
-                  <div class="form-group"> <a href="" class="chkbtn btn-google">Login dengan Google</a> </div>
+                  <div class="form-group"> <a href="" class="chkbtn btn-google">Login dengan Google</a> </div>-->
+                    <?php echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
+
                 </div>
               </div>
               <div class="modal fade forgotpassord-checkout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
+                   <div class="modal-dialog modal-sm" role="document">
+                       <form name="password_recover" id="password_recover" action="javascript://" method="POST">
                   <div class="modal-content">
                     <div class="modal-body">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <img src="images/icon-password-recover.svg" />
+                      <img src="<?php echo $this->getSkinUrl('images/icon-password-recover.svg');?>" />
                       <h2>Dapatkan password Anda kembali!</h2>
                       <p>Anda hanya butuh memasukkan email Anda dibawah ini, dan kami akan mengirim email
                         pentunjuk reset password langsung ke inbox Anda. </p>
-                      <input type="email" placeholder="Masukkan email Anda" class="form-control" />
+                      <input name="email" id="email_address" type="email" placeholder="Masukkan email Anda" class="form-control" />
+                      <div class="email-error-show" id="email-error-show" style="display:none;">
+                         <label>Lupa password Anda? Klik disini </label>
+                    </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="chkbtn btn-checkout btn-chk-forget">Kirimkan <i class="fa fa-arrow-right"></i></button>
+                      <button type="button" class="chkbtn btn-checkout btn-chk-forget" id="recover_password_button">Kirimkan <i class="fa fa-arrow-right"></i></button>
                     </div>
                   </div>
+                       </form>
                 </div>
               </div>
             </div>
@@ -85,7 +105,134 @@
 <?php //echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
 
 <script type="text/javascript">
-//<![CDATA[
+    //<![CDATA[ 
+    jQuery(document).ready(function($){
+        $("#email_check_button").click(function(){
+            //checkout.setMethod();
+            if($('#login-email').val()==''){
+               // $('#form_group').addClass('email-error');
+                $('#login-email').addClass('wrong-pass');
+              //  $('.email-error-show').html('<label>Enter Email Address</label>');
+               // $('.email-error-show').show();
+                return false;
+            }else{
+                $('#login-email').removeClass('wrong-pass');
+            }
+            
+            if(!isValidEmailAddress( $('#login-email').val() )){
+              //  $('#form_group').addClass('email-error');
+                $('#login-email').addClass('wrong-pass');
+              //  $('.email-error-show').html('<label>Enter valid Email Address</label>');
+              //  $('.email-error-show').show();
+                return false;
+            }else{
+                $('#login-email').removeClass('wrong-pass');
+            }
+        var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/customerexist";
+         $("#review_form").submit();
+            var form_data = $("#email_form").serialize();
+            $.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                   var return_data = $.parseJSON(result);
+                   if(return_data.success==false){
+                       var billing_post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveMethod";
+                       var data='method=register';
+                       $.ajax({
+                            url:billing_post_url,
+                            type:'POST',
+                            data:data,
+                            success: function(result){
+                                $('#checkout-step-billing').show();
+                                $('#checkout-step-login').hide();
+                            }
+                       });
+                   }else if(return_data.success==true){
+                       $('#login-email').hide();
+                       $('#login-password').show();
+                       $('#email_check_button').hide();
+                       $('#email_login_button').show();
+                       $('#social_login').hide();
+                       $('#email_login_button').click(function(){
+                           if($('#login-password').val()==''){
+                                $('#login-password').addClass('wrong-pass');
+                                $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                $('.email-error-show').show();
+                           }
+                       var login_post_url = <?php Mage::getBaseUrl();?>"/customer/account/loginPostAjax";
+                       var form_data = $("#email_form").serialize();                       
+                            $.ajax({
+                                url:login_post_url,
+                                type:'POST',
+                                data:form_data,
+                                success: function(result){
+                                    var result_data = $.parseJSON(result);
+                                    if(result_data.error==true){
+                                        $('#form_group').addClass('email-error');
+                                        $('#login-password').addClass('wrong-pass');
+                                        $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                        $('.email-error-show').show();
+                                    }else if(result_data.error==false){
+                                        location.reload();
+                                    }
+                                }
+                           });
+                       });
+                       
+                   }
+                }
+            });
+        });
+        
+        jQuery('#forgot-pass-pop').click(function(){
+            jQuery('.forgotpassord-checkout').show();
+        });
+        
+        jQuery('#recover_password_button').click(function(){
+            if($('#email_address').val()==''){
+               // $('#form_group').addClass('email-error');
+                $('#email_address').addClass('wrong-pass');
+               // $('.email-error-show').html('<label>Enter email address.</label>');
+                //$('.email-error-show').show();
+                return false;
+            }
+            if(!isValidEmailAddress( $('#email_address').val() )){
+               // $('#email_address').addClass('email-error');
+                $('#email_address').addClass('wrong-pass');
+                //$('#email-error-show').html('<label>Enter valid email address.</label>');
+               // $('#email-error-show').show();
+                return false;
+            }
+            var recover_pass_url = <?php Mage::getBaseUrl();?>"/customer/account/forgotPasswordPostAjax";
+            jQuery('#password_recover').submit();
+            var recover_pass_form_data = jQuery("#password_recover").serialize();
+            jQuery.ajax({
+                    url:recover_pass_url,
+                    type:'POST',
+                    data:recover_pass_form_data,
+                    success: function(result){
+                        var result_data = $.parseJSON(result);
+                        if(result_data.error==true){
+                            alert(result_data.message);
+                        }else{
+                            alert(result_data.message);
+                            jQuery('.forgotpassord-checkout').hide();
+                            jQuery('#password_recover').trigger('reset');
+                        }
+                        //$('#checkout-step-billing').show();
+                        //$('#checkout-step-login').hide();
+                    }
+               });
+        });
+        
+    });
+    function isValidEmailAddress(emailAddress) {
+        var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+        return pattern.test(emailAddress);
+    };
+
     var loginForm = new VarienForm('login-form', true);
     $('login-email').observe('keypress', bindLoginPost);
     $('login-password').observe('keypress', bindLoginPost);
@@ -101,5 +248,6 @@
             loginForm.submit();
         }
     }
+   
 //]]>
 </script>
