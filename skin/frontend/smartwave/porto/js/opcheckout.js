@@ -258,6 +258,10 @@ Checkout.prototype = {
             sectionElement = $('opc-' + section);
         }
        // alert('opc-' + section)
+       if(section=='billing'){
+          // jQuery('#opc-login').removeClass('panel-payment-active');
+           //jQuery('#opc-billing').addClass('panel-payment-active');
+       }
         if(section=='shipping'){
             section='review';
             jQuery('#checkout-step-review').show();
@@ -413,11 +417,11 @@ Billing.prototype = {
         if (transport && transport.responseText){
             try{
                // alert('Hi')
-                jQuery('#opc-billing').find('div.panel-payment-active').removeClass('panel-payment-active');
+                //jQuery('#opc-billing').find('div.panel-payment-active').removeClass('panel-payment-active');
                 jQuery('#completed-billing').show();
                 jQuery('#edit-completed-billing').show();
                 response = eval('(' + transport.responseText + ')');
-                jQuery('#opc-review').find('div.panel-payment').addClass('panel-payment-active');
+                //jQuery('#opc-review').find('div.panel-payment').addClass('panel-payment-active');
             }
             catch (e) {
                 response = {};
@@ -758,8 +762,8 @@ Payment.prototype = {
     },
 
     afterInit : function() {        
-                jQuery('#opc-review').find('div.panel-payment-active').removeClass('panel-payment-active');
-                jQuery('#opc-payment').find('div.panel-payment').addClass('panel-payment-active');
+                //jQuery('#opc-review').find('div.panel-payment-active').removeClass('panel-payment-active');
+                //jQuery('#opc-payment').find('div.panel-payment').addClass('panel-payment-active');
                 jQuery('#completed-review').show();
                 jQuery('#edit-completed-review').show();
                 jQuery('#cart_totals').show();
