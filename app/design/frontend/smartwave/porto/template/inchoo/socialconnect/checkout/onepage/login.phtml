@@ -35,6 +35,14 @@
 <?php echo $this->getChildHtml('login_before')?>
 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
+                <?php 
+                
+                $customer_session = Mage::getSingleton('customer/session'); 
+                $customer = $customer_session->getCustomer(); 
+                //var_dump($customer_session->isLoggedIn());
+                //echo "<pre>"; print_r($customer); echo "</pre>";
+                if(!$customer_session->isLoggedIn()):
+                ?>
               <div class="accordion-inner-content">
                 <div class="col-sm-8">
                   <div class="form-group">
@@ -100,6 +108,21 @@
                        </form>
                 </div>
               </div>
+                <?php else: ?>
+                <div class="accordion-inner-content">
+                <?php 
+                    $customer_data  = $customer->getData();
+                   // echo "<pre>"; print_r($customer_data); echo "</pre>";
+                ?>
+                    <div id="logged_in_as" class="logged-in-as">
+                        Logged in as <strong><?php echo $customer_data['email']; ?></strong>
+                    </div>
+                     <div id="sign_out" class="sign-out">
+                         <button type="button" class="chkbtn btn-checkout btn-chk-forget" id="logout_button">Logout</button> &nbsp; <a href="javascript://" id="checkout_continue" id="checkout-continue">Continue with checkout</a>
+                       
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
           </div>
 <?php //echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
@@ -225,6 +248,21 @@
                         //$('#checkout-step-login').hide();
                     }
                });
+        });
+        
+        
+        jQuery('#logout_button').click(function(){
+           var logout_url = "<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"; 
+           window.location = logout_url;
+        });
+        
+        jQuery('#checkout_continue').click(function(){
+           jQuery('#opc-login').removeClass('active');
+           jQuery('#opc-billing').addClass('allow');
+           jQuery('#opc-billing').addClass('active');
+           jQuery('#checkout-step-login').hide()
+           jQuery('#checkout-step-billing').show();
+           
         });
         
     });
