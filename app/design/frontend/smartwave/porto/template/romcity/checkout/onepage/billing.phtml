@@ -619,7 +619,8 @@
                });
           //  alert(jQuery(this).attr('rel'))
         });
-        jQuery('#new_address').click(function($){
+        
+        jQuery(document).on('click', '#new_address', function($){
             var error = 0;
            if(jQuery('#first_name').val()==''){
                jQuery('#first_name').addClass('wrong-pass');
@@ -683,7 +684,8 @@
                     }
                });
         });
-        jQuery('.delete_address').click(function(){
+        
+        jQuery(document).on('click', '.delete_address', function(){
           // jQuery(this).attr('rel');
            jQuery('#confirm_delete').attr('rel',jQuery(this).attr('rel'));
            jQuery('#confirm_delete').click(function(){
@@ -718,7 +720,8 @@
                });
            });
         });
-        jQuery('.checkout-box-inner-address').click(function(){
+        
+        jQuery(document).on('click', '.checkout-box-inner-address', function(){
             var elem_id = jQuery(this).attr('id');
             
            
