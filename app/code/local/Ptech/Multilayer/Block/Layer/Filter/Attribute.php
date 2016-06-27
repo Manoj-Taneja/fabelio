@@ -107,6 +107,7 @@ class Ptech_Multilayer_Block_Layer_Filter_Attribute extends Mage_Catalog_Block_L
             if ($this->getName() == "Color") {
                 $_filtersArray[] = $_html;
             } else {
+                $_htmlFilters .= 'data-id="' . $_item->getValueString() . '" ';
                 $_filtersArray[] = '<a ' . $_htmlFilters . '>' . $_item->getLabel().'<span>&nbsp;' . $qty. '</span></a>' ;
             }
         }
