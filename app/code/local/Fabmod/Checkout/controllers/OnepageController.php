@@ -271,9 +271,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             return;
         }
         
-            $post_array = $this->getRequest()->getPost();
-           // echo "<pre>"; print_r($post_array); echo "</pre>";
-           // exit;
+            $post_array = $this->getRequest()->getPost();           
             Mage::getSingleton('core/session')->unsShippingAmount();
             Mage::getSingleton('core/session')->unsShippingDescription();
             $return_array = array();
@@ -325,7 +323,9 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                       </div>';
             }
               $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+              if(isset($totals["discount"])){
                 $coupon_discount_amount = $totals["discount"]->getValue();
+                }
          $return_html .= '<div class="checkout-total-inner checkout-discount">
                         <label>Diskon Voucher</label>
                         <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
@@ -537,7 +537,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     public function customerexistAction(){     
         
-        
+       
         if ($this->_expireAjax()) {
             return;
         }
@@ -549,7 +549,10 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             
              $data_post = $this->getRequest()->getPost('login',array());
             
+             
+             
              $result_data = $this->_customerExists($data_post['username'],1);
+             
              if(!$result_data){
                  $result['success'] = false;
                  $result['error'] = true;
@@ -563,6 +566,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         }catch(Mage_Core_Exception $e){
             $result['error'] = $e->getMessage();
         }
+        
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         
     }
