@@ -67,7 +67,9 @@
 					<script type="text/javascript">
 						jQuery(function($){
 						var winWidht;
-                                                $('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+                                                function filterNavigationForAttribute()
+						{
+						$('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
                                                 var filterId, loc, keys = [];
                                                 var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
                                                 //layer //$('.ptech_multilayer_attribute').setAttribute('href','');
@@ -99,13 +101,18 @@
                                                         }
                                                         if(current_url.indexOf('manufacturer')> -1)
                                                         {
-                                                            if(current_url.indexOf(manufacturer)> -1)
-                                                            {
-                                                                var loc = current_url.replace(manufacturer,'');
-                                                            }
-                                                            else{
-                                                                var loc = current_url+"-"+manufacturer;
-                                                            }       
+                                                            for(i=0;i<keys.length;i++)
+						 	    {
+							    	if(current_url.indexOf(keys[i])> -1)
+                                                            	{
+                                                                	current_url = current_url.replace(keys[i],'');
+									//alert(current_url);
+                                                            	}
+                                                            	else{
+                                                                	current_url = current_url+"-"+keys[i];
+									//alert("else part"+current_url);
+                                                            	}
+							    } var loc =current_url;       
                                                         }
                                                         else
                                                         {    
@@ -131,13 +138,14 @@
                     //alert(loc);
 						
                                                 });
+						}
                                                 //manufacturer=167-230
                                                 // var filterUrl = '?'+ filterId
 					
 						function mobileFilter(){
 							winWidht = $(window).width();
 							if(winWidht < 767){
-							//layerNavigationForAttribute();
+							filterNavigationForAttribute();
 							$('.mobile-category').click(function(){
 									$('.mobile-links li').removeClass('active-filter');
 									$('.block.block-layered-nav, .shotby-mobile').hide();

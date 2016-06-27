@@ -53,3 +53,31 @@
 <?php endif;?> 
     </li>
 </ol>
+<script>
+jQuery(document).ready(function(){
+var winWidth = jQuery(window).width();
+if(winWidth <= 767){
+jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
+    //                                    winWidth = jQuery(window).width();
+      //                                  if(winWidth <= 767){
+					var parentOffset = jQuery(this).parent().offset(); 
+                                         //or $(this).offset(); if you really just want the current element's offset
+                                        var relX = e.pageX - parentOffset.left;
+                                        var relY = e.pageY - parentOffset.top;
+                                        var MinPrice = '<?php echo $from ?>';
+					var MaxPrice = '<?php echo $to ?>';
+					var parentWidth = jQuery(".block-layered-nav").width()-13;
+					alert(parentWidth);
+					var perPixelPrice = (MaxPrice-MinPrice)/parentWidth;
+					filteredPriceValue = (perPixelPrice*relX)+(perPixelPrice/2);
+					filteredPriceValue = 	parseInt(filteredPriceValue);
+				//	alert(filteredPriceValue);
+					jQuery('.handle-left').css('left',relX+'px');                                       
+	//				}
+					
+                                    });
+	jQuery('.clear-links a.clear-all').click(function(){
+	alert(filteredPriceValue);
+	});
+});
+</script>

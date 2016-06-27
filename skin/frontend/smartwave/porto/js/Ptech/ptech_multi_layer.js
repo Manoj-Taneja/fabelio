@@ -349,3 +349,16 @@ function calculateSliderPrice(width, from, to, min_price, max_price, value)
 
     return calculated;
 }
+$("#ptech_multilayer_price_sliderprice").click(function(e){
+
+                                        var parentOffset = $(this).parent().offset(); 
+
+                                         //or $(this).offset(); if you really just want the current element's offset
+
+                                        var relX = e.pageX - parentOffset.left;
+alert(relX);
+                                        var relY = e.pageY - parentOffset.top;
+
+                                        $('.handle-left').css('left',relX+'px');
+
+                                    });
