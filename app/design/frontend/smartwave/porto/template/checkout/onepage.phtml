@@ -37,7 +37,7 @@
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-        <div class="panel panel-default panel-payment  <?php if($this->getActiveStep()==$_stepId):?>panel-payment-active<?php endif;?>">
+        <div class="panel panel-default panel-payment">
         <div class="panel-heading " role="tab" id="headingOne">
 <!--            <div class="step-title">-->
             <h4 class="panel-title">
@@ -145,7 +145,7 @@ if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>')
     ematics("log", "product", "checkout", products);
 } 
 jQuery('#edit-completed-billing').click(function(){
-   jQuery('#opc-billing').find('div.panel-payment').addClass('panel-payment-active'); 
+  // jQuery('#opc-billing').find('div.panel-payment').addClass('panel-payment-active'); 
 });
  });
  
