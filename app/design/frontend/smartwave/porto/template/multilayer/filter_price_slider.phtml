@@ -82,7 +82,7 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
         var all_params_query_value = "<?php foreach ($_GET as $name => $value) {
                                                                                     echo $value.",";
                                                                                     } ?>";
-                                                   // alert(all_params_query_value);
+                                                   
 	if(all_params_query_name)
         {
         	if(all_params_query_name.indexOf('clearall') > -1)
@@ -90,22 +90,21 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
                     	current_url = current_url.substring(0, current_url.indexOf(search));
                 }
 		if(current_url.indexOf('price')> -1)
-		{ alert("price param found");
-			priceValues = current_url.substring(current_url.indexOf("price="));
-			alert(priceValues);		
+		{
+			priceValues = current_url.substring(current_url.indexOf("price="));		
 			current_url = current_url.replace(priceValues,'price='+filteredPriceValue+','+MaxPrice);
-			alert(current_url);
 		}
 	//	if(current_url.indexOf('manufacturer')> -1)
 	//	{
 			
 	//	}
 		else
-		{ alert("else part"); alert(filteredPriceValue); alert(current_url.indexOf('manufacturer'));
+		{
 			if(filteredPriceValue && current_url.indexOf('manufacturer')== -1){current_url = window.location.href+'?price='+filteredPriceValue+','+MaxPrice;}
-			if(filteredPriceValue && current_url.indexOf('manufacturer')> -1){alert("manufactured then price append in filter");current_url = window.location.href+'&price='+filteredPriceValue+','+MaxPrice; alert('final url:'+current_url);}
+			if(filteredPriceValue && current_url.indexOf('manufacturer')> -1){current_url = window.location.href+'&price='+filteredPriceValue+','+MaxPrice; }
 		}
 	}
+        jQuery("#filterSubmitUrl").val(current_url);
 	});
 }
 });
