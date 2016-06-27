@@ -819,7 +819,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                   <div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
                     <div class="form-group  has-feedback has-success" id="coupon_div">
-                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" value='.$this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode)).'/>
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" value="'.$this->__(Mage::helper('core')->escapeHtml($couponCode)).'/>
                     <i class="fa fa-check-circle form-control-feedback"></i>
                   </div>
 
