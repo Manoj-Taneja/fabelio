@@ -490,6 +490,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
     
     public function deleteAjaxAction()
     {
+        
         $id = (int) $this->getRequest()->getParam('id');
         if ($id) {
             try {
@@ -500,6 +501,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                 $result['html'] = $this->getUpdatedCartHtml();
                 $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
                 $grandtotal = round($totals["grand_total"]->getValue());
+                $_coreHelper = Mage::helper('core');
                 $result['grand_total']=$_coreHelper->formatPrice($grandtotal, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
                
             } catch (Exception $e) {
@@ -632,7 +634,9 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
          $html .= '<span>'.$_coreHelper->formatPrice($shipping_amount,false).'</span>';
          $html .= '</div>';
          $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+         if(isset($totals["discount"])){
                 $coupon_discount_amount = $totals["discount"]->getValue();
+         }
          $html .= '<div class="checkout-total-inner checkout-discount">
                         <label>Diskon Voucher</label>
                         <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
