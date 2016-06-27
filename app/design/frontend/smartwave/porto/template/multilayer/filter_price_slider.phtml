@@ -70,7 +70,7 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
 					var perPixelPrice = (MaxPrice-MinPrice)/parentWidth;
 					filteredPriceValue = (perPixelPrice*relX)+(perPixelPrice/2);
 					filteredPriceValue = 	parseInt(filteredPriceValue);
-				//	alert(filteredPriceValue);
+					alert(filteredPriceValue);
 					jQuery('.handle-left').css('left',relX+'px');                                       	
                                     });
 	jQuery('.clear-links a.clear-all').click(function(){
@@ -78,7 +78,7 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
 	var all_params_query_name = "<?php foreach ($_GET as $name => $value) {
                                                                                     echo $name.",";
                                                                                     } ?>";
-                                                   // alert(all_params_query_name);
+                                                   
         var all_params_query_value = "<?php foreach ($_GET as $name => $value) {
                                                                                     echo $value.",";
                                                                                     } ?>";
@@ -103,12 +103,9 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
 		else
 		{ alert("else part"); alert(filteredPriceValue); alert(current_url.indexOf('manufacturer'));
 			if(filteredPriceValue && current_url.indexOf('manufacturer')== -1){current_url = window.location.href+'?price='+filteredPriceValue+','+MaxPrice;}
-			if(filteredPriceValue && current_url.indexOf('manufacturer')> -1){alert("manufactured then price append in filter");current_url = window.location.href+'&price='+filteredPriceValue+','+MaxPrice;}
+			if(filteredPriceValue && current_url.indexOf('manufacturer')> -1){alert("manufactured then price append in filter");current_url = window.location.href+'&price='+filteredPriceValue+','+MaxPrice; alert('final url:'+current_url);}
 		}
 	}
-//	var current_url = window.location.href+'?price='+filteredPriceValue+','+MaxPrice;
-	jQuery(this).attr('href', current_url);
-//	window.refresh();
 	});
 }
 });
