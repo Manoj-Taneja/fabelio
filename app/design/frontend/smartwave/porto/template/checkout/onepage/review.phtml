@@ -239,7 +239,8 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
-        $('#go_payment').click(function(){
+       // $(document).on("click", "#go_payment", function(){});
+        $(document).on("click", "#go_payment", function(){
             $(this).hide();
             $('#review-please-wait').show();
             var attr_id=$(this).attr('rel');
@@ -266,7 +267,7 @@
         })
         
         
-       $('input[type=radio]').click(function(){
+       $(document).on("click", "input[type=radio]", function(){
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
@@ -286,12 +287,12 @@
             });
         })
         
-        $('.delete-item').click(function(){
+        $(document).on("click", ".delete-item", function(){
            var product_id = $(this).attr('rel');
            $('#delete_item').val(product_id);
         });
         
-        $('#delete_confirm').click(function(){
+        $(document).on("click", "#delete_confirm", function(){
            var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/deleteAjax";
            var form_data = "id="+$('#delete_item').val();
            $.ajax({
