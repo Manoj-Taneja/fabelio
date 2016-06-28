@@ -163,6 +163,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     public function saveBillingAction()
     {
+        //echo "<pre>"; print_r($_POST); echo "</pre>";
+        //exit;
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
             parent::saveBillingAction();
             return;
@@ -229,6 +231,67 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
+    
+    
+    
+    public function saveBillingAjaxAction()
+    {
+        //echo "<pre>"; print_r($_POST); echo "</pre>";
+        //exit;
+        if (!Mage::helper('fabmod_checkout')->getHideShipping()){
+            parent::saveBillingAction();
+            return;
+        }
+
+        if ($this->_expireAjax()) {
+            return;
+        }
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost('billing', array());
+            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
+            //$data['email'] = "as@gh.com";
+            if (isset($data['email'])) {
+               $data['email'] = trim($data['email']);
+                
+            }
+            if (isset($data['street'])) {
+               $data['street'] = trim($data['street']);
+                
+            }
+            //echo "<pre>"; print_r($data); echo "</pre>";
+            
+            $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
+           // echo "<pre>"; print_r($result); echo "</pre>";
+            //exit;
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+//            var_dump($customer);
+//            foreach ($customer->getAddresses() as $address):
+//                        $data = $address->toArray();
+//                        echo "<pre>"; print_r($data); echo "</pre>";
+//                        
+//            endforeach;
+//            exit;
+            if (!isset($result['error'])) {
+                $result['error']=false;
+                $result['success']=true;
+                $result['firstname'] = $data['firstname'];
+                $result['lastname'] = $data['lastname'];
+                $result['city'] = $data['city'];
+                $result['country_id'] = $data['country_id'];
+                $result['telephone'] = $data['telephone'];
+                $result['region'] = $data['region'];
+                $result['region_id'] = $data['region_id'];
+                $result['street'] = $data['street'];
+                 
+                
+            }
+
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        }
+    }
+    
+    
+    
     public function saveShippingAction()
     {
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
