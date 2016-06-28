@@ -66,11 +66,9 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
                                         var MinPrice = '<?php echo $from ?>';
 					MaxPrice = '<?php echo $to ?>';
 					var parentWidth = jQuery(".block-layered-nav").width()-13;
-					alert(parentWidth);
 					var perPixelPrice = (MaxPrice-MinPrice)/parentWidth;
 					filteredPriceValue = (perPixelPrice*relX)+(perPixelPrice/2);
 					filteredPriceValue = 	parseInt(filteredPriceValue);
-					alert(filteredPriceValue);
 					jQuery('.handle-left').css('left',relX+'px');                                       	
                                     });
 	jQuery('.clear-links a.clear-all').click(function(){
@@ -82,7 +80,13 @@ jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
         var all_params_query_value = "<?php foreach ($_GET as $name => $value) {
                                                                                     echo $value.",";
                                                                                     } ?>";
-                                                   
+        if(filteredPriceValue == null)
+	{
+		var priceParam = "<?php echo $_GET['price']; ?>";
+		var priceArray = priceParam.split(",");
+		filteredPriceValue = priceArray[0];
+		MaxPrice = priceArray[1];
+	}                                           
 	if(all_params_query_name)
         {
         	if(all_params_query_name.indexOf('clearall') > -1)
