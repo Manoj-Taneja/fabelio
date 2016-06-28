@@ -38,7 +38,7 @@
                     <?php // Product Image  
                     /* MANGOEXTENSIONS */
                     /* CHANGE THE SOURCE OF THE PRODUCT IMAGE TO CHANGE ACCORDING TO THE LAYERED NAVIGATION */
-                    ?>
+                    ?>              
                     <a href="<?php echo $_swatches["product_url"] ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <?php
                         if(Mage::getStoreConfig("porto_settings/category/alternative_image", $code)){
@@ -191,16 +191,6 @@
         
             <li class="item">
               <div class="item-area">
-                <div class="price-discount-percentage">
-                <?php
-                  $_finalPrice=$_product->getFinalPrice();
-                  $_price=$_product->getPrice();
-                  if($_finalPrice < $_price){
-                    $_savePercent = 100 - round(($_finalPrice / $_price)*100);
-                    echo '<span class="perc-text">'.$_savePercent.'</span>';
-                  }
-                ?>
-                </div>
                 <div class="product-image-area">
                     <?php
                     if( Mage::getStoreConfig("quickview/general/enableview", $code) ){
@@ -216,7 +206,7 @@
                             $base_url .= "quickview/index/view/";
                         }
                         $quickview_url = $base_url."id/".$_product->getId();
-                        ?>
+                        ?>             
                         <a href="<?php echo $quickview_url; ?>" class="quickview-icon"><i class="icon-export"></i><span><?php echo $this->__("Quick View"); ?></span></a>
                     <?php
                     }
@@ -225,6 +215,8 @@
                         /* MANGOEXTENSIONS */
                         /* CHANGE THE SOURCE OF THE PRODUCT IMAGE TO CHANGE ACCORDING TO THE LAYERED NAVIGATION */
                         ?>
+                        <div class="logo-over-image" data-click-state="0"></div>
+                        <div class="logo-over-content"><label>Produk pilihan Fabelio</label></div>
                     <a href="<?php echo $_swatches["product_url"] ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <?php
                         if(Mage::getStoreConfig("porto_settings/category/alternative_image", $code)){
@@ -281,8 +273,7 @@
                         }
                     ?>
                 </div>
-                <div class="details-area">
-                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                <div class="details-area item-detail-lat">                    
                     <?php
                     if($_product->getTypeId() == 'configurable') {
                       $_swatches_ids = array();
@@ -315,14 +306,20 @@
                         // FAB-83 code start
                           echo '<li><a href="'.$_product->getProductUrl().'#'.$attributeId.'='.$ps['option_id'].'"><img class="tooltip" src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></a></li>';
                         // FAB-83 code end
-                          if(++$cnt > 5) break;
+                          // FAB-65 swatch limit change to 7
+                          if(++$cnt > 7) break;
                       }
-                      if(count($_options)>5){
-                        echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
-                      }
+//                      if(count($_options)>7){
+//                        echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
+//                      }
+// FAB-65 swatch limit change to 7
+                      echo '<li class="more-swatches" options="'.count($_options).'"><a href="'.$_product->getProductUrl().'">More</a></li>';
                       echo '</ul>';
+                    }else{
+			echo '<ul class="fabric-color-swatches clearfix"><li></li></ul>';
                     }
                     ?>
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                     <?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                     <?php else: ?>
@@ -408,6 +405,54 @@
             jQuery('.col-main .products-grid li:nth-child(7n+1)').addClass('nth-child-7np1');
             jQuery('.col-main .products-grid li:nth-child(8n)').addClass('nth-child-8n');
             jQuery('.col-main .products-grid li:nth-child(8n+1)').addClass('nth-child-8np1');
+    
+    jQuery(document).ready(function(){
+				manageSwatches();
+			});
+			jQuery(window).resize(function() {
+				manageSwatches();
+			});
+			
+			function manageSwatches(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>780){
+					jQuery(".show-mobile-more-swatches").addClass("hide");
+					jQuery(".nth-child-4n").removeClass("hide");
+					jQuery(".nth-child-5n").removeClass("hide");
+					jQuery(".nth-child-6n").removeClass("hide");
+					jQuery(".nth-child-7n").removeClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).removeClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>5){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}else{
+					jQuery(".nth-child-4n").addClass("hide");
+					jQuery(".nth-child-5n").addClass("hide");
+					jQuery(".nth-child-6n").addClass("hide");
+					jQuery(".nth-child-7n").addClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>3){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}
+			}
+   
         </script>
     <?php endif; ?>
 
@@ -416,3 +461,23 @@
     </div>
 </div>
 <?php endif; ?>
+<script>
+    jQuery(document).ready(function($){
+       $('.logo-over-image').on('click',function(){
+           if($(this).attr('data-click-state') == 0) {
+		  $(this).attr('data-click-state', 1);
+             $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close.svg")'); 
+          $(this).next('.logo-over-content').css('display','block');
+         
+        }else{
+            
+            $(this).attr('data-click-state', 0); 
+           $(this).removeAttr('style');
+          $(this).next('.logo-over-content').css('display','none');
+          
+        }
+          
+       }); 
+        
+    });
+</script>

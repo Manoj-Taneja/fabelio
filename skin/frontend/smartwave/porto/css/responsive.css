@@ -1120,6 +1120,9 @@
 /* FAB-178 css starts */
 .mob-tetangga-step{display:block}.page-artiharga .tetangga-step{display:none}.disc-block .container p{width:100%}.page-artiharga .odd-block{padding:0px 0px 50px 0px}.page-artiharga .odd-block img{max-width:100%;margin-bottom:40px}.mob-tetangga-step #main-slider{padding:0 30px;margin-bottom:60px}.page-artiharga .number{float:left;margin-right:20px}.mob-tetangga-step .detail p{margin-top:10px}.mob-tetangga-step .detail{margin-top:30px}.page-artiharga .container{padding:0 15px}.page-artiharga .odd-block h2,.page-artiharga .block-one h2{font-size:16px}.mob-tetangga-step h2{font-size:16px;font-weight:700;padding:0 20px;margin-bottom:40px}.mob-tetangga-step .owl-theme .owl-controls .owl-buttons div{position:absolute;top:55px;left:0px;background:transparent;color:#757575;font-size:40px;opacity:1;padding:0}.mob-tetangga-step .owl-theme .owl-controls .owl-buttons div.owl-next{right:0px;left:auto}.mob-tetangga-step .owl-item .item img{max-width:80%;margin:0 auto;display:inherit}.page-artiharga .number{width:40px;height:40px;line-height:40px;font-size:25px}.mob-tetangga-step .heading{display:table-row;width:100%}.mob-tetangga-step .heading h3{display:table-cell;vertical-align:middle}
 /* FAB-178 css ends */
+/* FAB-65 css code starts */
+.logo-over-image{background-size:60% !important;right:-5px;background-repeat:no-repeat !important}.toolbar{display:none}.page-title.category-title{display:none}.col-main .category-products .products-grid li.item .details-area{padding:10px !important}.logo-over-content label{padding:0 5px;height:auto;text-align:center}.logo-over-content{right:35px}.item-detail-lat h2{padding:0 10px}.rrp-lat{font-size:12px}.msrp-lat{font-size:12px !important}.dis-div .old-price-lat span.price.original-price{font-size:12px}.perc-text-lat{font-size:12px !important}
+/* FAB-65 css code ends */
 }
 
 @media (max-width:640px){
