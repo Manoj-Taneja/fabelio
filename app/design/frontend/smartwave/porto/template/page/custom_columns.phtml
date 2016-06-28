@@ -72,28 +72,17 @@
 						jQuery('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
                                                 var filterId, loc, keys = [];
                                                 var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
-                                                //layer //$('.ptech_multilayer_attribute').setAttribute('href','');
                                                 jQuery('.ptech_multilayer_attribute').attr('href','javascript:void(0);')   
-
                                                 jQuery('.ptech_multilayer_attribute').click(function(){
                                                     jQuery(this).toggleClass('ptech_multilayer_attribute_selected');
                                                     filterId = jQuery(this).attr('data-id');
-                                                   // keys.push(filterId.slice("13"));
                                                     keys = jQuery.unique(keys); 
-                                                    
-                                                    
                                                     var found = jQuery.inArray(filterId, keys);
-                                                    console.log("found= "+found);
                                                     if (found >= 0) {
-                                                    // Element was found, remove it.
                                                         keys.splice(found, 1);
                                                     } else {
-                                                    // Element was not found, add it.
                                                         keys.push(filterId); 
                                                     } 
-                                                    
-                                                    
-                                                    console.log(keys);
                                                 });   
                                                 jQuery('.clear-links a.clear-all').click(function(){
                                                     var all_params_query_name = "<?php foreach ($_GET as $name => $value) {
@@ -130,7 +119,7 @@
                                                         }
                                                         else
                                                         {    
-                                                            var loc = current_url+'?manufacturer='+manufacturer;
+                                                            	if(manufacturer)var loc = current_url+'?manufacturer='+manufacturer;
                                                         }
                                                     }
                                                     else
@@ -141,7 +130,7 @@
                                                         }
                                                         else
                                                         {    
-                                                           var loc = current_url+'?manufacturer='+manufacturer;
+                                                          	if(manufacturer)var loc = current_url+'?manufacturer='+manufacturer;
                                                         }
                                                     }    
                                                         jQuery(this).attr('href', loc);
