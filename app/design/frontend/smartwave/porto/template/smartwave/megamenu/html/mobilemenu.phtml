@@ -1,5 +1,5 @@
 <?php $menuHelper = Mage::helper('megamenu'); ?>
-<div class="mobile-nav side-block container">
+<div class="mobile-nav side-block container mobile-nav-lat">
     <div class="menu-all-pages-container">
         <ul class="menu">
             <?php //echo $menuHelper->getMobileMenuContent(); ?>
@@ -413,6 +413,32 @@
           <a class="level1" href="http://fabelio.com/must-have"><span>Must Have</span></a>
 </li>
 
+<li class="menu-item menu-item-has-children menu-parent-item mobile-nav-divider">
+          <a class="level1" href=""><span></span></a>
+</li>
+
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+          <a class="level1" href="<?php echo Mage::helper('customer')->getLoginUrl();?>"><span>Login In/Register</span></a>
+</li>
+
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+          <a class="level1" href=""><span>Hubungi kami di (021)22775029</span></a>
+</li>
+
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+          <a class="level1" href=""><span>Showroom Kami</span></a>
+</li>
+
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+          <a class="level1" href=""><span>Free Design Services</span></a>
+</li>
+
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+     <a class="level1" href="">
+         <input type="text" placeholder="Cari barang atau kategori" class="search-mobile-view" />
+     </a>
+</li>
+
 <!--
 <li class="menu-item menu-item-has-children menu-parent-item ">
 <a href="http://fabelio.com/living-room.html">Living Room</a>
@@ -454,5 +480,7 @@
         <a href="/blog/fabelio-style-inspiration/">Style Inspiration</a>
     </li> --> 
         </ul>
+        
+        
     </div>
-</div>  
+</div>

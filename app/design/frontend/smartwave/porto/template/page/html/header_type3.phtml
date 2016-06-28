@@ -26,7 +26,7 @@
 }
 </style>
 <div class="header-container type3">
-    <div class="top-links-container">
+    <div class="top-links-container top-links-container-lat">
         <div class="top-links container">
             <?php
                 $store_currency = $this->getChildHtml('store_currency');
@@ -66,10 +66,14 @@
             <div class="clearer"></div>
         </div>
     </div>
+    
     <div class="header container">
+        <div class="menu-icon" data-menu-click="0"><a href="javascript:void(0)"><img src="/skin/frontend/smartwave/porto/images/menu-icon.svg" class="menu-icon-mobile" /></a></div>
         <?php if ($this->getIsHomePage()):?>
+        
         <h1 class="logo"><strong><?php echo $this->getLogoAlt(); ?></strong><a href="<?php echo $this->getUrl(''); ?>" title="<?php echo $this->getLogoAlt(); ?>" class="logo"><img src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>" /></a></h1>
         <?php else:?>
+
         <a href="<?php echo $this->getUrl(''); ?>" title="<?php echo $this->getLogoAlt(); ?>" class="logo"><strong><?php echo $this->getLogoAlt(); ?></strong><img src="<?php echo $this->getLogoSrc(); ?>" alt="<?php echo $this->getLogoAlt(); ?>" /></a>
         <?php endif; ?>
         <div class="cart-area">
@@ -79,13 +83,26 @@
             </div>
             <?php echo $this->getChildHtml('minicart'); ?>
         </div>
-        <div class="search-area">
+<!--        <div class="search-area">
             <a href="javascript:void(0);" class="search-icon"><i class="icon-search"></i></a>
             <?php echo $this->getChildHtml('topSearch'); ?>
-        </div>
-        <div class="menu-icon"><a href="javascript:void(0)"><i class="fa fa-bars"></i></a></div>
+        </div>-->
+        
         <?php echo $this->getChildHtml("demo_header_tooltip"); ?>
     </div>
+    <div class="mobile-view-usp">
+        <div class="mobile-view-usp-left">
+            <span>
+            <img src="/skin/frontend/smartwave/porto/images/mobile-navbar-pengiriman-gratis.svg" />
+            </span>
+            <label>Pengiriman Gratis</label>
+        </div>
+        <div class="mobile-view-usp-right">
+            <span><img src="/skin/frontend/smartwave/porto/images/mobile-navbar-30-hari.svg"></span>
+            <label>30 Hari Masa Perkenalan</label>
+        </div>        
+    </div>
+    
     <div class="header-usp">
       <div class="container">
         <ul class="usp-features">
@@ -122,3 +139,21 @@
     <?php echo $this->getChildHtml('topMenu') ?>
 </div>
 <?php echo $this->getChildHtml('mobile.nav') ?>
+
+<script>
+    jQuery(document).ready(function(){
+       jQuery('.menu-icon').click(function(){
+if(jQuery(this).attr('data-menu-click') == 0){
+jQuery(this).attr('data-menu-click', 1);
+jQuery(this).find('img').attr('src','/skin/frontend/smartwave/porto/images/close-button.svg');
+}
+else{
+jQuery(this).attr('data-menu-click', 0);
+jQuery(this).find('img').attr('src','/skin/frontend/smartwave/porto/images/menu-icon.svg');
+}
+
+}); 
+        
+    });
+    
+</script>
