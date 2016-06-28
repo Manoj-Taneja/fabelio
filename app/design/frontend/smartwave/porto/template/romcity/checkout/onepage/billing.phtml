@@ -57,7 +57,7 @@
                     <div class="checkout-box-inner">
                       <div class="checkout-plus-icon-main">
                       <div class="checkout-plus-icon" data-toggle="modal" data-target="#myAddress">
-                          <img src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
+                          <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
                       </div>
                     </div>
                       <label>Tambah Alamat Baru </label>
@@ -102,6 +102,15 @@
                               <input type="text" name="billing[lastname]" id="last_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan nama Belakang" value="<?php echo $data['lastname'];?>" />
                           </div>
                           </div>
+                          
+                          
+                          
+                          
+                          
+                          <input type="text" name="billing[email]" id="billing:email"
+                                               value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
+                                               title="<?php echo $this->__('Email Address') ?>"
+                                               class="input-text validate-email required-entry format_method_email"/>
 
                           <div class="checkout-form-popup-main">
 
@@ -170,7 +179,7 @@
                     <div class="checkout-box-inner">
                       <div class="checkout-plus-icon-main">
                       <div class="checkout-plus-icon checkout-plus-icon-new" data-toggle="modal" data-target="#myAddress">
-                          <img src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
+                          <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
                       </div>
                     </div>
                       <label>Tambah Alamat Baru </label>
@@ -199,6 +208,25 @@
                               <input name = "billing[lastname]" id="last_name" type="text" placeholder="Last Name" />
                           </div>
                           </div>
+                          
+                          
+                          
+                          <div class="checkout-form-popup-main" style="display:none;">
+
+
+                         
+                          <div class="checkout-form-popup">
+                              <label>Email</label>
+                              <input type="text" name="billing[email]" id="billing_email"
+                                               value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
+                                               title="<?php echo $this->__('Email Address') ?>"
+                                               class="input-text validate-email required-entry format_method_email" />
+                          </div>
+                          </div>
+                          
+                          
+                          
+                           
 
                           <div class="checkout-form-popup-main">
 
@@ -246,6 +274,32 @@
                           </div>
 
                           </div>
+                          
+                          <div class="checkout-form-popup-main" style="display:none;">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Create Password</label>
+                              <input type="password" name="billing[customer_password]"
+                                               id="billing_customer_password"
+                                               title="<?php echo $this->__('Password') ?>"
+                                               class="input-text " value="123456"/>
+                          </div>
+
+                          </div>
+                          
+                          <div class="checkout-form-popup-main" style="display:none;">
+                           <div class="checkout-form-popup">
+                              <label>Confirm Password</label>
+                              <input type="password" name="billing[confirm_password]"
+                                               title="<?php echo $this->__('Confirm Password') ?>"
+                                               id="billing_confirm_password"
+                                               class="input-text " value="123456"/>
+                          </div>
+
+                          </div>
+                          
+                          
 
 
 
@@ -253,7 +307,17 @@
                         <div class="modal-footer">
                             <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
                             <input type="hidden" name="billing[use_for_shipping]" value="1" />
-                          <button type="button" class="btn btn-default" id="new_address">Simpan Alamat Ini</button>
+                          <div class="buttons-set address-cont-btn" id="billing-buttons-container">
+<!--            <p class="required"><?php // echo $this->__('* Required Fields') ?></p>-->
+            <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" id="billing_save" onclick="beforeBillSave()">
+                <span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
+        <span class="please-wait" id="billing-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
+                 alt="<?php echo $this->__('Loading next step...') ?>"
+                 title="<?php echo $this->__('Loading next step...') ?>"
+                 class="v-middle"/> <?php echo $this->__('Loading next step...') ?>
+        </span>
+        </div>
                         </div>
                            </form>
                       </div>
@@ -295,8 +359,12 @@
                 <fieldset>
                     <input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>"
                            id="billing:address_id"/>
+                    <input type="hidden" name="billing_method" value="" id="billing_method" />
+                      <input type="hidden" name="guest_email" value="" id="guest_email" />
                     <ul>
-                        <li class="fields"><?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress()->getFirstname() ? $this->getAddress() : $this->getQuote()->getCustomer())->setForceUseCustomerRequiredAttributes(!$this->isCustomerLoggedIn())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?></li>
+                        <li class="fields">
+                            <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress()->getFirstname() ? $this->getAddress() : $this->getQuote()->getCustomer())->setForceUseCustomerRequiredAttributes(!$this->isCustomerLoggedIn())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+                        </li>
                         <li class="fields">
                             <!--<div class="field">
                                 <label for="billing:company"><?php echo $this->__('Company') ?></label>
@@ -317,7 +385,7 @@
                                         <input type="text" name="billing[email]" id="billing:email"
                                                value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
                                                title="<?php echo $this->__('Email Address') ?>"
-                                               class="input-text validate-email required-entry"/>
+                                               class="input-text validate-email required-entry format_method_email"/>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -331,7 +399,7 @@
                                 <input type="text" title="<?php echo $this->__('Street Address') ?>"
                                        name="billing[street][]" id="billing:street1"
                                        value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>"
-                                       class="input-text <?php echo $_streetValidationClass ?>"/>
+                                       class="input-text <?php echo $_streetValidationClass ?> format_method_street1"/>
                             </div>
                         </li>
                         <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
@@ -385,7 +453,7 @@
                                     <input type="text" id="billing:region" name="billing[region]"
                                            value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"
                                            title="<?php echo $this->__('Province') ?>"
-                                           class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>"
+                                           class="input-text format_method_region <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>"
                                            />
                                 </div>
                             </div>
@@ -398,7 +466,7 @@
                                 <div class="input-box">
                                     <input type="text" title="<?php echo $this->__('City') ?>" name="billing[city]"
                                            value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"
-                                           class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>"
+                                           class="input-text format_method_city <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>"
                                            id="billing:city"/>
                                 </div>
                             </div>
@@ -421,7 +489,7 @@
                                     <input type="text" name="billing[telephone]"
                                            value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
                                            title="<?php echo $this->__('Telephone') ?>"
-                                           class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
+                                           class="input-text format_method_telephone <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
                                            id="billing:telephone"/>
                                 </div>
                             </div>
@@ -465,7 +533,7 @@
                                 </li>
                             <?php endif ?>
 
-                            <li class="fields" id="register-customer-password">
+                            <li class="fields" id="register-customer-password" style="display:none;">
                                 <div class="field">
                                     <label for="billing:customer_password"
                                            class="required"><em>*</em><?php echo $this->__('Create Password') ?></label>
@@ -474,7 +542,7 @@
                                         <input type="password" name="billing[customer_password]"
                                                id="billing:customer_password"
                                                title="<?php echo $this->__('Password') ?>"
-                                               class="input-text required-entry validate-password"/>
+                                               class="input-text " value="123456"/>
                                     </div>
                                 </div>
                                 <div class="field">
@@ -486,7 +554,7 @@
                                         <input type="password" name="billing[confirm_password]"
                                                title="<?php echo $this->__('Confirm Password') ?>"
                                                id="billing:confirm_password"
-                                               class="input-text required-entry validate-cpassword"/>
+                                               class="input-text " value="123456"/>
                                     </div>
                                 </div>
                             </li>
@@ -531,7 +599,7 @@
         <?php endif; ?>
         <div class="buttons-set address-cont-btn" id="billing-buttons-container">
 <!--            <p class="required"><?php // echo $this->__('* Required Fields') ?></p>-->
-            <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" onclick="beforeBillSave()">
+            <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" id="billing_save" onclick="beforeBillSave()">
                 <span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
         <span class="please-wait" id="billing-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
@@ -544,8 +612,8 @@
 </form>
 <script type="text/javascript">
     //<![CDATA[
-    var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
-    var billingForm = new VarienForm('co-billing-form');
+    var billing = new Billing('address_form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
+    var billingForm = new VarienForm('address_form');
 
     //billingForm.setElementsRelation('billing:country_id', 'billing:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select Province...') ?>');
    // $('billing-address-select') && billing.newAddress(!$('billing-address-select').value);
@@ -654,42 +722,96 @@
            if(error==1){
                return false;
            }
+           
            jQuery('#address_form').submit();
            var address_form_data = jQuery('#address_form').serialize();
-           var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
-           jQuery.ajax({
-                    url:address_save_url,
-                    type:'POST',
-                    data:address_form_data,
-                    success: function(result){
-                        var result_data = jQuery.parseJSON(result);
-                        if(result_data.success==true){
-                           // jQuery('#address_boxes').html(result_data.block_html);
-                            //jQuery('#myAddress-'+address_id).hide();
-                            
-                            //console.log('#close-'+address_id);
-                           
-                            jQuery('.close').trigger( "click" );
-                            
-                           // jQuery('.modal-backdrop').fadeOut();
-                            setTimeout(function(){ 
-                               jQuery('#address_boxes').html(result_data.block_html);
-                            }, 500);
-                         // jQuery('#address_boxes').html(result_data.block_html);
-                           
-                        }else{
-                            alert("There is an error!!")
-                        }
-                     
-                    }
-               });
+           //var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+           
+           if(jQuery('#billing_method').val()==""){
+               var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+                jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 //console.log('#close-'+address_id);
+
+                                 jQuery('.close').trigger( "click" );
+
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 setTimeout(function(){ 
+                                    jQuery('#address_boxes').html(result_data.block_html);
+                                 }, 500);
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+           }else{
+               var address_save_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveBillingAjax";
+              //document.getElementById('billing:street1').value = jQuery('#street').val();
+            /*  console.log(jQuery('#street').val());
+               $$('billing:firstname').value = jQuery('#first_name').val();               
+               $$('billing:lastname').value = jQuery('#last_name').val();
+               $$('billing:email').value = jQuery('#login-email').val();
+               $$('billing:street1').value = jQuery('#street').val();
+               $$('billing:region').value = jQuery('#region').val();
+               $$('billing:city').value = jQuery('#city').val();
+               $$('billing:telephone').value = jQuery('#phone').val();*/
+               jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 console.log(result_data);
+                                 jQuery("input[title='First Name']").val(result_data.firstname);
+                                 jQuery("input[title='Last Name']").val(result_data.lastname);
+                                //$$('firstname').value = result_data.firstname;
+                                $$('billing:lastname').value = result_data.lastname;
+                                jQuery('.format_method_street1').val(result_data.street);
+                                jQuery('format_method_email').val(jQuery('#login-email').val());
+                               // $$('.format_method_telephone').value = result_data.telephone;
+                               // $$('billing:address_id').value = result_data.entity_id;
+                                jQuery('.format_method_region').val(result_data.region);
+                                jQuery('.format_method_city').val(result_data.city);
+                                jQuery('.format_method_telephone').val(result_data.telephone);
+                                
+                                 jQuery('.close').trigger( "click" );
+                                 jQuery('#billing_save').trigger('click');
+                                    
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+                                
+               
+           }
         });
         
         jQuery(document).on('click', '.delete_address', function(){
           // jQuery(this).attr('rel');
            jQuery('#confirm_delete').attr('rel',jQuery(this).attr('rel'));
            jQuery('#confirm_delete').click(function(){
-              console.log("Attr :"+jQuery(this).attr('rel')); 
+             // console.log("Attr :"+jQuery(this).attr('rel')); 
               var address_form_data = "id="+jQuery(this).attr('rel');
               var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/deleteAjax";
               jQuery.ajax({
@@ -731,7 +853,7 @@
             var address_id = element_id_array[2];
             var address_form_data = "id="+address_id;
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/getAddressAjax";
-            console.log("Address Id : "+address_id);
+            //console.log("Address Id : "+address_id);
             if(jQuery(this).hasClass('address-selected')){
             jQuery.ajax({
                     url:address_save_url,
