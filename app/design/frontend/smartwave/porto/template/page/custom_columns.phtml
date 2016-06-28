@@ -96,6 +96,7 @@
                                                     var manufacturer = keys.join("-");
                                                     //var current_url = window.location.href;
                                                     var current_url=jQuery("#filterSubmitUrl").val();
+						    var loc = current_url;
 						    if(all_params_query_name)
                                                     {
                                                         if(all_params_query_name.indexOf('clearall') > -1)
@@ -119,7 +120,7 @@
                                                         }
                                                         else
                                                         {    
-                                                            	if(manufacturer)var loc = current_url+'?manufacturer='+manufacturer;
+                                                            	if(manufacturer)var loc = current_url+'&manufacturer='+manufacturer;
                                                         }
                                                     }
                                                     else
