@@ -274,6 +274,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $post_array = $this->getRequest()->getPost();           
             Mage::getSingleton('core/session')->unsShippingAmount();
             Mage::getSingleton('core/session')->unsShippingDescription();
+            unset($shipping_amount_array);
             $return_array = array();
             $shipping_amount_array = array();
             $shipping_amount = 0;
@@ -299,8 +300,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $return_html .= '
                   <div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback">
-                    <input type="text" class="form-control" >
+                    <div class="form-group  has-feedback" id="coupon_div">
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon()"/>
                     <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
                   </div>
 
