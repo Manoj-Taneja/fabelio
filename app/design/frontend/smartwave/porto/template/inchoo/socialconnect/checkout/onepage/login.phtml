@@ -168,8 +168,18 @@
                             type:'POST',
                             data:data,
                             success: function(result){
-                                $('#checkout-step-billing').show();
+                                
                                 $('#checkout-step-login').hide();
+                                $('#opc-login').removeClass('active');
+                                $('#checkout-step-billing').show();
+                                $('#opc-billing').addClass('allow active');
+                                $('#billing_method').val(data);
+                                $('#guest_email.val').val($('#login-email').val());
+                                $('.format_method_email').val($('#login-email').val());
+                                $('#billing-new-address-form').hide();
+                                $('#edit-completed-login').show();
+                                $('#completed-login').show();
+                                $('#add_new_address').trigger('click');
                             }
                        });
                    }else if(return_data.success==true){
