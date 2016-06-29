@@ -77,10 +77,10 @@
                  </a>
            
              </div>
-                <?php if($this->isCustomerLoggedIn() && $_stepId=='login'):?>
+                <?php if($_stepId=='login'):?>
                 <?php $customer = Mage::getSingleton('customer/session')->getCustomer();?>
             <div class="col-sm-7 payment-email openaccord">
-              <label><?php echo $customer->getEmail(); ?></label>
+              <label id="user_email_id"><?php if($this->isCustomerLoggedIn()):echo $customer->getEmail(); endif; ?></label>
             </div>
                 <?php endif; ?>
                 <?php if($_stepId=='billing'):?>
@@ -106,13 +106,13 @@
                 <?php if($_stepInfo['allow'] && $this->getActiveStep()!=$_stepId): ?>
                 <div class="col-sm-2 payment-edit openaccord">
 
-                    <a class="payment-edit-btn" href="#"><?php echo $this->__('Edit') ?></a>
+                    <a class="payment-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>
             </div>
                 <?php endif; ?>
                 
                 <div class="col-sm-2 payment-edit openaccord" id="edit-completed-<?php echo $_stepId;?>" style="display:none;">
 
-                    <a class="payment-edit-btn" href="#"><?php echo $this->__('Edit') ?></a>
+                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>
             </div>
                  </h4>
 <!--            </div>--> 
@@ -126,6 +126,47 @@
 <?php endforeach ?>
 </ol>
 <script type="text/javascript">
+jQuery(document).ready(function(){
+    
+    
+    jQuery('#review-edit-btn').click(function(){
+           //console.log("Hi There !!");
+          jQuery('#opc-review').addClass('active');
+          jQuery('#checkout-step-review').show();
+          jQuery('#go_payment').show();
+          jQuery('#opc-payment').removeClass('active');
+          jQuery('#checkout-step-payment').hide();
+          jQuery('#opc-billing').removeClass('active');
+          jQuery('#checkout-step-billing').hide();
+          jQuery('#opc-login').removeClass('active');
+       });
+    
+    
+       
+       jQuery('#billing-edit-btn').click(function(){
+          jQuery('#opc-billing').addClass('active');
+          jQuery('#opc-payment').removeClass('active');
+          jQuery('#go_payment').show();
+          jQuery('#completed-review').hide();
+          jQuery('#checkout-step-payment').hide();
+          jQuery('#opc-review').removeClass('active');
+          jQuery('#checkout-step-billing').show();
+          jQuery('#opc-login').removeClass('active');
+       });
+
+       
+       jQuery('#login-edit-btn').click(function(){
+          jQuery('#opc.login').addClass('active');
+          jQuery('#opc-payment').removeClass('active');
+          jQuery('#checkout-step-payment').hide();
+          jQuery('#go_payment').show();
+          jQuery('#completed-review').hide();
+          jQuery('#opc-review').removeClass('active');
+          jQuery('#opc-billing').removeClass('active');
+          jQuery('#checkout-step-billing').hide();
+          jQuery('#opc-login').removeClass('active');
+       });
+});
 //<![CDATA[
     var accordion = new Accordion('checkoutSteps', '.panel-title', true);
     <?php if($this->getActiveStep()): ?>
@@ -147,7 +188,11 @@ if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>')
 jQuery('#edit-completed-billing').click(function(){
   // jQuery('#opc-billing').find('div.panel-payment').addClass('panel-payment-active'); 
 });
- });
+
+
+
+
+});
  
 
 </script>
