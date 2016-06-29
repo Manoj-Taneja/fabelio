@@ -97,7 +97,7 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
 				}
 			  else
 				{
-				echo '<a class="sub-categories ' . $_current_class_font . '" href="' . $_helper->getCategoryUrl($_top_parent_sub_category) . '">' . $_top_parent_sub_category->getName() . '</a>';
+				echo '<a class="sub-categories ' . $_current_class_font . '" href="' . $_helper->getCategoryUrl($_top_parent_sub_category) . '"><span>' . $_top_parent_sub_category->getName() . '</span></a>';
 				}
                 
 			switch ($current->getID())
@@ -201,7 +201,7 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
 					if ($current->getID() == $_sub_category->getID()):
 						echo '<a class=" sub-sub-categories current ' . $_sub_current_class_font . '" href="javascript://">' . $_sub_category->getName() . '</a>';
 					else:
-						echo '<a class=" sub-sub-categories ' . $_sub_current_class_font . '" href="' . $_helper->getCategoryUrl($_sub_category) . '"><span>' . $_sub_category->getName() . '</span></a>';
+						echo '<a class=" sub-sub-categories ' . $_sub_current_class_font . '" href="' . $_helper->getCategoryUrl($_sub_category) . '">' . $_sub_category->getName() . '</a>';
 					endif;
 					echo '</li>';
 				endforeach;
