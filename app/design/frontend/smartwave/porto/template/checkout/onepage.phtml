@@ -106,7 +106,7 @@
                 <?php if($_stepInfo['allow'] && $this->getActiveStep()!=$_stepId): ?>
                 <div class="col-sm-2 payment-edit openaccord">
 
-                    <a class="payment-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>
+                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>
             </div>
                 <?php endif; ?>
                 
@@ -123,6 +123,12 @@
         </div>
          </div>
     </li>
+<div id="loading-mask" style="display: none;">
+<div class="background-overlay"></div>
+	<p class="loader" id="loading_mask_loader">
+        <i class="ajax-loader large animate-spin"></i>
+	</p>
+</div>
 <?php endforeach ?>
 </ol>
 <script type="text/javascript">
@@ -160,6 +166,7 @@ jQuery(document).ready(function(){
           jQuery('#opc-payment').removeClass('active');
           jQuery('#checkout-step-payment').hide();
           jQuery('#go_payment').show();
+          jQuery('#completed-billing').hide();
           jQuery('#completed-review').hide();
           jQuery('#opc-review').removeClass('active');
           jQuery('#opc-billing').removeClass('active');

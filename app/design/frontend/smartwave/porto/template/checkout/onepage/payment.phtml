@@ -50,9 +50,15 @@
     </span>
 </div>
 <div id="submiting-order-container" class="buttons-set address-cont-btn" style="display:none;">
-    <span class="please-wait" id="payment-please-wait">
+<!--    <span class="please-wait" id="payment-please-wait">
         <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading next step...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
-    </span>
+    </span>-->
+    <div id="payment-please-wait" style="display: none;">
+            <div class="background-overlay"></div>
+            <p class="loader" id="loading_mask_loader">
+                <i class="ajax-loader large animate-spin"></i>
+            </p>
+    </div>
 </div>
 <script type="text/javascript">
 //<![CDATA[

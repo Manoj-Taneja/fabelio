@@ -592,12 +592,18 @@
 <!--            <p class="required"><?php // echo $this->__('* Required Fields') ?></p>-->
             <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" id="billing_save" onclick="beforeBillSave()">
                 <span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
-        <span class="please-wait" id="billing-please-wait" style="display:none;">
+<!--        <span class="please-wait" id="billing-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
                  alt="<?php echo $this->__('Loading next step...') ?>"
                  title="<?php echo $this->__('Loading next step...') ?>"
                  class="v-middle"/> <?php echo $this->__('Loading next step...') ?>
-        </span>
+        </span>-->
+        <div id="billing-please-wait" style="display: none;">
+            <div class="background-overlay"></div>
+                <p class="loader" id="loading_mask_loader">
+                    <i class="ajax-loader large animate-spin"></i>
+                </p>
+        </div>
         </div>
     </fieldset>
 </form>
@@ -849,7 +855,7 @@
            jQuery('#address_form_1').submit();
            var address_form_data = jQuery('#address_form_1').serialize();
            //var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
-           
+           jQuery('#loading-mask').show();
            if(jQuery('#billing_method_1').val()==""){
                var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
                 jQuery.ajax({
@@ -863,7 +869,7 @@
                                  //jQuery('#myAddress-'+address_id).hide();
 
                                  //console.log('#close-'+address_id);
-
+                                 jQuery('#loading-mask').hide();
                                  jQuery('.close').trigger( "click" );
 
                                 // jQuery('.modal-backdrop').fadeOut();
@@ -879,6 +885,7 @@
                          }
                     });
            }else{
+               
                var address_save_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveBillingAjax";
               //document.getElementById('billing:street1').value = jQuery('#street').val();
             /*  console.log(jQuery('#street').val());
@@ -912,6 +919,7 @@
                                 jQuery('.format_method_city').val(result_data.city);
                                 jQuery('.format_method_telephone').val(result_data.telephone);
                                 jQuery('#billing_method').val('method=register');
+                                jQuery('#loading-mask').hide();
                                  jQuery('.close').trigger( "click" );
                                  //jQuery('#billing_save').trigger('click');
                                  var entity_id_incr = result_data.entity_id;
@@ -949,6 +957,7 @@
            jQuery('#confirm_delete').click(function(){
              // console.log("Attr :"+jQuery(this).attr('rel')); 
               var address_form_data = "id="+jQuery(this).attr('rel');
+              jQuery('#loading-mask').show();
               var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/deleteAjax";
               jQuery.ajax({
                     url:address_save_url,
@@ -961,7 +970,7 @@
                             //jQuery('#myAddress-'+address_id).hide();
                             
                             //console.log('#close-'+address_id);
-                           
+                           jQuery('#loading-mask').hide();
                             jQuery('.close').trigger( "click" );
                             
                            // jQuery('.modal-backdrop').fadeOut();
@@ -990,6 +999,7 @@
             var address_form_data = "id="+address_id;
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/getAddressAjax";
             //console.log("Address Id : "+address_id);
+            jQuery('#loading-mask').show();
             if(jQuery(this).hasClass('address-selected')){
             jQuery.ajax({
                     url:address_save_url,
@@ -1008,6 +1018,7 @@
                                 $('billing:address_id').value = result_data.entity_id;
                                 $('billing:region').value=result_data.region;
                                 $('billing:city').value=result_data.city;
+                                jQuery('#loading-mask').hide();
                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
                                 jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
                            // jQuery('#address_boxes').html(result_data.block_html);
