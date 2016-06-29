@@ -66,10 +66,15 @@
                     
 					<script type="text/javascript">
 						jQuery(function($){
-						var winWidht;
+						var winWidht, ajexOn;
 						function filterNavigationForAttribute()
 						{
-						jQuery('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+						ajexOn = jQuery('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').clone();
+                            
+                           console.log(ajexOn);
+                            
+                    //        jQuery('.block-content').append(ajexOn);
+                            
                                                 var filterId, loc, keys = [];
                                                 var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
                                                 jQuery('.ptech_multilayer_attribute').attr('href','javascript:void(0);')   
@@ -113,7 +118,13 @@
 									//alert(current_url);
                                                             	}
                                                             	else{
-                                                                	current_url = current_url+"-"+keys[i];
+                                                                	manufacturerValues = current_url.substring(current_url.indexOf("manufacturer="));
+                        if(manufacturerValues.indexOf('&')> -1)
+                        {
+                                manufacturerValues = manufacturerValues.substring(0, manufacturerValues.indexOf('&'));
+                        }
+                        current_url = current_url.replace(manufacturerValues,manufacturerValues+'-'+keys[i]);
+									//current_url = current_url+"-"+keys[i];
 									//alert("else part"+current_url);
                                                             	}
 							    } var loc =current_url;       
@@ -142,6 +153,7 @@
                     //alert(loc);
 						
                                                 });
+                            
 						}
              						function mobileFilter(){
 							winWidht = $(window).width();
@@ -158,6 +170,7 @@
 							});
 							
 							$('.mobile-links li.mobile-filter').click(function(){
+									$('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
 									$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
 									$('.shotby-mobile').hide();
 									if($(this).hasClass('active-filter')){
@@ -170,6 +183,8 @@
 							});
 							
 							$('.mobile-links li.mobile-shotby').click(function(){
+                                    console.log("here shot");
+                                 $('.inner-wrapper').after(ajexOn);
 									$('.mobile-links li.mobile-filter').removeClass('active-filter');	
 									$('.block.block-layered-nav').hide();
 									if($(this).hasClass('active-filter')){
