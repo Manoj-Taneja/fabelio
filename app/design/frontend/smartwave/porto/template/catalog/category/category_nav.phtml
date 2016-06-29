@@ -374,20 +374,17 @@ if(array_key_exists(1, $url)){
 	}
 }
 ?>
-                <li><a href="<?php
-echo $url[0]; ?>?dir=asc&order=position" <?php if($order=='position'){ echo 'class="active"'; } ?>>Rekomendasi</a>
+                <li><a onclick="catalog_toolbar_make_request('<?php echo $url[0]?>?dir=asc&order=position')" <?php if($order=='position'){ echo 'class="active"'; } ?>>Rekomendasi</a>
                 </li>
 
 
 
-                <li><a href="<?php
-echo $url[0]; ?>?dir=asc&order=price" <?php if($order=='price' && $dir=='asc'){ echo 'class="active"'; } ?>>Harga: Rendah ke Tinggi</a>
+                <li><a onclick="catalog_toolbar_make_request('<?php echo $url[0]?>?dir=asc&order=price')" <?php if($order=='price' && $dir=='asc'){ echo 'class="active"'; } ?>>Harga: Rendah ke Tinggi</a>
                 </li>
 
 
 
-                <li><a href="<?php
-echo $url[0]; ?>?dir=desc&order=price" <?php if($order=='price' && $dir=='desc'){ echo 'class="active"'; } ?>>Harga: Tinggi ke Rendah</a>
+                <li><a onclick="catalog_toolbar_make_request('<?php echo $url[0]?>?dir=desc&order=price')" <?php if($order=='price' && $dir=='desc'){ echo 'class="active"'; } ?>>Harga: Tinggi ke Rendah</a>
                 </li>
 
 
