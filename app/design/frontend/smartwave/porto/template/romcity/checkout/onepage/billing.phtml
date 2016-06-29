@@ -346,7 +346,7 @@
     <fieldset>
         <ul class="form-list">
             
-            <li id="billing-new-address-form"<?php if ($this->customerHasAddresses()): ?> style="display:none;"<?php endif; ?>>
+            <li id="billing-new-address-form" style="display:none;">
                 <fieldset>
                     <input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>"
                            id="billing:address_id"/>
