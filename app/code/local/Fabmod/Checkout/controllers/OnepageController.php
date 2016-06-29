@@ -728,11 +728,13 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
              if(!$result_data){
                  $result['success'] = false;
                  $result['error'] = true;
+                 Mage::getSingleton('core/session')->setGuestEmail($data_post['username']);
                  
              }else{
                  $result['success'] = true;
                  $result['error'] = false;
                  $result['email'] = $result_data->getEmail();
+                 
              }
             
         }catch(Mage_Core_Exception $e){
@@ -760,6 +762,60 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
 
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
+        }
+        
+        public function createUserAjaxAction(){
+            if (!$this->_validateFormKey()) {
+                $this->_redirect('*/*/');
+                return;
+            }
+            
+            try{
+                if (!$this->getRequest()->isPost()) {
+                    $this->_ajaxRedirectResponse();
+                    return;
+                }
+                $data_post = $this->getRequest()->getPost();
+                
+                $e = $data_post['email']; //provided by guest user
+
+                $store = Mage::app()->getStore();
+                $websiteId = Mage::app()->getWebsite()->getId();
+
+                $customerObj = Mage::getModel('customer/customer');
+                $customerObj->website_id = $websiteId;
+                $customerObj->setStore($store);
+
+                //$prefix = "mag";
+                //$pwd = uniqid($prefix);
+                $pwd = $data_post['userpassword'];
+                $session = Mage::getSingleton('checkout/session');
+                $fname = $session->getFirstname();
+                $lname = $session->getLastname();
+
+                $customerObj->setEmail($e);
+                $customerObj->setFirstname('Guest');
+                $customerObj->setLastname('Guest');
+                $customerObj->setPassword($pwd);
+                $customerObj->save();
+                $ret = $customerObj->sendNewAccountEmail('confirmed'); //auto confirmed
+                $new_user_data = $ret->getData();
+                //var_dump($ret);
+                if($new_user_data['entity_id']!=''){
+                    $result['success'] = true;
+                    $result['error'] = false;
+                }else{
+                    $result['success'] = false;
+                    $result['error'] = true;
+                }
+
+                
+            }catch(Mage_Core_Exception $e){
+                    $result['success'] = false;
+                    $result['error'] = $e->getMessage();
+            }
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+                
         }
     
 }
