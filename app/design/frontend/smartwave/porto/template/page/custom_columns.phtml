@@ -75,6 +75,7 @@
                             
                     //        jQuery('.block-content').append(ajexOn);
                             
+
                                                 var filterId, loc, keys = [];
                                                 var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
                                                 jQuery('.ptech_multilayer_attribute').attr('href','javascript:void(0);')   
@@ -171,6 +172,7 @@
 							
 							$('.mobile-links li.mobile-filter').click(function(){
 									$('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+
 									$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
 									$('.shotby-mobile').hide();
 									if($(this).hasClass('active-filter')){
@@ -195,6 +197,12 @@
 										$('.shotby-mobile').show();
 									}
 							});
+							
+							$('.shotby-mobile li a').click(function(){
+								$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
+								$('.shotby-mobile').hide();
+							});
+							
 							
 							$(document).on('click', function(){
 								if(winWidht < 767){
