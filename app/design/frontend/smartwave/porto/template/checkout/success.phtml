@@ -27,16 +27,29 @@
 
 
 <div class="success-main">
-
-  <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" Class="success-icon" alt="" />
-  <h4>Terima Kasih! Pesanan Anda berhasil!</h4>
-  <label>Nomor order Anda : <b><?php
- // var_dump($this->getOrderId());
-  $lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+<?php
+$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
   //$order   = Mage::getModel('sales/order')->load($lastOrderId);
   $orderId = Mage::getModel('sales/order')
                ->loadByIncrementId($lastOrderId)
                ->getEntityId();
+  $order_data = Mage::getModel('sales/order')
+               ->loadByIncrementId($lastOrderId)
+               ->getData();
+  //$customer = Mage::getSingleton('customer/session')->getCustomer();
+    //$customerData = Mage::getModel('customer/customer')->load($order_data['customer_id'])->getData();
+  
+    $checkout_method = Mage::getSingleton('checkout/type_onepage')->getCheckoutMethod();
+    //var_dump($checkout_method);
+    $guest_email = Mage::getSingleton('core/session')->getGuestEmail();
+    //echo "<pre>"; print_r($guest_email); echo "</pre>";
+?>
+  <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" Class="success-icon" alt="" />
+  <h4>Terima Kasih! Pesanan Anda berhasil!</h4>
+  <label>Nomor order Anda : <b><?php
+ // var_dump($this->getOrderId());
+  
+  
 
 echo $lastOrderId;    
 
@@ -59,24 +72,86 @@ echo $lastOrderId;
 <div class="modal fade checkout-delete-main" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
-
+<form name="register_guest" id="register_guest" action="javascript://" method="POST">
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
         <img src="<?php echo $this->getSkinUrl('images/icon-delete.svg'); ?>" />
         <label>Apakah Anda yakin ingin menghapus barang Lni?</label>
         <h4>Batal</h4>
+        
+            <div id="userpass" ><input type="password" name="userpassword" id="userpassword" /></div>
+            <div id="confirmuserpass" style="display:none;" ><input type="password" name="confirmuserpassword" id="confirmuserpassword" /></div>
+            <div id="useremail" ><input type="hidden" name="email" id="email" value="<?php echo $guest_email; ?>" /></div>
+            <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+        
     </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" >Hapus</button>
+        <button type="button" class="btn btn-default" id="register_guest_btn" >Hapus</button>
       </div>
+ </form>
     </div>
   </div>
 </div>
 
 
     </div>
-
+<?php if($checkout_method=='guest'):?>
+<script>
+jQuery(document).ready(function(){
+    jQuery('#deleteitem').show();
+    jQuery('#register_guest_btn').click(function(){
+        var err = 0;
+        var cerr = 0;
+        if(jQuery('#userpassword').val()==''){
+            jQuery('#userpassword').addClass('wrong-pass');
+            err = 1;
+        }
+        if(jQuery('#userpassword').val().length < 6){
+            jQuery('#userpassword').addClass('wrong-pass');
+            err = 1;
+        }
+      if(err == 1){
+        jQuery('#register_guest_btn').addClass('register_guest_btn_disabled');  
+        return false;  
+      }else{
+          jQuery('#register_guest_btn').removeClass('register_guest_btn_disabled');
+      }
+      
+      if(!jQuery('#register_guest_btn').hasClass('register_guest_btn_disabled')){
+          var create_user_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/createUserAjax"
+          var data = jQuery('#register_guest').serialize();
+          jQuery.ajax({
+                url:create_user_url,
+                type:'POST',
+                data:data,
+                success: function(result){
+                    var result_data = jQuery.parseJSON(result)
+                    if(result_data.success==true){
+                        alert('Confirmation email has been sent');
+                        //jQuery('#deleteitem').hide();
+                        jQuery('.close').trigger( "click" );
+                        jQuery('#register_guest')[0].reset();
+                    }else{
+                        alert('There are some errors');
+                        jQuery('.close').trigger( "click" );
+                        jQuery('#register_guest')[0].reset();
+                    }
+                    //console.log(result);
+                    
+                }
+         });
+      }
+      
+      
+      
+      
+      
+      
+    });
+})    
+</script>
+<?php endif; ?>
 <!--<div class="page-title">
     <h1><?php //echo $this->__('Terima Kasih') ?></h1>
 </div>-->
