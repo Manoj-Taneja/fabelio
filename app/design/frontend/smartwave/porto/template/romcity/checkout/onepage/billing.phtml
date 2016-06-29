@@ -192,7 +192,7 @@
                   <div class="modal fade checkout-address-main" id="myAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
-                           <form name="address_for" id="address_form" method="post" action="javascript://">
+                           <form name="address_form" id="address_form" method="post" action="javascript://">
                         <div class="modal-body">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h3>Masukkan alamat baru Anda!</h3>
@@ -307,17 +307,8 @@
                         <div class="modal-footer">
                             <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
                             <input type="hidden" name="billing[use_for_shipping]" value="1" />
-                          <div class="buttons-set address-cont-btn" id="billing-buttons-container">
-<!--            <p class="required"><?php // echo $this->__('* Required Fields') ?></p>-->
-            <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" id="billing_save" onclick="beforeBillSave()">
-                <span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
-        <span class="please-wait" id="billing-please-wait" style="display:none;">
-            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
-                 alt="<?php echo $this->__('Loading next step...') ?>"
-                 title="<?php echo $this->__('Loading next step...') ?>"
-                 class="v-middle"/> <?php echo $this->__('Loading next step...') ?>
-        </span>
-        </div>
+                            <input type="hidden" name="billing[entity_id]" value="1" id="billing_entity_id" />
+                          <button type="button" class="btn btn-default" id="new_address">Simpan Alamat Ini</button>
                         </div>
                            </form>
                       </div>
@@ -612,8 +603,8 @@
 </form>
 <script type="text/javascript">
     //<![CDATA[
-    var billing = new Billing('address_form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
-    var billingForm = new VarienForm('address_form');
+    var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
+    var billingForm = new VarienForm('co-billing-form');
 
     //billingForm.setElementsRelation('billing:country_id', 'billing:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select Province...') ?>');
    // $('billing-address-select') && billing.newAddress(!$('billing-address-select').value);
@@ -670,7 +661,7 @@
                          // jQuery('#address_boxes').html(result_data.block_html);
                            
                         }else{
-                            alert("There is an error!!")
+                            alert(result_data.message)
                         }
                       //  console.log(" !! Hi !!");
 //                        var result_data = $.parseJSON(result);
@@ -788,9 +779,19 @@
                                 jQuery('.format_method_region').val(result_data.region);
                                 jQuery('.format_method_city').val(result_data.city);
                                 jQuery('.format_method_telephone').val(result_data.telephone);
-                                
+                                jQuery('#billing_method').val('method=register');
                                  jQuery('.close').trigger( "click" );
-                                 jQuery('#billing_save').trigger('click');
+                                 //jQuery('#billing_save').trigger('click');
+                                 var entity_id_incr = result_data.entity_id;
+                                 entity_id_incr = parseInt(entity_id_incr);
+                                 entity_id_incr = entity_id_incr + 1;
+                                 jQuery('#billing_entity_id').val(entity_id_incr);
+                                 jQuery('#address_form')[0].reset();
+                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
+                                jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                               setTimeout(function(){ 
+                               jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
                                     
                                 // jQuery('.modal-backdrop').fadeOut();
                                  
@@ -806,6 +807,141 @@
                
            }
         });
+        
+        
+        
+        
+        jQuery(document).on('click', '#new_address_1', function(){
+            var error = 0;
+           if(jQuery('#first_name').val()==''){
+               jQuery('#first_name').addClass('wrong-pass');
+               //return false;
+               error = 1;
+           } 
+           if(jQuery('#last_name').val()==''){
+               jQuery('#last_name').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#street').val()==''){
+               jQuery('#street').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#country_id').val()==''){
+               jQuery('#country_id').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#region').val()==''){
+               jQuery('#region').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#city').val()==''){
+               jQuery('#city').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#phone').val()==''){
+               jQuery('#phone').addClass('wrong-pass');
+               error = 1;
+           }
+           if(error==1){
+               return false;
+           }
+           
+           jQuery('#address_form_1').submit();
+           var address_form_data = jQuery('#address_form_1').serialize();
+           //var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+           
+           if(jQuery('#billing_method_1').val()==""){
+               var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+                jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 //console.log('#close-'+address_id);
+
+                                 jQuery('.close').trigger( "click" );
+
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 setTimeout(function(){ 
+                                    jQuery('#address_boxes').html(result_data.block_html);
+                                 }, 500);
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+           }else{
+               var address_save_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveBillingAjax";
+              //document.getElementById('billing:street1').value = jQuery('#street').val();
+            /*  console.log(jQuery('#street').val());
+               $$('billing:firstname').value = jQuery('#first_name').val();               
+               $$('billing:lastname').value = jQuery('#last_name').val();
+               $$('billing:email').value = jQuery('#login-email').val();
+               $$('billing:street1').value = jQuery('#street').val();
+               $$('billing:region').value = jQuery('#region').val();
+               $$('billing:city').value = jQuery('#city').val();
+               $$('billing:telephone').value = jQuery('#phone').val();*/
+               jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 console.log(result_data);
+                                 jQuery("input[title='First Name']").val(result_data.firstname);
+                                 jQuery("input[title='Last Name']").val(result_data.lastname);
+                                //$$('firstname').value = result_data.firstname;
+                                $$('billing:lastname').value = result_data.lastname;
+                                jQuery('.format_method_street1').val(result_data.street);
+                                jQuery('format_method_email').val(jQuery('#login-email').val());
+                               // $$('.format_method_telephone').value = result_data.telephone;
+                               // $$('billing:address_id').value = result_data.entity_id;
+                                jQuery('.format_method_region').val(result_data.region);
+                                jQuery('.format_method_city').val(result_data.city);
+                                jQuery('.format_method_telephone').val(result_data.telephone);
+                                jQuery('#billing_method').val('method=register');
+                                 jQuery('.close').trigger( "click" );
+                                 //jQuery('#billing_save').trigger('click');
+                                 var entity_id_incr = result_data.entity_id;
+                                 entity_id_incr = parseInt(entity_id_incr);
+                                 entity_id_incr = entity_id_incr + 1;
+                                 jQuery('#billing_entity_id').val(entity_id_incr);
+                                 jQuery('#address_form')[0].reset();
+                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
+                                jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                               setTimeout(function(){ 
+                               jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
+                                    
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+                                
+               
+           }
+        });
+        
+        
+        
         
         jQuery(document).on('click', '.delete_address', function(){
           // jQuery(this).attr('rel');
@@ -835,7 +971,7 @@
                          // jQuery('#address_boxes').html(result_data.block_html);
                            
                         }else{
-                            alert("There is an error!!")
+                            alert(result_data.message)
                         }
                      
                     }
@@ -888,7 +1024,7 @@
                          // jQuery('#address_boxes').html(result_data.block_html);
                            
                         }else{
-                            alert("There is an error!!")
+                            alert(result_data.message)
                         }
                      
                     }

@@ -101,6 +101,7 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
 
     public function addressFormPostAction()
     {
+       
         if (!$this->_validateFormKey()) {
            // return $this->_redirect('*/*/');
            $result['error'] = true;
@@ -108,9 +109,9 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
         // Save data
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest();
-          // echo "<pre>"; print_r($_POST['billing']); echo "</pre>";
+          // echo "<pre>"; print_r($data); echo "</pre>";
           //  var_dump($data);
-          //  exit;
+           // exit;
             $customer = $this->_getSession()->getCustomer();
             /* @var $address Mage_Customer_Model_Address */
             $address  = Mage::getModel('customer/address');
