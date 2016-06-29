@@ -127,6 +127,8 @@ Checkout.prototype = {
             this.reloadProgressBlock(this.currentStep);
         }
         this.currentStep = section;
+        
+              
         var sectionElement = $('opc-' + section);
         sectionElement.addClassName('allow');
         
@@ -262,26 +264,37 @@ Checkout.prototype = {
           // jQuery('#opc-login').removeClass('panel-payment-active');
            //jQuery('#opc-billing').addClass('panel-payment-active');
        }
+       console.log("Section : "+section);
         if(section=='shipping'){
             section='review';
             jQuery('#checkout-step-review').show();
             jQuery('#go_payment').show();
             jQuery('#checkout-step-payment').hide();
+            jQuery('#opc-billing').removeClass('active');
+            jQuery('#opc-billing').find('#checkout-step-billing').hide();
             jQuery('#opc-payment').removeClass('active');
         }
         this.changeSection('opc-' + section);
     },
 
     setStepResponse: function(response){
+        
         if (response.update_section) {
             $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
             if(response.goto_section=='review' && response.update_section.html!=false){
+               
+                
                 jQuery('#payment-buttons-container').hide();
                 jQuery('#submiting-order-container').show();
                 
                 setTimeout(function(){ 
                    jQuery('#place-order-button').trigger( "click" );
                }, 1000);
+            }
+            
+            if(response.goto_section=='review' && response.update_section.html==false){
+                jQuery('#opc-billing').removeClass('active');
+            jQuery('#opc-billing').find('#checkout-step-billing').hide();
             }
         }
         if (response.allow_sections) {
@@ -764,6 +777,7 @@ Payment.prototype = {
     afterInit : function() {        
                 //jQuery('#opc-review').find('div.panel-payment-active').removeClass('panel-payment-active');
                 //jQuery('#opc-payment').find('div.panel-payment').addClass('panel-payment-active');
+                
                 jQuery('#completed-review').show();
                 jQuery('#edit-completed-review').show();
                 jQuery('#cart_totals').show();
