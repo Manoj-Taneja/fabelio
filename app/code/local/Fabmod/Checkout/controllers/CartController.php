@@ -490,6 +490,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
     
     public function deleteAjaxAction()
     {
+        
         $id = (int) $this->getRequest()->getParam('id');
         if ($id) {
             try {
@@ -500,6 +501,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                 $result['html'] = $this->getUpdatedCartHtml();
                 $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
                 $grandtotal = round($totals["grand_total"]->getValue());
+                $_coreHelper = Mage::helper('core');
                 $result['grand_total']=$_coreHelper->formatPrice($grandtotal, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
                
             } catch (Exception $e) {
@@ -519,7 +521,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $_coreHelper = Mage::helper('core');
         $matrixrate_helper = Mage::helper('matrixrate');
         $items = Mage::getSingleton('checkout/cart')->getQuote()->getAllItems();
-        
+        $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
         
         $html = "";
        // $html .= '<div class="accordion-inner-content" >';
@@ -535,8 +537,10 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                       <div class="cell"></div>
                     </div>';
         # Loop data comes here
-        
+                    $quote_items_array = array();
                 foreach($items as $key=>$item){
+                    
+                    $quote_items_array[]= $item->getID();
                     $product_id = $item->getProductID();
                     $item_id = $item->getID();
                     $product = Mage::getModel('catalog/product')->load($product_id);
@@ -559,7 +563,8 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                     $html .= '<div class="cart-cell cell4"><input disabled="disabled" type="number" value="'.$product_qty.'" /></div>';
                     $html .= '<div class="cart-cell cell">';
                     $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);
-                   // echo "<pre>"; print_r($delivery_array); echo "</pre>";
+                    //echo "Product ID : ".$product_id."\n";
+                    //echo "<pre>"; print_r($shipping_amount_array); echo "</pre>";
                     //exit;
                     if(count($delivery_array) > 1){
                         $html .= '<div class="checkout-quantity">';
@@ -573,6 +578,11 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                                     if($val['Standard']==0){
                                         $checked = "checked='checked'";
                                     }
+                                    if($shipping_amount_array[$product_id] > 0 && $val['price']!="Free"){
+                                        $checked = "checked='checked'";
+                                    }else{
+                                        $checked = "";
+                                    }
                                     if($val['price']!="Free"): 
                                         $ship_price =  $_coreHelper->formatPrice($val['price'], false); 
                                     else: 
@@ -585,7 +595,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                     }else{
                         $html .= '<div class="checkout-quantity">';
                         foreach($delivery_array as $key=>$val):
-                            $html .= '<input type="radio" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method"/>&nbsp;'.$val['delivery_date'].' - Free';
+                            $html .= '<input disabled="disabled" type="radio" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method"/>&nbsp;'.$val['delivery_date'].' - Free';
                         endforeach;
                         $html .= '</div>';
                     }
@@ -601,17 +611,31 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                               </div>
                       <div class="cart-cell cell"><img class="delete-item" rel="'.$item_id.'" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-close-black.svg" width="20" style="cursor:pointer;"  data-toggle="modal" data-target="#deleteitem" />';
                     $html .= '</div></div>';
+                    
+                    
+                    if(array_key_exists($product_id,$shipping_amount_array)){
+                        // echo "<pre>"; print_r($shipping_amount_array); echo "</pre>";
+                         $shipping_amount = array_sum($shipping_amount_array);
+                     }else{
+                         $shipping_amount = 0;
+                         Mage::getSingleton('core/session')->unsShippingAmount();
+                         Mage::getSingleton('core/session')->unsShippingDescription();
+                         Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
+                        Mage::getSingleton('checkout/session')->getQuote()->setShippingAmount($shipping_amount);
+                        // Mage::getSingleton('core/session')->unsShippingAmount();
+                     }
                 }
         
-        
+         //echo "<pre>"; print_r($shipping_amount_array); echo "</pre>";
         $html .= '</div>';
         $html .= '<div class="checkout-total-main">';
         $html .= '<div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback">
-                    <input type="text" class="form-control" >
+                    <div class="form-group  has-feedback" id="coupon_div">
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon()"/>
                     <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
                   </div>
+
 
 <!--                  <div class="form-group has-error has-feedback">
                   <input type="text" class="form-control" >
@@ -627,12 +651,18 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $html .= '</div>';
         $html .= '<div class="checkout-total-inner">
                         <label>Ongkos Kirim</label>';
-         $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
-         $shipping_amount = array_sum($shipping_amount_array);
+         
+       
+        // exit;
+         
+         
+         
          $html .= '<span>'.$_coreHelper->formatPrice($shipping_amount,false).'</span>';
          $html .= '</div>';
          $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+         if(isset($totals["discount"])){
                 $coupon_discount_amount = $totals["discount"]->getValue();
+         }
          $html .= '<div class="checkout-total-inner checkout-discount">
                         <label>Diskon Voucher</label>
                         <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
@@ -819,7 +849,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                   <div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
                     <div class="form-group  has-feedback has-success" id="coupon_div">
-                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" value='.$this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode)).'/>
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" value="'.$this->__(Mage::helper('core')->escapeHtml($couponCode)).'"/>
                     <i class="fa fa-check-circle form-control-feedback"></i>
                   </div>
 

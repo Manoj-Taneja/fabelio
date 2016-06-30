@@ -25,13 +25,19 @@
   }
 }
 </style>
+
+    <?php
+    $controller_name = Mage::app()->getRequest()->getControllerName();; 
+    //echo "Module : ".$module_name;
+    if($controller_name!='onepage'):
+    ?>
 <div class="header-container type3">
     <div class="top-links-container">
         <div class="top-links container">
             <?php
                 $store_currency = $this->getChildHtml('store_currency');
                 $store_language = $this->getChildHtml('store_language');
-				        $compare_link = $this->getChildHtml('compare_link');
+                $compare_link = $this->getChildHtml('compare_link');
             ?>
             <?php echo $store_currency; ?>
             <?php if($store_currency && $store_language):?>
@@ -119,6 +125,26 @@
         </ul>
       </div>
     </div>
-    <?php echo $this->getChildHtml('topMenu') ?>
+      <?php echo $this->getChildHtml('topMenu') ?>
 </div>
+    <?php else: ?>
+<div class="checkout-main">
+    <header class="checkout-header-main">
+    <div class="checkout-header">
+      <div class="container">
+        <div class="checkout-logo"> <img src="<?php echo $this->getSkinUrl('images/fabelio-logo-white-lamp.svg');?>" /> </div>
+        <div class="checkout-header-right hidden-xs ">
+          <ul>
+            <li>Kesulitan? Hubungi 021 1234 1234</li>
+            <li><img src="<?php echo $this->getSkinUrl('images/nav-bar-truck.svg');?>" />Pengiriman Gratis</li>
+            <li><img src="<?php echo $this->getSkinUrl('images/nav-bar-secure.svg');?>" />Secure Payment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+    <?php endif; ?>
+    
+  
 <?php echo $this->getChildHtml('mobile.nav') ?>

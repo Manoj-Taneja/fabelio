@@ -35,6 +35,14 @@
 <?php echo $this->getChildHtml('login_before')?>
 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
+                <?php 
+                
+                $customer_session = Mage::getSingleton('customer/session'); 
+                $customer = $customer_session->getCustomer(); 
+                //var_dump($customer_session->isLoggedIn());
+                //echo "<pre>"; print_r($customer); echo "</pre>";
+                if(!$customer_session->isLoggedIn()):
+                ?>
               <div class="accordion-inner-content">
                 <div class="col-sm-8">
                   <div class="form-group">
@@ -100,6 +108,21 @@
                        </form>
                 </div>
               </div>
+                <?php else: ?>
+                <div class="accordion-inner-content">
+                <?php 
+                    $customer_data  = $customer->getData();
+                   // echo "<pre>"; print_r($customer_data); echo "</pre>";
+                ?>
+                    <div id="logged_in_as" class="logged-in-as">
+                        Logged in as <strong><?php echo $customer_data['email']; ?></strong>
+                    </div>
+                     <div id="sign_out" class="sign-out">
+                         <button type="button" class="chkbtn btn-checkout btn-chk-forget" id="logout_button">Logout</button> &nbsp; <a href="javascript://" id="checkout_continue" id="checkout-continue">Continue with checkout</a>
+                       
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
           </div>
 <?php //echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
@@ -131,6 +154,7 @@
         var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/customerexist";
          $("#review_form").submit();
             var form_data = $("#email_form").serialize();
+            jQuery('#loading-mask').show();
             $.ajax({
                 url:post_url,
                 type:'POST',
@@ -139,14 +163,26 @@
                    var return_data = $.parseJSON(result);
                    if(return_data.success==false){
                        var billing_post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveMethod";
-                       var data='method=register';
+                       var data='method=guest';
                        $.ajax({
                             url:billing_post_url,
                             type:'POST',
                             data:data,
                             success: function(result){
-                                $('#checkout-step-billing').show();
+                                
                                 $('#checkout-step-login').hide();
+                                $('#opc-login').removeClass('active');
+                                $('#checkout-step-billing').show();
+                                $('#opc-billing').addClass('allow active');
+                                $('#billing_method').val(data);
+                                $('#guest_email.val').val($('#login-email').val());
+                                $('#user_email_id').html($('#login-email').val());
+                                $('.format_method_email').val($('#login-email').val());
+                                $('#billing-new-address-form').hide();
+                                $('#edit-completed-login').show();
+                                $('#completed-login').show();
+                                jQuery('#loading-mask').hide();
+                                $('#add_new_address').trigger('click');
                             }
                        });
                    }else if(return_data.success==true){
@@ -154,6 +190,7 @@
                        $('#login-password').show();
                        $('#email_check_button').hide();
                        $('#email_login_button').show();
+                       jQuery('#loading-mask').hide();
                        $('#social_login').hide();
                        $('#email_login_button').click(function(){
                            if($('#login-password').val()==''){
@@ -162,21 +199,27 @@
                                 $('.email-error-show').show();
                            }
                        var login_post_url = <?php Mage::getBaseUrl();?>"/customer/account/loginPostAjax";
-                       var form_data = $("#email_form").serialize();                       
+                       var form_data = $("#email_form").serialize();  
+                       jQuery('#loading-mask').show();
                             $.ajax({
                                 url:login_post_url,
                                 type:'POST',
                                 data:form_data,
                                 success: function(result){
                                     var result_data = $.parseJSON(result);
-                                    if(result_data.error==true){
-                                        $('#form_group').addClass('email-error');
-                                        $('#login-password').addClass('wrong-pass');
-                                        $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
-                                        $('.email-error-show').show();
-                                    }else if(result_data.error==false){
-                                        location.reload();
-                                    }
+                                if(result_data!=null){
+                                        if(result_data.error==true){
+                                            jQuery('#loading-mask').hide();
+                                            $('#form_group').addClass('email-error');
+                                            $('#login-password').addClass('wrong-pass');
+                                            $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                            $('.email-error-show').show();
+                                        }else if(result_data.error==false){
+                                            location.reload();
+                                        }
+                                }else{
+                                    jQuery('#loading-mask').hide();
+                                }
                                 }
                            });
                        });
@@ -208,6 +251,7 @@
             var recover_pass_url = <?php Mage::getBaseUrl();?>"/customer/account/forgotPasswordPostAjax";
             jQuery('#password_recover').submit();
             var recover_pass_form_data = jQuery("#password_recover").serialize();
+            jQuery('#loading-mask').show();
             jQuery.ajax({
                     url:recover_pass_url,
                     type:'POST',
@@ -215,8 +259,10 @@
                     success: function(result){
                         var result_data = $.parseJSON(result);
                         if(result_data.error==true){
+                            jQuery('#loading-mask').hide();
                             alert(result_data.message);
                         }else{
+                            jQuery('#loading-mask').hide();
                             alert(result_data.message);
                             jQuery('.forgotpassord-checkout').hide();
                             jQuery('#password_recover').trigger('reset');
@@ -225,6 +271,21 @@
                         //$('#checkout-step-login').hide();
                     }
                });
+        });
+        
+        
+        jQuery('#logout_button').click(function(){
+           var logout_url = "<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"; 
+           window.location = logout_url;
+        });
+        
+        jQuery('#checkout_continue').click(function(){
+           jQuery('#opc-login').removeClass('active');
+           jQuery('#opc-billing').addClass('allow');
+           jQuery('#opc-billing').addClass('active');
+           jQuery('#checkout-step-login').hide()
+           jQuery('#checkout-step-billing').show();
+           
         });
         
     });

@@ -42,6 +42,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     public function saveOrderAction()
     {
+        //echo "<pre>"; print_r($_POST); echo "</pre>";
+        //exit;
        
         if (!$this->_validateFormKey()) {
             $this->_redirect('*/*');
@@ -134,13 +136,14 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $this->getOnepage()->getQuote()->setIsActive(1) ;
         }
         $this->getOnepage()->getQuote()->save();
-        
+       // var_dump($this->getOnepage()->getQuote());
+       // exit;
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
     
     
-    public function addressFormPostAction(){
+   /* public function addressFormPostAction(){
          if ($this->_expireAjax()) {
             return;
         }
@@ -159,10 +162,12 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         }
          
 
-    }
+    }*/
     
     public function saveBillingAction()
     {
+        //echo "<pre>"; print_r($_POST); echo "</pre>";
+        //exit;
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
             parent::saveBillingAction();
             return;
@@ -229,6 +234,196 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
+    
+    
+    
+    public function saveBillingAjaxAction()
+    {
+        //echo "<pre>"; print_r($_POST); echo "</pre>";
+        //exit;
+        if (!Mage::helper('fabmod_checkout')->getHideShipping()){
+            parent::saveBillingAction();
+            return;
+        }
+
+        if ($this->_expireAjax()) {
+            return;
+        }
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost('billing', array());
+            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
+            //$data['email'] = "as@gh.com";
+            if (isset($data['email'])) {
+               $data['email'] = trim($data['email']);
+                
+            }
+            if (isset($data['street'])) {
+               $data['street'] = trim($data['street']);
+                
+            }
+            //echo "<pre>"; print_r($data); echo "</pre>";
+            //exit;
+            $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
+           // echo "<pre>"; print_r($result); echo "</pre>";
+            //exit;
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+//            var_dump($customer);
+//            foreach ($customer->getAddresses() as $address):
+//                        $data = $address->toArray();
+//                        echo "<pre>"; print_r($data); echo "</pre>";
+//                        
+//            endforeach;
+//            exit;
+              
+
+            if (!isset($result['error'])) {
+             //   var_dump($this->getOnepage()->getQuote());
+               // exit;
+                $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
+                                 $region_name = $region_obj->getName();
+                $block_html .= '<div class="checkout-box-inner-address  address-selected" id="inner_address_'.$data['entity_id'].'">';
+                    $block_html .= '<div class="checkout-address-fill">
+                          <label>'.$data['firstname']. " ". $data['lastname'].'</label>
+                          <img width="25" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-edit.svg">
+                          
+                        </div>
+
+                        <div class="checkout-address-fill">
+                          <label>'.$data['street'].','.$region_name.', '.$data['city'].'</label>
+                        </div>
+                        <div class="checkout-address-fill">
+                          <label>'.$data['telephone'].'</label>
+                        </div>'; 
+                    $block_html .= '</div>';
+                    $block_html .= '<div class="modal fade checkout-address-main" id="myAddress-'.$data['entity_id'].'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <form name="address_form_'.$data['entity_id'].'" id="address_form_'.$data['entity_id'].'" method="post" action="javascript://">
+                              <input type="hidden" name="method" id="billing_method_1" value="method=guest" />
+                        <div class="modal-body">
+                          <button type="button" id="close-'.$data['entity_id'].'" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h3>Masukkan alamat baru Anda!</h3>
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Name Depan</label>
+                              <input type="text" name="billing[firstname]" id="first_name_'.$data['entity_id'].'" placeholder="Masukkan Nama Depan" value="'.$data['firstname'].'" />
+                          </div>
+                          <div class="checkout-form-popup">
+                              <label>Nama Belakang</label>
+                              <input type="text" name="billing[lastname]" id="first_name_'.$data['entity_id'].'" placeholder="Masukkan nama Belakang" value="'.$data['lastname'].'" />
+                          </div>
+                          </div>
+
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Alamat</label>
+                              <input type="text" name="billing[street]" placeholder="Alamat" value="'.$data['street'].'"/>
+                          </div>';
+                    $block_html .= '<div class="checkout-form-popup">
+                              <label>Negara</label>';
+
+                              $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false);
+                            if (count($_countries) > 0):
+                              $block_html .=  '<select name="billing[country_id]" id="billing:country_id" class="validate-select"><option value="">Please choose a country...</option>';
+                                    foreach($_countries as $_country):
+                                        
+                                    if($data['country_id']==$_country['value']){ $selected = "selected='selected'";}
+                                      $block_html .= '  <option value="'.$_country['value'].'" '.$selected.'>'.$_country['label'].'</option>';
+                                    endforeach;
+                               $block_html .= ' </select>';
+                             endif; 
+                             
+                          $block_html .= '</div>
+                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Provinsi</label>';
+                          
+                            $regionCollection = Mage::getModel('directory/region_api')->items('ID');
+                            $block_html.='<select name="billing[region_id]" id="region_'.$data['entity_id'].'" >
+                                  <option value="">Pilih provinsi</option>';
+                             foreach($regionCollection as $region):
+                                 $region_obj =  Mage::getModel('directory/region')->load($region['region_id']);
+                                 $region_name = $region_obj->getName();
+                                  if($region['region_id']==$data['region_id']){
+                                      $region_selected = "selected='selected'";
+                                  }else{
+                                      $region_selected = "";
+                                  }
+                             $block_html .= '<option value="'.$region['region_id'].'" '.$region_selected.'>'.$region_name.'</option>';     
+                             endforeach;
+                         $block_html .='</select> </div>';
+                          
+                          
+                              
+                         
+                         $block_html .=' <div class="checkout-form-popup ">
+                              <label>Kota</label>
+                              <input type="text" name="billing[city]" id="city_'.$data['entity_id'].'" placeholder="Kota" value="'.$data['city'].'" />
+                          </div>
+                          </div>
+
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Nomor HP</label>
+                              <input type="text" placeholder="Nomor HP" name="billing[telephone]" id="phone_'.$data['entity_id'].'" value="'.$data['telephone'].'"/>
+                          </div>
+
+                          </div>
+
+
+
+                      </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="billing[entity_id]" id="address_no_'.$data['entity_id'].'" value="'.$data['entity_id'].'" />
+                            <input type="hidden" value="'.Mage::getSingleton('core/session')->getFormKey().'" name="form_key">
+                            <input type="hidden" id="billing:address_id" value="'.$data['entity_id'].'" name="billing[address_id]">
+                                <input type="hidden" name="billing[email]" value="'.$data['email'].'" />
+                            <input type="hidden" name="billing[use_for_shipping]" value="1" />
+                        <input name="context" type="hidden" value="checkout" />
+                          <button type="button" class="btn btn-default save-address" id="new_address_1" rel="'.$data['entity_id'].'" >Simpan Alamat Ini</button>
+                        </div>
+                          </form>
+                      </div>
+                    </div>
+                  </div>';
+                      
+                      /*$block_html .= '<div class="checkout-box-inner">
+                      <div class="checkout-plus-icon-main">
+                      <div class="checkout-plus-icon checkout-plus-icon-new">
+                          <img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-add-white.svg" data-toggle="modal" data-target="#myAddress">
+                      </div>
+                    </div>
+                      <label>Tambah Alamat Baru </label>
+
+                    </div>';*/
+
+                $result['error']=false;
+                $result['success']=true;
+                $result['firstname'] = $data['firstname'];
+                $result['lastname'] = $data['lastname'];
+                $result['city'] = $data['city'];
+                $result['country_id'] = $data['country_id'];
+                $result['telephone'] = $data['telephone'];
+                $region = Mage::getModel('directory/region')->load($data['region_id']);
+                $result['region'] = $region->getName();
+                $result['region_id'] = $data['region_id'];
+                $result['street'] = $data['street'];
+                $result['entity_id'] = $data['entity_id'];
+                $result['block_html'] = $block_html;
+                
+            }
+
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        }
+    }
+    
+    
+    
     public function saveShippingAction()
     {
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
@@ -271,11 +466,10 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             return;
         }
         
-            $post_array = $this->getRequest()->getPost();
-           // echo "<pre>"; print_r($post_array); echo "</pre>";
-           // exit;
+            $post_array = $this->getRequest()->getPost();           
             Mage::getSingleton('core/session')->unsShippingAmount();
             Mage::getSingleton('core/session')->unsShippingDescription();
+            unset($shipping_amount_array);
             $return_array = array();
             $shipping_amount_array = array();
             $shipping_amount = 0;
@@ -301,8 +495,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $return_html .= '
                   <div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback">
-                    <input type="text" class="form-control" >
+                    <div class="form-group  has-feedback" id="coupon_div">
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon()"/>
                     <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
                   </div>
 
@@ -325,7 +519,9 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                       </div>';
             }
               $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+              if(isset($totals["discount"])){
                 $coupon_discount_amount = $totals["discount"]->getValue();
+                }
          $return_html .= '<div class="checkout-total-inner checkout-discount">
                         <label>Diskon Voucher</label>
                         <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
@@ -537,7 +733,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     public function customerexistAction(){     
         
-        
+       
         if ($this->_expireAjax()) {
             return;
         }
@@ -549,20 +745,26 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             
              $data_post = $this->getRequest()->getPost('login',array());
             
+             
+             
              $result_data = $this->_customerExists($data_post['username'],1);
+             
              if(!$result_data){
                  $result['success'] = false;
                  $result['error'] = true;
+                 Mage::getSingleton('core/session')->setGuestEmail($data_post['username']);
                  
              }else{
                  $result['success'] = true;
                  $result['error'] = false;
                  $result['email'] = $result_data->getEmail();
+                 
              }
             
         }catch(Mage_Core_Exception $e){
             $result['error'] = $e->getMessage();
         }
+        
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         
     }
@@ -584,6 +786,60 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
 
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
+        }
+        
+        public function createUserAjaxAction(){
+            if (!$this->_validateFormKey()) {
+                $this->_redirect('*/*/');
+                return;
+            }
+            
+            try{
+                if (!$this->getRequest()->isPost()) {
+                    $this->_ajaxRedirectResponse();
+                    return;
+                }
+                $data_post = $this->getRequest()->getPost();
+                
+                $e = $data_post['email']; //provided by guest user
+
+                $store = Mage::app()->getStore();
+                $websiteId = Mage::app()->getWebsite()->getId();
+
+                $customerObj = Mage::getModel('customer/customer');
+                $customerObj->website_id = $websiteId;
+                $customerObj->setStore($store);
+
+                //$prefix = "mag";
+                //$pwd = uniqid($prefix);
+                $pwd = $data_post['userpassword'];
+                $session = Mage::getSingleton('checkout/session');
+                $fname = $session->getFirstname();
+                $lname = $session->getLastname();
+
+                $customerObj->setEmail($e);
+                $customerObj->setFirstname('Guest');
+                $customerObj->setLastname('Guest');
+                $customerObj->setPassword($pwd);
+                $customerObj->save();
+                $ret = $customerObj->sendNewAccountEmail('confirmed'); //auto confirmed
+                $new_user_data = $ret->getData();
+                //var_dump($ret);
+                if($new_user_data['entity_id']!=''){
+                    $result['success'] = true;
+                    $result['error'] = false;
+                }else{
+                    $result['success'] = false;
+                    $result['error'] = true;
+                }
+
+                
+            }catch(Mage_Core_Exception $e){
+                    $result['success'] = false;
+                    $result['error'] = $e->getMessage();
+            }
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+                
         }
     
 }

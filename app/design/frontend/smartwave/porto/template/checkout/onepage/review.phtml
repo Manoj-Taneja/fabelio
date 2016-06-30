@@ -90,7 +90,7 @@
                                     }
                                     $shipping_code = "matrixrate_matrixrate_".$val['pk'];
                              ?>
-                            <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?>
+                              <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?> <br>
                             <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
                             <?php endforeach; ?>
                         
@@ -219,9 +219,15 @@
     <div id="review-buttons-container" class="buttons-set address-cont-btn">
         
         <button onclick="" class="button btn-checkout" id="go_payment" title="Next Step" type="submit"><span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
-        <span style="display:none;" id="review-please-wait" class="please-wait">
+<!--        <span style="display:none;" id="review-please-wait" class="please-wait">
             <img class="v-middle" title="Loading Next Step..." alt="Loading Next Step..." src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif');?>"> Loading Next Step...        </span>
-    </div>
+    </div>-->
+        <div id="review-please-wait" style="display: none;">
+            <div class="background-overlay"></div>
+            <p class="loader" id="loading_mask_loader">
+                <i class="ajax-loader large animate-spin"></i>
+            </p>
+        </div>
     
 </div>
             </div>
@@ -239,7 +245,8 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
-        $('#go_payment').click(function(){
+       // $(document).on("click", "#go_payment", function(){});
+        $(document).on("click", "#go_payment", function(){
             $(this).hide();
             $('#review-please-wait').show();
             var attr_id=$(this).attr('rel');
@@ -266,7 +273,7 @@
         })
         
         
-       $('input[type=radio]').click(function(){
+       $(document).on("click", "input[type=radio]", function(){
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
@@ -286,12 +293,12 @@
             });
         })
         
-        $('.delete-item').click(function(){
+        $(document).on("click", ".delete-item", function(){
            var product_id = $(this).attr('rel');
            $('#delete_item').val(product_id);
         });
         
-        $('#delete_confirm').click(function(){
+        $(document).on("click", "#delete_confirm", function(){
            var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/deleteAjax";
            var form_data = "id="+$('#delete_item').val();
            $.ajax({
@@ -309,26 +316,7 @@
                          });
                          
                          
-                         
-                        $('input[type=radio]').click(function(){
-                            var attr_id=$(this).attr('rel');
-                            var pk = $(this).val();
-                            var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
-                            $("#review_form").submit();
-                            var form_data = $("#review_form").serialize();
-                            //console.log("Review FOrm Data : "+form_data);
-                            $.ajax({
-                                url:post_url,
-                                type:'POST',
-                                data:form_data,
-                                success: function(result){
-                                    var return_data = $.parseJSON(result);
-                                    $('.checkout-total-main').html(return_data.subtotal_string);   
-                                    $('#cart_totals').html(return_data.grand_total);
-                                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
-                                }
-                            });
-                        })
+                       
                          
                          
                     }else{
@@ -380,5 +368,42 @@ $("#coupon_code").enterKey(function () {
    
    
 });
+
+function apply_coupon(){
+jQuery.fn.enterKey = function (fnc) {
+    return this.each(function () {
+        jQuery(this).keypress(function (ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        })
+    })
+}
+jQuery("#coupon_code").enterKey(function ($) {
+    var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/couponPostAjax";
+    var form_data = "coupon_code="+jQuery('#coupon_code').val();
+     jQuery.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = jQuery.parseJSON(result);
+                    if(return_data.error==true){
+                        jQuery('#coupon_div').addClass('has-error');
+                        jQuery('.form-control-feedback').hide();
+                    }else{
+                        //$('#coupon_div').addClass('has-success');
+                         jQuery('.checkout-total-main').html(return_data.html);
+                         jQuery('#cart_totals').html(return_data.grand_total);
+                        //$('.form-control-feedback').show();
+                    }
+                    //alert(return_data.success);
+                   // $('.checkout-total-main').html(return_data.subtotal_string);                    
+                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+                }
+            });
+})
+}
   
 </script>
