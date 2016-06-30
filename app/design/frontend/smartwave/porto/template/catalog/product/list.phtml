@@ -180,18 +180,18 @@
     //$_columnCount = Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     $_columnCount = $this->getColumnCount() ? $this->getColumnCount() : Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     ?>
-    <ul id="myProductList" class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
-    <?php $i=0; $mycount=0;foreach ($_productCollection as $_product): ?>
+    <ul <?php /* FAB-95 Start/**/ ?>id="myProductList" <?php /* FAB-95 End/**/ ?>class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
+    <?php $i=0; /* FAB-95 Start/**/ $mycount=0; /* FAB-95 End/**/ foreach ($_productCollection as $_product): ?>
             <?php
             /* MANGOEXTENSIONS */
             /* -SWATCHES HTML OUTPUT */
             $_swatches = $_swatches_helper->setProduct($_product)->processSwatches();
             /* EOF -SWATCHES HTML OUTPUT */
             $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
-			$mycount++;
+			/* FAB-95 Start/**/ $mycount++; /* FAB-95 End/**/
             ?>
         
-            <li class="item myProductLi" product-index="<?php echo $mycount; ?>">
+            <li class="item <?php /* FAB-95 Start/**/ ?>myProductLi<?php /* FAB-95 End/**/ ?>" <?php /* FAB-95 Start/**/ ?>product-index="<?php echo $mycount; ?>"<?php /* FAB-95 End/**/ ?>>
               <div class="item-area">
                 <div class="price-discount-percentage">
                 <?php
@@ -429,7 +429,7 @@
 			
 			function manageSwatches(){
 				var winWidth=jQuery(window).width();
-				if(winWidth>780){
+				if(winWidth>767){
 					jQuery(".show-mobile-more-swatches").addClass("hide");
 					jQuery(".nth-child-4n").removeClass("hide");
 					jQuery(".nth-child-5n").removeClass("hide");
@@ -474,18 +474,18 @@
 				var hH = jQuery('#myProductList').outerHeight();
 				var wH = jQuery(window).height();
 				var wS = jQuery(this).scrollTop();
-				var wHNew=wH*2;
+				var wHNew=wH*3;
 				var winWidth=jQuery(window).width();
 				if (wS > (hT+hH-wHNew)){
 					
-					if(winWidth>780){
+					if(winWidth>767){
 					
 					}else{
 						infiniteScrollForMobile();
 					}
 				}
 				
-				if(winWidth<780){
+				if(winWidth<767){
 					var currentLi=2;
 					var currentCount=0;
 					var index=0;
@@ -508,6 +508,10 @@
 						jQuery('#myProductList').after('<div id="currentProductIsBlock" style="position: fixed;z-index: 100000000;bottom: 10px;height: 50px;opacity: 0.8;margin-left: -75px;width: 150px;left: 50%;text-align: center;background-color: black;border-radius: 5px;color: white;padding-top: 15px;"></div>');
 					}
 					jQuery('#currentProductIsBlock').html(currentLi+" of <?php echo $_productCollection->getSize(); ?>");
+					clearTimeout(jQuery.data(this, 'scrollTimer'));
+					jQuery.data(this, 'scrollTimer', setTimeout(function() {
+						jQuery('#currentProductIsBlock').remove();
+					}, 2000));
 					
 				}
 				
@@ -521,7 +525,7 @@
 			
 			function hideAndShowPaging(){
 				var winWidth=jQuery(window).width();
-				if(winWidth>780){
+				if(winWidth>767){
 					jQuery(".pager").removeClass('hide');
 					jQuery(".limiter").removeClass('hide');
 					if(jQuery('#myProductLoaderImg').length>0){
@@ -557,14 +561,14 @@
 								url: url,
 								data: "",
 								beforeSend: function() {
-									jQuery('#myProductList').append('<img id="myProductLoaderImg" src="/media/loading_spinner.gif" style="margin: auto;height: 50px;">');
+									jQuery('#myProductList').append('<img id="myProductLoaderImg" src="/media/infinitescroll/loading_spinner.gif" style="margin: auto;height: 50px;">');
 								},
 								success: function(data) {
 									if(jQuery('#myProductLoaderImg').length>0){
 										jQuery('#myProductLoaderImg').remove();
 									}
 									var jsonObj=JSON.parse(data);
-									console.log(jsonObj);
+									//console.log(jsonObj);
 									var elements = jQuery(jsonObj.products);
 									var found = jQuery('#myProductList', elements).html();
 									jQuery('#myProductList').append(found);
