@@ -1112,7 +1112,7 @@
             jQuery('#phone-error-msg').html('');
             
         });
-        <?php if (!$this->customerHasAddresses()): ?>
+        <?php if (!$this->customerHasAddresses() && $this->isCustomerLoggedIn()): ?>
         jQuery('#add_new_address').trigger('click');
         <?php endif;?>
     });
