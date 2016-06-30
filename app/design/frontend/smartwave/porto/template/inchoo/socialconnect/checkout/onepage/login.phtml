@@ -163,7 +163,7 @@
                    var return_data = $.parseJSON(result);
                    if(return_data.success==false){
                        var billing_post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveMethod";
-                       var data='method=register';
+                       var data='method=guest';
                        $.ajax({
                             url:billing_post_url,
                             type:'POST',

@@ -45,6 +45,7 @@
 
              </h4>
           </div>-->
+
           <div id="collapseTwo" class="panel-collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
                 <div class="accordion-inner-content">
@@ -107,7 +108,7 @@
                           
                           
                           
-                          <input type="text" name="billing[email]" id="billing:email"
+                          <input type="hidden" name="billing[email]" id="billing:email"
                                                value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
                                                title="<?php echo $this->__('Email Address') ?>"
                                                class="input-text validate-email required-entry format_method_email"/>
@@ -140,7 +141,17 @@
                           </div>
                           <div class="checkout-form-popup custom-select-icon">
                               <label>Provinsi</label>
-                              <input type="text" name="billing[region]" id="region_<?php echo $data['entity_id']; ?>" placeholder="Provinsi" value="<?php echo $data['region']; ?>" />
+                              <?php
+                                    $regionCollection = Mage::getModel('directory/region_api')->items('ID');
+                              ?>
+                              <select name="billling[region_id]" id="region_<?php echo $data['entity_id']; ?>" >
+                                  <option value="">Pilih provinsi</option>
+                                  <?php foreach($regionCollection as $region):?>
+                                  <?php $region_name =  Mage::getModel('directory/region')->load($region['region_id']);?>
+                                  <option value="<?php echo $region['region_id']; ?>"<?php if($region['region_id']==$data['region_id']):?>selected="selected"<?php endif; ?>><?php echo $region_name; ?></option>
+                                  <?php endforeach;?>
+                              </select>
+<!--                              <input type="text" name="billing[region]" id="region_<?php echo $data['entity_id']; ?>" placeholder="Provinsi" value="<?php echo $data['region']; ?>" />-->
                           </div>
                           <div class="checkout-form-popup custom-select-icon">
                               <label>Kota</label>
@@ -196,7 +207,7 @@
                         <div class="modal-body">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h3>Masukkan alamat baru Anda!</h3>
-                          <div class="checkout-form-popup-main">
+                          <div class="checkout-form-popup-main" id="name-div">
 
 
                           <div class="checkout-form-popup">
@@ -208,6 +219,7 @@
                               <input name = "billing[lastname]" id="last_name" type="text" placeholder="Last Name" />
                           </div>
                           </div>
+                          <p id="name-error-msg" class="error-message"></p>
                           
                           
                           
@@ -228,7 +240,7 @@
                           
                            
 
-                          <div class="checkout-form-popup-main">
+                          <div class="checkout-form-popup-main" id="address-div">
 
 
                           <div class="checkout-form-popup">
@@ -244,28 +256,39 @@
 <!--                              <input type="text" placeholder="Indonesia" />-->
                             <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
                             <?php if (count($_countries) > 0): ?>
-                                <select name="billing[country_id]" id="country_id" class="validate-select">
+<!--                                <select name="billing[country_id]" id="country_id" class="validate-select">
                                     <option value="">Please choose a country...</option>
                                     <?php foreach($_countries as $_country): ?>
                                         <option value="<?php echo $_country['value'] ?>" >
                                             <?php echo $_country['label'] ?>
                                         </option>
                                     <?php endforeach; ?>
-                                </select>
+                                </select>-->
+                              <?php echo $this->getCountryHtmlSelect('billing') ?>
                             <?php endif; ?> 
                           </div>
                           <div class="checkout-form-popup custom-select-icon">
                               <label>Provinsi</label>
-                              <input type="text" placeholder="Provinsi" name="billing[region]" id="region" />
-
+                              <input type="text" placeholder="Provinsi"  name="billing[region]" id="region" />
+                              <select id="billing_region_id" name="billing[region_id]"
+                                            title="<?php echo $this->__('Province') ?>" class="validate-select"
+                                            style="display:none;">
+                                        <option
+                                            value=""><?php echo $this->__('Please select province') ?></option>
+                                    </select>
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        $('billing_region_id').setAttribute('defaultValue', "<?php echo $this->getAddress()->getRegionId() ?>");
+                                        //]]>
+                                    </script>
                           </div>
-                          <div class="checkout-form-popup custom-select-icon">
+                          <div class="checkout-form-popup">
                               <label>Kota</label>
                                <input type="text" name="billing[city]" id="city" placeholder="Kota" />
                           </div>
                           </div>
-
-                          <div class="checkout-form-popup-main">
+                          <p id="address-error-msg" class="error-message"></p>
+                          <div class="checkout-form-popup-main" id="phone-div">
 
 
                           <div class="checkout-form-popup">
@@ -274,6 +297,7 @@
                           </div>
 
                           </div>
+                          <p id="phone-error-msg" class="error-message"></p>
                           
                           <div class="checkout-form-popup-main" style="display:none;">
 
@@ -308,7 +332,7 @@
                             <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
                             <input type="hidden" name="billing[use_for_shipping]" value="1" />
                             <input type="hidden" name="billing[entity_id]" value="1" id="billing_entity_id" />
-                          <button type="button" class="btn btn-default" id="new_address">Simpan Alamat Ini</button>
+                          <button type="button" class="btn btn-default pass-disabled" id="new_address">Simpan Alamat Ini</button>
                         </div>
                            </form>
                       </div>
@@ -372,7 +396,7 @@
                                     <label for="billing:email"
                                            class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
 
-                                    <div class="input-box">
+                                    <div class="input-box" style="display:none;">
                                         <input type="text" name="billing[email]" id="billing:email"
                                                value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
                                                title="<?php echo $this->__('Email Address') ?>"
@@ -612,10 +636,14 @@
     var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
     var billingForm = new VarienForm('co-billing-form');
 
-    //billingForm.setElementsRelation('billing:country_id', 'billing:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select Province...') ?>');
-   // $('billing-address-select') && billing.newAddress(!$('billing-address-select').value);
+    billingForm.setElementsRelation('billing:country_id', 'billing:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select Province...') ?>');
+    $('billing-address-select') && billing.newAddress(!$('billing-address-select').value);
 
-//    var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing:postcode');
+    var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing:postcode');
+    
+     var billingRegionUpdater = new RegionUpdater('billing:country_id', 'region', 'billing_region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing_postcode');
+    
+    
     CITIES_ACTION = "<?php echo $this->getUrl('citydropdown/index/cities',array('_secure'=>true)); ?>";
     //]]>
 </script>
@@ -642,9 +670,13 @@
     //]]>
     jQuery(document).ready(function(){
         //jQuery(".save-address").click(function(){
+        
+        <?php if($this->isCustomerLoggedIn()):?>
         jQuery(document).on('click', '.save-address', function(){
             var address_id = jQuery(this).attr('rel');
+            
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+           
             var address_form_data = jQuery('#address_form_'+address_id).serialize();
              jQuery.ajax({
                     url:address_save_url,
@@ -682,38 +714,46 @@
                         //$('#checkout-step-login').hide();
                     }
                });
+              
           //  alert(jQuery(this).attr('rel'))
         });
-        
+         <?php endif; ?> 
+         
         jQuery(document).on('click', '#new_address', function($){
             var error = 0;
            if(jQuery('#first_name').val()==''){
-               jQuery('#first_name').addClass('wrong-pass');
+               jQuery('#name-div').addClass('wrong-pass');
+               jQuery('#name-error-msg').html('Enter first name');
                //return false;
                error = 1;
            } 
            if(jQuery('#last_name').val()==''){
-               jQuery('#last_name').addClass('wrong-pass');
+               jQuery('#name-div').addClass('wrong-pass');
+               jQuery('#name-error-msg').html('Enter last name');
                error = 1;
            }
            if(jQuery('#street').val()==''){
-               jQuery('#street').addClass('wrong-pass');
+               jQuery('#address-div').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Enter street');
                error = 1;
            }
            if(jQuery('#country_id').val()==''){
-               jQuery('#country_id').addClass('wrong-pass');
+               jQuery('#address-div').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Select country');
                error = 1;
            }
-           if(jQuery('#region').val()==''){
-               jQuery('#region').addClass('wrong-pass');
+           if(jQuery('#billing_region_id').val()==''){
+               jQuery('#address-div').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Select region');
                error = 1;
            }
            if(jQuery('#city').val()==''){
-               jQuery('#city').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Enter city');
                error = 1;
            }
            if(jQuery('#phone').val()==''){
-               jQuery('#phone').addClass('wrong-pass');
+               jQuery('#phone-div').addClass('wrong-pass');
+               jQuery('#phone-error-msg').html('Enter phone number');
                error = 1;
            }
            if(error==1){
@@ -726,6 +766,7 @@
            
            if(jQuery('#billing_method').val()==""){
                var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+               jQuery('#loading-mask').show();
                 jQuery.ajax({
                          url:address_save_url,
                          type:'POST',
@@ -737,9 +778,9 @@
                                  //jQuery('#myAddress-'+address_id).hide();
 
                                  //console.log('#close-'+address_id);
-
+                                  jQuery('#address_form')[0].reset();
                                  jQuery('.close').trigger( "click" );
-
+                                 jQuery('#loading-mask').hide();
                                 // jQuery('.modal-backdrop').fadeOut();
                                  setTimeout(function(){ 
                                     jQuery('#address_boxes').html(result_data.block_html);
@@ -754,6 +795,7 @@
                     });
            }else{
                var address_save_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveBillingAjax";
+               jQuery('#loading-mask').show();
               //document.getElementById('billing:street1').value = jQuery('#street').val();
             /*  console.log(jQuery('#street').val());
                $$('billing:firstname').value = jQuery('#first_name').val();               
@@ -773,7 +815,7 @@
                                 // jQuery('#address_boxes').html(result_data.block_html);
                                  //jQuery('#myAddress-'+address_id).hide();
 
-                                 console.log(result_data);
+                                // console.log(result_data);
                                  jQuery("input[title='First Name']").val(result_data.firstname);
                                  jQuery("input[title='Last Name']").val(result_data.lastname);
                                 //$$('firstname').value = result_data.firstname;
@@ -795,10 +837,11 @@
                                  jQuery('#address_form')[0].reset();
                                  jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
                                 jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                                
                                setTimeout(function(){ 
                                jQuery('#address_boxes').html(result_data.block_html);
                             }, 500);
-                                    
+                                jQuery('#loading-mask').hide();    
                                 // jQuery('.modal-backdrop').fadeOut();
                                  
                               // jQuery('#address_boxes').html(result_data.block_html);
@@ -818,44 +861,46 @@
         
         
         jQuery(document).on('click', '#new_address_1', function(){
+        
             var error = 0;
-           if(jQuery('#first_name').val()==''){
+           if(jQuery('#first_name_1').val()==''){
                jQuery('#first_name').addClass('wrong-pass');
                //return false;
                error = 1;
            } 
-           if(jQuery('#last_name').val()==''){
+           if(jQuery('#last_name_1').val()==''){
                jQuery('#last_name').addClass('wrong-pass');
                error = 1;
            }
-           if(jQuery('#street').val()==''){
+           if(jQuery('#street_1').val()==''){
                jQuery('#street').addClass('wrong-pass');
                error = 1;
            }
-           if(jQuery('#country_id').val()==''){
+           if(jQuery('#country_id_1').val()==''){
                jQuery('#country_id').addClass('wrong-pass');
                error = 1;
            }
-           if(jQuery('#region').val()==''){
+           if(jQuery('#region_1').val()==''){
                jQuery('#region').addClass('wrong-pass');
                error = 1;
            }
-           if(jQuery('#city').val()==''){
+           if(jQuery('#city_1').val()==''){
                jQuery('#city').addClass('wrong-pass');
                error = 1;
            }
-           if(jQuery('#phone').val()==''){
+           if(jQuery('#phone_1').val()==''){
                jQuery('#phone').addClass('wrong-pass');
                error = 1;
            }
+           
            if(error==1){
                return false;
            }
-           
+           jQuery('#loading-mask').show();
            jQuery('#address_form_1').submit();
            var address_form_data = jQuery('#address_form_1').serialize();
            //var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
-           jQuery('#loading-mask').show();
+           
            if(jQuery('#billing_method_1').val()==""){
                var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
                 jQuery.ajax({
@@ -869,13 +914,15 @@
                                  //jQuery('#myAddress-'+address_id).hide();
 
                                  //console.log('#close-'+address_id);
-                                 jQuery('#loading-mask').hide();
+                                 
+                                 jQuery('#address_form')[0].reset();
                                  jQuery('.close').trigger( "click" );
-
+                                 
                                 // jQuery('.modal-backdrop').fadeOut();
                                  setTimeout(function(){ 
                                     jQuery('#address_boxes').html(result_data.block_html);
                                  }, 500);
+                                 jQuery('#loading-mask').hide();
                               // jQuery('#address_boxes').html(result_data.block_html);
 
                              }else{
@@ -918,7 +965,7 @@
                                 jQuery('.format_method_region').val(result_data.region);
                                 jQuery('.format_method_city').val(result_data.city);
                                 jQuery('.format_method_telephone').val(result_data.telephone);
-                                jQuery('#billing_method').val('method=register');
+                                jQuery('#billing_method').val('method=guest');
                                 jQuery('#loading-mask').hide();
                                  jQuery('.close').trigger( "click" );
                                  //jQuery('#billing_save').trigger('click');
@@ -953,8 +1000,10 @@
         
         jQuery(document).on('click', '.delete_address', function(){
           // jQuery(this).attr('rel');
+          console.log("gcvzxc : "+jQuery(this).attr('rel'));
            jQuery('#confirm_delete').attr('rel',jQuery(this).attr('rel'));
-           jQuery('#confirm_delete').click(function(){
+          // jQuery('#confirm_delete').click(function(){
+          jQuery(document).on('click', '#confirm_delete', function(){
              // console.log("Attr :"+jQuery(this).attr('rel')); 
               var address_form_data = "id="+jQuery(this).attr('rel');
               jQuery('#loading-mask').show();
@@ -997,10 +1046,18 @@
             var element_id_array = elem_id.split("_");
             var address_id = element_id_array[2];
             var address_form_data = "id="+address_id;
+            <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+            <?php if($this->isCustomerLoggedIn()): ?>
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/getAddressAjax";
+            <?php else: ?>
+                jQuery(this).addClass('address-selected');
+                return false;
+                
+            <?php endif; ?>
             //console.log("Address Id : "+address_id);
-            jQuery('#loading-mask').show();
+            
             if(jQuery(this).hasClass('address-selected')){
+                jQuery('#loading-mask').show();
             jQuery.ajax({
                     url:address_save_url,
                     type:'POST',
@@ -1018,6 +1075,7 @@
                                 $('billing:address_id').value = result_data.entity_id;
                                 $('billing:region').value=result_data.region;
                                 $('billing:city').value=result_data.city;
+                                jQuery('#confirm_delete').attr('rel',result_data.entity_id);
                                 jQuery('#loading-mask').hide();
                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
                                 jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
@@ -1035,12 +1093,23 @@
                          // jQuery('#address_boxes').html(result_data.block_html);
                            
                         }else{
-                            alert(result_data.message)
+                            alert(result_data.message);
+                            jQuery('#loading-mask').hide();
                         }
                      
                     }
                });
            }
+        });
+        
+        jQuery('#address_form').find('.close').click(function(){
+            jQuery('#name-div').removeClass('wrong-pass');
+            jQuery('#name-error-msg').html('');
+            jQuery('#address-div').removeClass('wrong-pass');
+            jQuery('#address-error-msg').html('');
+            jQuery('#phone-div').removeClass('wrong-pass');
+            jQuery('#phone-error-msg').html('');
+            
         });
     });
 </script>

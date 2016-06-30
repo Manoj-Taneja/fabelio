@@ -595,7 +595,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                     }else{
                         $html .= '<div class="checkout-quantity">';
                         foreach($delivery_array as $key=>$val):
-                            $html .= '<input type="radio" '.$checked.' name="'.$product_id.'" value="0" rel="shipping_method"/>&nbsp;'.$val['delivery_date'].' - Free';
+                            $html .= '<input disabled="disabled" type="radio" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method"/>&nbsp;'.$val['delivery_date'].' - Free';
                         endforeach;
                         $html .= '</div>';
                     }

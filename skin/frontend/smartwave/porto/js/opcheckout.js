@@ -286,6 +286,7 @@ Checkout.prototype = {
                 
                 jQuery('#payment-buttons-container').hide();
                 jQuery('#submiting-order-container').show();
+                jQuery('#loading-mask').show();
                 
                 setTimeout(function(){ 
                    jQuery('#place-order-button').trigger( "click" );

@@ -69,25 +69,26 @@ echo $lastOrderId;
 </div>-->
 
 
-<div class="modal fade checkout-delete-main" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade checkout-delete-main in" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
 <form name="register_guest" id="register_guest" action="javascript://" method="POST">
       <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pass-close"><span aria-hidden="true">&times;</span></button>
 
-        <img src="<?php echo $this->getSkinUrl('images/icon-delete.svg'); ?>" />
-        <label>Apakah Anda yakin ingin menghapus barang Lni?</label>
-        <h4>Batal</h4>
+        <img src="<?php echo $this->getSkinUrl('images/icon-guest-password.svg'); ?>" />
+        <h4>Satu langkah lagi!</h4>
+        <p>Daftarkan email Anda dengan cara memasukkan password dibawah ini</p>
         
-            <div id="userpass" ><input type="password" name="userpassword" id="userpassword" /></div>
-            <div id="confirmuserpass" style="display:none;" ><input type="password" name="confirmuserpassword" id="confirmuserpassword" /></div>
+        
+            <div id="userpass" ><input type="password" class="form-control" placeholder="Masukkan password Anda" name="userpassword" id="userpassword" /></div>
+<!--            <div id="confirmuserpass" style="display:none;" ><input type="password" name="confirmuserpassword" id="confirmuserpassword" /></div>-->
             <div id="useremail" ><input type="hidden" name="email" id="email" value="<?php echo $guest_email; ?>" /></div>
             <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
         
     </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="register_guest_btn" >Hapus</button>
+          <button type="button" class="btn btn-default pass-disabled" id="register_guest_btn" >Buat Akun Fabelio <i class="fa fa-arrow-right"></i></button>
       </div>
  </form>
     </div>
@@ -95,11 +96,64 @@ echo $lastOrderId;
 </div>
 
 
+
+
+
+<div class="modal fade checkout-delete-main in" id="confirmed-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+<form name="register_guest" id="register_guest" action="javascript://" method="POST">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pass-close"><span aria-hidden="true">&times;</span></button>
+
+        <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" />
+        <h4>Yay!</h4>
+        <p>Akun Anda telah terdaftar di Fabelio!</p> 
+    </div>
+ </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
     </div>
 <?php if($checkout_method=='guest'):?>
 <script>
 jQuery(document).ready(function(){
     jQuery('#deleteitem').show();
+    
+    
+    
+jQuery('input[type=password]').keyup(function() {
+    // keyup code here
+    if(jQuery('#userpassword').val().length >= 6){
+        jQuery('#register_guest_btn').removeClass('pass-disabled');
+        jQuery('#userpassword').removeClass('wrong-pass');
+    }
+}).focus(function() {
+    if(jQuery('#userpassword').val().length >= 6){
+       jQuery('#register_guest_btn').addClass('pass-disabled');
+    }
+    //$('#pswd_info').show();
+    
+}).blur(function() {
+    //$('#pswd_info').hide();
+});
+    
+    jQuery('#pass-close').click(function(){
+        jQuery('#deleteitem').hide();
+        jQuery('#register_guest')[0].reset();
+    })
+    
     jQuery('#register_guest_btn').click(function(){
         var err = 0;
         var cerr = 0;
@@ -112,15 +166,16 @@ jQuery(document).ready(function(){
             err = 1;
         }
       if(err == 1){
-        jQuery('#register_guest_btn').addClass('register_guest_btn_disabled');  
+        jQuery('#register_guest_btn').addClass('pass-disabled');  
         return false;  
       }else{
-          jQuery('#register_guest_btn').removeClass('register_guest_btn_disabled');
+          jQuery('#register_guest_btn').removeClass('pass-disabled');
       }
       
       if(!jQuery('#register_guest_btn').hasClass('register_guest_btn_disabled')){
           var create_user_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/createUserAjax"
           var data = jQuery('#register_guest').serialize();
+          jQuery('#loading-mask').show();
           jQuery.ajax({
                 url:create_user_url,
                 type:'POST',
@@ -128,13 +183,18 @@ jQuery(document).ready(function(){
                 success: function(result){
                     var result_data = jQuery.parseJSON(result)
                     if(result_data.success==true){
-                        alert('Confirmation email has been sent');
-                        //jQuery('#deleteitem').hide();
-                        jQuery('.close').trigger( "click" );
+                            
+                            jQuery('#deleteitem').hide();
+                            jQuery('#loading-mask').hide();
+                            jQuery('#confirmed-user').show();
+                            jQuery('#confirmed-user').find('.close').click(function(){
+                            jQuery('#confirmed-user').hide();
+                        })
                         jQuery('#register_guest')[0].reset();
                     }else{
                         alert('There are some errors');
-                        jQuery('.close').trigger( "click" );
+                        jQuery('#loading-mask').hide();
+                        
                         jQuery('#register_guest')[0].reset();
                     }
                     //console.log(result);

@@ -143,7 +143,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     
     
-    public function addressFormPostAction(){
+   /* public function addressFormPostAction(){
          if ($this->_expireAjax()) {
             return;
         }
@@ -162,7 +162,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         }
          
 
-    }
+    }*/
     
     public function saveBillingAction()
     {
@@ -262,7 +262,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 
             }
             //echo "<pre>"; print_r($data); echo "</pre>";
-            
+            //exit;
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
            // echo "<pre>"; print_r($result); echo "</pre>";
             //exit;
@@ -274,10 +274,14 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
 //                        
 //            endforeach;
 //            exit;
+              
+
             if (!isset($result['error'])) {
              //   var_dump($this->getOnepage()->getQuote());
                // exit;
-                $block_html .= '<div class="checkout-box-inner-address" id="inner_address_'.$data['entity_id'].'">';
+                $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
+                                 $region_name = $region_obj->getName();
+                $block_html .= '<div class="checkout-box-inner-address  address-selected" id="inner_address_'.$data['entity_id'].'">';
                     $block_html .= '<div class="checkout-address-fill">
                           <label>'.$data['firstname']. " ". $data['lastname'].'</label>
                           <img width="25" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-edit.svg">
@@ -285,7 +289,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                         </div>
 
                         <div class="checkout-address-fill">
-                          <label>'.$data['street'].','.$data['region'].', '.$data['city'].'</label>
+                          <label>'.$data['street'].','.$region_name.', '.$data['city'].'</label>
                         </div>
                         <div class="checkout-address-fill">
                           <label>'.$data['telephone'].'</label>
@@ -295,7 +299,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <form name="address_form_'.$data['entity_id'].'" id="address_form_'.$data['entity_id'].'" method="post" action="javascript://">
-                              <input type="hidden" name="method" id="billing_method_1" value="method=register"
+                              <input type="hidden" name="method" id="billing_method_1" value="method=guest" />
                         <div class="modal-body">
                           <button type="button" id="close-'.$data['entity_id'].'" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h3>Masukkan alamat baru Anda!</h3>
@@ -332,12 +336,30 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                                     endforeach;
                                $block_html .= ' </select>';
                              endif; 
+                             
                           $block_html .= '</div>
                           <div class="checkout-form-popup custom-select-icon">
-                              <label>Provinsi</label>
-                              <input type="text" name="billing[region]" id="region_'.$data['entity_id'].'" placeholder="Provinsi" value="'.$data['region'].'" />
-                          </div>
-                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Provinsi</label>';
+                          
+                            $regionCollection = Mage::getModel('directory/region_api')->items('ID');
+                            $block_html.='<select name="billing[region_id]" id="region_'.$data['entity_id'].'" >
+                                  <option value="">Pilih provinsi</option>';
+                             foreach($regionCollection as $region):
+                                 $region_obj =  Mage::getModel('directory/region')->load($region['region_id']);
+                                 $region_name = $region_obj->getName();
+                                  if($region['region_id']==$data['region_id']){
+                                      $region_selected = "selected='selected'";
+                                  }else{
+                                      $region_selected = "";
+                                  }
+                             $block_html .= '<option value="'.$region['region_id'].'" '.$region_selected.'>'.$region_name.'</option>';     
+                             endforeach;
+                         $block_html .='</select> </div>';
+                          
+                          
+                              
+                         
+                         $block_html .=' <div class="checkout-form-popup ">
                               <label>Kota</label>
                               <input type="text" name="billing[city]" id="city_'.$data['entity_id'].'" placeholder="Kota" value="'.$data['city'].'" />
                           </div>
@@ -357,9 +379,10 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
 
                       </div>
                         <div class="modal-footer">
-                            <input type="hidden" name="id" id="address_no_'.$data['entity_id'].'" value="'.$data['entity_id'].'" />
+                            <input type="hidden" name="billing[entity_id]" id="address_no_'.$data['entity_id'].'" value="'.$data['entity_id'].'" />
                             <input type="hidden" value="'.Mage::getSingleton('core/session')->getFormKey().'" name="form_key">
                             <input type="hidden" id="billing:address_id" value="'.$data['entity_id'].'" name="billing[address_id]">
+                                <input type="hidden" name="billing[email]" value="'.$data['email'].'" />
                             <input type="hidden" name="billing[use_for_shipping]" value="1" />
                         <input name="context" type="hidden" value="checkout" />
                           <button type="button" class="btn btn-default save-address" id="new_address_1" rel="'.$data['entity_id'].'" >Simpan Alamat Ini</button>
@@ -386,7 +409,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 $result['city'] = $data['city'];
                 $result['country_id'] = $data['country_id'];
                 $result['telephone'] = $data['telephone'];
-                $result['region'] = $data['region'];
+                $region = Mage::getModel('directory/region')->load($data['region_id']);
+                $result['region'] = $region->getName();
                 $result['region_id'] = $data['region_id'];
                 $result['street'] = $data['street'];
                 $result['entity_id'] = $data['entity_id'];
