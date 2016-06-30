@@ -52,8 +52,9 @@ if ('front' != Mage::app()->getRequest()->getControllerName()) {
         </div>
         <div class="ptech_multilayer_filters" style="display:none"></div>
         <div class="clear-links">
-            <a href="<?php if(strpos($this->helper('core/url')->getCurrentUrl(), "?")===false){echo $this->helper('core/url')->getCurrentUrl()."?clearall=true";} else {echo $this->helper('core/url')->getCurrentUrl()."&clearall=true";}?>">Hapus Filter</a>    
-            <a href="#" class="clear-all">Terapkan Filter</a>
+            <a href="<?php if(strpos($this->helper('core/url')->getCurrentUrl(), "?")===false){echo $this->helper('core/url')->getCurrentUrl()."?clearall=true";} else {echo $this->helper('core/url')->getCurrentUrl()."&clearall=true";}?>">Hapus Filter</a>   
+            <input type="hidden" id="filterSubmitUrl" value="">
+            <a href="" class="clear-all">Terapkan Filter</a>
         </div>
     </div>
 <?php endif; ?>

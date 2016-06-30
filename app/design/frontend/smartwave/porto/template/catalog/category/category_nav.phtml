@@ -93,11 +93,11 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
         <li class="has-children">';
 			if ($current->getID() == $_top_parent_sub_category->getID())
 				{
-				echo '<a class="sub-categories current ' . $_current_class_font . '" href="javascript://">' . $_top_parent_sub_category->getName() . '</a>';
+				echo '<a class="sub-categories current ' . $_current_class_font . '" href="javascript://"><span>' . $_top_parent_sub_category->getName() . '</span></a>';
 				}
 			  else
 				{
-				echo '<a class="sub-categories ' . $_current_class_font . '" href="' . $_helper->getCategoryUrl($_top_parent_sub_category) . '">' . $_top_parent_sub_category->getName() . '</a>';
+				echo '<a class="sub-categories ' . $_current_class_font . '" href="' . $_helper->getCategoryUrl($_top_parent_sub_category) . '"><span>' . $_top_parent_sub_category->getName() . '</span></a>';
 				}
                 
 			switch ($current->getID())
@@ -354,21 +354,37 @@ $subcategories = Mage::getModel('catalog/category')->getCategories($current->get
             <ul>
 
 
-
-                <li><a href="<?php
-echo $this->helper('core/url')->getCurrentUrl(); ?>?dir=asc&order=position">Rekomendasi</a>
+<?php 
+$url=explode("?", $this->helper('core/url')->getCurrentUrl());
+$dir='';
+$order='';
+if(array_key_exists(1, $url)){
+	$urlValues=$url[1];
+	$getParams=explode("&", $urlValues);
+	
+	foreach($getParams as $paramWithEqual){
+		$keyValue=explode("=", $paramWithEqual);
+		if(array_key_exists(1, $keyValue)){
+			if($keyValue[0]=='dir'){
+				$dir=$keyValue[1];
+			}elseif($keyValue[0]=='order'){
+				$order=$keyValue[1];
+			}
+		}
+	}
+}
+?>
+                <li><a onclick="catalog_toolbar_make_request('<?php echo $url[0]?>?dir=asc&order=position')" class="active">Rekomendasi</a>
                 </li>
 
 
 
-                <li><a href="<?php
-echo $this->helper('core/url')->getCurrentUrl(); ?>?dir=asc&order=price">Harga: Rendah ke Tinggi</a>
+                <li><a onclick="catalog_toolbar_make_request('<?php echo $url[0]?>?dir=asc&order=price')" <?php if($order=='price' && $dir=='asc'){ echo 'class="active"'; } ?>>Harga: Rendah ke Tinggi</a>
                 </li>
 
 
 
-                <li><a href="<?php
-echo $this->helper('core/url')->getCurrentUrl(); ?>?dir=desc&order=price">Harga: Tinggi ke Rendah</a>
+                <li><a onclick="catalog_toolbar_make_request('<?php echo $url[0]?>?dir=desc&order=price')" <?php if($order=='price' && $dir=='desc'){ echo 'class="active"'; } ?>>Harga: Tinggi ke Rendah</a>
                 </li>
 
 

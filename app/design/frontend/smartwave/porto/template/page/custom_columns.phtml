@@ -65,12 +65,101 @@
                     </div>
                     
 					<script type="text/javascript">
-					jQuery(function($){
-						var winWidht;
+						jQuery(function($){
+						var winWidht, ajexOn;
+						function filterNavigationForAttribute()
+						{
+						ajexOn = jQuery('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').clone();
+                            
+                           console.log(ajexOn);
+                            
+                    //        jQuery('.block-content').append(ajexOn);
+                            
+
+                                                var filterId, loc, keys = [];
+                                                var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
+                                                jQuery('.ptech_multilayer_attribute').attr('href','javascript:void(0);')   
+                                                jQuery('.ptech_multilayer_attribute').click(function(){
+                                                    jQuery(this).toggleClass('ptech_multilayer_attribute_selected');
+                                                    filterId = jQuery(this).attr('data-id');
+                                                    keys = jQuery.unique(keys); 
+                                                    var found = jQuery.inArray(filterId, keys);
+                                                    if (found >= 0) {
+                                                        keys.splice(found, 1);
+                                                    } else {
+                                                        keys.push(filterId); 
+                                                    } 
+                                                });   
+                                                jQuery('.clear-links a.clear-all').click(function(){
+                                                    var all_params_query_name = "<?php foreach ($_GET as $name => $value) {
+                                                                                    echo $name.",";
+                                                                                    } ?>";
+                                                   // alert(all_params_query_name);                                            
+                                                    var all_params_query_value = "<?php foreach ($_GET as $name => $value) {
+                                                                                    echo $value.",";
+                                                                                    } ?>";
+                                                   // alert(all_params_query_value);
+                                                    var manufacturer = keys.join("-");
+                                                    //var current_url = window.location.href;
+                                                    var current_url=jQuery("#filterSubmitUrl").val();
+						    var loc = current_url;
+						    if(all_params_query_name)
+                                                    {
+                                                        if(all_params_query_name.indexOf('clearall') > -1)
+                                                        {   var search = "?";
+                                                            current_url = current_url.substring(0, current_url.indexOf(search));
+                                                        }
+                                                        if(current_url.indexOf('manufacturer')> -1)
+                                                        {
+                                                            for(i=0;i<keys.length;i++)
+						 	    {
+							    	if(current_url.indexOf(keys[i])> -1)
+                                                            	{
+                                                                	current_url = current_url.replace(keys[i],'');
+									//alert(current_url);
+                                                            	}
+                                                            	else{
+                                                                	manufacturerValues = current_url.substring(current_url.indexOf("manufacturer="));
+                        if(manufacturerValues.indexOf('&')> -1)
+                        {
+                                manufacturerValues = manufacturerValues.substring(0, manufacturerValues.indexOf('&'));
+                        }
+                        current_url = current_url.replace(manufacturerValues,manufacturerValues+'-'+keys[i]);
+									//current_url = current_url+"-"+keys[i];
+									//alert("else part"+current_url);
+                                                            	}
+							    } var loc =current_url;       
+                                                        }
+                                                        else
+                                                        {    
+                                                            	if(manufacturer)var loc = current_url+'&manufacturer='+manufacturer;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if(existing_filter_attr)
+                                                        {
+                                                            var loc = current_url+"-"+manufacturer;
+                                                        }
+                                                        else
+                                                        {    
+                                                          	if(manufacturer)var loc = current_url+'?manufacturer='+manufacturer;
+                                                        }
+                                                    }    
+                                                        jQuery(this).attr('href', loc);
+                                                         window.refresh();
+
+                                                   //  console.log(loc);
+                                                    //window.location.href = loc;
+                    //alert(loc);
 						
-						function mobileFilter(){
+                                                });
+                            
+						}
+             						function mobileFilter(){
 							winWidht = $(window).width();
 							if(winWidht < 767){
+							filterNavigationForAttribute();
 							$('.mobile-category').click(function(){
 									$('.mobile-links li').removeClass('active-filter');
 									$('.block.block-layered-nav, .shotby-mobile').hide();
@@ -82,6 +171,8 @@
 							});
 							
 							$('.mobile-links li.mobile-filter').click(function(){
+									$('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+
 									$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
 									$('.shotby-mobile').hide();
 									if($(this).hasClass('active-filter')){
@@ -94,6 +185,8 @@
 							});
 							
 							$('.mobile-links li.mobile-shotby').click(function(){
+                                    console.log("here shot");
+                                 $('.inner-wrapper').after(ajexOn);
 									$('.mobile-links li.mobile-filter').removeClass('active-filter');	
 									$('.block.block-layered-nav').hide();
 									if($(this).hasClass('active-filter')){
@@ -104,6 +197,12 @@
 										$('.shotby-mobile').show();
 									}
 							});
+							
+							$('.shotby-mobile li a').click(function(){
+								$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
+								$('.shotby-mobile').hide();
+							});
+							
 							
 							$(document).on('click', function(){
 								if(winWidht < 767){
@@ -128,6 +227,17 @@
 						$(window).resize(function() {
 							mobileFilter()
 						})
+						//add jQuery code at the end
+
+						//shopby add class active
+
+						jQuery('.shotby-mobile ul li a').click(function(){
+
+						jQuery('.shotby-mobile ul li a').removeClass('active');
+
+						jQuery(this).addClass('active');
+
+						});
 					});
 					</script>
 					
