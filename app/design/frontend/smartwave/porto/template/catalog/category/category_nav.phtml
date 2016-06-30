@@ -93,7 +93,7 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
         <li class="has-children">';
 			if ($current->getID() == $_top_parent_sub_category->getID())
 				{
-				echo '<a class="sub-categories current ' . $_current_class_font . '" href="javascript://">' . $_top_parent_sub_category->getName() . '</a>';
+				echo '<a class="sub-categories current ' . $_current_class_font . '" href="javascript://"><span>' . $_top_parent_sub_category->getName() . '</span></a>';
 				}
 			  else
 				{
