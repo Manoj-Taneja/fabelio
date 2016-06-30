@@ -1,6 +1,7 @@
+
 <?php
     $_productCollection=$this->getLoadedProductCollection();
-    $_helper = $this->helper('catalog/output');
+	$_helper = $this->helper('catalog/output');
     $store = Mage::app()->getStore();
     $code  = $store->getCode();
     $aspect_ratio = Mage::getStoreConfig("porto_settings/category/aspect_ratio",$code);
@@ -179,17 +180,18 @@
     //$_columnCount = Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     $_columnCount = $this->getColumnCount() ? $this->getColumnCount() : Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     ?>
-    <ul class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
-    <?php $i=0; foreach ($_productCollection as $_product): ?>
+    <ul id="myProductList" class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
+    <?php $i=0; $mycount=0;foreach ($_productCollection as $_product): ?>
             <?php
             /* MANGOEXTENSIONS */
             /* -SWATCHES HTML OUTPUT */
             $_swatches = $_swatches_helper->setProduct($_product)->processSwatches();
             /* EOF -SWATCHES HTML OUTPUT */
             $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+			$mycount++;
             ?>
         
-            <li class="item">
+            <li class="item myProductLi" product-index="<?php echo $mycount; ?>">
               <div class="item-area">
                 <div class="price-discount-percentage">
                 <?php
@@ -317,11 +319,13 @@
                         // FAB-83 code end
                           if(++$cnt > 5) break;
                       }
-                      if(count($_options)>5){
-                        echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
-                      }
+					  echo '<li class="more-swatches" options="'.count($_options).'"><a href="'.$_product->getProductUrl().'">More</a></li>';
+                      
+					  
                       echo '</ul>';
-                    }
+                    }else{
+						echo '<ul class="fabric-color-swatches clearfix"><li></li></ul>';
+					}
                     ?>
                     <?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
@@ -393,7 +397,14 @@
             </div></li>
         <?php endforeach ?>
         </ul>
-        <script type="text/javascript">
+		<?php /***** FAB - 95 Start *******/  ?>
+		<input type="hidden" id="scrollPageNum" value="<?php $valueOfP=Mage::app()->getRequest()->getParam('p'); if($valueOfP>1){ echo $valueOfP; }else{ echo '1'; }?>">
+		<input type="hidden" id="scrollEndPageNum" value="<?php echo $_productCollection->getLastPageNumber(); ?>">
+		<input type="hidden" id="isRequested" value="0">
+		<input type="hidden" id="currentPageSize" value="<?php echo $_productCollection->getPageSize(); ?>">
+		<input type="hidden" id="TotalProductsInList" value="<?php echo $_productCollection->getPageSize(); ?>">
+		<?php /***** FAB - 95 end *******/  ?>
+		<script type="text/javascript">
             jQuery('.col-main .products-grid li:nth-child(2n)').addClass('nth-child-2n');
             jQuery('.col-main .products-grid li:nth-child(2n+1)').addClass('nth-child-2np1');
             jQuery('.col-main .products-grid li:nth-child(3n)').addClass('nth-child-3n');
@@ -408,6 +419,175 @@
             jQuery('.col-main .products-grid li:nth-child(7n+1)').addClass('nth-child-7np1');
             jQuery('.col-main .products-grid li:nth-child(8n)').addClass('nth-child-8n');
             jQuery('.col-main .products-grid li:nth-child(8n+1)').addClass('nth-child-8np1');
+			
+			jQuery(document).ready(function(){
+				manageSwatches();
+			});
+			jQuery(window).resize(function() {
+				manageSwatches();
+			});
+			
+			function manageSwatches(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>780){
+					jQuery(".show-mobile-more-swatches").addClass("hide");
+					jQuery(".nth-child-4n").removeClass("hide");
+					jQuery(".nth-child-5n").removeClass("hide");
+					jQuery(".nth-child-6n").removeClass("hide");
+					jQuery(".nth-child-7n").removeClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).removeClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>5){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}else{
+					jQuery(".nth-child-4n").addClass("hide");
+					jQuery(".nth-child-5n").addClass("hide");
+					jQuery(".nth-child-6n").addClass("hide");
+					jQuery(".nth-child-7n").addClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>3){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}
+			}
+/***** FAB - 95 Start *******/		
+
+			jQuery(window).scroll(function(){
+				//alert("hello");
+				var hT = jQuery('#myProductList').offset().top;
+				var hH = jQuery('#myProductList').outerHeight();
+				var wH = jQuery(window).height();
+				var wS = jQuery(this).scrollTop();
+				var wHNew=wH*2;
+				var winWidth=jQuery(window).width();
+				if (wS > (hT+hH-wHNew)){
+					
+					if(winWidth>780){
+					
+					}else{
+						infiniteScrollForMobile();
+					}
+				}
+				
+				if(winWidth<780){
+					var currentLi=2;
+					var currentCount=0;
+					var index=0;
+					jQuery('.myProductLi').each(function(i, obj) {
+						var LiTop=jQuery(this).offset().top;
+						var liheight=jQuery(this).height();
+						//console.log("index : "+index+", top : "+LiTop+", height : "+liheight);
+						if(liheight>0){
+							if(wS>LiTop+liheight-wH){
+								
+								currentLi=index+1;
+							}
+							index++;
+						}
+						
+					});
+					var total=index;
+					jQuery("#TotalProductsInList").val(total);
+					if(jQuery('#currentProductIsBlock').length==0){
+						jQuery('#myProductList').after('<div id="currentProductIsBlock" style="position: fixed;z-index: 100000000;bottom: 10px;height: 50px;opacity: 0.8;margin-left: -75px;width: 150px;left: 50%;text-align: center;background-color: black;border-radius: 5px;color: white;padding-top: 15px;"></div>');
+					}
+					jQuery('#currentProductIsBlock').html(currentLi+" of <?php echo $_productCollection->getSize(); ?>");
+					
+				}
+				
+			});
+			jQuery(document).ready(function(){
+				hideAndShowPaging();
+			});
+			jQuery(window).resize(function() {
+				hideAndShowPaging();
+			});
+			
+			function hideAndShowPaging(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>780){
+					jQuery(".pager").removeClass('hide');
+					jQuery(".limiter").removeClass('hide');
+					if(jQuery('#myProductLoaderImg').length>0){
+						jQuery('#myProductLoaderImg').remove();
+					}
+					if(jQuery('#currentProductIsBlock').length>0){
+						jQuery('#currentProductIsBlock').remove();
+					}
+					
+				}else{
+					jQuery(".pager").addClass('hide');
+					jQuery(".limiter").addClass('hide');
+					
+				}
+			}
+			function infiniteScrollForMobile(){
+					var currentPageNum=jQuery('#scrollPageNum').val();
+					var scrollEndPageNum=jQuery('#scrollEndPageNum').val();
+					if(currentPageNum<scrollEndPageNum){
+						var nextPageNum=parseInt(currentPageNum)+1;
+						var categoryUrlPage=jQuery('#ptech_multilayer_ajax').val();
+						var isRequested=jQuery('#isRequested').val();
+						var url=categoryUrlPage;
+						if(categoryUrlPage.indexOf('?') >= 0){
+							url=url+'&p='+nextPageNum;
+						}else{
+							url=url+'?p='+nextPageNum;
+						}
+						if(isRequested==0){
+							jQuery('#isRequested').val("1");
+							jQuery.ajax({
+								type: "POST",
+								url: url,
+								data: "",
+								beforeSend: function() {
+									jQuery('#myProductList').append('<img id="myProductLoaderImg" src="/media/loading_spinner.gif" style="margin: auto;height: 50px;">');
+								},
+								success: function(data) {
+									if(jQuery('#myProductLoaderImg').length>0){
+										jQuery('#myProductLoaderImg').remove();
+									}
+									var jsonObj=JSON.parse(data);
+									console.log(jsonObj);
+									var elements = jQuery(jsonObj.products);
+									var found = jQuery('#myProductList', elements).html();
+									jQuery('#myProductList').append(found);
+									jQuery('#isRequested').val("0");
+									jQuery('#scrollPageNum').val(nextPageNum);
+									jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+									jQuery(".more-swatches").each(function() {
+									if(jQuery( this ).attr("options")>3){
+										jQuery( this ).removeClass('hide');
+									}else{
+										jQuery( this ).addClass('hide');
+									}
+									});
+								}
+							});
+						}
+					}
+			}
+			
+/***** FAB - 95 End *******/
         </script>
     <?php endif; ?>
 
