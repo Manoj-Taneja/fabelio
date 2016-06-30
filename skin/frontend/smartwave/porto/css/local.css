@@ -3982,7 +3982,7 @@ ul.top-parent-category {
 .sub-category-list .sub-sub-categories.current-font span {
     color: #464646;
 	display:block;
-    text-decoration: underline
+    text-decoration: underline;
 }
 .block-category-nav .sub-category-list li a.current:before {
     position: absolute;
