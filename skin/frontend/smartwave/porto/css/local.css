@@ -3973,26 +3973,29 @@ ul.top-parent-category {
 .sub-category-list .sub-sub-categories.current-font {
     font-weight: 400;
     color: #ffc000;
-    text-decoration: none
+    text-decoration: none 
 }
+
+.sub-category-list .sub-categories.current,
 .sub-category-list .sub-sub-categories.current-font {
-	display:block;
-}
-.sub-category-list .sub-categories.current span,
-.sub-category-list .sub-sub-categories.current-font span {
     color: #464646;
 	display:block;
     text-decoration: underline;
 }
-.block-category-nav .sub-category-list li a.current:before {
+.block-category-nav .sub-category-list li a:before {
     position: absolute;
     content: '\f0da';
     font-family: FontAwesome;
     left: -10px;
     top: -2px;
     font-size: 15px;
-    color: #ffc000
+    color: #ffc000;
+    visibility: hidden; 
 }
+.block-category-nav .sub-category-list li a:hover:before, .block-category-nav .sub-category-list li a.current.current-font:before{
+    visibility: visible;
+}
+    
 .block-category-nav .sub-category-list ul.top-parent-category li,
 .block-category-nav .sub-parent-category a.sub-categories,
 .block-category-nav .sub-parent-category.no-child-cat a.sub-categories,
