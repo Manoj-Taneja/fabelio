@@ -416,11 +416,20 @@
 <li class="menu-item menu-item-has-children menu-parent-item mobile-nav-divider">
           <a class="level1" href=""><span></span></a>
 </li>
-
+<?php if(!Mage::getSingleton('customer/session')->isLoggedIn()){ ?>
 <li class="menu-item menu-item-has-children menu-parent-item  ">
-          <a class="level1" href="<?php echo Mage::helper('customer')->getLoginUrl();?>"><span>Login In/Register</span></a>
+	  <a class="level1" href="<?php echo Mage::helper('customer')->getLoginUrl();?>"><span>Log In / Register</span></a>
 </li>
-
+<?php }
+else{
+?>
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+	  <a class="level1" href="javascript:void(0)"><span><?php echo Mage::getSingleton('customer/session')->getCustomer()->getName() ?></span></a>
+</li>
+<li class="menu-item menu-item-has-children menu-parent-item  ">
+	  <a class="level1" href="<?php echo Mage::helper('customer')->getLogoutUrl() ?>"><span>Log Out</span></a>
+</li>
+<?php } ?>
 <li class="menu-item menu-item-has-children menu-parent-item  ">
           <a class="level1" href=""><span>Hubungi kami di (021)22775029</span></a>
 </li>
