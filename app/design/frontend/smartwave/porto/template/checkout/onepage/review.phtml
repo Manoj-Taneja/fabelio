@@ -292,6 +292,7 @@
             $('#review-please-wait').show();
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
+            jQuery('#loading-mask').show();
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/goPayment/";
             var form_data ="pk="+pk; 
             $.ajax({
@@ -309,6 +310,7 @@
                     $('#opc-review').removeClass('active');
                     $('#opc-payment').addClass('active');
                     $('#checkout-payment-method-load').html(return_data.update_section.html);
+                    jQuery('#loading-mask').hide();
                 }
             });
         })
@@ -321,6 +323,7 @@
             $("#review_form").submit();
             var form_data = $("#review_form").serialize();
             //console.log("Review FOrm Data : "+form_data);
+            jQuery('#loading-mask').show();
             $.ajax({
                 url:post_url,
                 type:'POST',
@@ -329,6 +332,7 @@
                     var return_data = $.parseJSON(result);
                     $('.checkout-total-main').html(return_data.subtotal_string);  
                     $('#cart_totals').html(return_data.grand_total);
+                    jQuery('#loading-mask').hide();
                     //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
                 }
             });
@@ -342,6 +346,7 @@
         $(document).on("click", "#delete_confirm", function(){
            var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/deleteAjax";
            var form_data = "id="+$('#delete_item').val();
+           jQuery('#loading-mask').show();
            $.ajax({
                 url:post_url,
                 type:'POST',
@@ -351,6 +356,7 @@
                     if(return_data.success==true){
                         $('#accordion-inner-content').html(return_data.html);
                         jQuery('.close').trigger( "click" );
+                        jQuery('#loading-mask').hide();
                         $('.delete-item').click(function(){
                             var product_id = $(this).attr('rel');
                             $('#delete_item').val(product_id);
@@ -362,6 +368,7 @@
                          
                     }else{
                         alert(return_data.error_message);
+                        jQuery('#loading-mask').hide();
                     }
                    //return false;
                 }
@@ -385,6 +392,7 @@
 $("#coupon_code").enterKey(function () {
     var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/couponPostAjax";
     var form_data = "coupon_code="+$('#coupon_code').val();
+    jQuery('#loading-mask').show();
      $.ajax({
                 url:post_url,
                 type:'POST',
@@ -400,6 +408,7 @@ $("#coupon_code").enterKey(function () {
                          $('#cart_totals').html(return_data.grand_total);
                         //$('.form-control-feedback').show();
                     }
+                    jQuery('#loading-mask').hide();
                     //alert(return_data.success);
                    // $('.checkout-total-main').html(return_data.subtotal_string);                    
                     //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
@@ -424,6 +433,7 @@ jQuery.fn.enterKey = function (fnc) {
 jQuery("#coupon_code").enterKey(function ($) {
     var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/couponPostAjax";
     var form_data = "coupon_code="+jQuery('#coupon_code').val();
+    jQuery('#loading-mask').show();
      jQuery.ajax({
                 url:post_url,
                 type:'POST',
@@ -439,6 +449,7 @@ jQuery("#coupon_code").enterKey(function ($) {
                          jQuery('#cart_totals').html(return_data.grand_total);
                         //$('.form-control-feedback').show();
                     }
+                    jQuery('#loading-mask').hide();
                     //alert(return_data.success);
                    // $('.checkout-total-main').html(return_data.subtotal_string);                    
                     //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
