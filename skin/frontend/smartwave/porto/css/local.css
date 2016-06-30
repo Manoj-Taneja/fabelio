@@ -3976,8 +3976,8 @@ ul.top-parent-category {
     text-decoration: none 
 }
 
-.sub-category-list .sub-categories.current,
-.sub-category-list .sub-sub-categories.current-font {
+.sub-category-list .sub-categories.current span,
+.sub-category-list .sub-sub-categories.current-font span{
     color: #464646;
 	display:block;
     text-decoration: underline;
