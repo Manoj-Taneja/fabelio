@@ -260,14 +260,16 @@
                     success: function(result){
                         var result_data = $.parseJSON(result);
                         if(result_data.error==true){
-                            jQuery('#loading-mask').hide();
+                            //jQuery('#loading-mask').hide();
                             alert(result_data.message);
+                            jQuery('.close').trigger('click');
                             jQuery('#loading-mask').hide();
                         }else{
-                            jQuery('#loading-mask').hide();
+                            //jQuery('#loading-mask').hide();
                             alert(result_data.message);
                             jQuery('.forgotpassord-checkout').hide();
                             jQuery('#password_recover').trigger('reset');
+                            jQuery('.close').trigger('click');
                             jQuery('#loading-mask').hide();
                         }
                         //$('#checkout-step-billing').show();
@@ -281,7 +283,7 @@
            var logout_url = "<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"; 
            window.location = logout_url;
         });
-        
+                                                                                                                                                                                                                    
         jQuery('#checkout_continue').click(function(){
            jQuery('#opc-login').removeClass('active');
            jQuery('#opc-billing').addClass('allow');
