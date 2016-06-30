@@ -64,6 +64,7 @@
                       <label>Tambah Alamat Baru </label>
 
                     </div>
+                      
                     <?php else: ?>
                       <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
                       <?php foreach ($customer->getAddresses() as $address): ?>
@@ -1111,5 +1112,8 @@
             jQuery('#phone-error-msg').html('');
             
         });
+        <?php if (!$this->customerHasAddresses()): ?>
+        jQuery('#add_new_address').trigger('click');
+        <?php endif;?>
     });
 </script>
