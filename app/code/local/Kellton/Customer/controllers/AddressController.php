@@ -101,6 +101,7 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
 
     public function addressFormPostAction()
     {
+       
         if (!$this->_validateFormKey()) {
            // return $this->_redirect('*/*/');
            $result['error'] = true;
@@ -108,9 +109,9 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
         // Save data
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest();
-          // echo "<pre>"; print_r($_POST['billing']); echo "</pre>";
+          // echo "<pre>"; print_r($data); echo "</pre>";
           //  var_dump($data);
-          //  exit;
+           // exit;
             $customer = $this->_getSession()->getCustomer();
             /* @var $address Mage_Customer_Model_Address */
             $address  = Mage::getModel('customer/address');
@@ -217,11 +218,27 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                                     endforeach;
                                $block_html .= ' </select>';
                              endif; 
+                             
+                             
+                             
+                             
                           $block_html .= '</div>
                           <div class="checkout-form-popup custom-select-icon">
-                              <label>Provinsi</label>
-                              <input type="text" name="billing[region]" id="region_'.$data['entity_id'].'" placeholder="Provinsi" value="'.$data['region'].'" />
-                          </div>
+                              <label>Provinsi</label>';
+                              $regionCollection = Mage::getModel('directory/region_api')->items('ID');
+                             $block_html.='<select name="billing[region_id]" id="region_'.$data['entity_id'].'" >
+                                  <option value="">Pilih provinsi</option>';
+                             foreach($regionCollection as $region):
+                                 $region_obj =  Mage::getModel('directory/region')->load($region['region_id']);
+                                 $region_name = $region_obj->getName();
+                                  if($region['region_id']==$data['region_id']){
+                                      $region_selected = "selected='selected'";
+                                  }else{
+                                      $region_selected = "";
+                                  }
+                             $block_html .= '<option value="'.$region['region_id'].'" '.$region_selected.'>'.$region_name.'</option>';     
+                             endforeach;
+                         $block_html .=' </div>
                           <div class="checkout-form-popup custom-select-icon">
                               <label>Kota</label>
                               <input type="text" name="billing[city]" id="city_'.$data['entity_id'].'" placeholder="Kota" value="'.$data['city'].'" />
@@ -289,7 +306,8 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
     public function deleteAjaxAction()
     {
         $addressId = $this->getRequest()->getParam('id', false);
-
+       // var_dump($addressId);
+       // exit;
         if ($addressId) {
             $address = Mage::getModel('customer/address')->load($addressId);
 
@@ -317,7 +335,7 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                     $block_html .= '<div class="checkout-address-fill">
                           <label>'.$data['firstname']. " ". $data['lastname'].'</label>
                           <img width="25" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-edit.svg">
-                          <img width="25" data-target="#deleteaddress" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-delete.svg">
+                          <img width="25" data-target="#deleteaddress" rel='.$data['entity_id'].' data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-delete.svg">
                         </div>
 
                         <div class="checkout-address-fill">
