@@ -209,11 +209,12 @@
                                     var result_data = $.parseJSON(result);
                                 if(result_data!=null){
                                         if(result_data.error==true){
-                                            jQuery('#loading-mask').hide();
+                                            
                                             $('#form_group').addClass('email-error');
                                             $('#login-password').addClass('wrong-pass');
                                             $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
                                             $('.email-error-show').show();
+                                            jQuery('#loading-mask').hide();
                                         }else if(result_data.error==false){
                                             location.reload();
                                         }
@@ -261,11 +262,13 @@
                         if(result_data.error==true){
                             jQuery('#loading-mask').hide();
                             alert(result_data.message);
+                            jQuery('#loading-mask').hide();
                         }else{
                             jQuery('#loading-mask').hide();
                             alert(result_data.message);
                             jQuery('.forgotpassord-checkout').hide();
                             jQuery('#password_recover').trigger('reset');
+                            jQuery('#loading-mask').hide();
                         }
                         //$('#checkout-step-billing').show();
                         //$('#checkout-step-login').hide();
