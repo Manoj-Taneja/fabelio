@@ -93,6 +93,17 @@
                         }
                     ?>
                 </div>
+<?php
+$delivery = $_product->getDeliverytimeconfig();
+$del = (int) filter_var($delivery, FILTER_SANITIZE_NUMBER_INT);
+if($del < 7){
+?>
+<div class="new-label" style="width: 100%;bottom: 0px;"><span class="sale-product-icon" style="padding: 7px;line-height: 23px;">
+<img src="http://fabelio.com/media/fab/icons/delivery-truck-02.svg" style="height: 24px;padding-right: 6px;margin-bottom: -1px;">
+<span class="delivery-label"><strong><?php echo $del; ?> Hari </strong>Pengiriman Kilat GRATIS</span></span></div>
+<?php
+}
+?>
                 <div class="details-area">
                     <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                     <?php if($_product->getRatingSummary()): ?>
@@ -273,6 +284,17 @@
                         }
                     ?>
                 </div>
+<?php
+$delivery = $_product->getDeliverytimeconfig();
+$del = (int) filter_var($delivery, FILTER_SANITIZE_NUMBER_INT);
+if($del < 7){
+?>
+<div class="new-label" style="width: 100%;bottom: 0px;"><span class="sale-product-icon" style="padding: 7px;line-height: 23px;">
+<img src="http://fabelio.com/media/fab/icons/delivery-truck-02.svg" style="height: 24px;padding-right: 6px;margin-bottom: -1px;">
+<span class="delivery-label"><strong><?php echo $del; ?> Hari </strong>Pengiriman Kilat GRATIS</span></span></div>
+<?php
+}
+?>
                 <div class="details-area item-detail-lat">                    
                     <?php
                     if($_product->getTypeId() == 'configurable') {
