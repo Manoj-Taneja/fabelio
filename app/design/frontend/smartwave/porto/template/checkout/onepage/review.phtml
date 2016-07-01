@@ -70,13 +70,6 @@
                       <div class="cart-cell cell2"><span> <?php echo $_coreHelper->formatPrice($product_price, false) ?></span></div>
                       <div class="cart-cell cell4"><input disabled="disabled" type="number" value="<?php echo $product_qty; ?>" /></div>
                       <div class="cart-cell cell">
-                          
-                          
-                          
-                          
-                          
-                          
-                          
                         
                           <?php $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);?>
                         <?php if(count($delivery_array) > 1):?>
