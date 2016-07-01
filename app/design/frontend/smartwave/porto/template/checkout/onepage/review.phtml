@@ -90,7 +90,7 @@
                                     }
                                     $shipping_code = "matrixrate_matrixrate_".$val['pk'];
                              ?>
-                              <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?> <br>
+                              <input type="radio" id="" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/><label for="<?php echo $radio_name; ?>"><?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?></label>
                             <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
                             <?php endforeach; ?>
                         
@@ -99,7 +99,8 @@
                          <?php ?>
                         <div class="checkout-quantity">
                             <?php foreach($delivery_array as $key=>$val): ?>
-                            <input type="radio" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method"/>&nbsp;<?php echo $val['delivery_date']; ?> - Free
+                            <?php $radio_name_free = "free-std-".$product_id; ?>
+                            <input type="radio" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method"/><label for="<?php echo $radio_name_free; ?>"><?php echo $val['delivery_date']; ?> - Free</label>
                             <?php endforeach; ?>
                         </div>
                         <?php endif; ?>              
@@ -134,7 +135,7 @@
                 <div class="checkout-total-main">
                   <div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback" id="coupon_div">
+                    <div class="form-group  has-feedback" id="coupon_div" style="display:none;">
                     <input type="text" class="form-control" name="coupon_code" id="coupon_code"/>
                     <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
                   </div>
@@ -415,6 +416,10 @@ $("#coupon_code").enterKey(function () {
                 }
             });
 })
+
+jQuery('.checkout-total-left').find('span').click(function(){
+    jQuery('#coupon_div').show();
+});
    
    
 });
