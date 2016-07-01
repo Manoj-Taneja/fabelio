@@ -119,7 +119,7 @@
 
                           <div class="checkout-form-popup">
                               <label>Alamat</label>
-                              <input type="text" name="billing[street]" placeholder="Alamat" value="<?php echo $data['street'];?>"/>
+                              <input type="text" name="billing[street]" placeholder="Contoh: JI. Panglima Polim V no.52" value="<?php echo $data['street'];?>"/>
                           </div>
 <!--                          <div class="checkout-form-popup">
                               <label>Patokan</label>
@@ -146,7 +146,7 @@
                                     $regionCollection = Mage::getModel('directory/region_api')->items('ID');
                               ?>
                               <select name="billling[region_id]" id="region_<?php echo $data['entity_id']; ?>" >
-                                  <option value="">Pilih provinsi</option>
+                                  <option value="">Pilih provinsi...</option>
                                   <?php foreach($regionCollection as $region):?>
                                   <?php $region_name =  Mage::getModel('directory/region')->load($region['region_id']);?>
                                   <option value="<?php echo $region['region_id']; ?>"<?php if($region['region_id']==$data['region_id']):?>selected="selected"<?php endif; ?>><?php echo $region_name; ?></option>
@@ -156,7 +156,7 @@
                           </div>
                           <div class="checkout-form-popup custom-select-icon">
                               <label>Kota</label>
-                              <input type="text" name="billing[city]" id="city_<?php echo $data['entity_id']; ?>" placeholder="Kota" value="<?php echo $data['city']; ?>" />
+                              <input type="text" name="billing[city]" id="city_<?php echo $data['entity_id']; ?>" placeholder="Pilih Kota" value="<?php echo $data['city']; ?>" />
                           </div>
                           </div>
 
@@ -165,7 +165,7 @@
 
                           <div class="checkout-form-popup">
                               <label>Nomor HP</label>
-                              <input type="text" placeholder="Nomor HP" name="billing[telephone]" id="phone_<?php echo $data['entity_id']; ?>" value="<?php echo $data['telephone']; ?>"/>
+                              <input type="text" placeholder="Contoh: 081212341234" name="billing[telephone]" id="phone_<?php echo $data['entity_id']; ?>" value="<?php echo $data['telephone']; ?>"/>
                           </div>
 
                           </div>
@@ -213,11 +213,11 @@
 
                           <div class="checkout-form-popup">
                               <label>Name Depan</label>
-                              <input name = "billing[firstname]" id="first_name" type="text" placeholder="First Name" />
+                              <input name = "billing[firstname]" id="first_name" type="text" placeholder="Masukkan Nama Depan" />
                           </div>
                           <div class="checkout-form-popup">
                               <label>Nama Belakang</label>
-                              <input name = "billing[lastname]" id="last_name" type="text" placeholder="Last Name" />
+                              <input name = "billing[lastname]" id="last_name" type="text" placeholder="Masukkan Nama Belakang" />
                           </div>
                           </div>
                           <p id="name-error-msg" class="error-message"></p>
@@ -246,7 +246,7 @@
 
                           <div class="checkout-form-popup">
                               <label>Alamat</label>
-                              <input type="text" placeholder="Address" name="billing[street]" id="street" />
+                              <input type="text" placeholder="Contoh: JI. Panglima Polim V no. 52" name="billing[street]" id="street" />
                           </div>
 <!--                          <div class="checkout-form-popup">
                               <label>Patokan</label>
@@ -275,7 +275,7 @@
                                             title="<?php echo $this->__('Province') ?>" class="validate-select"
                                             style="display:none;">
                                         <option
-                                            value=""><?php echo $this->__('Please select province') ?></option>
+                                            value=""><?php echo $this->__('Pilih provinsi...') ?></option>
                                     </select>
                                     <script type="text/javascript">
                                         //<![CDATA[
@@ -285,7 +285,7 @@
                           </div>
                           <div class="checkout-form-popup">
                               <label>Kota</label>
-                               <input type="text" name="billing[city]" id="city" placeholder="Kota" />
+                               <input type="text" name="billing[city]" id="city" placeholder="Phili kota..." />
                           </div>
                           </div>
                           <p id="address-error-msg" class="error-message"></p>
@@ -294,7 +294,7 @@
 
                           <div class="checkout-form-popup">
                               <label>Nomor HP</label>
-                             <input type="text" placeholder="Nomor HP" name="billing[telephone]" id="phone" />
+                             <input type="text" placeholder="Contoh: 081212341234" name="billing[telephone]" id="phone" />
                           </div>
 
                           </div>
