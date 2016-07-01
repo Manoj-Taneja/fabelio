@@ -90,7 +90,7 @@
                                     }
                                     $shipping_code = "matrixrate_matrixrate_".$val['pk'];
                              ?>
-                              <input type="radio" id="" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/><label for="<?php echo $radio_name; ?>"><?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?></label>
+                              <input type="radio" <?php if($val['Standard']==0):?>checked="checked"<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/><label for="<?php echo $radio_name; ?>"><?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?></label>
                             <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
                             <?php endforeach; ?>
                         
