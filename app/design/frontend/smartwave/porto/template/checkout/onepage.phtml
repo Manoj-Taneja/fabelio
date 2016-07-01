@@ -51,28 +51,19 @@
             <?php
             switch($_stepId){
                 case 'login':
-                    echo "1.";
+                    echo "1. ".$this->__('Log in / Sign Up');
                     break;
                 case 'billing':
-                    echo "2.";
+                    echo "2. ".$this->__('Alamat Pengiriman');
                     break;
                 case 'review':
-                    echo "3.";
+                    echo "3. ".$this->__('Daftar Pesanan');
                    break;
                 case 'payment':
-                    echo "4.";
+                    echo "4. ".$this->__('Metode Pembayaran');;
                     break;
             }
             ?>
-     <?php if($_stepId=='login'):?>   
-           
-            <?php echo $this->__('Log in / Sign Up'); ?>
-            <?php else: ?>
-            <?php echo $_stepInfo['label'] ?>
-            <?php endif; ?>
-           
-            
-            
             <!--<a href="#"><?php //echo $this->__('Edit') ?></a>-->
                  </a>
            
