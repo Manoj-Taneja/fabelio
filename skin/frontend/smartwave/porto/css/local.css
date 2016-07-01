@@ -4692,7 +4692,7 @@ button.close {
 		.checkout-delete-main .modal-body{padding-bottom: 5px;}
 		.checkout-item{display: table-row;text-align: left;
     color: #000;}
-	.checkout-header-table{display: table;}
+	.checkout-header-table{display: table; width:100%;}
 		.checkout-item{}
 			.checkout-item .cell{font-size: 14px;
     font-family: roboto-regular;
@@ -4739,7 +4739,7 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     content: "\f14a";
     color: #4eb06d;
 }
-.checkout-cart-item .cart-cell input[type=number]{border: none; width: 40%; float:left; font-family: roboto-regular; font-weight: 500; font-size: 14px; color:#464646;	}
+.checkout-cart-item .cart-cell input[type=number]{border: none; width: 40%; float:left; font-family: roboto-regular; font-weight: 500; font-size: 14px; color:#464646; background: transparent;	}
 .checkout-cart-item .cart-cell.cell2 span{float:left; width: 100%; font-size: 14px; font-family: roboto-regular; font-weight: 500; color: #464646;}
 .checkout-cart-item .cart-cell.cell2 span.checkout-orignal-price{float: left; width: 100%; text-decoration: line-through; font-size: 12px; font-weight: 400;}
 .checkout-total-main{float: left;
@@ -5043,8 +5043,8 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     border-radius: 4px; margin-bottom: 20px;}
 .address-cont-btn .button:hover{ color: #fff !important;}
 .nav.nav-tabs.bank-tabs a{display: block !important;}
-#review-buttons-container button.button > span{background-color: #d14836;}
-#payment-buttons-container button.fab-btn-primary {background-color: #d14836 !important; margin-bottom: 20px;}
+#review-buttons-container button.button > span{background-color: #d9534f;width:200px; border-radius:4px;}
+#payment-buttons-container button.fab-btn-primary {background-color: #d9534f !important; margin-bottom: 20px; width:200px; border-radius:4px;}
 .section.allow.active .panel-heading { background: #ffd41c;}
 
 .section.active .panel-heading { background: #ffd41c;}
@@ -5069,4 +5069,6 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     margin: 0 0 0 10px;
     text-align: left;
     width: 100%;}
+.checkout-page{background: #f8f2f2 !important;}
+accordion-main li.section.allow.active .payment-email{display: none;}
  /*FAB 58 css ends here*/ 
