@@ -100,7 +100,7 @@
                         <div class="checkout-quantity">
                             <?php foreach($delivery_array as $key=>$val): ?>
                             <?php $radio_name_free = "free-std-".$product_id; ?>
-                            <input type="radio" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method"/><label for="<?php echo $radio_name_free; ?>"><?php echo $val['delivery_date']; ?> - Free</label>
+                            <input type="radio" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method" id="<?php echo $radio_name_free; ?>"/><label for="<?php echo $radio_name_free; ?>"><?php echo $val['delivery_date']; ?> - Free</label>
                             <?php endforeach; ?>
                         </div>
                         <?php endif; ?>              
@@ -419,6 +419,7 @@ $("#coupon_code").enterKey(function () {
 
 jQuery('.checkout-total-left').find('span').click(function(){
     jQuery('#coupon_div').show();
+    jQuery('.checkout-total-left').find('label').hide();
 });
    
    
