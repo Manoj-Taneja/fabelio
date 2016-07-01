@@ -589,13 +589,14 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                                         $ship_price = $val['price'];
                                     endif;
                                     $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price'];
-                                    $html .= '<input type="radio" '.$checked.' name="'.$product_id.'" id="'.$radio_name.'" rel="shipping_method" value="'.$val['pk'].'"/>&nbsp;'.$val['delivery_date'].'- '.$ship_price.' ';
+                                    $html .= '<input type="radio" '.$checked.' name="'.$product_id.'" id="'.$radio_name.'" rel="shipping_method" value="'.$val['pk'].'"/><label for="'.$radio_name.'">'.$val['delivery_date'].'- '.$ship_price.' </label>';
                         endforeach;
                         $html .= '</div>';
                     }else{
                         $html .= '<div class="checkout-quantity">';
                         foreach($delivery_array as $key=>$val):
-                            $html .= '<input disabled="disabled" type="radio" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method"/>&nbsp;'.$val['delivery_date'].' - Free';
+                            $radio_name_free = "free-std-".$product_id;
+                            $html .= '<input disabled="disabled" type="radio" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method" id="'.$radio_name_free.'"/><label for="'.$radio_name_free.'">'.$val['delivery_date'].' - Free';
                         endforeach;
                         $html .= '</div>';
                     }
@@ -630,8 +631,8 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $html .= '</div>';
         $html .= '<div class="checkout-total-main">';
         $html .= '<div class="checkout-total-left">
-                    <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback" id="coupon_div">
+                    <label>Apakah Anda memiliki voucher Fabelio? <span onclick="remove_me()">Klik disini</span></label>
+                    <div class="form-group  has-feedback" id="coupon_div" style="display:none;">
                     <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon()"/>
                     <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
                   </div>

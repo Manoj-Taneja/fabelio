@@ -494,8 +494,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             
             $return_html .= '
                   <div class="checkout-total-left">
-                    <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback" id="coupon_div">
+                    <label>Apakah Anda memiliki voucher Fabelio? <span onclick="remove_me()">Klik disini</span></label>
+                    <div class="form-group  has-feedback" id="coupon_div" style="display:none;">
                     <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon()"/>
                     <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
                   </div>
