@@ -103,7 +103,12 @@
                 
                 <div class="col-sm-2 payment-edit openaccord" id="edit-completed-<?php echo $_stepId;?>" style="display:none;">
 
-                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>
+                    
+            <div class="col-sm-2 payment-edit openaccord">
+                <button id="<?php echo $_stepId; ?>-edit-btn" class="payment-edit-btn" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <img  src="<?php echo $this->getSkinUrl('images/card-edit.svg'); ?>" Class="visible-xs hidden-lg hidden-md"> Edit </button>
+            </div>
+                    
+<!--                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>-->
             </div>
                  </h4>
 <!--            </div>--> 
