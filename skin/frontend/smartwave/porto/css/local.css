@@ -5070,5 +5070,6 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     text-align: left;
     width: 100%;}
 .checkout-page{background: #f8f2f2 !important;}
-accordion-main li.section.allow.active .payment-email{display: none;}
+.accordion-main li.section.allow.active .payment-email{display: none;}
+#co-billing-form{float:left; width:100%;}
  /*FAB 58 css ends here*/ 
