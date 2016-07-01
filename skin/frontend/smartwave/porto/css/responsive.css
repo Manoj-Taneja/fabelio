@@ -1126,7 +1126,7 @@
     margin-top: -10px;
     width: 100% !important;}
      .border-left-checkout{border: none; float: left; width: 100%;}
-     .checkout-box-inner{margin-right: 0px; height: 60px; margin-bottom: 10px;}
+     .checkout-box-inner{margin-right: 0px; height: 60px; margin-bottom: 10px; width: 100%;}
      .checkout-plus-icon-main{left: 10%;
     position: absolute;
     top: 45%;
@@ -1145,7 +1145,7 @@
 }
 .checkout-plus-icon{height: 40px; width: 40px;}
 .checkout-box-inner-address{width: 100%;}
-.checkout-address-fill label{width: 78%;}
+.checkout-address-fill label{width: 76%;}
 .checkout-cart-item .cart-cell.cell5 img{width:50px; height: 50px;}
 .checkout-total-left{width: 100%;}
 .checkout-total-right{width: 100%;}
@@ -1167,11 +1167,11 @@
 .accordion-main .panel-heading h4.panel-title{float: left; width: 100%; position: relative;}
 .payment-edit-btn{padding: 5px 10px; height: 100%;}
 .payment-edit {
-  bottom: -10px;
+  bottom: -5px;
    position: absolute !important;
    right: -15px;
    text-align: right;
-   top: -10px !important;
+   top: -5px !important;
 }
 .payment-edit-btn img{width: 20px; margin-bottom: 5px;}
 .checkout-header-table{display: none;}
@@ -1213,7 +1213,7 @@
 .cart-delivery-option{border-radius: 5px;
     box-shadow: 0 0 5px #ccc;
     float: left;
-    padding: 5px;
+    padding: 4px;
     width: 49%; margin-top: 10px; margin-right: 1%; color: #464646;}
   .cart-quantity-main{float: left;
     width: 100%; margin-top: 10px;}
@@ -1279,6 +1279,7 @@ margin-top: 1px;
   
    .email-error-show{display: none;}
   .email-error::before{display: none;}
+  #review-buttons-container button.button > span{width: 100%}
      /*FAB 58 css ends here*/
 }
 /* FAB-178 css starts */
