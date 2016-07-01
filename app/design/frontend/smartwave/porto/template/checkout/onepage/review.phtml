@@ -418,6 +418,11 @@ jQuery('.checkout-total-left').find('span').click(function(){
    
 });
 
+function remove_me(){    
+        jQuery('#coupon_div').show();
+        jQuery('.checkout-total-left').find('label').hide();   
+}
+
 function apply_coupon(){
 jQuery.fn.enterKey = function (fnc) {
     return this.each(function () {
