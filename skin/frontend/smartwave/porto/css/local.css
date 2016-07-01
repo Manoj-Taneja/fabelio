@@ -5043,7 +5043,7 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     border-radius: 4px; margin-bottom: 20px;}
 .address-cont-btn .button:hover{ color: #fff !important;}
 .nav.nav-tabs.bank-tabs a{display: block !important;}
-#review-buttons-container button.button > span{background-color: #d9534f;width:200px; border-radius:4px;padding: 6px 12px; font-family: roboto-regular; font-weight: 500 !important;}
+#review-buttons-container button.button > span{background-color: #d9534f;width:200px; border-radius:4px;font-family: roboto-regular; font-weight: 500 !important;}
 #payment-buttons-container button.fab-btn-primary {background-color: #d9534f !important; margin-bottom: 20px; width:200px; border-radius:4px; padding: 6px 12px; font-family: roboto-regular; font-weight: 500 !important;}
 .section.allow.active .panel-heading { background: #ffd41c;}
 
@@ -5071,6 +5071,16 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     width: 100%;}
 .checkout-page{background: #f8f2f2 !important;}
 .accordion-main li.section.allow.active .payment-email{display: none;}
+.accordion-main li.section.allow.active .payment-edit{display: none;}
 #co-billing-form{float:left; width:100%;}
 #co-payment-form{float:left; width:100%;}
+ .checkout-quantity input[type=radio]:checked + label:before {
+    content: "\f14a";
+    color: #4eb06d;
+}
+.checkout-quantity input[type=radio] {
+    margin: 4px 5px 0 0;
+    float: left;
+    display: none;
+}
  /*FAB 58 css ends here*/ 
