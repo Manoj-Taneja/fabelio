@@ -437,7 +437,7 @@ if($del < 7){
 			
 			function manageSwatches(){
 				var winWidth=jQuery(window).width();
-				if(winWidth>780){
+				if(winWidth>767){
 					jQuery(".show-mobile-more-swatches").addClass("hide");
 					jQuery(".nth-child-4n").removeClass("hide");
 					jQuery(".nth-child-5n").removeClass("hide");
@@ -448,7 +448,7 @@ if($del < 7){
 					jQuery( ".fabric-color-swatches li:nth-child(6)" ).removeClass('hide');
 					jQuery( ".fabric-color-swatches li:nth-child(7)" ).removeClass('hide');
 					jQuery(".more-swatches").each(function() {
-						if(jQuery( this ).attr("options")>5){
+						if(jQuery( this ).attr("options")>7){
 							jQuery( this ).removeClass("hide");
 						}else{
 							jQuery( this ).addClass("hide");
