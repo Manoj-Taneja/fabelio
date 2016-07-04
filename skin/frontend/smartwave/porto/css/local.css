@@ -4364,3 +4364,6 @@ body.side-header .top-container > .breadcrumbs.fixed-position{position:fixed;wid
 /* FAB-147 css code starts */
 .block-telah{text-align:center}.block-telah h2{font-size:22px;font-weight:700;color:#313131;border-bottom:1px solid #95989A;padding:50px 0 25px 0;text-transform:uppercase;margin-bottom:25px}.block-telah img{max-width:55%}.block-telah .col-md-3{margin-bottom:20px}
 /* FAB-147 css code ends */
+/* FAB-139 css code starts */
+.limiter select{width:50px}.sorter .sort-by select::-ms-expand,.limiter select::-ms-expand{display:none}.sorter .sort-by select,.limiter select{border:1px solid #c2c2c2;overflow:hidden;text-indent:0.01px;text-overflow:'';background:url("../images/select-icon.png") no-repeat right center;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;appearance:none}.limiter select{background:url("../images/select-icon.png") no-repeat 33px center}
+/* FAB-139 css code ends */
