@@ -838,6 +838,7 @@
                                  jQuery('#address_form')[0].reset();
                                  jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
                                 jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                                jQuery('#mobile-selected-address-address').html(result_data.firstname+" "+result_data.lastname+" "+result_data.street+", "+result_data.region+","+result_data.city);
                                 
                                setTimeout(function(){ 
                                jQuery('#address_boxes').html(result_data.block_html);
@@ -1040,8 +1041,6 @@
         
         jQuery(document).on('click', '.checkout-box-inner-address', function(){
             var elem_id = jQuery(this).attr('id');
-            
-           
             jQuery(this).toggleClass('address-selected').siblings().removeClass('address-selected');
             //jQuery(this).toggleClass('address-selected');
             var element_id_array = elem_id.split("_");
@@ -1080,6 +1079,7 @@
                                 jQuery('#loading-mask').hide();
                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
                                 jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                                jQuery('#mobile-selected-address-address').html(result_data.firstname+" "+result_data.lastname+" "+result_data.street+", "+result_data.region+","+result_data.city);
                            // jQuery('#address_boxes').html(result_data.block_html);
                             //jQuery('#myAddress-'+address_id).hide();
                             

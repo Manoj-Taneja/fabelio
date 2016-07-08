@@ -41,12 +41,12 @@
         <div class="panel-heading " role="tab" id="headingOne">
 <!--            <div class="step-title">-->
             <h4 class="panel-title">
-             <div class="col-sm-3 payment-label ">
+             <div class="col-sm-3 col-xs-8 payment-label ">
             
                  <a href="#">
                      <i class="fa fa-check-circle openaccord" id="completed-<?php echo $_stepId?>" style="display:none;"></i>
                      <?php if($_stepInfo['allow'] && $this->getActiveStep()!=$_stepId): ?>
-            <i class="fa fa-check-circle openaccord"></i>
+<!--            <i class="fa fa-check-circle openaccord"></i>-->
             <?php endif; ?>
             <?php
             switch($_stepId){
@@ -70,18 +70,19 @@
              </div>
                 <?php if($_stepId=='login'):?>
                 <?php $customer = Mage::getSingleton('customer/session')->getCustomer();?>
-            <div class="col-sm-7 payment-email openaccord">
-              <label id="user_email_id"><?php if($this->isCustomerLoggedIn()):echo $customer->getEmail(); endif; ?></label>
+            <div class="col-sm-7 col-xs-8 payment-email openaccord">
+              <label class="mobile-address" id="user_email_id"><?php if($this->isCustomerLoggedIn()):echo $customer->getEmail(); endif; ?></label>
             </div>
                 <?php endif; ?>
                 <?php if($_stepId=='billing'):?>
-            <div class="col-sm-7 payment-email openaccord">
-                <label id="selected-address-name"></label><br>
-              <label id="selected-address-address"></label>
+            <div class="col-sm-7 col-xs-8 payment-email openaccord">
+              <label class="hidden-xs" id="selected-address-name"></label>
+              <label class="hidden-xs" id="selected-address-address"></label>
+              <label class="mobile-address visible-xs hidden-lg- hidden-md" id="mobile-selected-address-address"></label>
             </div>
                 <?php endif; ?>
             <?php if($_stepId=='review'):?>
-                <div class="col-sm-7 payment-email openaccord">
+                <div class="col-sm-7 col-xs-8 payment-email openaccord">
                     <label id="cart_totals" style="display:none;">                        
                 <?php
                     $_coreHelper = Mage::helper('core');
@@ -95,19 +96,19 @@
                 </div>
             <?php endif; ?>
                 <?php if($_stepInfo['allow'] && $this->getActiveStep()!=$_stepId): ?>
-                <div class="col-sm-2 payment-edit openaccord">
+<!--                <div class="col-sm-2 payment-edit openaccord">
 
-                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>
-            </div>
+                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php //echo $this->__('Edit') ?></a>
+            </div>-->
                 <?php endif; ?>
                 
-                <div class="col-sm-2 payment-edit openaccord" id="edit-completed-<?php echo $_stepId;?>" style="display:none;">
+                <div class="col-sm-2 payment-edit openaccord col-xs-4" id="edit-completed-<?php echo $_stepId;?>" style="display:none;">
 
                     
             
                      <button id="<?php echo $_stepId; ?>-edit-btn" class="payment-edit-btn" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <img  src="<?php echo $this->getSkinUrl('images/card-edit.svg'); ?>" Class="visible-xs hidden-lg hidden-md"> Edit </button>
                     
-<!--                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php echo $this->__('Edit') ?></a>-->
+<!--                    <a class="payment-edit-btn" id="<?php echo $_stepId; ?>-edit-btn" href="javascript://"><?php //echo $this->__('Edit') ?></a>-->
             </div>
                  </h4>
 <!--            </div>--> 
@@ -134,6 +135,7 @@ jQuery(document).ready(function(){
            //console.log("Hi There !!");
           jQuery('#opc-review').addClass('active');
           jQuery('#checkout-step-review').show();
+          jQuery('#completed-billing').show();
           jQuery('#go_payment').show();
           jQuery('#opc-payment').removeClass('active');
           jQuery('#checkout-step-payment').hide();
@@ -141,6 +143,7 @@ jQuery(document).ready(function(){
           jQuery('#checkout-step-billing').hide();
           jQuery('#opc-login').removeClass('active');
           jQuery('#checkout-step-login').hide();
+          //jQuerr('#cart_totals').hide();
        });
     
     
@@ -155,6 +158,9 @@ jQuery(document).ready(function(){
           jQuery('#checkout-step-billing').show();
           jQuery('#opc-login').removeClass('active');
           jQuery('#checkout-step-login').hide();
+          
+          //jQuery('#selected-address-name').hide();
+          //jQuery('#selected-address-address').hide();
        });
 
        
@@ -172,7 +178,7 @@ jQuery(document).ready(function(){
           jQuery('#opc-login').removeClass('active');
        });
        
-       jQueru
+       
 });
 //<![CDATA[
     var accordion = new Accordion('checkoutSteps', '.panel-title', true);

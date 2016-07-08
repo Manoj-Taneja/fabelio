@@ -13,6 +13,13 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             return;
         }
         
+        
+        $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
+        $shipping_amount = array_sum($shipping_amount_array);
+        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+        $grandtotal = round($totals["grand_total"]->getValue());
+        $grandtotal_reverse = $grandtotal - $shipping_amount;
+        Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal_reverse);
         Mage::getSingleton('core/session')->unsShippingAmount();
         Mage::getSingleton('core/session')->unsShippingDescription();
         $quote = $this->getOnepage()->getQuote();
@@ -490,6 +497,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $grandtotal_final = 0;
             $grandtotal_final = $grandtotal + $shipping_amount;
             Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal);
+            
             
             
             $return_html .= '
