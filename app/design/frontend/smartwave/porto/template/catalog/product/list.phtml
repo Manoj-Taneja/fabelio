@@ -485,21 +485,90 @@ if($del < 7){
 <?php endif; ?>
 <script>
     jQuery(document).ready(function($){
-       $('.logo-over-image').on('click',function(){
-           if($(this).attr('data-click-state') == 0) {
-		  $(this).attr('data-click-state', 1);
-             $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close.svg")'); 
-          $(this).next('.logo-over-content').css('display','block');
+//       $('.logo-over-image').on('click',function(){
+  //         if($(this).attr('data-click-state') == 0) {
+//		  $(this).attr('data-click-state', 1);
+  //           $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close.svg")'); 
+    //      $(this).next('.logo-over-content').css('display','block');
          
-        }else{
+      //  }else{
             
+        //    $(this).attr('data-click-state', 0); 
+          // $(this).removeAttr('style');
+         // $(this).next('.logo-over-content').css('display','none');
+          
+       // }
+          
+     //  }); 
+if(jQuery(window).width() > 767){
+
+        
+
+       $('.logo-over-image').on('click',function(){
+
+           if($(this).attr('data-click-state') == 0) {
+
+    $(this).attr('data-click-state', 1);
+
+             $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close.svg")'); 
+
+          $(this).next('.logo-over-content').css('display','block');
+
+         
+
+        }else{
+
+            
+
             $(this).attr('data-click-state', 0); 
+
            $(this).removeAttr('style');
+
           $(this).next('.logo-over-content').css('display','none');
+
           
+
         }
+
           
+
        }); 
+
+        }else {
+
+            $('.logo-over-image').on('click',function(){
+
+           if($(this).attr('data-click-state') == 0) {
+
+    $(this).attr('data-click-state', 1);
+
+             $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close-mobile.png")'); 
+
+          $(this).next('.logo-over-content').css('display','block');
+
+         
+
+        }else{
+
+            
+
+            $(this).attr('data-click-state', 0); 
+
+           $(this).removeAttr('style');
+
+          $(this).next('.logo-over-content').css('display','none');
+
+          
+
+        }
+
+          
+
+       }); 
+
+            
+
+        }
         
     });
 </script>
