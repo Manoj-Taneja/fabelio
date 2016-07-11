@@ -1167,11 +1167,11 @@
 .accordion-main .panel-heading h4.panel-title{float: left; width: 100%; position: relative;}
 .payment-edit-btn{padding: 5px 10px; height: 100%;}
 .payment-edit {
-  bottom: -5px;
+  bottom: -10px;
    position: absolute !important;
    right: -15px;
    text-align: right;
-   top: -5px !important;
+   top: -10px !important;
 }
 .payment-edit-btn img{width: 20px; margin-bottom: 5px;}
 .checkout-header-table{display: none;}
@@ -1183,7 +1183,7 @@
 .cart-main-box-left img{}
   .cart-main-box-right{ float: right;
     width: 70%;}
-    .cart-product-name{float: left;width: 100%;}
+    .cart-product-name{float: left;width: 90%;}
       .cart-product-name h4{ float: left;
     overflow: hidden;
     text-align: left;
@@ -1280,6 +1280,8 @@ margin-top: 1px;
    .email-error-show{display: none;}
   .email-error::before{display: none;}
   #review-buttons-container button.button > span{width: 100%}
+  .mobile-close-item{float:left; width: 10%;}
+  .delevery-option-selected{border: 1px solid #1592e6;}
      /*FAB 58 css ends here*/
 }
 /* FAB-178 css starts */
