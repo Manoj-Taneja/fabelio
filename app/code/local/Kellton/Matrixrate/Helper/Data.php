@@ -105,7 +105,7 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
          
             $delivery_date = date('j F',strtotime(strftime('%X').'+ 2 day'));
         }elseif($delivery_days=='' && $current_local_time < $cut_off_time ){
-            echo "5 \n";
+            
              $delivery_date = date('j F',strtotime(strftime('%X').'+ 1 day'));
         }elseif($delivery_days=='' && $current_local_time > $cut_off_time ){
          
@@ -157,5 +157,15 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $select = "SELECT  * from {$table} where pk = '{$id}'";
         $row = $read->fetchAll($select);
         return $row;
+    }
+    
+    
+    public function get_sku_data($sku){
+        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+        $select = "SELECT  * from {$table} where sku = '{$sku}'";
+        $row = $read->fetchAll($select);
+        return $row;
+       
     }
 }
