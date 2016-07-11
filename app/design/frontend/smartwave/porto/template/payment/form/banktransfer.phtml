@@ -1,0 +1,127 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php if ($instructions = $this->getInstructions()): ?>
+   <div role="tabpanel" class="tab-pane" id="profile">
+                          <div class="bank-logo-inner">
+                              <p>
+
+Harap melakukan transfer maksimal 2X24 jam, jika tidak maka transaksi akan
+dibatalkan. Silakan konfirmasi pembayaran Anda dengan mengirimkan bukti transaksi ke
+hello@fabelio.com
+                              </p>
+
+                              <p>
+Pilihan bank
+                              </p>
+                              <div class="bank-detail-main">
+                              <div class="bank-detail">
+                                  <div class="bank-detail-check">
+                                    <input type="checkbox" id="55" >
+                                    <label for="55"></label>
+                                  </div>
+                                  <div class="bank-detail-address">
+                                    <label>Bank Mandiri</label>
+                                    <span>Nomor Rekening</span>
+                                    <span>a/n PT Tiga Elora Nusantara</span>
+                                    <span>122-00-0710477-4</span>
+                                    <span>Cabang Grand Indonesia</span>
+                                  </div>
+                                  <div class="bank-detail-logo">
+                                    <img src="<?php echo $this->getSkinUrl('images/bank-mandiri.png'); ?>" />
+                                  </div>
+                              </div>
+
+                              <div class="bank-detail">
+                                  <div class="bank-detail-check">
+                                    <input type="checkbox" id="56" >
+                                      <label for="56"></label>
+                                  </div>
+                                  <div class="bank-detail-address">
+                                    <label>Bank Mandiri</label>
+                                    <span>Nomor Rekening</span>
+                                    <span>a/n PT Tiga Elora Nusantara</span>
+                                    <span>122-00-0710477-4</span>
+                                    <span>Cabang Grand Indonesia</span>
+                                  </div>
+                                  <div class="bank-detail-logo">
+                                    <img src="<?php echo $this->getSkinUrl('images/bank-bca.png'); ?>" />
+                                  </div>
+                              </div>
+
+                              <div class="bank-detail">
+                                  <div class="bank-detail-check">
+                                    <input type="checkbox" id="57" >
+                                      <label for="57"></label>
+                                  </div>
+                                  <div class="bank-detail-address">
+                                    <label>Bank Mandiri</label>
+                                    <span>Nomor Rekening</span>
+                                    <span>a/n PT Tiga Elora Nusantara</span>
+                                    <span>122-00-0710477-4</span>
+                                    <span>Cabang Grand Indonesia</span>
+                                  </div>
+                                  <div class="bank-detail-logo">
+                                    <img src="<?php echo $this->getSkinUrl('images/bank-bni.png'); ?>" />
+                                  </div>
+                              </div>
+
+
+
+                            </div>
+                              <div class="bank-page-total">
+                                <div class="bank-page-inner">
+                                  <label>Grand Total</label>
+                                  <span>
+                                    <?php
+                                        $_coreHelper = Mage::helper('core');
+                                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                        $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                        echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                    ?>   
+                                </span>
+                                </div>
+
+                                <div class="bank-page-inner bank-lower-total">
+                                  <label>Total Dibayarkan</label>
+                                  <span>
+                                    <?php
+                                        $_coreHelper = Mage::helper('core');
+                                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                        $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                        echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                    ?>   
+                                </span>
+                                </div>
+                              </div>
+
+<!--                              <div class="checkout-item-button">
+                                <a href="" class="chkbtn btn-checkout">Konfirmasi Pesanan</a>
+                              </div>-->
+                            </div>
+
+                          </div>
+<?php endif; ?>

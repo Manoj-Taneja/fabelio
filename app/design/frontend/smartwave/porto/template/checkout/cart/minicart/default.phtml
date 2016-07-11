@@ -75,7 +75,7 @@ if($aspect_ratio && Mage::getStoreConfig("porto_settings/category/ratio_width",$
             if(strpos($delete_url,'uenc')>-1)
                 $delete_url=substr($delete_url,0,strpos($delete_url,'uenc')-1);
         ?>
-        <a href="<?php echo $delete_url ?>" title="<?php echo $this->__('Remove This Item') ?>" onclick="if(confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>')){ematic_removed(this);} else {return false;}" class="btn-remove"><i class="icon-cancel"></i></a>
+<!-- FAB-62 Ematic code starts -->        <a href="<?php echo $delete_url ?>" title="<?php echo $this->__('Remove This Item') ?>" onclick="if(confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>')){if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematic_removed(this);}} else {return false;}" class="btn-remove"><i class="icon-cancel"></i></a> <!-- FAB-62 Ematic code ends -->
     </div>
     <div class="clearer"></div>
 </li>

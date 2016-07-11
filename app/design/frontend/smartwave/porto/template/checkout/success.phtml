@@ -24,44 +24,196 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="page-title">
-    <h1><?php echo $this->__('Terima Kasih') ?></h1>
+
+
+<div class="success-main">
+<?php
+$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+  //$order   = Mage::getModel('sales/order')->load($lastOrderId);
+  $orderId = Mage::getModel('sales/order')
+               ->loadByIncrementId($lastOrderId)
+               ->getEntityId();
+  $order_data = Mage::getModel('sales/order')
+               ->loadByIncrementId($lastOrderId)
+               ->getData();
+  //$customer = Mage::getSingleton('customer/session')->getCustomer();
+    //$customerData = Mage::getModel('customer/customer')->load($order_data['customer_id'])->getData();
+  
+    $checkout_method = Mage::getSingleton('checkout/type_onepage')->getCheckoutMethod();
+    //var_dump($checkout_method);
+    $guest_email = Mage::getSingleton('core/session')->getGuestEmail();
+    //echo "<pre>"; print_r($guest_email); echo "</pre>";
+?>
+  <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" Class="success-icon" alt="" />
+  <h4>Terima Kasih! Pesanan Anda berhasil!</h4>
+  <label>Nomor order Anda : <b><?php
+ // var_dump($this->getOrderId());
+  
+  
+
+echo $lastOrderId;    
+
+  ?></b></label>
+  <p>
+    Jika Anda memiliki pertanyaan, silahkan email kami ke hello@fabelio.com atau hubungi kami di 021 1234 1234
+  </p>
+<div class="success-button">
+  <a href="<?php echo Mage::getBaseUrl();?>sales/order/view/order_id/<?php echo $orderId; ?>" class="success-order" >Lihat Order Anda </a>
+  <a href="<?php echo Mage::getBaseUrl();?>" class="success-home">Kembali ke Homepage</a>
 </div>
-<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<div class="form-wrap">
-    <h2 class="sub-title"><?php echo $this->__('Terima kasih atas pembelian Anda!') ?></h2>
 
-    <?php if ($this->getOrderId()):?>
-    <?php if ($this->getCanViewOrder()) :?>
-        <p><?php echo $this->__('Nomor pesanan Anda: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
-    <?php  else :?>
-        <p><?php echo $this->__('Nomor pesanan Anda: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
-    <?php endif;?>
-<p><?php echo $this->__('Customer Service Kemi Akan Menghubungi Anda.') ?></p>
-        <p><?php echo $this->__('Anda akan menerima email konfirmasi pemesanan berisi detail pemesanan Anda dan sebuah link untuk mengecek status pembelian.') ?></p>
-    <?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
-        <p>
-            <?php echo $this->__('Klik <a href="%s" onclick="this.target=\'_blank\'">disini</a> untuk mencetak lembar konfirmasi pemesanan Anda.', $this->getPrintUrl()) ?>
-            <?php echo $this->getChildHtml() ?>
-        </p>
-    <?php endif;?>
-    <?php endif;?>
+<!--<div class="success-social">
+  <label>Share belanjaan Anda!</label>
+  <img src="<?php echo $this->getSkinUrl('images/social-media-facebook.svg'); ?>" />
+  <img src="<?php echo $this->getSkinUrl('images/social-media-twitter.svg'); ?>" />
+</div>-->
 
-    <?php if ($this->getAgreementRefId()): ?>
-        <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
-    <?php endif;?>
 
-    <?php if ($profiles = $this->getRecurringProfiles()):?>
-    <p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
-    <ul class="disc">
-    <?php foreach($profiles as $profile):?>
-    <?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
-        <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
-    <?php endforeach;?>
-    </ul>
-    <?php endif;?>
+<div class="modal fade checkout-delete-main in" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+<form name="register_guest" id="register_guest" action="javascript://" method="POST">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pass-close"><span aria-hidden="true">&times;</span></button>
 
-    <div class="buttons-set">
-        <button type="button" class="button" title="<?php echo $this->__('Lanjutkan Berbelanja') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Lanjutkan Berbelanja') ?></span></span></button>
+        <img src="<?php echo $this->getSkinUrl('images/icon-guest-password.svg'); ?>" />
+        <h4>Satu langkah lagi!</h4>
+        <p>Daftarkan email Anda dengan cara memasukkan password dibawah ini</p>
+        
+        
+            <div id="userpass" ><input type="password" class="form-control" placeholder="Masukkan password Anda" name="userpassword" id="userpassword" /></div>
+<!--            <div id="confirmuserpass" style="display:none;" ><input type="password" name="confirmuserpassword" id="confirmuserpassword" /></div>-->
+            <div id="useremail" ><input type="hidden" name="email" id="email" value="<?php echo $guest_email; ?>" /></div>
+            <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+        
     </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default pass-disabled" id="register_guest_btn" >Buat Akun Fabelio <i class="fa fa-arrow-right"></i></button>
+      </div>
+ </form>
+    </div>
+  </div>
 </div>
+
+
+
+
+
+<div class="modal fade checkout-delete-main in" id="confirmed-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+<form name="register_guest" id="register_guest" action="javascript://" method="POST">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pass-close"><span aria-hidden="true">&times;</span></button>
+
+        <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" />
+        <h4>Yay!</h4>
+        <p>Akun Anda telah terdaftar di Fabelio!</p> 
+    </div>
+ </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+<?php if($checkout_method=='guest'):?>
+<script>
+jQuery(document).ready(function(){
+    jQuery('#deleteitem').show();
+    
+    
+    
+jQuery('input[type=password]').keyup(function() {
+    // keyup code here
+    if(jQuery('#userpassword').val().length >= 6){
+        jQuery('#register_guest_btn').removeClass('pass-disabled');
+        jQuery('#userpassword').removeClass('wrong-pass');
+    }
+}).focus(function() {
+    if(jQuery('#userpassword').val().length >= 6){
+       jQuery('#register_guest_btn').addClass('pass-disabled');
+    }
+    //$('#pswd_info').show();
+    
+}).blur(function() {
+    //$('#pswd_info').hide();
+});
+    
+    jQuery('#pass-close').click(function(){
+        jQuery('#deleteitem').hide();
+        jQuery('#register_guest')[0].reset();
+    })
+    
+    jQuery('#register_guest_btn').click(function(){
+        var err = 0;
+        var cerr = 0;
+        if(jQuery('#userpassword').val()==''){
+            jQuery('#userpassword').addClass('wrong-pass');
+            err = 1;
+        }
+        if(jQuery('#userpassword').val().length < 6){
+            jQuery('#userpassword').addClass('wrong-pass');
+            err = 1;
+        }
+      if(err == 1){
+        jQuery('#register_guest_btn').addClass('pass-disabled');  
+        return false;  
+      }else{
+          jQuery('#register_guest_btn').removeClass('pass-disabled');
+      }
+      
+      if(!jQuery('#register_guest_btn').hasClass('register_guest_btn_disabled')){
+          var create_user_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/createUserAjax"
+          var data = jQuery('#register_guest').serialize();
+          jQuery('#loading-mask').show();
+          jQuery.ajax({
+                url:create_user_url,
+                type:'POST',
+                data:data,
+                success: function(result){
+                    var result_data = jQuery.parseJSON(result)
+                    if(result_data.success==true){
+                            
+                            jQuery('#deleteitem').hide();
+                            jQuery('#loading-mask').hide();
+                            jQuery('#confirmed-user').show();
+                            jQuery('#confirmed-user').find('.close').click(function(){
+                            jQuery('#confirmed-user').hide();
+                        })
+                        jQuery('#register_guest')[0].reset();
+                    }else{
+                        alert('There are some errors');
+                        jQuery('#loading-mask').hide();
+                        
+                        jQuery('#register_guest')[0].reset();
+                    }
+                    //console.log(result);
+                    
+                }
+         });
+      }
+      
+      
+      
+      
+      
+      
+    });
+})    
+</script>
+<?php endif; ?>
+<!--<div class="page-title">
+    <h1><?php //echo $this->__('Terima Kasih') ?></h1>
+</div>-->
+<?php //echo $this->getMessagesBlock()->getGroupedHtml() ?>
+

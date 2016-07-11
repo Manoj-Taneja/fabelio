@@ -159,6 +159,7 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         return $row;
     }
     
+
     
     public function get_sku_data($sku){
         $read = Mage::getSingleton('core/resource')->getConnection('core_read');
@@ -166,6 +167,6 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $select = "SELECT  * from {$table} where sku = '{$sku}'";
         $row = $read->fetchAll($select);
         return $row;
-       
     }
+
 }

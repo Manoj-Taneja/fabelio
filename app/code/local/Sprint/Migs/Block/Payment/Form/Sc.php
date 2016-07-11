@@ -17,9 +17,8 @@ class Sprint_Migs_Block_Payment_Form_Sc extends Mage_Payment_Block_Form
         $mark = new $mark;
         $mark->setTemplate('migs/payment/form/sc.phtml');
 		
-		$this->setTemplate('migs/payment/redirectsc.phtml')
-            ->setMethodTitle('') // Output MIGS mark, omit title
-			->setMethodLabelAfterHtml($mark->toHtml());
+//    $this->setTemplate('migs/payment/redirectsc.phtml')->setMethodTitle('') // Output MIGS mark, omit title
+//            ->setMethodLabelAfterHtml($mark->toHtml());
 		
 			return parent::_construct();    
 	}

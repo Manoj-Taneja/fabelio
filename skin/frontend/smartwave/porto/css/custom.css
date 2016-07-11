@@ -968,9 +968,11 @@ a {
 .cart .discount h2.opened, .cart .shipping h2.opened,
 .opc .step {
   border-radius: 0;
+  
 }
+
 .opc .active .step-title {
-  background: #fff;
+  background: #ffd41c;
 }
 .opc .active .step-title h2 {
   font-weight: bold;

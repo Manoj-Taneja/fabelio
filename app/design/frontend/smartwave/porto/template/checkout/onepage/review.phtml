@@ -24,10 +24,6 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="order-review waD" id="checkout-review-load" style="display:none;">
-    <!-- Content loaded dynamically -->
-    
-</div>
 <?php 
         $items = Mage::getSingleton('checkout/cart')->getQuote()->getAllItems();
         $rc = Mage::getResourceSingleton('catalog/product');
@@ -36,63 +32,138 @@
        
         
 ?>
-
-<div id="cart-items-table">
-    <table style="width:100%" border="1">
-            <thead>
-                    <tr>
-                        <th rowspan="<?php echo $rowspan ?>"><?php echo $this->__('Product Name') ?></th>
-                        <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Price') ?></th>
-                        <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
-                        <th rowspan="<?php echo $rowspan ?>" class="a-center"><?php echo $this->__('Delivery Details') ?></th>
-                        <th colspan="<?php echo $colspan ?>" class="a-center"><?php echo $this->__('Subtotal') ?></th>
-                    </tr>
-            </thead>
-            <form name="review_form" id="review_form" action="javascript://" method="POST">
-            <tbody id="response-review-items">
+<div id="collapseThree" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body" id="review_html">
+              <div class="accordion-inner-content" id="accordion-inner-content" >
+                 
+                  
+                <div class="checkout-header-table-mobile-main">
+        
+                 <form name="review_form_mobile" id="review_form_mobile" action="javascript://" method="POST">
                 <?php foreach($items as $key=>$item): ?>
+                    <div class="checkout-header-table-mobile">  
                 <?php
-                    $product_id = $item->getID();
+                    $product_id = $item->getProductID();
+                    $item_id = $item->getID();
                     $product = Mage::getModel('catalog/product')->load($product_id);
                     $product_name = $item->getName();
                     $product_price = $item->getBaseRowTotal();
                     $product_qty = $item->getQty();
                     $product_sku = $item->getSku();
-                    $smallImage = $rc->getAttributeRawValue($product_id, 'thumbnail', Mage::app()->getStore());
-                    $imageModel = Mage::getModel('catalog/product_image');
-                    $imageModel->setDestinationSubdir('thumbnail');
-                    $imageModel->setBaseFile($smallImage);
-                    //$product_image = $imageModel->getUrl();
+                    $manufacturer = $product->getAttributeText('manufacturer');
                     $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(80);
                 ?>
-                  <tr>
-                     <td align="right">
-                        <img height="80" width="80" src="<?php echo $product_image; ?>" />
-                        <div class="product-title"><?php echo $product_name; ?>
+                  <div class="cart-main-box">
+                    <div class="cart-main-box-left">
+                      <img src="<?php echo $product_image; ?>" alt="" />
+                    </div>
+                    <div class="cart-main-box-right">
+                     <div class="cart-product-name">
+                      <h4><?php echo $product_name; ?></h4>
+                       <label><?php echo $manufacturer; ?></label>
+                     </div>
+                        <div class="mobile-close-item">
+                             <img width="18" data-target="#deleteitem" class="delete-item" rel="<?php echo $item_id; ?>" data-toggle="modal" style="cursor:pointer;" src="<?php echo $this->getSkinUrl('images/icon-close-black.svg');?>">
                         </div>
-                       
-                     </td>
-                     <td align="right">
-                        <!--<div class="discount-price">Rp 4.699.000</div>-->
-                        <div class="main-price">
-                            <?php echo $_coreHelper->formatPrice($product_price, false) ?>
-                            
+                     <div class="cart-quantity-main">
+                       <div class="cart-quantity">
+                       <label>Jumlah</label>
+                       <input type="number" disabled="disabled" value="<?php echo $product_qty; ?>">
+                     </div>
+                     <div class="cart-mobile-price">
+                       <label><?php echo $_coreHelper->formatPrice($product_price, false) ?></label>
+                     </div>
+                     </div>
+
+                    </div>
+                  </div>
+                  <div class="cart-delivery-mobile">
+                      <?php $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);?>
+                    <label>Tanggal Pengiriman:</label>
+                    <?php if(count($delivery_array) > 1):?>
+                    <?php 
+                                foreach($delivery_array as $key=>$val):
+                                    //echo "<pre>"; print_r($val); echo "</pre>";
+                                    if($val['price']!="Free"){
+                                        $radio_name = "express-delivery-option-".$product_id;
+                                    }else{
+                                        $radio_name = "standard-delivery-option-".$product_id;
+                                    }
+                                    $shipping_code = "matrixrate_matrixrate_".$val['pk'];
+                             ?>
+                    
+                    <div class="cart-delivery-option <?php if($val['price']=="Free"):?>delevery-option-selected<?php endif; ?>" rel="<?php echo $radio_name;?>">
+                      <?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?>
+                      
+                    </div>
+                    <div style="display:none;"><input class="mobile-shipping-method"  type="radio" <?php if($val['Standard']==0):?>checked="checked"<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/></div>
+                    
+                             
+                            <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
+                            <?php endforeach; ?>
+                    <?php else: ?>
+                    <?php foreach($delivery_array as $key=>$val): ?>
+                            <?php $radio_name_free = "free-std-mob-".$product_id; ?>
+
+                    <div class="cart-delivery-option delevery-option-disabled" for="<?php echo $radio_name_free; ?>">
+                     <?php echo $val['delivery_date']; ?> - Free
+                      
+                    </div>
+                    <div style="display:none;"><input class="mobile-shipping-method" type="radio" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method" id="<?php echo $radio_name_free; ?>"/></div>
+                            <?php endforeach; ?>
+                    
+                   <?php endif; ?>
+                    
+                  </div>
                         </div>
-                     </td>
-                     </td>
-                     <td align="right">
-<!--                         <input type="text" maxlength="2" name="product_qty" id="product_qty" value="<?php echo $product_qty; ?>" disabled="disabled" />-->
-                        <select>
-                            <?php for($i=1; $i<=100; $i++):?>
-                           <option value="<?php echo $i; ?>" <?php if($i==$product_qty):?>selected="selected"<?php endif; ?>><?php echo $i; ?></option>
-                           <?php endfor; ?>
-                           
-                        </select>
-                     </td>
-                     <td align="right">
-                        <div>
+                  <?php endforeach; ?>
+                    
+                
+                 </form>
+                
+              </div>
+                  
+                  
+                  
+                <form name="review_form" id="review_form" action="javascript://" method="POST">
+                <div class="checkout-header-table">
+                    <div class="checkout-item">
+                      <div class="cell"></div>
+                      <div class="cell">Item</div>
+                      <div class="cell">Harga Satuan</div>
+                      <div class="cell">Jumlah</div>
+                      <div class="cell">Tanggal Pengiriman </div>
+                      <div class="cell">Subtotal</div>
+                      <div class="cell"></div>
+                    </div>
+                <?php foreach($items as $key=>$item): ?>
+                <?php
+               
+                    $product_id = $item->getProductID();
+                    $item_id = $item->getID();
+                    $product = Mage::getModel('catalog/product')->load($product_id);
+                    $product_name = $item->getName();
+                    $product_price = $item->getBaseRowTotal();
+                    $product_qty = $item->getQty();
+                    $product_sku = $item->getSku();
+                    $manufacturer = $product->getAttributeText('manufacturer');
+                    $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(150);
+                ?>
+                    <div class="checkout-cart-item">
+                      <div class="cart-cell cell5">
+                      <img src="<?php echo $product_image; ?>" width="155" height="155" />
+                    </div>
+                      <div class="cart-cell cell1">
+                        <h4><?php echo $product_name; ?></h4>
+                        <label><?php echo $manufacturer; ?></label>
+                      </div>
+                      <div class="cart-cell cell2"><span> <?php echo $_coreHelper->formatPrice($product_price, false) ?></span></div>
+                      <div class="cart-cell cell4"><input disabled="disabled" type="number" value="<?php echo $product_qty; ?>" /></div>
+                      <div class="cart-cell cell">
+                        
                           <?php $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);?>
                         <?php if(count($delivery_array) > 1):?>
+                          <div class="checkout-quantity">
                             <?php 
                                 foreach($delivery_array as $key=>$val): 
                                     if($val['price']!="Free"){
@@ -102,83 +173,160 @@
                                     }
                                     $shipping_code = "matrixrate_matrixrate_".$val['pk'];
                              ?>
-                            <input type="radio" <?php if($val['Standard']==0):?>checked='checked'<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/>&nbsp;<?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?><br>
+                              <input type="radio" class="desktop-shipping-method" <?php if($val['Standard']==0):?>checked="checked"<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/><label for="<?php echo $radio_name; ?>"><?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?></label>
                             <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
                             <?php endforeach; ?>
                         
                         </div>
                          <?php else: ?>
                          <?php ?>
-                        <div>
+                        <div class="checkout-quantity">
                             <?php foreach($delivery_array as $key=>$val): ?>
-                            <input type="radio" checked="checked" name="<?php echo $product_id; ?>" value="0" rel="shipping_method"/>&nbsp;<?php echo $val['delivery_date']; ?> - Free
+                            <?php $radio_name_free = "free-std-".$product_id; ?>
+                            <input type="radio" class="desktop-shipping-method" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method" id="<?php echo $radio_name_free; ?>"/><label for="<?php echo $radio_name_free; ?>"><?php echo $val['delivery_date']; ?> - Free</label>
                             <?php endforeach; ?>
                         </div>
-                        <?php endif; ?>
-
-                     </td>
-                     <td align="right">
-                        <div class="total-price">
+                        <?php endif; ?>              
+<!--                        <div class="checkout-quantity">
+                        <input type="checkbox" id="checkout-qty-one" />
+                        <label for="checkout-qty-one">31 Mei - Gratis</label>
+                      </div>
+                      <div class="checkout-quantity" >
+                      <input type="checkbox" id="checkout-qty-two" />
+                      <label for="checkout-qty-two">24 Mei - Rp 100.000</label>
+                    </div>-->
+                      </div>
+                              <div class="cart-cell cell2">
+                          <span>
                             <?php
-                                $total_price = $product_qty * $product_price;
-                                echo $_coreHelper->formatPrice($total_price, false);
+                                  $total_price = $product_qty * $product_price;
+                                  echo $_coreHelper->formatPrice($total_price, false);
                             ?>
-                        </div>
-                     </td>
-                     <!--<td>X</td>-->
-                  </tr>
+                          </span>
+                              </div>
+                      <div class="cart-cell cell"><img class="delete-item" rel="<?php echo $item_id; ?>" src="<?php echo $this->getSkinUrl('images/icon-close-black.svg'); ?>" width="20" style="cursor:pointer;"  data-toggle="modal" data-target="#deleteitem" /></div>
+
+                    </div>
+                    <?php endforeach; ?>
+                    
+                </div>
                 
-                <?php endforeach ?>
-            </tbody>
-            </form>
-            <tfoot id="subtotal_footer">
-               
-                <tr class="first">
-                                <td colspan="4" class="a-right" style="">Subtotal</td>
-                                <td class="a-right last" style="">
-                                    <span class="price"><?php echo $_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false); ?></span>
-                                </td>
-                </tr>
-                            <tr>
-                                <td colspan="4" class="a-right" style="">
-                                    Shipping &amp; Handling     
-                                </td>
-                                <td class="a-right last" style="">
-                                    <?php
+
+                <!-- Modal delete item -->
+                
+
+                <div class="checkout-total-main">
+                  <div class="checkout-total-left">
+                    <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
+                    <div class="form-group  has-feedback" id="coupon_div" style="display:none;">
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code"/>
+                    <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
+                  </div>
+
+<!--                  <div class="form-group has-error has-feedback">
+                  <input type="text" class="form-control" >
+                  <i class="fa fa-close form-control-feedback" ></i>
+                </div>-->
+
+                  </div>
+                  <div class="checkout-total-right">
+                      <div class="checkout-total-inner">
+                        <label>Jumlah Belanjaan Anda</label>
+                        <span><?php echo $_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false); ?></span>
+                      </div>
+
+                      <div class="checkout-total-inner">
+                        <label>Ongkos Kirim</label>
+                        <span>
+                            <?php
                                         $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
                                         $shipping_amount = array_sum($shipping_amount_array);
-                                    ?>
-                                    <?php echo $_coreHelper->formatPrice($shipping_amount,false); ?>
-                                </td>
-                            </tr>
-                            <tr class="last">
-                            <td colspan="4" class="a-right" style="">
-                                <strong>Grand Total</strong>
-                            </td>
-                            <td class="a-right last" style="">
-                                <strong>
-                                    <?php 
-                                    $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
-                                    $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
-                                    echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
-                                   ?>
-                                </strong>
-                            </td>
-                            </tr>
-                
-            </tfoot>
-    </table>
+                            ?>
+                            <?php echo $_coreHelper->formatPrice($shipping_amount,false); ?>
+                        </span>
+                      </div>
+
+                      <div class="checkout-total-inner checkout-discount" style="display:none;">
+                        <label>Diskon Voucher</label>
+                        <span>-Rp100.000</span>
+                      </div>
+
+                      <div class="checkout-total-inner g-total">
+                        <label>Grand Total</label>
+                        <span>
+                            
+                        <?php 
+                                $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                        ?>
+                            
+                        </span>
+                      </div>
+                  </div>
+                    
+                    
+<!--<div class="checkout-item-button">
+  <a href="" class="chkbtn btn-checkout" >Lanjutkan</a>
+</div>-->
+
+                </div>
+                </form>
+                  
+              </div>
+<input type="hidden" name="delete_item" id="delete_item" value="" />
+              </div>
+
+    
+    
+    <div class="modal fade checkout-delete-main" id="deleteitem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+
+                      <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                        <img src="<?php echo $this->getSkinUrl('images/icon-delete.svg'); ?>" />
+                        <label>Apakah Anda yakin ingin menghapus barang Lni?</label>
+                        <h4>Batal</h4>
+                    </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="delete_confirm">Hapus</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+    
+    
     <div id="checkout-review-submit">
     
-    <div id="review-buttons-container" class="buttons-set">
+    <div id="review-buttons-container" class="buttons-set address-cont-btn">
         
-        <button onclick="" class="button btn-checkout" id="go_payment" title="Next Step" type="submit"><span><span>Continue</span></span></button>
-        <span style="display:none;" id="review-please-wait" class="please-wait">
-            <img class="v-middle" title="Loading Next Step..." alt="Loading Next Step..." src="http://local.rnd.com/skin/frontend/default/default/images/opc-ajax-loader.gif"> Loading Next Step...        </span>
-    </div>
+        <button onclick="" class="button btn-checkout" id="go_payment" title="Next Step" type="submit"><span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
+<!--        <span style="display:none;" id="review-please-wait" class="please-wait">
+            <img class="v-middle" title="Loading Next Step..." alt="Loading Next Step..." src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif');?>"> Loading Next Step...        </span>
+    </div>-->
+        <div id="review-please-wait" style="display: none;">
+            <div class="background-overlay"></div>
+            <p class="loader" id="loading_mask_loader">
+                <i class="ajax-loader large animate-spin"></i>
+            </p>
+        </div>
     
 </div>
+            </div>
+      </div>
+
+              
+            
+<div class="order-review waD" id="checkout-review-load" style="display:none;">
+    <!-- Content loaded dynamically -->
+    
 </div>
+
+
+
 
 <!--<div style="float:right;"><button id="go_payment" class="fab-btn fab-btn-primary" type="button"><span><span>Continue</span></span></button></div>-->
 
@@ -186,11 +334,13 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
-        $('#go_payment').click(function(){
+       // $(document).on("click", "#go_payment", function(){});
+        $(document).on("click", "#go_payment", function(){
             $(this).hide();
-            $('#review-please-wait').show();
+           // $('#review-please-wait').show();
             var attr_id=$(this).attr('rel');
             var pk = $(this).val();
+            jQuery('#loading-mask').show();
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/goPayment/";
             var form_data ="pk="+pk; 
             $.ajax({
@@ -208,29 +358,219 @@
                     $('#opc-review').removeClass('active');
                     $('#opc-payment').addClass('active');
                     $('#checkout-payment-method-load').html(return_data.update_section.html);
+                    jQuery('#loading-mask').hide();
                 }
             });
         })
         
         
-       $('input[type=radio]').click(function(){
-            var attr_id=$(this).attr('rel');
+       
+        
+        $(document).on("click", ".delete-item", function(){
+          //  alert('hi');
+           var product_id = $(this).attr('rel');
+           $('#delete_item').val(product_id);
+        });
+        
+        $(document).on("click", "#delete_confirm", function(){
+           var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/deleteAjax";
+           var form_data = "id="+$('#delete_item').val();
+           jQuery('#loading-mask').show();
+           $.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = $.parseJSON(result);
+                    if(return_data.success==true){
+                        $('#accordion-inner-content').html(return_data.html);
+                        jQuery('.close').trigger( "click" );
+                        jQuery('#loading-mask').hide();
+                        $('.delete-item').click(function(){
+                            var product_id = $(this).attr('rel');
+                            $('#delete_item').val(product_id);
+                         });
+                         
+                         
+                       
+                         
+                         
+                    }else{
+                        alert(return_data.error_message);
+                        jQuery('#loading-mask').hide();
+                    }
+                   //return false;
+                }
+            });
+        });
+   
+   
+   
+   $.fn.enterKey = function (fnc) {
+    return this.each(function () {
+        $(this).keypress(function (ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        })
+    })
+}
+
+
+//$("#coupon_code").blur(function () {
+//    var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/couponPostAjax";
+//    var form_data = "coupon_code="+$('#coupon_code').val();
+//    jQuery('#loading-mask').show();
+//     $.ajax({
+//                url:post_url,
+//                type:'POST',
+//                data:form_data,
+//                success: function(result){
+//                    var return_data = $.parseJSON(result);
+//                    if(return_data.error==true){
+//                        $('#coupon_div').addClass('has-error');
+//                        $('.form-control-feedback').hide();
+//                    }else{
+//                        //$('#coupon_div').addClass('has-success');
+//                         $('.checkout-total-main').html(return_data.html);
+//                         $('#cart_totals').html(return_data.grand_total);
+//                        //$('.form-control-feedback').show();
+//                    }
+//                    jQuery('#loading-mask').hide();
+//                    //alert(return_data.success);
+//                   // $('.checkout-total-main').html(return_data.subtotal_string);                    
+//                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+//                }
+//            });
+//})
+
+jQuery('.checkout-total-left').find('span').click(function(){
+    jQuery('#coupon_div').show();
+    jQuery('.checkout-total-left').find('label').hide();
+});
+   
+  
+jQuery(document).on('click','.cart-delivery-option', function(){
+    var radio_id = jQuery(this).attr('rel');
+    jQuery('#'+radio_id).trigger('click');
+    jQuery(this).toggleClass('delevery-option-selected').siblings().removeClass('delevery-option-selected');
+    
+    var attr_id=$(this).attr('rel');
             var pk = $(this).val();
             var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
-            $("#review_form").submit();
-            var form_data = $("#review_form").serialize();
-            console.log("Review FOrm Data : "+form_data);
+            $("#review_form_mobile").submit();
+            var form_data = $("#review_form_mobile").serialize();
+            //console.log("Review FOrm Data : "+form_data);
+            jQuery('#loading-mask').show();
             $.ajax({
                 url:post_url,
                 type:'POST',
                 data:form_data,
                 success: function(result){
                     var return_data = $.parseJSON(result);
-                    $('#subtotal_footer').html(return_data.subtotal_string);
-                    
-                    $('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+                    $('.checkout-total-main').html(return_data.subtotal_string);  
+                    $('#cart_totals').html(return_data.grand_total);
+                    jQuery('#loading-mask').hide();
+                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+                }
+            });
+    
+   
+}); 
+  
+  
+});
+
+function remove_me(){    
+        jQuery('#coupon_div').show();
+        jQuery('.checkout-total-left').find('label').hide();   
+}
+
+//function apply_coupon(){
+//
+//jQuery("#coupon_code").blur(function ($) {
+//    var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/couponPostAjax";
+//    var form_data = "coupon_code="+jQuery('#coupon_code').val();
+//    jQuery('#loading-mask').show();
+//     jQuery.ajax({
+//                url:post_url,
+//                type:'POST',
+//                data:form_data,
+//                success: function(result){
+//                    var return_data = jQuery.parseJSON(result);
+//                    if(return_data.error==true){
+//                        jQuery('#coupon_div').addClass('has-error');
+//                        jQuery('.form-control-feedback').hide();
+//                    }else{
+//                        //$('#coupon_div').addClass('has-success');
+//                         jQuery('.checkout-total-main').html(return_data.html);
+//                         jQuery('#cart_totals').html(return_data.grand_total);
+//                        //$('.form-control-feedback').show();
+//                    }
+//                    jQuery('#loading-mask').hide();
+//                    //alert(return_data.success);
+//                   // $('.checkout-total-main').html(return_data.subtotal_string);                    
+//                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+//                }
+//            });
+//})
+//}
+
+jQuery(document).on("click", ".desktop-shipping-method", function(){
+            var attr_id=jQuery(this).attr('rel');
+            var pk = jQuery(this).val();
+            var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/updateOrderReview";
+            jQuery("#review_form").submit();
+            var form_data = jQuery("#review_form").serialize();
+            //console.log("Review FOrm Data : "+form_data);
+            jQuery('#loading-mask').show();
+            jQuery.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = jQuery.parseJSON(result);
+                    jQuery('.checkout-total-main').html(return_data.subtotal_string);  
+                    jQuery('#cart_totals').html(return_data.grand_total);
+                    jQuery('#loading-mask').hide();
+                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
                 }
             });
         })
-    })
+        
+        
+  //$("#coupon_code").blur(function () {
+  jQuery(document).on("blur", "#coupon_code", function(){
+    var post_url = <?php Mage::getBaseUrl();?>"/checkout/cart/couponPostAjax";
+    var form_data = "coupon_code="+jQuery('#coupon_code').val();
+    if(form_data==""){
+        jQuery('#coupon_div').addClass('has-error');
+        return false;
+    }
+    jQuery('#loading-mask').show();
+     jQuery.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = jQuery.parseJSON(result);
+                    if(return_data.error==true){
+                        jQuery('#coupon_div').addClass('has-error');
+                        jQuery('.form-control-feedback').hide();
+                    }else{
+                        //$('#coupon_div').addClass('has-success');
+                         jQuery('.checkout-total-main').html(return_data.html);
+                         jQuery('#cart_totals').html(return_data.grand_total);
+                        //$('.form-control-feedback').show();
+                    }
+                    jQuery('#loading-mask').hide();
+                    //alert(return_data.success);
+                   // $('.checkout-total-main').html(return_data.subtotal_string);                    
+                    //$('#shipping_method-progress-opcheckout dd').html(return_data.shipping_method);
+                }
+            });
+})
+
+  
 </script>
