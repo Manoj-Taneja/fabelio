@@ -107,7 +107,10 @@
                       <?php endif; ?>
                        <li style="display:none;"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->escapeHtml($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" /></li>
                       <?php if($i==4):?>
-                      <?php break; endif;?>
+                      <?php
+                      //break;
+                      endif;
+                      ?>
                     <?php $i++; ?>
                       
                 <?php endforeach; ?>
@@ -132,7 +135,9 @@
     
     <?php endif; ?>
    <?php if($j==4):?>
-                      <?php break; endif;?>
+                      <?php
+                      //break; 
+                      endif;?>
     
     
 <?php $j++; endforeach;
@@ -146,12 +151,14 @@
                             <div class="bank-cicilan">
                               <div class="bank-cicilan-inner" style="width:70%;">
                                 <label>Bank</label>
-                                <select class="">
+                                <select>
                                 <option>Pilih bank Anda</option>
-                                <?php foreach($methods as $_method): ?>
+                                <?php $k = 1; foreach($methods as $_method): ?>
                                 <?php $_code = $_method->getCode(); ?>
+                                <?php if($k > 4): ?>
                                 <option value="<?php echo $_code; ?>"><?php echo $this->escapeHtml($_method->getTitle()) ?></option>
-                                <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?php $k++; endforeach; ?>
                                 
                                  
                                 </select>
