@@ -7,22 +7,22 @@
  *
  */
 ?>
-<!--<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
-    <li class="form-alt"><?php echo $this->getRedirectMessage() ?></li>
+<!--<ul class="form-list" id="payment_form_<?php //echo $this->getMethodCode() ?>" style="display:none;">
+    <li class="form-alt"><?php //echo $this->getRedirectMessage() ?></li>
 </ul>-->
 <?php $_code=$this->getMethodCode() ?>
  <?php $total = $this->helper('checkout/cart')->getQuote()->getGrandTotal();
 $threeMonths = sprintf('%0.2f', $total/3);
  $sixMonths = sprintf('%0.2f', $total/6);
  $twelveMonths = sprintf('%0.2f', $total/12);?>
-<div class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
-<p>Please Choose Installment Type:</p>
+<div class="bank-cicilan-inner" id="payment_form_<?php echo $_code ?>" >
+<label style="width:35%;">Tenor</label>
  <select id="bca_credit_installment" name="payment[bca_credit_installment]" class="installment_select">
 <option value="bca3">3 months x Rp <?php echo $threeMonths?></option>
 <option value="bca6">6 months x Rp <?php echo $sixMonths?></option>
  <option value="bca12">12 months x Rp <?php echo $twelveMonths?></option>
 </select>
-<div>
-<?php echo $this->getMethod()->getConfigData('message');?>
-</div>
+<!--<div>
+<?php //echo $this->getMethod()->getConfigData('message');?>
+</div>-->
 </div>

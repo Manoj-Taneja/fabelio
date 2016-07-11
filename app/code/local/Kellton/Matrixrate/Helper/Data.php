@@ -158,4 +158,8 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $row = $read->fetchAll($select);
         return $row;
     }
+    
+    function delivery_time($sku){
+        
+    }
 }

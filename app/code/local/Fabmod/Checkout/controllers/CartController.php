@@ -524,6 +524,114 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
         
         $html = "";
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //////////////////// MOBILE HTML BEGIN /////////////////////
+        //<div class="checkout-header-table-mobile-main">
+        
+               $html.='  <form name="review_form_mobile" id="review_form_mobile" action="javascript://" method="POST">';
+                 foreach($items as $key=>$item): 
+                  $html .='<div class="checkout-header-table-mobile">';  
+                
+                    $product_id = $item->getProductID();
+                    $item_id = $item->getID();
+                    $product = Mage::getModel('catalog/product')->load($product_id);
+                    $product_name = $item->getName();
+                    $product_price = $item->getBaseRowTotal();
+                    $product_qty = $item->getQty();
+                    $product_sku = $item->getSku();
+                    $manufacturer = $product->getAttributeText('manufacturer');
+                    $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(80);
+                
+                  $html .='<div class="cart-main-box">
+                    <div class="cart-main-box-left">
+                      <img src="'.$product_image.'" alt="" />
+                    </div>
+                    <div class="cart-main-box-right">
+                     <div class="cart-product-name">
+                      <h4>'.$product_name.'</h4>
+                       <label>'.$manufacturer.'</label>
+                     </div>
+                        <div class="mobile-close-item">';
+                           $html.='<img width="18" data-target="#deleteitem" class="delete-item" rel="'.$item_id.'" data-toggle="modal" style="cursor:pointer;" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-close-black.svg">';
+                        $html.= '</div>
+                     <div class="cart-quantity-main">
+                       <div class="cart-quantity">
+                       <label>Jumlah</label>
+                       <input type="number" disabled="disabled" value="'.$product_qty.'">
+                     </div>
+                     <div class="cart-mobile-price">
+                       <label>'.$_coreHelper->formatPrice($product_price, false).'</label>
+                     </div>
+                     </div>
+
+                    </div>
+                  </div>
+                  <div class="cart-delivery-mobile">';
+                      $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);
+                    $html .= '<label>Tanggal Pengiriman:</label>';
+                                    if(count($delivery_array) > 1):
+                     
+                                foreach($delivery_array as $key=>$val):
+                                    //echo "<pre>"; print_r($val); echo "</pre>";
+                                    if($val['price']!="Free"){
+                                        $radio_name = "express-delivery-option-".$product_id;
+                                    }else{
+                                        $radio_name = "standard-delivery-option-".$product_id;
+                                    }
+                                    $shipping_code = "matrixrate_matrixrate_".$val['pk'];
+                                    
+                                    if($val['price']=="Free"){
+                                        $delevery_option_selected = 'delevery-option-selected';
+                                        $checked = "checked='checked'";
+                                    }else{
+                                        $delevery_option_selected = '';
+                                         $checked = '';
+                                    }
+                                    
+                                    if($val['price']!="Free"): 
+                                        $ship_price =  $_coreHelper->formatPrice($val['price'], false); 
+                                    else: 
+                                        $ship_price = $val['price'];
+                                    endif;
+                                    $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price'];
+                    
+                    $html .= '<div class="cart-delivery-option '.$delevery_option_selected.'" rel="<?php echo $radio_name;?>">';
+                       $html .= $val['delivery_date']." - ".$ship_price; 
+                      
+                    $html .='</div><div style="display:none;"><input class="mobile-shipping-method"  type="radio" '.$checked.' name="'.$product_id.'" id="'.$radio_name.'" rel="shipping_method" value="'.$val['pk'].'"/></div>';
+                    
+                             
+                            $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price'];
+                             endforeach;
+                    else:
+                         foreach($delivery_array as $key=>$val):
+                            $radio_name_free = "free-std-mob-".$product_id;
+
+                    $html .= '<div class="cart-delivery-option delevery-option-disabled" for="'.$radio_name_free.'">
+                     '.$val['delivery_date'].' - Free
+                      
+                    </div>';
+                    $html .= '<div style="display:none;"><input class="mobile-shipping-method" type="radio" checked="checked" disabled="disabled" name="'.$product_id.'" value="0" rel="shipping_method" id="'.$radio_name_free.'"/></div>';
+                             endforeach;
+                    
+                   endif;
+                    
+                  $html .= '</div>
+                        </div>';
+                  endforeach;
+                    
+                
+                 $html .= '</form></div>';
+        //////////////////// MOBILE HTML END ///////////////////////
        // $html .= '<div class="accordion-inner-content" >';
         $html .= '<form name="review_form" id="review_form" action="javascript://" method="POST">';
         $html .= '<div class="checkout-header-table">';
@@ -616,12 +724,18 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                     
                     if(array_key_exists($product_id,$shipping_amount_array)){
                         // echo "<pre>"; print_r($shipping_amount_array); echo "</pre>";
-                         $shipping_amount = array_sum($shipping_amount_array);
+                        $shipping_amount = array_sum($shipping_amount_array);
                      }else{
-                         $shipping_amount = 0;
-                         Mage::getSingleton('core/session')->unsShippingAmount();
-                         Mage::getSingleton('core/session')->unsShippingDescription();
-                         Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
+                        $shipping_amount = 0;
+                        $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
+                        $shipping_amount = array_sum($shipping_amount_array);
+                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+                        $grandtotal = round($totals["grand_total"]->getValue());
+                        $grandtotal_reverse = $grandtotal - $shipping_amount;
+                        Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal_reverse);
+                        Mage::getSingleton('core/session')->unsShippingAmount();
+                        Mage::getSingleton('core/session')->unsShippingDescription();
+                        Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
                         Mage::getSingleton('checkout/session')->getQuote()->setShippingAmount($shipping_amount);
                         // Mage::getSingleton('core/session')->unsShippingAmount();
                      }

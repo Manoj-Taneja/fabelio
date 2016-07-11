@@ -12,8 +12,8 @@ class Sprint_Migs_Block_Payment_Form_Bri extends Mage_Payment_Block_Form
      * Set template and redirect message
      */
     protected function _construct() {
-      $this->setTemplate('migs/payment/redirectbri.phtml')
-        ->setMethodTitle('Cicilan 0% Kartu Kredit Bank BRI');
+//      $this->setTemplate('migs/payment/redirectbri.phtml')
+//        ->setMethodTitle('Cicilan 0% Kartu Kredit Bank BRI');
 		
 			return parent::_construct();    
 	}
