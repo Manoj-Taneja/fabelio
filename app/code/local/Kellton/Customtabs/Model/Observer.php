@@ -44,7 +44,8 @@ class Kellton_Customtabs_Model_Observer
                 $matrixrate_helper = Mage::helper('matrixrate');
                 //var_dump($matrixrate_helper);
                 $sku_data = $matrixrate_helper->get_sku_data($sku);
-                
+                $product_id = Mage::registry('current_product')->getId();
+                $_product= Mage::getModel('catalog/product')->load($product_id);
                 if(!empty($sku) && count($sku_data) > 0){
                     $query_express = 'update '.$table.' set express_fee_enabled = '.$fee_enabled.' , express_number_of_days = '.$express_number_of_days.' , price = '.$express_fees.' where sku = "'.$sku.'" and delivery_type = "Express"';
                     $write->query($query_express);
@@ -52,8 +53,7 @@ class Kellton_Customtabs_Model_Observer
                     $query_standard = 'update '.$table.' set express_fee_enabled = 0 , standard_number_of_days = '.$standard_number_of_days.' , price = '.$standard_fees.' where sku = "'.$sku.'" and delivery_type = "Standard"';                    
                     $write->query($query_standard);
                 }else{
-                    $product_id = Mage::registry('current_product')->getId();
-                    $_product= Mage::getModel('catalog/product')->load($product_id);
+                    
                     $sku = $_product->getSku();
                     $query_express = 'insert into '.$table.' set website_id = "1", dest_country_id = "IN",  express_fee_enabled = '.$fee_enabled.' , standard_number_of_days = '.$express_number_of_days.' , price = '.$express_fees.' , sku = "'.$sku.'" , delivery_type = "Express" ';
                     $write->query($query_express);
@@ -62,10 +62,13 @@ class Kellton_Customtabs_Model_Observer
                     $query_standard = 'insert into '.$table.' set website_id = "1", dest_country_id = "IN", express_fee_enabled = 0 , standard_number_of_days = '.$standard_number_of_days.' , price = '.$standard_fees.' , sku = "'.$sku.'" , delivery_type = "Standard" ';
                     $write->query($query_standard);
                 }
+                
+                
                 /**
                  * Uncomment the line below to save the product
                  *
                  */
+                //$_product->setDeliveryTime($express_number_of_days);
                 //$product->save();
             }
             catch (Exception $e) {
