@@ -17,9 +17,9 @@ class Sprint_Migs_Block_Payment_Form_Permata extends Mage_Payment_Block_Form
         $mark = new $mark;
         $mark->setTemplate('migs/payment/form/permata.phtml');
 		
-		$this->setTemplate('migs/payment/redirectpermata.phtml')
-            ->setMethodTitle('') // Output MIGS mark, omit title
-			->setMethodLabelAfterHtml($mark->toHtml());
+//		$this->setTemplate('migs/payment/redirectpermata.phtml')
+//            ->setMethodTitle('') // Output MIGS mark, omit title
+//			->setMethodLabelAfterHtml($mark->toHtml());
 		
 			return parent::_construct();    
 	}

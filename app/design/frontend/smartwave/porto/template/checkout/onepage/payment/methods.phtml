@@ -151,12 +151,14 @@
                             <div class="bank-cicilan">
                               <div class="bank-cicilan-inner" style="width:70%;">
                                 <label>Bank</label>
-                                <select>
-                                <option>Pilih bank Anda</option>
-                                <?php $k = 1; foreach($methods as $_method): ?>
-                                <?php $_code = $_method->getCode(); ?>
-                                <?php if($k > 4): ?>
-                                <option value="<?php echo $_code; ?>"><?php echo $this->escapeHtml($_method->getTitle()) ?></option>
+                                
+                                
+                                <select id="select_bank_name" onchange="getHtml(this.value);">
+                                    <option>Pilih bank Anda</option>
+                                    <?php $k = 1; foreach($methods as $_method): ?>
+                                    <?php $_code = $_method->getCode(); ?>
+                                    <?php if($k > 4): ?>
+                                    <option value="<?php echo $_code; ?>"><?php echo $this->escapeHtml($_method->getTitle()) ?></option>
                                 <?php endif; ?>
                                 <?php $k++; endforeach; ?>
                                 
@@ -166,13 +168,15 @@
                               </div>
                               <img src="<?php echo $this->getSkinUrl('images/bank-mandiri.png'); ?>" width="100" class="hidden-xs" />
 
-                              <div class="bank-cicilan-inner">
-                                <label style="width:35%;">Tenor</label>
-                                <select style="width:65%;">
-                                  <option>Pilih durasi cicilan Anda</option>
+                              <div id="installment_container">
+                                <div class="bank-cicilan-inner" id="sc_bank" >
+                                  <label style="width:35%;">Tenor</label>
+                                  <select style="width:65%;">
+                                    <option>Pilih durasi cicilan Anda</option>
 
-                                </select>
-                              </div>
+                                  </select>
+                                </div>
+                              </div>  
                               <p>
                                 Silahkan pilih program cicilan Anda beserta waktu tenor yang tersedia.
                               </p>
@@ -232,8 +236,46 @@
     payment.switchMethod('<?php echo $oneMethod ?>');
         <?php endif; ?>
     //]]>
-    
+    function getHtml(val){
+        //alert(val);
+        if(val=='sc'){
+            jQuery('#p_method_sc').trigger('click');
+        }
+        if(val=='permata'){
+            jQuery('#p_method_permata').trigger('click');
+        }
+        if(val=='bri'){
+            jQuery('#p_method_bri').trigger('click');
+        }
+        if(val=='bcacredit'){
+            jQuery('#p_method_bcacredit').trigger('click');
+        }
+        var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/getEmiAjax";
+        var form_data = "bank="+val;
+        jQuery('#loading-mask').show();
+        jQuery.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                    var return_data = jQuery.parseJSON(result);
+                    if(return_data.error==true){
+                        alert("There is some error !");
+                    }else{
+                       
+                        jQuery('#installment_container').html(return_data.html)
+                        jQuery('#sc_bank').show();
+                    }
+                    jQuery('#loading-mask').hide();
+                    
+                }
+            });
+    }
   jQuery(document).ready(function($){
+      
+      $('#select_bank_name').change(function(){
+         alert('Hello'); 
+      });
       
      $(".bank-detail-check input[type=checkbox]").change(function(){
         if($(this).is(":checked")){
@@ -249,5 +291,9 @@
        var p_code = $(this).attr('rel'); 
        $('#p_method_'+p_code).trigger('click');
     });
+ });
+ 
+ jQuery('document').on('change','#select_bank_name', function(){
+     alert("----Hi----");
  });
 </script>

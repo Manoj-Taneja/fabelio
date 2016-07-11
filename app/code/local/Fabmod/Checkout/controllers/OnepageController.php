@@ -849,6 +849,55 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
                 
         }
+        
+        public function getEmiAjaxAction(){
+            try{
+                $data_post = $this->getRequest()->getPost();
+                $bank_name = $data_post['bank'];
+                
+                switch($bank_name){
+                    case 'sc':
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectsc.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                    case 'permata':                        
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectpermata.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                    case 'bri':                        
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectbri.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                    case 'bcacredit':                        
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectbcacredit.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                }
+                
+            }catch(Mage_Core_Exception $e){
+                $result['success'] = false;
+                $result['error'] = $e->getMessage();
+            }
+            
+           
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        }
     
 }
 
