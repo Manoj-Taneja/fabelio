@@ -166,6 +166,5 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $select = "SELECT  * from {$table} where sku = '{$sku}'";
         $row = $read->fetchAll($select);
         return $row;
-       
-    }
+       }
 }

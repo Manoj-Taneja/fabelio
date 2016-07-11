@@ -13,6 +13,13 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             return;
         }
         
+        
+        $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
+        $shipping_amount = array_sum($shipping_amount_array);
+        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+        $grandtotal = round($totals["grand_total"]->getValue());
+        $grandtotal_reverse = $grandtotal - $shipping_amount;
+        Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal_reverse);
         Mage::getSingleton('core/session')->unsShippingAmount();
         Mage::getSingleton('core/session')->unsShippingDescription();
         $quote = $this->getOnepage()->getQuote();
@@ -492,6 +499,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal);
             
             
+            
             $return_html .= '
                   <div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span onclick="remove_me()">Klik disini</span></label>
@@ -840,6 +848,55 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             }
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
                 
+        }
+        
+        public function getEmiAjaxAction(){
+            try{
+                $data_post = $this->getRequest()->getPost();
+                $bank_name = $data_post['bank'];
+                
+                switch($bank_name){
+                    case 'sc':
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectsc.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                    case 'permata':                        
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectpermata.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                    case 'bri':                        
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectbri.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                    case 'bcacredit':                        
+                        $mark = Mage::getConfig()->getBlockClassName('core/template');
+                        $mark = new $mark;
+                        $mark->setTemplate('migs/payment/redirectbcacredit.phtml');
+                        $result['success'] = true;
+                        $result['error'] = false;
+                        $result['html'] = $mark->toHtml();
+                        break;
+                }
+                
+            }catch(Mage_Core_Exception $e){
+                $result['success'] = false;
+                $result['error'] = $e->getMessage();
+            }
+            
+           
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     
 }

@@ -4684,7 +4684,7 @@ button.close {
 .checkout-delete-main .modal-footer{padding: 0px; border: none;}
 .checkout-delete-main .modal-footer button{background: #d14836; border-radius: 0px; width: 100%;}
 .checkout-delete-main label{text-align: center;
-    margin: 20px 0; color: #bababa;}
+    margin: 20px 0; color: #bababa; font-family: roboto-regular; font-size: 14px; font-weight: 500;}
 		.checkout-delete-main h4{font-family: roboto-regular;
     font-weight: 500;
     color: #464646;
@@ -5078,6 +5078,10 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     content: "\f14a";
     color: #4eb06d;
 }
+
+
+
+
 .checkout-quantity input[type=radio] {
     margin: 4px 5px 0 0;
     float: left;
