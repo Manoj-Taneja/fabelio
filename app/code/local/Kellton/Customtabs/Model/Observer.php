@@ -68,8 +68,8 @@ class Kellton_Customtabs_Model_Observer
                  * Uncomment the line below to save the product
                  *
                  */
-                $_product->setDeliveryTime($express_number_of_days);
-                $product->save();
+                //$_product->setDeliveryTime($express_number_of_days);
+                //$product->save();
             }
             catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
