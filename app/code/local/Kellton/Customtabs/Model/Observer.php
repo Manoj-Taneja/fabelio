@@ -38,11 +38,9 @@ class Kellton_Customtabs_Model_Observer
                 $standard_number_of_days = $this->_getRequest()->getPost('standard_number_of_days');
                 $standard_fees = $this->_getRequest()->getPost('standard_fees');
                 $sku = $this->_getRequest()->getPost('sku');
-                //echo "<pre>"; print_r($_POST); echo "</pre>";
-                //exit;
+               
                 
                 $matrixrate_helper = Mage::helper('matrixrate');
-                //var_dump($matrixrate_helper);
                 $sku_data = $matrixrate_helper->get_sku_data($sku);
                 $product_id = Mage::registry('current_product')->getId();
                 $_product= Mage::getModel('catalog/product')->load($product_id);
