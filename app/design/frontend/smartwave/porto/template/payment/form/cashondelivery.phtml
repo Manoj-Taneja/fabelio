@@ -1,0 +1,134 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * @see Saas_Payment_Block_Form_Cashondelivery
+ */
+$quoteId=Mage::getSingleton('checkout/session')->getQuoteId(); 
+$quote = Mage::getModel("sales/quote")->load($quoteId); 
+$cartitems = $quote->getAllVisibleItems();
+$startmessage = '<span style="font-size:13px;padding-bottom:10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Mohon maaf, daftar dibawah ini adalah barang yang tidak dapat dibayar dengan metode ini:</i><br> <ul style="margin-left: 20px;list-style-type:disc">';
+$endmessage = '</ul><i><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Silahkan pilih metode pembayaran yang lain untuk melanjutkan.<i></span><br>&nbsp;<br>';
+$productcod ='';
+$suppliername ='';
+$displayCOD=0;
+$cart = Mage::getModel('checkout/cart')->getQuote();
+
+        foreach ($cart->getAllItems() as $item) {
+				//$product_id = $item->product_id;
+				//$product_sku = $item->sku;
+				//$product_price = $item->getPrice();
+				$product_name = $item->getName();
+
+				
+				$suppliername=Mage::getResourceModel('catalog/product')
+					->getAttribute('creator_id')
+					->getSource()
+					->getOptionText(
+						Mage::getResourceModel('catalog/product')->getAttributeRawValue($item->getProductId(), 'creator_id')
+					);
+				//if($cod == 'No' && $suppliername!='' && !is_array($suppliername)){ 
+				if($suppliername!='' && !is_array($suppliername)){ 
+								$productcod = '<li style="margin-left: 30px;"><i>'.$product_name.'</i></li>'.$productcod;
+                                $displayCOD=1;
+				}
+
+		}
+
+?>
+
+<?php if ($this->getInstructions()): ?>
+<p><?php ?></p>
+   
+
+
+
+
+<div role="tabpanel" class="tab-pane" id="messages">
+<div class="bank-logo-inner">
+                          <p>
+
+Pesanan Cash on Delivery atau Debit on Delivery Anda akan dekonfirmasi dan diverifikasi
+oleh customer service kami melalui telepon.
+                          </p>
+<!--                          <p style="color:#c31a20;">
+                            Mohon maaf, daftar dibawah ini adalah barang yang tidak dapat dibayar dengan metode ini:
+                          </p>
+
+                          <div class="bank-cod">
+                              <div class="bank-cod-inner">
+                                <div class="bank-cod-left">
+                                  <img src="" alt="" height="100" width="100" />
+                                </div>
+                                <div class="bank-cod-right">
+                                  <label>Shackleton 2 Seater Sofa (Silverstone)</label>
+                                  <span>Didesain oleh SDF</span>
+                                </div>
+                              </div>
+
+                              <div class="bank-cod-inner">
+                                <div class="bank-cod-left">
+                                  <img src="" alt="" height="100" width="100" />
+                                </div>
+                                <div class="bank-cod-right">
+                                  <label>Shackleton 2 Seater Sofa (Silverstone)</label>
+                                  <span>Didesain oleh SDF</span>
+                                </div>
+                              </div>
+
+                          </div>-->
+
+                          <div class="bank-page-total">
+                            <div class="bank-page-inner">
+                              <label>Grand Total</label>
+                              <span>
+                                  <?php
+                                        $_coreHelper = Mage::helper('core');
+                                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                        $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                        echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                    ?>   
+                              </span>
+                            </div>
+
+                            <div class="bank-page-inner bank-lower-total">
+                              <label>Total Dibayarkan</label>
+                              <span>
+                                  <?php
+                                        $_coreHelper = Mage::helper('core');
+                                        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                                        $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                        echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                                    ?>   
+                              </span>
+                            </div>
+                          </div>
+<!--                          <div class="checkout-item-button">
+                            <a href="" class="chkbtn btn-checkout">Konfirmasi Pesanan</a>
+                          </div>-->
+                        </div>
+                        </div>
+<?php endif; ?>

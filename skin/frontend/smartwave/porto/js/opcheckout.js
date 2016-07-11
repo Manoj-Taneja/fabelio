@@ -41,7 +41,7 @@ Checkout.prototype = {
         this.currentStep = 'billing';
 
         this.accordion.sections.each(function(section) {
-            Event.observe($(section).down('.step-title'), 'click', this._onSectionClick.bindAsEventListener(this));
+            Event.observe($(section).down('.panel-title'), 'click', this._onSectionClick.bindAsEventListener(this));
         }.bind(this));
 
         this.accordion.disallowAccessToNextSections = true;
@@ -127,8 +127,11 @@ Checkout.prototype = {
             this.reloadProgressBlock(this.currentStep);
         }
         this.currentStep = section;
+        
+              
         var sectionElement = $('opc-' + section);
         sectionElement.addClassName('allow');
+        
         this.accordion.openSection('opc-' + section);
         if(!reloadProgressBlock) {
             this.resetPreviousSteps();
@@ -257,24 +260,42 @@ Checkout.prototype = {
             sectionElement = $('opc-' + section);
         }
        // alert('opc-' + section)
+       if(section=='billing'){
+          // jQuery('#opc-login').removeClass('panel-payment-active');
+           //jQuery('#opc-billing').addClass('panel-payment-active');
+       }
+       console.log("Section : "+section);
         if(section=='shipping'){
             section='review';
             jQuery('#checkout-step-review').show();
             jQuery('#go_payment').show();
             jQuery('#checkout-step-payment').hide();
+            jQuery('#opc-billing').removeClass('active');
+            jQuery('#opc-billing').find('#checkout-step-billing').hide();
             jQuery('#opc-payment').removeClass('active');
         }
         this.changeSection('opc-' + section);
     },
 
     setStepResponse: function(response){
-        console.log("Go to section : "+response.goto_section);
+
         if (response.update_section) {
             $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
             if(response.goto_section=='review' && response.update_section.html!=false){
+               
+                
+                jQuery('#payment-buttons-container').hide();
+                jQuery('#submiting-order-container').show();
+                jQuery('#loading-mask').show();
+                
                 setTimeout(function(){ 
                    jQuery('#place-order-button').trigger( "click" );
                }, 1000);
+            }
+            
+            if(response.goto_section=='review' && response.update_section.html==false){
+                jQuery('#opc-billing').removeClass('active');
+            jQuery('#opc-billing').find('#checkout-step-billing').hide();
             }
         }
         if (response.allow_sections) {
@@ -409,7 +430,12 @@ Billing.prototype = {
     nextStep: function(transport){
         if (transport && transport.responseText){
             try{
+               // alert('Hi')
+                //jQuery('#opc-billing').find('div.panel-payment-active').removeClass('panel-payment-active');
+                jQuery('#completed-billing').show();
+                jQuery('#edit-completed-billing').show();
                 response = eval('(' + transport.responseText + ')');
+                //jQuery('#opc-review').find('div.panel-payment').addClass('panel-payment-active');
             }
             catch (e) {
                 response = {};
@@ -447,6 +473,7 @@ Shipping.prototype = {
         if ($(this.form)) {
             $(this.form).observe('submit', function(event){this.save();Event.stop(event);}.bind(this));
         }
+        jQuery('#opc-shipping').hide();
         this.addressUrl = addressUrl;
         this.saveUrl = saveUrl;
         this.methodsUrl = methodsUrl;
@@ -572,6 +599,7 @@ Shipping.prototype = {
     nextStep: function(transport){
         if (transport && transport.responseText){
             try{
+                
                 response = eval('(' + transport.responseText + ')');
             }
             catch (e) {
@@ -708,6 +736,8 @@ Payment.prototype = {
         this.saveUrl = saveUrl;
         this.onSave = this.nextStep.bindAsEventListener(this);
         this.onComplete = this.resetLoadWaiting.bindAsEventListener(this);
+        
+       
     },
 
     addBeforeInitFunction : function(code, func) {
@@ -745,7 +775,13 @@ Payment.prototype = {
         this.afterInitFunc.set(code, func);
     },
 
-    afterInit : function() {
+    afterInit : function() {        
+                //jQuery('#opc-review').find('div.panel-payment-active').removeClass('panel-payment-active');
+                //jQuery('#opc-payment').find('div.panel-payment').addClass('panel-payment-active');
+                
+                jQuery('#completed-review').show();
+                jQuery('#edit-completed-review').show();
+                jQuery('#cart_totals').show();
         (this.afterInitFunc).each(function(init){
             (init.value)();
         });
@@ -770,6 +806,7 @@ Payment.prototype = {
     },
 
     changeVisible: function(method, mode) {
+         
         var block = 'payment_form_' + method;
         [block + '_before', block, block + '_after'].each(function(el) {
             element = $(el);
@@ -868,6 +905,7 @@ Payment.prototype = {
     nextStep: function(transport){
         if (transport && transport.responseText){
             try{
+                
                 response = eval('(' + transport.responseText + ')');
             }
             catch (e) {

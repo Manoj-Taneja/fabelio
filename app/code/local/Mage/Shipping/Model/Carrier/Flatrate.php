@@ -118,21 +118,22 @@ class Mage_Shipping_Model_Carrier_Flatrate
         foreach($id as $key=>$val){
            $id_rev[$val] = $key; 
         }*/
-       // echo "<pre>"; print_r($id_rev); echo "</pre>";
+       // echo "<pre>"; print_r($id); echo "</pre>";
        // exit;
         foreach( $cart_items as $items ){
             $item_id = $items->getID();
+            $product_id = $items->getProductID();
            $custom_ship =0;
-            if(array_key_exists($item_id,$id)){
-                $data =  $matrixrate_helper->give_option_array($id[$item_id]);
+            if(array_key_exists($product_id,$id)){
+                $data =  $matrixrate_helper->give_option_array($id[$product_id]);
                 
                //echo "<pre>"; print_r($data); echo "</pre>";
                 if(count($data) > 0){
                     $custom_ship =$custom_ship + (($items->getQty())*($data['0']['price'])); 
-                    $shipping_amount_session[$items->getID()]=$custom_ship;
+                    $shipping_amount_session[$product_id]=$custom_ship;
                     $shipping_description[$items->getID()] = $data['0']['pk'];
                 }else{
-                     $shipping_amount_session[$items->getID()]=0;
+                     $shipping_amount_session[$product_id]=0;
                     $shipping_description[$items->getID()] = '';
                 }
             }
@@ -149,8 +150,8 @@ class Mage_Shipping_Model_Carrier_Flatrate
 
         }
         
-      //  echo "<pre>"; print_r($shipping_description); echo "</pre>";
-      //  exit;
+       // echo "<pre>"; print_r($shipping_amount_session); echo "</pre>";
+       // exit;
         Mage::getSingleton('core/session')->setShippingAmount($shipping_amount_session);
         Mage::getSingleton('core/session')->setShippingDescription($shipping_description);
         $shippingPrice_array = Mage::getSingleton('core/session')->getShippingAmount();

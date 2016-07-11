@@ -261,7 +261,11 @@ class Mage_Checkout_Model_Type_Onepage
         } else {
             $addressForm->setEntity($address);
             // emulate request object
-            $addressData    = $addressForm->extractData($addressForm->prepareRequest($data));
+           // echo "<pre>"; print_r($data); echo "</pre>";
+            //$addressData    = $addressForm->extractData($addressForm->prepareRequest($data));
+            $addressData = $data;
+           // echo "<pre>"; print_r($addressData); echo "</pre>";
+            //exit;
             $addressErrors  = $addressForm->validateData($addressData);
             if ($addressErrors !== true) {
                 return array('error' => 1, 'message' => array_values($addressErrors));

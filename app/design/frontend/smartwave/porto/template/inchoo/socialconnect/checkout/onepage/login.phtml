@@ -31,84 +31,277 @@
 * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 */
 ?>
-<?php /* Extensions placeholder */ ?>
 <?php echo $this->getChildHtml('checkout.onepage.login.extra')?>
-<div class="col2-set">
-    <?php echo $this->getChildHtml('login_before')?>
-    <div class="col-1">
-        <h3><?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?><?php echo $this->__('Checkout as a Guest or Register') ?><?php else: ?><?php echo $this->__('Register to Create an Account') ?><?php endif; ?></h3>
-        <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-            <p><?php echo $this->__('Register with us for future convenience:') ?></p>
-        <?php else: ?>
-            <p><strong><?php echo $this->__('Register and save time!') ?></strong><br />
-            <?php echo $this->__('Register with us for future convenience:') ?></p>
-            <ul>
-                <li><?php echo $this->__('Fast and easy check out') ?></li>
-                <li><?php echo $this->__('Easy access to your order history and status') ?></li>
-            </ul>
-        <?php endif; ?>
-        <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-            <ul class="form-list">
-                <?php if( $this->getQuote()->isAllowedGuestCheckout() ): ?>
-                <li class="control">
-                    <input type="radio" name="checkout_method" id="login:guest" value="guest"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_GUEST): ?> checked="checked"<?php endif; ?> class="radio" /><label for="login:guest"><?php echo $this->__('Checkout as Guest') ?></label>
-                </li>
-                <?php endif; ?>
-                <li class="control">
-                    <input type="radio" name="checkout_method" id="login:register" value="register"<?php if($this->getQuote()->getCheckoutMethod()==Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER || !$this->getQuote()->isAllowedGuestCheckout()): ?> checked="checked"<?php endif ?> class="radio" /><label for="login:register"><?php echo $this->__('Register') ?></label>
-                </li>
-            </ul>
-            <h4><?php echo $this->__('Register and save time!') ?></h4>
-            <p><?php echo $this->__('Register with us for future convenience:') ?></p>
-            <ul class="ul">
-                <li><?php echo $this->__('Fast and easy check out') ?></li>
-                <li><?php echo $this->__('Easy access to your order history and status') ?></li>
-            </ul>
-        <?php else: ?>
-            <input type="hidden" name="checkout_method" id="login:register" value="register" checked="checked" />
-        <?php endif; ?>
-        <div class="buttons-set">
-            <p class="required">&nbsp;</p>
-            <button type="button" class="button" onclick="checkout.setMethod();"><span><span><?php echo ($this->getQuote()->isAllowedGuestCheckout() ? $this->__('Continue') : $this->__('Register')) ?></span></span></button>
-        </div>
-    </div>
-    <div class="col-2">
-        <h3><?php echo $this->__('Login') ?></h3>
-        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post">
-        <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
-        <fieldset>
-            <h4><?php echo $this->__('Already registered?') ?></h4>
-            <p><?php echo $this->__('Please log in below:') ?></p>
-            <ul class="form-list">
-                <li>
-                    <label for="login-email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
-                    <div class="input-box">
-                        <input type="text" class="input-text required-entry validate-email" id="login-email" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" />
+<?php echo $this->getChildHtml('login_before')?>
+<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <?php 
+                
+                $customer_session = Mage::getSingleton('customer/session'); 
+                $customer = $customer_session->getCustomer(); 
+                //var_dump($customer_session->isLoggedIn());
+                //echo "<pre>"; print_r($customer); echo "</pre>";
+                if(!$customer_session->isLoggedIn()):
+                ?>
+              <div class="accordion-inner-content">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <label>Dimulai dengan memasukkan email Anda!</label>
+                  </div>
+                    <form name="email_form" id="email_form" action="javascript://" method="POST">
+                        <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+                        <input name="context" type="hidden" value="checkout" />
+                  <div class="form-group" id="form_group">
+                    <input type="text" required class="form-control required-entry validate-email" name="login[username]" id="login-email" placeholder="Masukkan email disini" />
+                    <input type="password" required style="display:none;" class="form-control required-entry" name="login[password]" id="login-password" placeholder="password" />
+                     <div class="email-error-show" style="display:none;">
+                         <label>Lupa password Anda? Klik disini </label>
                     </div>
-                </li>
-                <li>
-                    <label for="login-password" class="required"><em>*</em><?php echo $this->__('Password') ?></label>
-                    <div class="input-box">
-                        <input type="password" class="input-text required-entry" id="login-password" name="login[password]" />
-                    </div>
-                </li>
-                <?php echo $this->getChildHtml('form.additional.info'); ?>
-            </ul>
-        </fieldset>
-        </form>
-        <div class="buttons-set">
-            <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-            <button type="submit" class="button" onclick="onepageLogin(this)"><span><span><?php echo $this->__('Login') ?></span></span></button>
-            <a href="<?php echo $this->getUrl('customer/account/forgotpassword') ?>" class=""><?php echo $this->__('Forgot your password?') ?></a>
-        </div>
-    </div>
-</div>
 
-<?php echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
+                  </div>
+                       
+                  <div class="form-group">
+                      
+                    <label class="forget-password-link hidden-lg hidden-md visible-xs" data-toggle="modal" data-target=".forgotpassord-checkout">Lupa Password Anda?</label>
+                  <a href="javascript://" id="email_check_button" class="chkbtn btn-checkout">Lanjutkan</a>
+                  <a href="javascript://" id="email_login_button" class="chkbtn btn-checkout" style="display:none;">Lanjutkan</a>
+                  <label class="forget-password-link hidden-xs visible-lg visible-md" data-toggle="modal" data-target=".forgotpassord-checkout">Lupa Password Anda?</label>
+                  </div>
+                 </form>
+
+                </div>
+
+                <div class="hidden-lg hidden-md visible-xs mobile-divider">
+                  <span>Atau</span>
+                </div>
+
+                <div class="col-sm-4 border-left-checkout" id="social_login">
+                  <div class="form-group checkout-social-link">
+                    <p>Atau Anda juga bisa menggunakan akun Facebok, Twitter atau Google Anda untuk melanjutkan</p>
+                  </div>
+<!--                  <div class="form-group"> <a href="" class="chkbtn btn-facebook">Login dengan Facebook</a> </div>
+                  <div class="form-group"> <a href="" class="chkbtn btn-twitter">Login dengan Twitter</a> </div>
+                  <div class="form-group"> <a href="" class="chkbtn btn-google">Login dengan Google</a> </div>-->
+                    <?php echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
+
+                </div>
+              </div>
+              <div class="modal fade forgotpassord-checkout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                   <div class="modal-dialog modal-sm" role="document">
+                       <form name="password_recover" id="password_recover" action="javascript://" method="POST">
+                  <div class="modal-content">
+                    <div class="modal-body text-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <img src="<?php echo $this->getSkinUrl('images/icon-password-recover.svg');?>" />
+                      <h2>Dapatkan password Anda kembali!</h2>
+                      <p>Anda hanya butuh memasukkan email Anda dibawah ini, dan kami akan mengirim email
+                        pentunjuk reset password langsung ke inbox Anda. </p>
+                      <input name="email" id="email_address" type="email" placeholder="Masukkan email Anda" class="form-control" />
+                      <div class="email-error-show" id="email-error-show" style="display:none;">
+                         <label>Lupa password Anda? Klik disini </label>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="chkbtn btn-checkout btn-chk-forget" id="recover_password_button">Kirimkan <i class="fa fa-arrow-right"></i></button>
+                    </div>
+                  </div>
+                       </form>
+                </div>
+              </div>
+                <?php else: ?>
+                <div class="accordion-inner-content">
+                <?php 
+                    $customer_data  = $customer->getData();
+                   // echo "<pre>"; print_r($customer_data); echo "</pre>";
+                ?>
+                    <div id="logged_in_as" class="logged-in-as">
+                        Logged in as <strong><?php echo $customer_data['email']; ?></strong>
+                    </div>
+                     <div id="sign_out" class="sign-out">
+                         <button type="button" class="chkbtn btn-checkout btn-chk-forget" id="logout_button">Logout</button> &nbsp; <a href="javascript://" id="checkout_continue" id="checkout-continue">Continue with checkout</a>
+                       
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+          </div>
+<?php //echo $this->getChildHtml('inchoo_socialconnect_checkout')?>
 
 <script type="text/javascript">
-//<![CDATA[
+    //<![CDATA[ 
+    jQuery(document).ready(function($){
+        $("#email_check_button").click(function(){
+            //checkout.setMethod();
+            if($('#login-email').val()==''){
+               // $('#form_group').addClass('email-error');
+                $('#login-email').addClass('wrong-pass');
+              //  $('.email-error-show').html('<label>Enter Email Address</label>');
+               // $('.email-error-show').show();
+                return false;
+            }else{
+                $('#login-email').removeClass('wrong-pass');
+            }
+            
+            if(!isValidEmailAddress( $('#login-email').val() )){
+              //  $('#form_group').addClass('email-error');
+                $('#login-email').addClass('wrong-pass');
+              //  $('.email-error-show').html('<label>Enter valid Email Address</label>');
+              //  $('.email-error-show').show();
+                return false;
+            }else{
+                $('#login-email').removeClass('wrong-pass');
+            }
+        var post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/customerexist";
+         $("#review_form").submit();
+            var form_data = $("#email_form").serialize();
+            jQuery('#loading-mask').show();
+            $.ajax({
+                url:post_url,
+                type:'POST',
+                data:form_data,
+                success: function(result){
+                   var return_data = $.parseJSON(result);
+                   if(return_data.success==false){
+                       var billing_post_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveMethod";
+                       var data='method=guest';
+                       $.ajax({
+                            url:billing_post_url,
+                            type:'POST',
+                            data:data,
+                            success: function(result){
+                                
+                                $('#checkout-step-login').hide();
+                                $('#opc-login').removeClass('active');
+                                $('#checkout-step-billing').show();
+                                $('#opc-billing').addClass('allow active');
+                                $('#billing_method').val(data);
+                                $('#guest_email.val').val($('#login-email').val());
+                                $('#user_email_id').html($('#login-email').val());
+                                $('.format_method_email').val($('#login-email').val());
+                                $('#billing-new-address-form').hide();
+                                $('#edit-completed-login').show();
+                                $('#completed-login').show();
+                                jQuery('#loading-mask').hide();
+                                $('#add_new_address').trigger('click');
+                            }
+                       });
+                   }else if(return_data.success==true){
+                       $('#login-email').hide();
+                       $('#login-password').show();
+                       $('#email_check_button').hide();
+                       $('#email_login_button').show();
+                       jQuery('#loading-mask').hide();
+                       $('#social_login').hide();
+                       $('#email_login_button').click(function(){
+                           if($('#login-password').val()==''){
+                                $('#login-password').addClass('wrong-pass');
+                                $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                $('.email-error-show').show();
+                           }
+                       var login_post_url = <?php Mage::getBaseUrl();?>"/customer/account/loginPostAjax";
+                       var form_data = $("#email_form").serialize();  
+                       jQuery('#loading-mask').show();
+                            $.ajax({
+                                url:login_post_url,
+                                type:'POST',
+                                data:form_data,
+                                success: function(result){
+                                    var result_data = $.parseJSON(result);
+                                if(result_data!=null){
+                                        if(result_data.error==true){
+                                            
+                                            $('#form_group').addClass('email-error');
+                                            $('#login-password').addClass('wrong-pass');
+                                            $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                            $('.email-error-show').show();
+                                            jQuery('#loading-mask').hide();
+                                        }else if(result_data.error==false){
+                                            location.reload();
+                                        }
+                                }else{
+                                    jQuery('#loading-mask').hide();
+                                }
+                                }
+                           });
+                       });
+                       
+                   }
+                }
+            });
+        });
+        
+        jQuery('#forgot-pass-pop').click(function(){
+            jQuery('.forgotpassord-checkout').show();
+        });
+        
+        jQuery('#recover_password_button').click(function(){
+            if($('#email_address').val()==''){
+               // $('#form_group').addClass('email-error');
+                $('#email_address').addClass('wrong-pass');
+               // $('.email-error-show').html('<label>Enter email address.</label>');
+                //$('.email-error-show').show();
+                return false;
+            }
+            if(!isValidEmailAddress( $('#email_address').val() )){
+               // $('#email_address').addClass('email-error');
+                $('#email_address').addClass('wrong-pass');
+                //$('#email-error-show').html('<label>Enter valid email address.</label>');
+               // $('#email-error-show').show();
+                return false;
+            }
+            var recover_pass_url = <?php Mage::getBaseUrl();?>"/customer/account/forgotPasswordPostAjax";
+            jQuery('#password_recover').submit();
+            var recover_pass_form_data = jQuery("#password_recover").serialize();
+            jQuery('#loading-mask').show();
+            jQuery.ajax({
+                    url:recover_pass_url,
+                    type:'POST',
+                    data:recover_pass_form_data,
+                    success: function(result){
+                        var result_data = $.parseJSON(result);
+                        if(result_data.error==true){
+                            //jQuery('#loading-mask').hide();
+                            alert(result_data.message);
+                            jQuery('.close').trigger('click');
+                            jQuery('#loading-mask').hide();
+                        }else{
+                            //jQuery('#loading-mask').hide();
+                            alert(result_data.message);
+                            jQuery('.forgotpassord-checkout').hide();
+                            jQuery('#password_recover').trigger('reset');
+                            jQuery('.close').trigger('click');
+                            jQuery('#loading-mask').hide();
+                        }
+                        //$('#checkout-step-billing').show();
+                        //$('#checkout-step-login').hide();
+                    }
+               });
+        });
+        
+        
+        jQuery('#logout_button').click(function(){
+           var logout_url = "<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"; 
+           window.location = logout_url;
+        });
+                                                                                                                                                                                                                    
+        jQuery('#checkout_continue').click(function(){
+           jQuery('#opc-login').removeClass('active');
+           jQuery('#opc-billing').addClass('allow');
+           jQuery('#opc-billing').addClass('active');
+           jQuery('#checkout-step-login').hide()
+           jQuery('#checkout-step-billing').show();
+           
+        });
+        <?php if($this->isCustomerLoggedIn()):?>
+            $('#edit-completed-login').show();
+            $('#completed-login').show();
+        <?php endif; ?>                      
+    });
+    function isValidEmailAddress(emailAddress) {
+        var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+        return pattern.test(emailAddress);
+    };
+
     var loginForm = new VarienForm('login-form', true);
     $('login-email').observe('keypress', bindLoginPost);
     $('login-password').observe('keypress', bindLoginPost);
@@ -124,5 +317,6 @@
             loginForm.submit();
         }
     }
+   
 //]]>
 </script>

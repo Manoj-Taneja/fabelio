@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <modules>
+      <Kellton_Customer>
+          <version>0.1.0</version>
+      </Kellton_Customer>
+  </modules>
+  
+  <frontend>
+      <routers>
+          <customer>
+              <args>
+                  <modules>
+                      <Kellton_Customer before="Mage_Customer">Kellton_Customer</Kellton_Customer>
+                  </modules>
+              </args>
+          </customer>
+      </routers>
+  </frontend>
+</config> 
