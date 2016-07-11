@@ -273,9 +273,9 @@
     }
   jQuery(document).ready(function($){
       
-      $('#select_bank_name').change(function(){
-         alert('Hello'); 
-      });
+      jQuery('#select_bank_name').removeAttr("disabled");
+      jQuery('#select_bank_name').removeAttr("autocomplete");
+     
       
      $(".bank-detail-check input[type=checkbox]").change(function(){
         if($(this).is(":checked")){
