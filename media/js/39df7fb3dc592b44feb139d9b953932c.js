@@ -17399,7 +17399,8 @@ directPost.prototype = {
     },
 
     preparePayment : function() {
-        this.changeInputOptions('autocomplete', 'off');
+       // alert("!! Hi !!");
+        //this.changeInputOptions('autocomplete', 'off');
         if ($(this.iframeId)) {
             switch (this.controller) {
                 case 'onepage':
@@ -17448,7 +17449,7 @@ directPost.prototype = {
                         if (!this.hasError) {
                             this.returnQuote();
                         } else {
-                            this.changeInputOptions('disabled', false);
+                           // this.changeInputOptions('disabled', false);
                             toggleSelectsUnderBlock($('loading-mask'), true);
                             $('loading-mask').hide();
                             enableElements('save');
@@ -17499,7 +17500,7 @@ directPost.prototype = {
                         break;
                     case 'sales_order_edit':
                     case 'sales_order_create':
-                        this.changeInputOptions('disabled', false);
+                       // this.changeInputOptions('disabled', false);
                         toggleSelectsUnderBlock($('loading-mask'), true);
                         $('loading-mask').hide();
                         enableElements('save');

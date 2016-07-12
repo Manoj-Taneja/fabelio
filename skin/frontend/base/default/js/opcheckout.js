@@ -36,7 +36,7 @@ Checkout.prototype = {
         this.method = '';
         this.payment = '';
         this.loadWaiting = false;
-        this.steps = ['login', 'billing', 'shipping', 'shipping_method', 'payment', 'review'];
+        this.steps = ['login', 'billing', 'shipping', 'shipping_method', 'review', 'payment'];
         //We use billing as beginning step since progress bar tracks from billing
         this.currentStep = 'billing';
 
@@ -937,6 +937,7 @@ Review.prototype = {
                 return;
             }
             if (response.success) {
+                //alert(response.success);
                 this.isSuccess = true;
                 window.location=this.successUrl;
             }

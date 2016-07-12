@@ -5088,4 +5088,5 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     display: none;
 }
 #checkout-step-login{border: none;}
+.accordion-main li.section.allow.active .payment-label .fa.fa-check-circle{display: none;}
  /*FAB 58 css ends here*/ 

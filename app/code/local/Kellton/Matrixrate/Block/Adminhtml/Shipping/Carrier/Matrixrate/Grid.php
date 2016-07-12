@@ -14,7 +14,7 @@ class Kellton_Matrixrate_Block_Adminhtml_Shipping_Carrier_Matrixrate_Grid extend
         $this->addColumn('dest_country', array(
             'header'    => Mage::helper('adminhtml')->__('Country'),
             'index'     => 'dest_country',
-            'default'   => '*',
+            'default'   => 'IN',
         ));
 
         $this->addColumn('dest_region', array(
