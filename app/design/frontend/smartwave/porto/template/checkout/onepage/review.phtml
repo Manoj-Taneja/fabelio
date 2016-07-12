@@ -451,6 +451,12 @@ jQuery('.checkout-total-left').find('span').click(function(){
 });
    
   
+
+  
+  
+});
+
+
 jQuery(document).on('click','.cart-delivery-option', function(){
     var radio_id = jQuery(this).attr('rel');
     jQuery('#'+radio_id).trigger('click');
@@ -478,9 +484,6 @@ jQuery(document).on('click','.cart-delivery-option', function(){
     
    
 }); 
-  
-  
-});
 
 function remove_me(){    
         jQuery('#coupon_div').show();
