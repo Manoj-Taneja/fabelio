@@ -125,7 +125,7 @@
                               <label>Patokan</label>
                               <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
                           </div>-->
-                          <div class="checkout-form-popup">
+                          <div class="checkout-form-popup custom-select-icon">
                               <label>Negara</label>
 <!--                              <input type="text" placeholder="Indonesia" />-->
                               <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
@@ -148,7 +148,8 @@
                               <select name="billling[region_id]" id="region_<?php echo $data['entity_id']; ?>" >
                                   <option value="">Pilih provinsi...</option>
                                   <?php foreach($regionCollection as $region):?>
-                                  <?php $region_name =  Mage::getModel('directory/region')->load($region['region_id']);?>
+                                  <?php $region_name_obj =  Mage::getModel('directory/region')->load($region['region_id']);?>
+                                  <?php $region_name = $region_name_obj->getName(); ?>
                                   <option value="<?php echo $region['region_id']; ?>"<?php if($region['region_id']==$data['region_id']):?>selected="selected"<?php endif; ?>><?php echo $region_name; ?></option>
                                   <?php endforeach;?>
                               </select>
@@ -252,7 +253,7 @@
                               <label>Patokan</label>
                               <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
                           </div>-->
-                          <div class="checkout-form-popup">
+                          <div class="checkout-form-popup custom-select-icon">
                               <label>Negara</label>
 <!--                              <input type="text" placeholder="Indonesia" />-->
                             <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
