@@ -205,7 +205,7 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                               <label>Alamat</label>
                               <input type="text" name="billing[street]" placeholder="Alamat" value="'.$data['street'].'"/>
                           </div>';
-                    $block_html .= '<div class="checkout-form-popup">
+                    $block_html .= '<div class="checkout-form-popup custom-select-icon">
                               <label>Negara</label>';
 
                               $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false);
