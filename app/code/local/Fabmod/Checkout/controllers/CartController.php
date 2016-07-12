@@ -607,7 +607,7 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                     $html .= '<div class="cart-delivery-option '.$delevery_option_selected.'" rel="<?php echo $radio_name;?>">';
                        $html .= $val['delivery_date']." - ".$ship_price; 
                       
-                    $html .='</div><div style="display:none;"><input class="mobile-shipping-method"  type="radio" '.$checked.' name="'.$product_id.'" id="'.$radio_name.'" rel="shipping_method" value="'.$val['pk'].'"/></div>';
+                    $html .='</div><div style="display:none;"><input class="mobile-shipping-method"  type="radio" '.$checked.' name="'.$product_id.'" id="'.$radio_name.'"  rel="shipping_method" value="'.$val['pk'].'"/></div>';
                     
                              
                             $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price'];
@@ -697,14 +697,14 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
                                         $ship_price = $val['price'];
                                     endif;
                                     $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price'];
-                                    $html .= '<input type="radio" '.$checked.' name="'.$product_id.'" id="'.$radio_name.'" rel="shipping_method" value="'.$val['pk'].'"/><label for="'.$radio_name.'">'.$val['delivery_date'].'- '.$ship_price.' </label>';
+                                    $html .= '<input type="radio" '.$checked.' class="desktop-shipping-method" name="'.$product_id.'" id="'.$radio_name.'" rel="shipping_method" value="'.$val['pk'].'"/><label for="'.$radio_name.'">'.$val['delivery_date'].'- '.$ship_price.' </label>';
                         endforeach;
                         $html .= '</div>';
                     }else{
                         $html .= '<div class="checkout-quantity">';
                         foreach($delivery_array as $key=>$val):
                             $radio_name_free = "free-std-".$product_id;
-                            $html .= '<input disabled="disabled" type="radio" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method" id="'.$radio_name_free.'"/><label for="'.$radio_name_free.'">'.$val['delivery_date'].' - Free';
+                            $html .= '<input disabled="disabled" type="radio" class="desktop-shipping-method" checked="checked" name="'.$product_id.'" value="0" rel="shipping_method" id="'.$radio_name_free.'"/><label for="'.$radio_name_free.'">'.$val['delivery_date'].' - Free';
                         endforeach;
                         $html .= '</div>';
                     }
