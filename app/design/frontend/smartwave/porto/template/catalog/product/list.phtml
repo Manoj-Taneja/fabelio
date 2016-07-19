@@ -226,7 +226,20 @@ if($del < 7){
                         /* MANGOEXTENSIONS */
                         /* CHANGE THE SOURCE OF THE PRODUCT IMAGE TO CHANGE ACCORDING TO THE LAYERED NAVIGATION */
                         ?>
-                        <div class="logo-over-image" data-click-state="0"></div>
+                        <?php 
+      $manufacturerValue=Mage::app()->getRequest()->getParam('manufacturer');
+      $mExist='N';
+      if(is_array($manufacturerValue)){
+       if(in_array(167, $manufacturerValue)){
+        $mExist='Y';
+       }
+      }else{
+       if($manufacturerValue==167){
+        $mExist='Y';
+       }
+      }
+      ?>
+       <div class="logo-over-image <?php if(Mage::getModel('catalog/product')->load($_product->getId())->getManufacturer()!=167 && $mExist=='N'){ echo 'hide'; } ?>" data-click-state="0" manufacturer="<?php echo Mage::getModel('catalog/product')->load($_product->getId())->getAttributeText('manufacturer'); ?>"></div>
                         <div class="logo-over-content"><label>Produk pilihan Fabelio</label></div>
                     <a href="<?php echo $_swatches["product_url"] ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <?php
