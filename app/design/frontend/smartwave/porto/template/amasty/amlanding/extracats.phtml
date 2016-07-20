@@ -27,6 +27,15 @@ foreach($cats as $cat){
     $msrp      = 0 + $_p->getMsrp();
     $finaPrice = 0 + $_p->getFinalPrice();
 ?>
+
+ <?php 
+    $_swatches_helper = $this->helper("attributeswatches/product_list")->setDimensions(300,300); /*set the dimensions here...*/
+    ?>
+    <?php
+      $_swatches = $_swatches_helper->setProduct($_p)->processSwatches();
+    ?>
+
+
     <li class="item">
       <div class="item-area">
 <!-- discount code starts -->
@@ -40,12 +49,59 @@ foreach($cats as $cat){
  </div>
  <!-- discount code ends -->
         <div class="product-image-area">
+ <div class="logo-over-image " data-click-state="0" manufacturer="SDF"></div>
+                        <div class="logo-over-content"><label>Produk pilihan Fabelio</label></div>
           <a class="product-image" href="<?php echo $_p->getProductUrl();?>">
             <img class="defaultImage catalog-product-image" src="<?php echo $this->helper('catalog/image')->init($_p, 'small_image')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(true)->resize(300, 300);?>" alt="<?php echo $_p->getName(); ?>">
             <img class="hoverImage" src="<?php echo $this->helper('catalog/image')->init($_p, 'thumbnail')->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(true)->resize(300, 300);?>" alt="<?php echo $_p->getName(); ?>">
           </a>
         </div>
-        <div class="details-area">
+        <div class="details-area item-detail-lat">
+  <?php
+                    if($_p->getTypeId() == 'configurable') {
+                      $_swatches_ids = array();
+
+                      $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_p);
+                      $simpleProds = Mage::getModel('catalog/product')->getCollection()
+                        ->addAttributeToSelect('fabric_color')
+                        ->addAttributeToSelect('leather_color')
+                        ->addAttributeToFilter('entity_id', $conf->getUsedProductCollection()->getAllIds())
+                        ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+
+                      foreach($simpleProds as $simple_product){
+                        if($fabricColor = $simple_product->getData('fabric_color')) {
+                          $_swatches_ids[] = $fabricColor;
+                        }
+                        if($leatherColor = $simple_product->getData('leather_color')) {
+                          $_swatches_ids[] = $leatherColor;
+                        }
+                      }
+
+                      $_options = Mage::getModel('attributeswatches/attributeswatches')->getCollection()
+                        ->setOrder('value', Varien_Data_Collection::SORT_ORDER_ASC)
+                        ->addFieldToFilter('main_table.option_id', array('in' => $_swatches_ids));
+                    // FAB-83 code start
+                      $attributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('catalog_product', 'fabric_color');
+                    // FAB-83 code end
+                      echo '<ul class="fabric-color-swatches clearfix">';
+                      $cnt = 1;
+                      foreach($_options as $k=>$ps) {
+                        // FAB-83 code start
+                          echo '<li><a href="'.$_p->getProductUrl().'#'.$attributeId.'='.$ps['option_id'].'"><img class="tooltip" src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></a></li>';
+                        // FAB-83 code end
+                          // FAB-65 swatch limit change to 7
+                          if(++$cnt > 7) break;
+                      }
+//                      if(count($_options)>7){
+//                        echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
+//                      }
+// FAB-65 swatch limit change to 7
+                      echo '<li class="more-swatches" options="'.count($_options).'"><a href="'.$_p->getProductUrl().'">More</a></li>';
+                      echo '</ul>';
+                    }else{
+   echo '<ul class="fabric-color-swatches clearfix"><li></li></ul>';
+                    }
+                    ?>
           <h2 class="product-name"><a href="<?php echo $_p->getProductUrl();?>"><?php echo $_p->getName(); ?></a></h2>
           <div class="price-box">
             <?php if($finaPrice < $price){ ?>
@@ -61,8 +117,8 @@ foreach($cats as $cat){
             </span>
             <?php if($finaPrice < $msrp){ ?>
             <p class="old-price rrp-price">
-              <span class="rrp-price-label price-label">Harga Tetangga:</span>
-              <span class="price msrp-price" id="msrp-price-<?php echo $_p->getId(); ?>"><?php echo Mage::helper('core')->currency($_p->getMsrp(), true, false); ?></span>
+              <span class="rrp-price-label price-label rrp-lat">Harga Tetangga:</span>
+              <span class="price msrp-price msrp-lat" id="msrp-price-<?php echo $_p->getId(); ?>"><?php echo Mage::helper('core')->currency($_p->getMsrp(), true, false); ?></span>
             </p>
             <?php } ?>
           </div>
@@ -90,3 +146,70 @@ foreach($cats as $cat){
   <?php } ?>
 </div>
 
+<script type="text/javascript">
+            jQuery('.col-main .products-grid li:nth-child(2n)').addClass('nth-child-2n');
+            jQuery('.col-main .products-grid li:nth-child(2n+1)').addClass('nth-child-2np1');
+            jQuery('.col-main .products-grid li:nth-child(3n)').addClass('nth-child-3n');
+            jQuery('.col-main .products-grid li:nth-child(3n+1)').addClass('nth-child-3np1');
+            jQuery('.col-main .products-grid li:nth-child(4n)').addClass('nth-child-4n');
+            jQuery('.col-main .products-grid li:nth-child(4n+1)').addClass('nth-child-4np1');
+            jQuery('.col-main .products-grid li:nth-child(5n)').addClass('nth-child-5n');
+            jQuery('.col-main .products-grid li:nth-child(5n+1)').addClass('nth-child-5np1');
+            jQuery('.col-main .products-grid li:nth-child(6n)').addClass('nth-child-6n');
+            jQuery('.col-main .products-grid li:nth-child(6n+1)').addClass('nth-child-6np1');
+            jQuery('.col-main .products-grid li:nth-child(7n)').addClass('nth-child-7n');
+            jQuery('.col-main .products-grid li:nth-child(7n+1)').addClass('nth-child-7np1');
+            jQuery('.col-main .products-grid li:nth-child(8n)').addClass('nth-child-8n');
+            jQuery('.col-main .products-grid li:nth-child(8n+1)').addClass('nth-child-8np1');
+            
+            
+
+    
+    jQuery(document).ready(function(){
+				manageSwatches();
+			});
+			jQuery(window).resize(function() {
+				manageSwatches();
+			});
+			
+			function manageSwatches(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>767){
+					jQuery(".show-mobile-more-swatches").addClass("hide");
+					jQuery(".nth-child-4n").removeClass("hide");
+					jQuery(".nth-child-5n").removeClass("hide");
+					jQuery(".nth-child-6n").removeClass("hide");
+					jQuery(".nth-child-7n").removeClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).removeClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>7){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}else{
+					jQuery(".nth-child-4n").addClass("hide");
+					jQuery(".nth-child-5n").addClass("hide");
+					jQuery(".nth-child-6n").addClass("hide");
+					jQuery(".nth-child-7n").addClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>3){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}
+			}
+   
+        </script>
