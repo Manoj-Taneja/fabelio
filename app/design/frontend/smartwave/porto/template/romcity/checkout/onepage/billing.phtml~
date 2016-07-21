@@ -125,8 +125,11 @@
                               <label>Patokan</label>
                               <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
                           </div>-->
-
+<<<<<<< HEAD
+                          <div class="checkout-form-popup custom-select-icon" >
+=======
                           <div class="checkout-form-popup custom-select-icon">
+>>>>>>> origin/FAB-144-3
                               <label>Negara</label>
 <!--                              <input type="text" placeholder="Indonesia" />-->
                               <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
@@ -150,7 +153,11 @@
                                   <option value="">Pilih provinsi...</option>
                                   <?php foreach($regionCollection as $region):?>
                                   <?php $region_name_obj =  Mage::getModel('directory/region')->load($region['region_id']);?>
-				<?php $region_name = $region_name_obj->getName(); ?>
+<<<<<<< HEAD
+                                  <?php $region_name = $region_name_obj->getName();?>
+=======
+                                  <?php $region_name = $region_name_obj->getName(); ?>
+>>>>>>> origin/FAB-144-3
                                   <option value="<?php echo $region['region_id']; ?>"<?php if($region['region_id']==$data['region_id']):?>selected="selected"<?php endif; ?>><?php echo $region_name; ?></option>
                                   <?php endforeach;?>
                               </select>

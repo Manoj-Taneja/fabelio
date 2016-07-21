@@ -1,21 +1,33 @@
 <?xml version="1.0"?>
 <package>
-    <name>Magefast_ProductBreadcrumbs</name>
-    <version>1.0.1</version>
+    <name>Clearandfizzy_Reducedcheckout</name>
+    <version>1.10.2</version>
     <stability>stable</stability>
-    <license>AFL</license>
+    <license uri="http://www.clearandfizzy.com/licence.txt">Clearandfizzy Licence</license>
     <channel>community</channel>
     <extends/>
-    <summary>Breadcrumbs for Product page, with categories link</summary>
-    <description>Add breadcrumbs for Product page, if customers go to Product page by current link.&amp;#xD;&#xD;
-Good for improve Google result page.</description>
-    <notes>Add localization uk_UA, ru_RU.&#xD;
-Small fix for Observer.&#xD;
-</notes>
-    <authors><author><name>Alex</name><user>alexhost</user><email>magento@magefast.com</email></author></authors>
-    <date>2015-06-03</date>
-    <time>19:53:01</time>
-    <contents><target name="mage"><dir name="app"><dir name="code"><dir name="community"><dir name="Magefast"><dir name="ProductBreadcrumbs"><dir name="Helper"><file name="Data.php" hash="10df491f7cb0244637c15bebd59be9c0"/></dir><dir name="Model"><file name="Observer.php" hash="86d916ac57e13cf5b3d8fee4a08c42db"/></dir><dir name="etc"><file name="config.xml" hash="7be5f5a238648c1c5a63db697e790ac0"/><file name="system.xml" hash="55b5246448b7c92e5c493bc9d76edf0f"/></dir></dir></dir></dir><dir name="local"><dir name="Magefast"><dir name="RemoveCrumbs"><dir name="Block"><dir name="Html"><file name="Breadcrumbs.php" hash="f2ac7bfd76bcccd9bb774bf971e0e911"/></dir></dir><dir name="Helper"><file name="Data.php" hash="4d7a688a276acd82309ed56a7f8e7584"/></dir><dir name="etc"><file name="config.xml" hash="3afcc96685c1a34584861135b763bc9e"/></dir></dir></dir></dir></dir><dir name="etc"><dir name="modules"><file name="Magefast_ProductBreadcrumbs.xml" hash="d2eeb802b3e2d341c260d48d869d45f9"/><file name="Magefast_RemoveCrumbs.xml" hash="9d65e88f7956ed10f31413863abab01a"/></dir></dir><dir name="locale"><dir name="uk_UA"><file name="Magefast_ProductBreadcrumbs.csv" hash="8e0a05e802cac514ef6bd989b702bf24"/></dir><dir name="ru_RU"><file name="Magefast_ProductBreadcrumbs.csv" hash="b7afd0f0b9f9434eceb828bd5e38c9f0"/></dir></dir></dir></target></contents>
+    <summary>Reduce the checkout process by force shipping &amp; payment methods, adds "register" form to order success page.</summary>
+    <description>Extending the standard Magento onepage checkout  this ReducedCheckout extension gives you the ability to reduce the number of steps a customer takes to a minimum.  &#xD;
+&#xD;
+Configure it to remove the login step by forcing guest checkout, force payment and shipping methods to your choosing.&#xD;
+&#xD;
+Integration with 3rd-party payment and shipping extensions should be easy as this extension makes no modifications to the base templates.&#xD;
+&#xD;
+Also&#xD;
+* Contains a fix for Magento bug #28112 with regards to Shipping Tablerates.&#xD;
+</description>
+    <notes>Did we add new features?&lt;br /&gt;&#xD;
+No&lt;br /&gt;&#xD;
+&lt;br /&gt;&#xD;
+Did you fix a bunch of Bugs?&lt;br /&gt;&#xD;
+Yes&lt;br /&gt;&#xD;
+&lt;br /&gt;&#xD;
+Fixed a bug with a magento warning signing up via the customer account screen.&#xD;
+&lt;br/&gt;&lt;br/&gt;</notes>
+    <authors><author><name>Gareth Price</name><user>clearandfizzy</user><email>gareth@clearandfizzy.com</email></author></authors>
+    <date>2015-07-10</date>
+    <time>14:00:54</time>
+    <contents><target name="magecommunity"><dir name="Clearandfizzy"><dir name="Reducedcheckout"><file name="ABOUT.html" hash="f5660ea744778528fcf46f9f1b771dc4"/><dir name="Helper"><file name="Data.php" hash="f40195409de3bcd177fbaef187c38ac8"/><file name="Order.php" hash="8bb5e25a5af150f2a11aa1cf38c7eb2a"/><file name="Url.php" hash="987fdf77efee5bf6a196cd0535f9af55"/></dir><dir name="Model"><dir name="Notification"><file name="Feed.php" hash="ef814251717438061fb09c2e3350cc76"/></dir><dir name="Observer"><dir name="Notification"><file name="Feed.php" hash="31f374cb977f90e95c5a449489e04a32"/></dir></dir><file name="Observer.php" hash="975762338aa63607468f11f94fa05de2"/><dir name="Resource"><dir name="Carrier"><file name="TablerateFix.php" hash="0c7bfc67b88e2dd07c9487203ec304cd"/></dir><file name="Setup.php" hash="a2c94b16cc40e9c19c6acb2c359ceb08"/></dir><dir name="System"><dir name="Config"><dir name="Source"><dir name="Login"><file name="Step.php" hash="296a73590864ccb68214170fc590d218"/></dir><dir name="Payment"><file name="Enabledmethods.php" hash="e050df0c5951fc1e014ec947cecfddf0"/></dir><dir name="Shipping"><file name="Enabledmethods.php" hash="b74773eaf2ff0243f92370dd84ce1d57"/></dir></dir></dir></dir></dir><file name="README.txt" hash="e44d3902587ce3405e8ef527d92d0ca5"/><dir name="controllers"><dir name="Adminhtml"><file name="ReducedcheckoutController.php" hash="825f7e381698ecf47e405f634d950c61"/></dir><file name="OnepageController.php" hash="aa45a5f0367e3346b92e5deb53bb1b7b"/></dir><dir name="etc"><file name="adminhtml.xml" hash="4c42f829ac324b149f7937c64b99773c"/><file name="config.xml" hash="39ca30f0cc30634a1db5bec9b84f8ee0"/><file name="system.xml" hash="420fd9ad4565ae7376d9a74c415c7747"/></dir><dir name="sql"><dir name="reducedcheckout_setup"><file name="install-1.5.1.php" hash="825ce19e90018c4568273c14b10f5318"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Clearandfizzy_ReducedCheckout.xml" hash="9cb58e8121e0c0e294f10a3595b2be7d"/></dir></target><target name="magedesign"><dir><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><dir name="clearandfizzy"><dir name="reducedcheckout"><file name="reducedcheckout.xml" hash="362ed866ca7c856758b47a74b9a66c69"/></dir></dir></dir><dir name="template"><dir name="clearandfizzy"><dir name="reducedcheckout"><file name="onepage.phtml" hash="ac4a2e8f4b9fb6710b0492c798c7dbdf"/></dir></dir></dir></dir></dir></dir></dir></target><target name="mageskin"><dir><dir name="frontend"><dir name="base"><dir name="default"><dir name="css"><dir name="clearandfizzy"><file name="reducedcheckout.css" hash="2122ca5de41c9e6a7b7bd9d6531e82a0"/></dir></dir></dir></dir></dir></dir></target><target name="mageweb"><dir><dir name="js"><dir name="clearandfizzy"><dir name="reducedcheckout"><file name="hidetelephonefax.js" hash="321ce2ed89d3a1958a487c5fd0445d23"/></dir></dir></dir></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
 </package>

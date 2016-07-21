@@ -159,7 +159,14 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         return $row;
     }
     
-    function delivery_time($sku){
-        
+
+    
+    public function get_sku_data($sku){
+        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+        $select = "SELECT  * from {$table} where sku = '{$sku}'";
+        $row = $read->fetchAll($select);
+        return $row;
     }
+
 }

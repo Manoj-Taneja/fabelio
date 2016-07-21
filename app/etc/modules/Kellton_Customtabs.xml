@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Kellton_Customtabs>
+			<active>true</active>
+			<codePool>local</codePool>			
+		</Kellton_Customtabs>
+	</modules>
+</config>

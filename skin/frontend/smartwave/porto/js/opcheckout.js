@@ -278,7 +278,9 @@ Checkout.prototype = {
     },
 
     setStepResponse: function(response){
+
         
+
         if (response.update_section) {
             $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
             if(response.goto_section=='review' && response.update_section.html!=false){
@@ -983,11 +985,13 @@ Review.prototype = {
             catch (e) {
                 response = {};
             }
+           
             if (response.redirect) {
                 this.isSuccess = true;
                 location.href = response.redirect;
                 return;
             }
+           
             if (response.success) {
                 //alert(response.success);
                 this.isSuccess = true;

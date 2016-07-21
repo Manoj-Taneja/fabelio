@@ -301,11 +301,12 @@ One page checkout main layout
         <label>One Page Checkout</label>
         <!-- Mage_Checkout -->
         <remove name="left"/>
+        <remove name="right"/>
 
         <reference name="root">
-            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
-        <reference name="right">
+<!--        <reference name="right">
             <action method="unsetChildren"></action>
             <block type="page/html_wrapper" name="checkout.progress.wrapper" translate="label">
                 <label>Checkout Progress Wrapper</label>
@@ -317,7 +318,7 @@ One page checkout main layout
                     <block type="checkout/onepage_progress" name="payment.progress" template="checkout/onepage/progress/payment.phtml"></block>
                 </block>
             </block>
-        </reference>
+        </reference>-->
         <reference name="content">
             <block type="checkout/onepage" name="checkout.onepage" template="checkout/onepage.phtml">
                 <block type="checkout/onepage_login" name="checkout.onepage.login" as="login" template="checkout/onepage/login.phtml">
@@ -356,7 +357,9 @@ One page checkout main layout
             <block type="checkout/onepage_progress" name="billing.progress" template="checkout/onepage/progress/billing.phtml"></block>
             <block type="checkout/onepage_progress" name="shipping.progress" template="checkout/onepage/progress/shipping.phtml"></block>
             <block type="checkout/onepage_progress" name="shippingmethod.progress" template="checkout/onepage/progress/shipping_method.phtml"></block>
-            <block type="checkout/onepage_progress" name="payment.progress" template="checkout/onepage/progress/payment.phtml"></block>
+<!--            <block type="checkout/onepage_progress" name="payment.progress" template="checkout/onepage/progress/payment.phtml"></block>-->
+    <block type="checkout/onepage_progress" name="review.progress" template="checkout/onepage/progress/review.phtml"></block>
+     <block type="checkout/onepage_progress" name="payment.progress" template="checkout/onepage/progress/payment.phtml"></block>
         </block>
     </checkout_onepage_progress>
 
@@ -392,6 +395,15 @@ One page checkout main layout
             <action method="setInfoTemplate"><method></method><template></template></action>
         </block>
     </checkout_onepage_progress_shipping_method>
+    
+    <checkout_onepage_progress_review>
+          <remove name="right"/>
+        <remove name="left"/>
+
+        <block type="checkout/onepage_progress" name="root" output="toHtml" template="checkout/onepage/progress/review.phtml">
+            <action method="setInfoTemplate"><method></method><template></template></action>
+        </block>
+    </checkout_onepage_progress_review>
 
     <checkout_onepage_progress_payment>
     <!-- Mage_Checkout -->
@@ -467,6 +479,7 @@ One page checkout order review block
             <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
             <block type="core/template" name="checkout.onepage.review.button" as="button" template="checkout/onepage/review/button.phtml"/>
         </block>
+        <block name="root" type="core/template"/>
     </checkout_onepage_review>
 
     <checkout_onepage_success translate="label">
@@ -488,4 +501,7 @@ One page checkout order review block
         </reference>
     </checkout_onepage_failure>
     <block type="core/list" name="additional.product.info"/>
+<checkout_onepage_orderupdate>
+    <block name="root" type="core/template"/>
+</checkout_onepage_orderupdate>
 </layout>

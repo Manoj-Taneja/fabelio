@@ -51,6 +51,7 @@ class Kellton_Matrixrate_System_ConfigController   extends Mage_Adminhtml_Contro
         } else {
             $conditionName = $website->getConfig('carriers/matrixrate/condition_name');
         }
+        $conditionName = "";
         $gridBlock->setWebsiteId($website->getId())->setConditionName($conditionName);
         $content    = $gridBlock->getCsvFile();
         $this->_prepareDownloadResponse($fileName, $content);
