@@ -168,5 +168,64 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $row = $read->fetchAll($select);
         return $row;
     }
+    
+    public function set_matrix_rate($post_array){
+        
+            Mage::getSingleton('core/session')->unsShippingAmount();
+            Mage::getSingleton('core/session')->unsShippingDescription();
+            
+            unset($shipping_amount_array);
+            $return_array = array();
+            $shipping_amount_array = array();
+            $shipping_amount = 0;
+            $_coreHelper = Mage::helper('core');
+            $items = Mage::getSingleton('checkout/session')->getQuote();
+            $id=$pk;
+            $flatrate_model = Mage::getModel('shipping/carrier_flatrate');
+            $result = $flatrate_model->collectRates($items, $post_array);
+           
+            $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
+            
+            $shipping_amount = array_sum($shipping_amount_array);
+            Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
+            Mage::getSingleton('checkout/session')->getQuote()->setShippingAmount($shipping_amount);
+            $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+            
+            $subtotal = round($totals["subtotal"]->getValue());
+            $grandtotal = round($totals["grand_total"]->getValue());
+            $grandtotal_final = 0;
+            $grandtotal_final = $subtotal + $shipping_amount;            
+            Mage::getSingleton('checkout/cart')->setGrandTotal($grandtotal_final)->save();           
+            return $shipping_amount;
+    } 
+    
+    public function check_sku_exist($id){       
+        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+        $select = "SELECT  * from {$table} where pk = '{$id}'";
+        $row = $read->fetchAll($select);
+        if(count($row) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function remove_shipping_amount_from_grand_total($matrix_id,$matrix_item){
+        
+        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $table = Mage::getSingleton('core/resource')->getTableName('matrixrate_shipping/matrixrate');
+        $select = "SELECT  price from {$table} where pk = '{$matrix_id}'";
+        $row = $read->fetchAll($select);        
+        $item_matrix_rate = $row['0']['price'];
+        $itemObject = Mage::getModel('sales/quote_item')->load($matrix_item);
+        $item_qty=$itemObject->getQty();
+        $item_total = $item_qty * $item_matrix_rate;
+        $totals = Mage::getSingleton('checkout/cart')->getQuote()->getTotals();
+        $grandtotal = $totals["grand_total"]->getValue();
+        $grand_total = $grandtotal - $item_total;        
+        Mage::getSingleton('checkout/cart')->setGrandTotal($grand_total)->save();       
+        
+    }
 
 }

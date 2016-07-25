@@ -1282,6 +1282,9 @@ margin-top: 1px;
   #review-buttons-container button.button > span{width: 100%}
   .mobile-close-item{float:left; width: 10%;}
   .delevery-option-selected{border: 1px solid #1592e6;}
+  .checkout-footer-left span{text-align: center;}
+  .checkout-footer-left{padding: 0;}
+   .email-error-voucher::before{display: none;}
      /*FAB 58 css ends here*/
 }
 /* FAB-178 css starts */

@@ -13,7 +13,7 @@ class Sprint_Migs_Block_Payment_Form_Permata extends Mage_Payment_Block_Form
      */
     protected function _construct()
     {
-		$mark = Mage::getConfig()->getBlockClassName('core/template');
+        $mark = Mage::getConfig()->getBlockClassName('core/template');
         $mark = new $mark;
         $mark->setTemplate('migs/payment/form/permata.phtml');
 		

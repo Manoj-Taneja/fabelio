@@ -2452,7 +2452,7 @@ h2 .word-rotate{margin-bottom:-7px}
 .word-rotate .word-rotate-items span{display:block;white-space:nowrap}
 p .alternative-font{display:inline-block;margin-top:-15px;position:relative;top:3px;margin-bottom:-6px;color:#08c;font-family:"Shadows Into Light",cursive;font-size:1.6em}
 .btn-primary{color:#fff;text-shadow:0 -1px 0 rgba(0,0,0,.25);background-color:#08c;border-color:#08c}
-.btn{display:inline-block;margin-bottom:0;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;background-image:none;border:1px solid transparent;white-space:nowrap;padding:6px 12px;font-size:14px;line-height:1.42857143;border-radius:4px}
+.btn{display:inline-block;margin-bottom:0;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;background-image:none;border:1px solid transparent;white-space:nowrap;padding:6px 12px;font-size:14px;line-height:1.42857143;border-radius:4px !important;}
 .btn-lg{padding:10px 16px;font-size:18px;line-height:1.33;border-radius:6px}
 .push-top{margin-top:20px}
 .btn-primary:hover{border-color:#0099e6;background-color:#0099e6;color:#fff}
@@ -4394,6 +4394,7 @@ header.checkout-header-main{float:left; width:100%;}
     text-align: left;
     border-radius: 5px 5px 0 0; float:left; width:100%;}
 	.accordion-main .panel-heading h4.panel-title a{color:#464646; font-family:roboto-regular; font-weight:500; font-size:14px; float:left; width:100%;}
+        .opc .section .panel-heading{cursor:pointer;}
 	.accordion-main{float:left; width:100%; margin-top:30px; }
 		.accordion-main .panel-heading h4.panel-title{margin:0px;}
 .accordion-main .panel-heading h4.panel-title a:hover{text-decoration:none;}
@@ -4661,7 +4662,7 @@ button.close {
 .checkout-form-popup input[type=text]{border:none; width: 70%;}
 .checkout-form-popup-main{    background: #fff;
     border-radius: 5px ; margin-top: 20px;}
-.checkout-form-popup select{padding: 0px; width: 70%; border: none;-webkit-apparance:none; -moz-appearance:none;-ms-appearance:none;}
+.checkout-form-popup select{padding: 0px; width: 70%; border: none;-webkit-appearance:none; -moz-appearance:none;-ms-appearance:none;}
 .checkout-form-popup select::-ms-expand{display: none;}
 .checkout-address-main .modal-footer{text-align: center; border: none;}
 .checkout-address-main .modal-footer button{width: 200px; background: #d6d6d6; color: #444;}
@@ -4864,9 +4865,9 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
 					.bank-cod-right label{margin-bottom: 0px;}
 						.bank-cod-right span{float:left;}
 .bank-cicilan{float: left; padding: 20px; width: 100%; background: #ebebeb;}
-.bank-cicilan-inner{float: left; width: 100%; background: #fff; padding: 5px; border-radius: 5px; margin-bottom: 10px;}
+.bank-cicilan-inner{float: left; width: 100%; background: #fff; padding: 5px; border-radius: 5px; margin-bottom: 10px;position:relative;}
 .bank-cicilan-inner label{float: left; width: 50%; margin-bottom: 0px; color: #464646; font-family: roboto-regular;}
-.bank-cicilan-inner select{float: left; width: 50%;border: none;}
+.bank-cicilan-inner select{float: left; width: 50%;border: none;-webkit-appearance: none; -moz-appearance: none;-ms-appearance:none;}
 .bank-cicilan p{float: left; width: 100%;}
 .payment-gate{float:left; width: 100%;}
 	.payment-gate-image{    float: left;
@@ -5060,8 +5061,8 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     width: 20%;}
 .sign-out a{float: left;
     font-size: 16px;
-    margin: 10px 0 0 30px;
-    text-decoration: underline;}
+    margin: 10px 0 0 0px;
+    text-decoration: underline; width: 20%;}
 #userpass{margin-bottom: 10px;}
 .pass-disabled{background: #d6d6d6 !important; color: #c0c0c0;}
 .error-message{color: #a4a7a8;
@@ -5088,4 +5089,89 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     display: none;
 }
 #checkout-step-login{border: none;}
+.btn-active-fill{ background-color: #d9534f !important;
+    border-color: #d43f3a !important; color:#fff !important;}
+.checkout-footer-right{float:right;padding: 10px 0;}
+ .checkout-footer-left{float:right;padding: 20px 10px 0px 0;}
+ .checkout-footer-left span{float: right;
+    width: 100%;
+    text-align: right;}
+  .ft-tp{font-family: roboto-regular; font-size: 11px; font-weight: 400; color: #464646;}
+  .ft-btm{font-family: roboto-italic; font-size: 11px; font-weight: 400; color: #464646;}
+  .cursor-pointer{cursor: pointer;}
+  
+   .input-group-addon {
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1;
+      color: #555;
+      text-align: center;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+        display: table-cell;
+      width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .input-group .form-control, .input-group-addon, .input-group-btn{display: table-cell;}
+
+  .form-inline .input-group .form-control, .form-inline .input-group .input-group-addon, .form-inline .input-group .input-group-btn{width: auto;}
+  .input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.input-group-addon:first-child {
+    border-right: 0;
+}
+ .input-group-addon:first-child{border-top-right-radius: 0;
+    border-bottom-right-radius: 0;}
+  .input-group-addon:last-child{    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;}
+  .input-group .form-control:not(:first-child):not(:last-child){border-radius: 0;}
+  .dis-voucher{border: 1px solid #16b3d5;
+    border-radius: 4px;}
+  .dis-voucher input[type=text]{border-radius: 4px 0 0 4px;border:none;}
+  .dis-voucher .fa.fa-check-circle{right: 83px;}
+   .dis-voucher .fa.fa-times-circle{right: 83px;}
+  .dis-voucher .input-group-addon{    border: none;
+    background: #d6d6d6;
+    color: #bababa;
+    font-family: roboto-regular;}
+  .email-error-voucher{position: relative;}
+  .email-error-voucher .email-error-show {
+    position: absolute;
+    right: -205px;
+    top: 0;
+}
+.email-error-voucher::before {
+    position: absolute;
+    content: '';
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #464646;
+    right: -4%;
+    top: 10px;
+}
+.has-success .dis-voucher {border:1px solid #04984c !important;}
+.has-success .dis-voucher .fa.fa-check-circle{color:#04984c !important;}
+.use-coupon-active{color:#464646 !important; background: #ebebeb !important; cursor: pointer;}
+.has-error .dis-voucher {border:1px solid #c31a20 !important;}
+.has-error .dis-voucher .fa.fa-check-circle{color:#c31a20 !important;}
+.has-error .dis-voucher .input-group-addon{color:#bababa !important; background: #d6d6d6 !important; }
+.installment_select{width: 65% !important;}
+.custom-select-icon-payment::before {
+    background: rgba(0, 0, 0, 0) url("../images/icon-arrow-down.svg") no-repeat scroll 0 0 / 30px auto;
+    content: "";
+    height: 37px;
+    pointer-events: none;
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    width: 30px;
+}
+
  /*FAB 58 css ends here*/ 

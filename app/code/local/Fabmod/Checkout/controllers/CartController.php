@@ -414,6 +414,9 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
             case 'update_qty':
                 $this->_updateShoppingCart();
                 break;
+            case 'update_qty_ajax':
+                $this->_updateShoppingCartAjax();
+                break;
             default:
                 $this->_updateShoppingCart();
         }
@@ -488,33 +491,118 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $this->_redirectReferer(Mage::getUrl('*/*'));
     }
     
-    public function deleteAjaxAction()
-    {
-        
-        $id = (int) $this->getRequest()->getParam('id');
-        if ($id) {
-            try {
-                $this->_getCart()->removeItem($id)
-                  ->save();
-                $result['error'] = false;
-                $result['success'] = true;
-                $result['html'] = $this->getUpdatedCartHtml();
-                $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-                $grandtotal = round($totals["grand_total"]->getValue());
-                $_coreHelper = Mage::helper('core');
-                $result['grand_total']=$_coreHelper->formatPrice($grandtotal, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
-               
-            } catch (Exception $e) {
+    
+    
+    public function updateCartAjaxAction(){
+           
+            if (!$this->_validateFormKey()) {
                 $result['error'] = true;
                 $result['success'] = false;
-                $result['error_message'] = $this->__('Cannot remove the item.');
-                //$this->_getSession()->addError($this->__('Cannot remove the item.'));
-                //Mage::logException($e);
+                $result['redirect_url'] = Mage::helper('checkout/cart')->getCartUrl();
+            }else{
+                $cart_helper = Mage::helper('matrixrate');                
+                $cart_response_template = Mage::getConfig()->getBlockClassName('core/template');
+                $cart_response_template = new $cart_response_template;
+                $item_id = $this->getRequest()->getParam('item_id');
+                $qty = $this->getRequest()->getParam('qty');
+                $quote = Mage::getSingleton('checkout/session')->getQuote();
+                $quote->updateItem($item_id, array( 'qty' => $qty));
+                $quote->save();
+                $post_array = $this->getRequest()->getPost();  
+
+                $selected_option = array();
+                foreach($post_array as $key=>$val){
+                    if(is_numeric($key)){
+                        $selected_option[$key] = $val;
+                    }
+                }
+                
+                $shipping_amount =  $cart_helper->set_matrix_rate($selected_option);
+                $matrix_id = $post_array['matrix_item'];
+                
+                $result['error'] = false;
+                $result['success'] = true;
+                $cart_response_template->setTemplate('checkout/onepage/review_response.phtml');
+                $cart_response_template->setShippingAmount($shipping_amount);
+                $cart_response_template->setSelectedOption($selected_option);
+                $result['html'] = $cart_response_template->toHtml();
+                
+            }
+            
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+
+    
+   
+    
+    
+    
+    public function deleteAjaxAction()
+    {
+        if (!$this->_validateFormKey()) {
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['redirect_url'] = Mage::helper('checkout/cart')->getCartUrl();
+        }else{
+            $cart_helper = Mage::helper('matrixrate');
+            $id = (int) $this->getRequest()->getParam('delete_item');
+            $cart_response_template = Mage::getConfig()->getBlockClassName('core/template');
+            $cart_response_template = new $cart_response_template;
+
+            if ($id) {
+                try {
+                $this->_getCart()->removeItem($id)->save();
+                $post_array = $this->getRequest()->getPost();  
+
+                $selected_option = array();
+                foreach($post_array as $key=>$val){
+                    if(is_numeric($key)){
+                        $selected_option[$key] = $val;
+                    }
+                }
+                
+                $shipping_amount =  $cart_helper->set_matrix_rate($selected_option);
+                $matrix_id = $post_array['matrix_item'];
+
+                $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+
+
+                if(array_key_exists($post_array['matrix_item'], $selected_option)){                
+                    $sku_exist = $cart_helper->check_sku_exist($selected_option[$matrix_id]);
+                }
+
+                if($sku_exist){
+                    $this->_getSession()->getQuote()->setTotalsCollectedFlag(false)->collectTotals();
+                    $cart_helper->remove_shipping_amount_from_grand_total($selected_option[$matrix_id],$id);
+
+                }
+
+
+                    if(Mage::helper('checkout/cart')->getItemsCount() > 0){
+
+                        $result['error'] = false;
+                        $result['success'] = true;
+                        $cart_response_template->setTemplate('checkout/onepage/review_response.phtml');
+                        $cart_response_template->setShippingAmount($shipping_amount);
+                        $cart_response_template->setSelectedOption($selected_option);
+                        $result['html'] = $cart_response_template->toHtml();
+                    }else{
+                        $result['error'] = true;
+                        $result['success'] = false;
+                        $result['redirect_url'] = Mage::helper('checkout/cart')->getCartUrl();
+                    }
+
+
+                } catch (Exception $e) {
+                    $result['error'] = true;
+                    $result['success'] = false;                
+                    $result['error_message'] = $this->__('Cannot remove the item.');
+                    $result['redirect_url'] = Mage::helper('checkout/cart')->getCartUrl();
+
+                }
             }
         }
-        //echo "<pre>"; print_r($result); echo "</pre>";
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-        //$this->_redirectReferer(Mage::getUrl('*/*'));
     }
     
     public function getUpdatedCartHtml(){
@@ -524,14 +612,6 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
         
         $html = "";
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         //////////////////// MOBILE HTML BEGIN /////////////////////
@@ -743,7 +823,18 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
         
          //echo "<pre>"; print_r($shipping_amount_array); echo "</pre>";
         $html .= '</div>';
+        
+        
+        
+        
+        
+        
+        
+        
         $html .= '<div class="checkout-total-main">';
+        
+        
+        
         $html .= '<div class="checkout-total-left">
                     <label>Apakah Anda memiliki voucher Fabelio? <span onclick="remove_me()">Klik disini</span></label>
                     <div class="form-group  has-feedback" id="coupon_div" style="display:none;">
@@ -895,131 +986,106 @@ class Fabmod_Checkout_CartController extends Mage_Core_Controller_Front_Action
     
     
     
-    public function couponPostAjaxAction()
+    public function  couponPostAjaxAction()
     {
-         $_coreHelper = Mage::helper('core');
-        $matrixrate_helper = Mage::helper('matrixrate');
-        /**
-         * No reason continue with empty shopping cart
-         */
-        if (!$this->_getCart()->getQuote()->getItemsCount()) {
-            
-            $result['error'] = true;
-            $result['success'] = false;
-        }
+        if (!$this->_validateFormKey()) {
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['redirect_url'] = Mage::helper('checkout/cart')->getCartUrl();
+        }else{
+            $_coreHelper = Mage::helper('core');
+            $cart_helper = Mage::helper('matrixrate');
+            $cart_response_template = Mage::getConfig()->getBlockClassName('core/template');
+            $cart_response_template = new $cart_response_template;
+            /**
+             * No reason continue with empty shopping cart
+             */
+            if (!$this->_getCart()->getQuote()->getItemsCount()) {
 
-        $couponCode = (string) $this->getRequest()->getParam('coupon_code');
-        if ($this->getRequest()->getParam('remove') == 1) {
-            $couponCode = '';
-        }
-        $oldCouponCode = $this->_getQuote()->getCouponCode();
+                $result['error'] = true;
+                $result['success'] = false;
+            }
 
-        if (!strlen($couponCode) && !strlen($oldCouponCode)) {
-            $result['error'] = true;
-            $result['success'] = false;
-        }
+            $couponCode = (string) $this->getRequest()->getParam('coupon_code');
+            $post_array = $this->getRequest()->getPost();
+            if ($this->getRequest()->getParam('remove') == 1) {
+                $couponCode = '';
+            }
+            $oldCouponCode = $this->_getQuote()->getCouponCode();
 
-        try {
-            $codeLength = strlen($couponCode);
-            $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
+            if (!strlen($couponCode) && !strlen($oldCouponCode)) {
+                $result['error'] = true;
+                $result['success'] = false;
+            }
 
-            $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
-            $this->_getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
-                ->collectTotals()
-                ->save();
+            try {
+                $codeLength = strlen($couponCode);
+                $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
 
-            if ($codeLength) {
-                if ($isCodeLengthValid && $couponCode == $this->_getQuote()->getCouponCode()) {
-//                    $this->_getSession()->addSuccess(
-//                        $this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode))
-//                    );
+                $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
+                $this->_getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
+                    ->collectTotals()
+                    ->save();
+                $selected_option = array();
+                foreach($post_array as $key=>$val){
+                    if(is_numeric($key)){
+                        $selected_option[$key] = $val;
+                    }
+                }
+                if ($codeLength) {
+                    if ($isCodeLengthValid && $couponCode == $this->_getQuote()->getCouponCode()) {
+    //                    $this->_getSession()->addSuccess(
+    //                        $this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode))
+    //                    );
                     $result['error'] = false;
                     $result['success'] = true;
                     $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-                $grandtotal = round($totals["grand_total"]->getValue());
-                $result['grand_total']=$_coreHelper->formatPrice($grandtotal, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
-                $quote = Mage::getSingleton('checkout/session')->getQuote();
+                    $grandtotal = round($totals["grand_total"]->getValue());
+                    $result['grand_total']=$_coreHelper->formatPrice($grandtotal, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
+                    
 
-//                foreach ($quote->getAllItems() as $item){
-//
-//                     $coupon_discount_amount =  $coupon_discount_amount + $item->getDiscountAmount();
-//
-//                } 
-                
-                $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-                $coupon_discount_amount = $totals["discount"]->getValue();
-                
-            $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
-            $shipping_amount = array_sum($shipping_amount_array);
-            Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
-            Mage::getSingleton('checkout/session')->getQuote()->setShippingAmount($shipping_amount);
-            $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-            Mage::getSingleton('checkout/session')->getQuote()->save();
-            $subtotal = round($totals["subtotal"]->getValue());
-            $grandtotal = round($totals["grand_total"]->getValue());
-            $grandtotal_final = 0;
-            $grandtotal_final = $grandtotal + $shipping_amount;
-            Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal);
-            $return_html .= '
-                  <div class="checkout-total-left">
-                    <label>Apakah Anda memiliki voucher Fabelio? <span>Klik disini</span></label>
-                    <div class="form-group  has-feedback has-success" id="coupon_div">
-                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" value="'.$this->__(Mage::helper('core')->escapeHtml($couponCode)).'"/>
-                    <i class="fa fa-check-circle form-control-feedback"></i>
-                  </div>
+                    $shipping_amount =  $cart_helper->set_matrix_rate($selected_option);
+                    
 
-<!--                  <div class="form-group has-error has-feedback">
-                  <input type="text" class="form-control" >
-                  <i class="fa fa-close form-control-feedback" ></i>
-                </div>-->
+                    $cart_response_template->setTemplate('checkout/onepage/review_response.phtml');
+                    $cart_response_template->setShippingAmount($shipping_amount);
+                    $cart_response_template->setSelectedOption($selected_option);
+                    $result['html'] = $cart_response_template->toHtml();
+                    } else {
+                    Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode("")->collectTotals()->save();
+                    $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+                    $grandtotal = round($totals["grand_total"]->getValue());
+                    $result['grand_total']=$_coreHelper->formatPrice($grandtotal, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
+                    $quote = Mage::getSingleton('checkout/session')->getQuote();
+                    $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
+                    //$coupon_discount_amount = $totals["discount"]->getValue();
 
-                  </div>
-                  <div class="checkout-total-right">
-                      <div class="checkout-total-inner">
-                        <label>Jumlah Belanjaan Anda</label>';
-            
-            $return_html .= '<span>'.$_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false).'</span>';
-            $return_html .= ' </div><div class="checkout-total-inner">
-                        <label>Ongkos Kirim</label>';
-                        
-                       // $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
-                       // $shipping_amount = array_sum($shipping_amount_array);
-            $return_html .= '<span>'.$_coreHelper->formatPrice($shipping_amount,false).'</span>';
-            $return_html .= '</div>';
-            if($shipping_amount > 0){
-//            $return_html .='<div class="checkout-total-inner checkout-discount" >
-//                        <label>Shipping & Handling - Express</label>
-//                        <span>'.$_coreHelper->formatPrice($shipping_amount, false).'</span>
-//                      </div>';
-            }
-            $return_html .= '<div class="checkout-total-inner checkout-discount">
-                        <label>Diskon Voucher</label>
-                        <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
-                      </div>';
-            $return_html .='<div class="checkout-total-inner g-total">
-                        <label>Grand Total</label>';
-            $return_html .= '<span>'.$_coreHelper->formatPrice($grandtotal_final, false).'</span>';     
-                $result['html'] = $return_html;
-                } else {
-                    $this->_getSession()->addError(
-                        $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode))
-                    );
+                    $shipping_amount =  $cart_helper->set_matrix_rate($selected_option);
                     $result['error'] = true;
                     $result['success'] = false;
-                }
-            } else {
-                $this->_getSession()->addSuccess($this->__('Coupon code was canceled.'));
-            }
+                    $cart_response_template->setTemplate('checkout/onepage/review_response.phtml');
+                    $cart_response_template->setPostcouponcode($couponCode);
+                    $cart_response_template->setShippingAmount($shipping_amount);
+                    $cart_response_template->setSelectedOption($selected_option);
+                    $result['html'] = $cart_response_template->toHtml();
 
-        } catch (Mage_Core_Exception $e) {
-            $this->_getSession()->addError($e->getMessage());
-            $result['error'] = true;
-                    $result['success'] = false;
-        } catch (Exception $e) {
-            $this->_getSession()->addError($this->__('Cannot apply the coupon code.'));
-            Mage::logException($e);
-            $result['error'] = true;
-                    $result['success'] = false;
+
+
+                    }
+                } else {
+                   // $this->_getSession()->addSuccess($this->__('Coupon code was canceled.'));
+                }
+
+            } catch (Mage_Core_Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+                $result['error'] = true;
+                        $result['success'] = false;
+            } catch (Exception $e) {
+               // $this->_getSession()->addError($this->__('Cannot apply the coupon code.'));
+                Mage::logException($e);
+                $result['error'] = true;
+                        $result['success'] = false;
+            }
         }
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }

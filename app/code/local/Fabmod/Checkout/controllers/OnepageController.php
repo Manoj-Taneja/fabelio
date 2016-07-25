@@ -19,7 +19,8 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
         $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
         $grandtotal = round($totals["grand_total"]->getValue());
         $grandtotal_reverse = $grandtotal - $shipping_amount;
-        Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal_reverse);
+        Mage::getSingleton('checkout/session')->getQuote()->setTotalsCollectedFlag(false)->collectTotals();
+        Mage::getSingleton('checkout/cart')->setGrandTotal($grandtotal_reverse)->save();
         Mage::getSingleton('core/session')->unsShippingAmount();
         Mage::getSingleton('core/session')->unsShippingDescription();
         $quote = $this->getOnepage()->getQuote();
@@ -473,101 +474,44 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             return;
         }
         
-            $post_array = $this->getRequest()->getPost();           
-            Mage::getSingleton('core/session')->unsShippingAmount();
-            Mage::getSingleton('core/session')->unsShippingDescription();
-            unset($shipping_amount_array);
-            $return_array = array();
-            $shipping_amount_array = array();
-            $shipping_amount = 0;
+        if (!$this->_validateFormKey()) {
+                $this->_redirect('*/*/');
+                return;
+        }
+        
+            $post_array = $this->getRequest()->getPost();  
+            
+            $selected_option = array();
+            $cart_helper = Mage::helper('matrixrate');
             $_coreHelper = Mage::helper('core');
-            $items = Mage::getSingleton('checkout/session')->getQuote();
-            $id=$_POST['pk'];
-            $flatrate_model = Mage::getModel('shipping/carrier_flatrate');
-            $result = $flatrate_model->collectRates($items, $post_array);
-            $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount(); 
             
-            $shipping_amount = array_sum($shipping_amount_array);
-            Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->setShippingAmount($shipping_amount);
-            Mage::getSingleton('checkout/session')->getQuote()->setShippingAmount($shipping_amount);
-            $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-            Mage::getSingleton('checkout/session')->getQuote()->save();
-            $subtotal = round($totals["subtotal"]->getValue());
-            $grandtotal = round($totals["grand_total"]->getValue());
-            $grandtotal_final = 0;
-            $grandtotal_final = $grandtotal + $shipping_amount;
-            Mage::getSingleton('checkout/session')->getQuote()->setGrandTotal($grandtotal);
-            
-            
-            
-            $return_html .= '
-                  <div class="checkout-total-left">
-                    <label>Apakah Anda memiliki voucher Fabelio? <span onclick="remove_me()">Klik disini</span></label>
-                    <div class="form-group  has-feedback" id="coupon_div" style="display:none;">
-                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon()"/>
-                    <i class="fa fa-check-circle form-control-feedback" style="display:none;"></i>
-                  </div>
-
-<!--                  <div class="form-group has-error has-feedback">
-                  <input type="text" class="form-control" >
-                  <i class="fa fa-close form-control-feedback" ></i>
-                </div>-->
-
-                  </div>
-                  <div class="checkout-total-right">
-                      <div class="checkout-total-inner">
-                        <label>Jumlah Belanjaan Anda</label>';
-            
-            $return_html .= '<span>'.$_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false).'</span>';
-         
-            if($shipping_amount > 0){
-            $return_html .='</div><div class="checkout-total-inner">
-                        <label>Ongkos Kirim</label>
-                        <span>'.$_coreHelper->formatPrice($shipping_amount, false).'</span>
-                      </div>';
-            }
-              $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();
-              if(isset($totals["discount"])){
-                $coupon_discount_amount = $totals["discount"]->getValue();
+            foreach($post_array as $key=>$val){
+                if(is_numeric($key)){
+                    $selected_option[$key] = $val;  
                 }
-         $return_html .= '<div class="checkout-total-inner checkout-discount">
-                        <label>Diskon Voucher</label>
-                        <span>'.$_coreHelper->formatPrice($coupon_discount_amount, false).'</span>
-                      </div>';
-            $return_html .='<div class="checkout-total-inner g-total">
-                        <label>Grand Total</label>';
-            $return_html .= '<span>'.$_coreHelper->formatPrice($grandtotal_final, false).'</span>';            
+            }
             
+            $shipping_amount = $cart_helper->set_matrix_rate($selected_option);
+
+            $cart_response_template = Mage::getConfig()->getBlockClassName('core/template');
+            $cart_response_template = new $cart_response_template;
+           
+             $cart_response_template->setTemplate('checkout/onepage/review_response.phtml');
+             $cart_response_template->setShippingAmount($shipping_amount);
+             $cart_response_template->setSelectedOption($selected_option);
             
-//            $return_html ='<tr class="first">
-//                                <td colspan="4" class="a-right" style="">Subtotal</td>
-//                                <td class="a-right last" style="">
-//                                    <span class="price">'.$_coreHelper->formatPrice($subtotal, false).'</span>
-//                                </td>
-//                            </tr>
-//                            <tr>
-//                                <td colspan="4" class="a-right" style="">
-//                                    Shipping &amp; Handling        </td>
-//                                <td class="a-right last" style="">
-//                                    '.$_coreHelper->formatPrice($shipping_amount, false).'    </td>
-//                            </tr>
-//                            <tr class="last">
-//                            <td colspan="4" class="a-right" style="">
-//                                <strong>Grand Total</strong>
-//                            </td>
-//                            <td class="a-right last" style="">
-//                                <strong>'.$_coreHelper->formatPrice($grandtotal_final, false).'</strong>
-//                            </td>
-//                            </tr>';
-             $shipping_method_html = 'Shipping &amp; Handling - Express '.$_coreHelper->formatPrice($shipping_amount, false).' ';
-             $return_array['subtotal_string']=$return_html;
-             $return_array['shipping_method']=$shipping_method_html;
+             
+             
+             $return_array['html']=$cart_response_template->toHtml();
              
              $return_array['grand_total']=$_coreHelper->formatPrice($grandtotal_final, false)." (".Mage::helper('checkout/cart')->getItemsCount()." Barang)";
              
-             $return_array_string = json_encode($return_array);
-            echo $return_array_string;
-            exit;
+             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($return_array));
+            
+    }
+    
+    public function get_item_shipping_rate(){
+        
     }
     
     
@@ -780,8 +724,6 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
         function couponAction() {
 
-                //$this->loadLayout(‘checkout_onepage_review’);
-
                 $this->couponCode = (string) $this->getRequest()->getParam('coupon_code');
 
                 Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->setCollectShippingRates(true);
@@ -789,8 +731,6 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode(strlen($this->couponCode) ? $this->couponCode : '')->collectTotals()->save();
 
                 $result['goto_section'] ='review';
-
-                //$result['update_section'] = array( ‘name’ => ‘review’, ‘html’ => $this->_getReviewHtml() );
 
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
@@ -817,10 +757,11 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 $customerObj = Mage::getModel('customer/customer');
                 $customerObj->website_id = $websiteId;
                 $customerObj->setStore($store);
-
+                $pwd = $customerObj->generatePassword();
                 //$prefix = "mag";
                 //$pwd = uniqid($prefix);
-                $pwd = $data_post['userpassword'];
+                //$pwd = $data_post['userpassword'];
+                $sendPassToEmail = true;
                 $session = Mage::getSingleton('checkout/session');
                 $fname = $session->getFirstname();
                 $lname = $session->getLastname();
@@ -854,42 +795,34 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
             try{
                 $data_post = $this->getRequest()->getPost();
                 $bank_name = $data_post['bank'];
-                
+                 $mark = Mage::getConfig()->getBlockClassName('core/template');
+                 $mark = new $mark;
+                 $mark_logo = clone $mark;
                 switch($bank_name){
-                    case 'sc':
-                        $mark = Mage::getConfig()->getBlockClassName('core/template');
-                        $mark = new $mark;
+                    case 'sc':                       
                         $mark->setTemplate('migs/payment/redirectsc.phtml');
-                        $result['success'] = true;
-                        $result['error'] = false;
-                        $result['html'] = $mark->toHtml();
+                        $mark_logo->setTemplate('migs/payment/sc_logo.phtml');
+                    
                         break;
-                    case 'permata':                        
-                        $mark = Mage::getConfig()->getBlockClassName('core/template');
-                        $mark = new $mark;
+                    case 'permata':
                         $mark->setTemplate('migs/payment/redirectpermata.phtml');
-                        $result['success'] = true;
-                        $result['error'] = false;
-                        $result['html'] = $mark->toHtml();
+                        $mark_logo->setTemplate('migs/payment/permata_logo.phtml');
                         break;
-                    case 'bri':                        
-                        $mark = Mage::getConfig()->getBlockClassName('core/template');
-                        $mark = new $mark;
+                    case 'bri':                       
+                       
                         $mark->setTemplate('migs/payment/redirectbri.phtml');
-                        $result['success'] = true;
-                        $result['error'] = false;
-                        $result['html'] = $mark->toHtml();
+                        $mark_logo->setTemplate('migs/payment/bri_logo.phtml');
                         break;
                     case 'bcacredit':                        
-                        $mark = Mage::getConfig()->getBlockClassName('core/template');
-                        $mark = new $mark;
+                       
                         $mark->setTemplate('migs/payment/redirectbcacredit.phtml');
+                        $mark_logo->setTemplate('migs/payment/bca_logo.phtml');
+                        break;
+                }
                         $result['success'] = true;
                         $result['error'] = false;
                         $result['html'] = $mark->toHtml();
-                        break;
-                }
-                
+                        $result['logo'] = $mark_logo->toHtml();
             }catch(Mage_Core_Exception $e){
                 $result['success'] = false;
                 $result['error'] = $e->getMessage();

@@ -10,6 +10,7 @@
 <!--<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
     <li class="form-alt"><?php //echo $this->getRedirectMessage() ?></li>
 </ul>-->
+<?php $_coreHelper = Mage::helper('core'); ?>
 <?php $_code=$this->getMethodCode() ?>
  <?php $total = $this->helper('checkout/cart')->getQuote()->getGrandTotal();
 $threeMonths = sprintf('%0.2f', $total/3);
@@ -19,9 +20,9 @@ $threeMonths = sprintf('%0.2f', $total/3);
 <label style="width:35%;">Tenor</label>
  <select id="sc_installment" name="payment[sc_installment]" style="width:65%;">
 <option value="sc">no installment</option>
-<option value="sc3">3 months x Rp <?php echo $threeMonths?></option>
-<option value="sc6">6 months x Rp <?php echo $sixMonths?></option>
- <option value="sc12">12 months x Rp <?php echo $twelveMonths?></option>
+<option value="sc3">3 months x <?php echo $_coreHelper->formatPrice($threeMonths, false); ?></option>
+<option value="sc6">6 months x <?php echo $_coreHelper->formatPrice($sixMonths, false);?></option>
+ <option value="sc12">12 months x <?php echo $_coreHelper->formatPrice($twelveMonths, false);?></option>
 </select>
 <!--<div>
 <?php //echo $this->getMethod()->getConfigData('message');?>
