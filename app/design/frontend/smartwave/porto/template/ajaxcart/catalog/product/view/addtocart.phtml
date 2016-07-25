@@ -6,8 +6,11 @@
         <div class="qty-prod-li clearfix">
 	<div class="hand-craft">
                 <label><?php
-                
-                $DeliveryTime = $_product->getDeliveryTime();
+                if($_product->getStockItem()->getQty()){
+                    $DeliveryTime = $_product->getDeliveryTime();
+                }else{
+                     $DeliveryTime = $_product->getDeliverytimeBackorder();
+                }
                 $DeliveryTimeArray = explode(":", $DeliveryTime);
                 $counter = count($DeliveryTimeArray);
                 if ($counter > 1) { 
@@ -21,7 +24,7 @@
                 }
                
 ?>-</label>
-                <span>Barang ini akan diproduksi dan dikirim dalam 
+ <?php /*               <span>Barang ini akan diproduksi dan dikirim dalam 
 <span id="delivery-time-days-status"> 
 <?php
 if($_product->getStockItem()->getQty())
@@ -49,7 +52,51 @@ else
     if($DeliveryTimeNumberOnly[0] >= 54) echo "<b>8-9 minggu</b>";
 }             
 ?></span>
+</span>  /**/ ?>
+<?php
+/*** FAB-200 Start***************/
+?>
+               <span>
+<?php
+$deliveryDaysData=$this->getDeliveryDateOptions($DeliveryTimeNumberOnly[0]);
+if($deliveryDaysData['deliveryDays'] >0){
+	
+	//echo " Delivery TimeNumber : ".$DeliveryTimeNumberOnly[0]." Delivery DateWas : ".$toDate." totalSaturdays : ".$totalSaturdays." totalSundays : ".$totalSundays." CutOffDay : ".$cutoffDay." Now DeliverDate : ".$deliveryDate;
+	setlocale(LC_TIME, 'IND');
+	$stringDeliveryDate=strftime('%d %B', strtotime($deliveryDaysData['deliveryDate']));
+	$dataStringForDate=$this->__($stringDeliveryDate);
+		
+	if($_product->getStockItem()->getQty()){
+		if($deliveryDaysData['deliveryDays'] <= 10){
+			echo 'Ingin barang ini sampai pada <b>'.$dataStringForDate.'</b>? Pesan barang ini dalam waktu <span id="countdown" class="timer"></span>!';
+		}else{
+			echo "Barang ini akan dikirim pada tanggal <b>".$dataStringForDate."</b>.";
+		}
+		// echo "want this stuff up on <b>".$dataStringForDate."</b> ? This item message within 10 hours 22 minutes !";
+    
+	}else{
+		$DeliveryTime = $_product->getDeliverytimeBackorder();
+		$DeliveryTimeArray = explode(" ", $DeliveryTime);
+		if($deliveryDaysData['deliveryDays'] <= 10){
+			echo 'Ingin barang ini sampai pada <b>'.$dataStringForDate.'</b>? Pesan barang ini dalam waktu <span id="countdown" class="timer"></span>!';
+		}else{
+			echo "Barang ini akan dikirim pada tanggal <b>".$dataStringForDate."</b>.";
+		}
+		
+	}     
+}
+        
+?>
+
 </span>
+<?php
+/*** FAB-200 End***************/
+?>
+
+
+
+
+
             </div>
           <label for="qty" class="pull-left qty-lbl"><?php echo $this->__('Qty:') ?></label>
           <div class="qty-holder pull-right">
@@ -68,3 +115,35 @@ else
         </div>
     </div>
 <?php endif; ?>
+<?php
+/*** FAB-200 Start***************/
+?>
+<script>
+function startTimer(duration, display) {
+    var timer = duration, hours, minutes, seconds;
+    setInterval(function () {
+        hours = parseInt(timer / 3600, 10);
+		var minutesLeft = Math.floor((timer) - (hours*3600));
+		minutes = Math.floor(minutesLeft/60);
+		seconds = timer % 60;
+		hours = hours < 10 ? "0" + hours : hours;
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        //display.textContent = hours + ":" + minutes + ":" + seconds;
+		display.textContent = hours + " jam " + minutes + " menit";
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+jQuery(document).ready(function(){    
+	var timer = <?php echo $deliveryDaysData['differenceInSeconds']; ?>,
+        display = document.querySelector('#countdown');
+		
+    startTimer(timer, display);
+});
+</script>
+<?php
+/*** FAB-200 End***************/
+?>

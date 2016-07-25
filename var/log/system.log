@@ -1,0 +1,272 @@
+2016-07-21T19:44:49+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-21T19:57:54+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-21T20:00:08+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-21T20:00:20+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T11:44:18+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:06:55+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:07:04+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:09:11+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:09:17+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:09:19+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:09:31+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:09:51+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-22T12:09:53+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:09:54+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-22T12:11:24+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:11:55+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:11:55+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-22T12:11:55+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-22T12:11:55+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-22T12:11:55+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-22T12:11:55+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-22T12:11:55+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-22T12:24:06+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:24:13+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:24:13+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-22T12:24:13+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-22T12:24:13+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-22T12:24:13+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-22T12:24:13+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-22T12:24:13+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-22T12:26:16+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:26:30+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:26:30+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-22T12:26:30+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-22T12:26:30+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-22T12:26:30+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-22T12:26:30+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-22T12:26:30+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-22T12:27:19+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:27:24+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:27:24+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-22T12:27:24+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-22T12:27:24+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-22T12:27:24+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-22T12:27:24+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-22T12:27:24+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-22T12:27:38+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-22T12:27:40+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ecommerce/search.phtml on line 22
+2016-07-22T12:27:40+07:00 ERR (3): Notice: Undefined index: grand_total  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/fbpixel/search.phtml on line 9
+2016-07-22T12:28:08+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:28:37+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:28:37+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-22T12:28:37+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-22T12:28:37+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-22T12:28:37+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-22T12:28:37+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-22T12:28:37+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-22T12:29:03+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:52:59+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:53:06+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:53:28+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T12:53:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:53:34+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:56:49+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:56:58+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:57:13+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T12:57:16+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:57:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:59:16+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T12:59:44+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T12:59:44+07:00 ERR (3): User Error: Some transactions have not been committed or rolled back  in /var/www/html/fabelio/lib/Varien/Db/Adapter/Pdo/Mysql.php on line 3941
+2016-07-22T13:01:23+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:01:32+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:01:44+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:01:54+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:01:54+07:00 ERR (3): User Error: Some transactions have not been committed or rolled back  in /var/www/html/fabelio/lib/Varien/Db/Adapter/Pdo/Mysql.php on line 3941
+2016-07-22T13:03:32+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:03:37+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:03:46+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:03:49+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:03:52+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:06:18+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:06:24+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:06:40+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:06:41+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:06:46+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:07:11+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:07:13+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:07:17+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:09:16+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:09:26+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:09:30+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:09:31+07:00 ERR (3): User Error: Some transactions have not been committed or rolled back  in /var/www/html/fabelio/lib/Varien/Db/Adapter/Pdo/Mysql.php on line 3941
+2016-07-22T13:11:05+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:11:07+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:11:12+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:17:43+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:18:05+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:18:24+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-22T13:18:26+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-22T13:18:30+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:41:19+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T11:44:53+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T11:47:53+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:50:04+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:50:34+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:51:49+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:51:52+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T11:52:11+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T11:52:36+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T11:57:41+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:28+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:24:39+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:39+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:39+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:39+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:24:50+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:15+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:25:35+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:35+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:35+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:35+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:35+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:35+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:35+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:25:51+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:25:51+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T12:26:02+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T12:26:12+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:12+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:12+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:12+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:12+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:12+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:12+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:26:22+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:22+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:22+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:22+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:22+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:22+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:22+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:26:29+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:29+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:29+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:29+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:29+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:29+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:29+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:26:33+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:33+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:33+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:33+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:33+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:33+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:26:33+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
+2016-07-25T12:36:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T12:39:56+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63

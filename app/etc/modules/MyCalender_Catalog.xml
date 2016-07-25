@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MyCalender_Catalog>
+            <active>true</active>
+            <codePool>local</codePool>
+        </MyCalender_Catalog>
+    </modules>
+</config>

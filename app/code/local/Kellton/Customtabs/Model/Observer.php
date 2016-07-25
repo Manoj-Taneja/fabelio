@@ -61,7 +61,12 @@ class Kellton_Customtabs_Model_Observer
                     $write->query($query_standard);
                 }
                 
-                
+                if($fee_enabled){
+                    $days=$express_number_of_days;
+                }else{
+                    $days=$standard_number_of_days;
+                }
+                $matrixrate_helper->set_delivery_time($product_id, $days);
                 /**
                  * Uncomment the line below to save the product
                  *

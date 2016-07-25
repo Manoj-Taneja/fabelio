@@ -1,0 +1,70 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+        <div class="qty-prod-li clearfix">
+	<div class="hand-craft">
+                <label><?php
+                
+                $DeliveryTime = $_product->getDeliveryTime();
+                $DeliveryTimeArray = explode(":", $DeliveryTime);
+                $counter = count($DeliveryTimeArray);
+                if ($counter > 1) { 
+                    $DeliveryTimeNumberOnly = explode(" ", trim($DeliveryTimeArray[1]));
+                    if(count($DeliveryTimeNumberOnly) > 1)
+                    { 
+                            if($DeliveryTimeNumberOnly[0] >= 11){echo '<label style="color:#f7941d;">Handcrafted Order</label>'; } else{echo '<label style="color:#00a249;">Ready Stock</label>'; }
+                    }
+                } else {
+                    echo $DeliveryTimeArray[0];
+                }
+               
+?>-</label>
+                <span>Barang ini akan diproduksi dan dikirim dalam 
+<span id="delivery-time-days-status"> 
+<?php
+if($_product->getStockItem()->getQty())
+{
+    if($DeliveryTimeNumberOnly[0] >= 3 && $DeliveryTimeNumberOnly[0] < 14) echo "<b>".$DeliveryTimeNumberOnly[0]." hari</b>";
+    if($DeliveryTimeNumberOnly[0] >= 14 && $DeliveryTimeNumberOnly[0] < 19) echo "<b>2 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 19 && $DeliveryTimeNumberOnly[0] < 26) echo "<b>3 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 26 && $DeliveryTimeNumberOnly[0] < 33) echo "<b>4 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 33 && $DeliveryTimeNumberOnly[0] < 40) echo "<b>5 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 40 && $DeliveryTimeNumberOnly[0] < 47) echo "<b>6 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 47 && $DeliveryTimeNumberOnly[0] < 54) echo "<b>7 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 54) echo "<b>8-9 minggu</b>";
+}
+else
+{
+    $DeliveryTime = $_product->getDeliverytimeBackorder();
+    $DeliveryTimeArray = explode(" ", $DeliveryTime);
+    if($DeliveryTimeNumberOnly[0] >= 3 && $DeliveryTimeNumberOnly[0] < 14) echo "<b>".$DeliveryTimeNumberOnly[0]." hari</b>";
+    if($DeliveryTimeNumberOnly[0] >= 14 && $DeliveryTimeNumberOnly[0] < 19) echo "<b>2 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 19 && $DeliveryTimeNumberOnly[0] < 26) echo "<b>3 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 26 && $DeliveryTimeNumberOnly[0] < 33) echo "<b>4 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 33 && $DeliveryTimeNumberOnly[0] < 40) echo "<b>5 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 40 && $DeliveryTimeNumberOnly[0] < 47) echo "<b>6 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 47 && $DeliveryTimeNumberOnly[0] < 54) echo "<b>7 minggu</b>";
+    if($DeliveryTimeNumberOnly[0] >= 54) echo "<b>8-9 minggu</b>";
+}             
+?></span>
+</span>
+            </div>
+          <label for="qty" class="pull-left qty-lbl"><?php echo $this->__('Qty:') ?></label>
+          <div class="qty-holder pull-right">
+            <a href="javascript:void(0)" class="table_qty_dec">-</a>
+              <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+            <a href="javascript:void(0)" class="table_qty_inc">+</a>
+          </div>
+        </div>
+        <?php endif; ?>
+        <div class="add-to-btn-wrap">
+          <button type="button" title="<?php echo $buttonTitle ?>" class="add-to-cart-btn fab-btn fab-btn-primary" onclick="productAddToCartForm.submit(this)">
+            <i class="icon-cart"></i><?php echo $this->__('Beli Sekarang'); ?>
+          </button>
+          <span id='ajax_loader' style='display:none'><i class="ajax-loader small animate-spin"></i></span>
+          <?php echo $this->getChildHtml('', true, true) ?>
+        </div>
+    </div>
+<?php endif; ?>

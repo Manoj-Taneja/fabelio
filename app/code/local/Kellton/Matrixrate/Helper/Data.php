@@ -168,5 +168,12 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $row = $read->fetchAll($select);
         return $row;
     }
+    
+    public function set_delivery_time($product_id, $days){
+        $_product= Mage::getModel('catalog/product')->load($product_id);
+        $_product->setDeliverytime($days." Days");
+       // $_product->setDeliverytimeBackorder($days." Days");
+        $_product->save();
+    }
 
 }

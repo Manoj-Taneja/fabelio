@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <MyCalender_Catalog>
+      <version>1.0</version>
+    </MyCalender_Catalog>
+  </modules>
+ 
+  <global>
+    <blocks>
+      <catalog>
+        <rewrite>
+          <product_view>MyCalender_Catalog_Block_Product_View</product_view>
+        </rewrite>
+      </catalog>
+    </blocks>
+  </global>
+</config>
