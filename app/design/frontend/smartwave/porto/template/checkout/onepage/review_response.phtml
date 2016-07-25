@@ -1,0 +1,343 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php 
+        $items = Mage::getSingleton('checkout/cart')->getQuote()->getAllItems();
+        $rc = Mage::getResourceSingleton('catalog/product');
+        $_coreHelper = $this->helper('core');
+        $matrixrate_helper = Mage::helper('matrixrate');
+        $couponCode = Mage::getSingleton('checkout/session')->getQuote()->getCouponCode();
+        //var_dump($couponCode);
+        $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals();            
+        if(isset($totals["discount"])){
+            $coupon_discount_amount = $totals["discount"]->getValue();
+        }
+        $postcouponcode = $this->getPostcouponcode(); 
+        $selected_option = $this->getSelectedOption();
+       // echo "<pre>"; print_r($selected_option); echo "</pre>";
+        $shipping_amount = 0;
+?>
+
+<div class="checkout-header-table-mobile-main">
+        
+                 <form name="review_form_mobile" id="review_form_mobile" action="javascript://" method="POST">
+                <?php foreach($items as $key=>$item): ?>
+                    <div class="checkout-header-table-mobile">  
+                <?php
+                    $product_id = $item->getProductID();
+                    $item_id = $item->getID();
+                    $product = Mage::getModel('catalog/product')->load($product_id);
+                    $product_name = $item->getName();
+                    $product_price = $item->getBaseRowTotal();
+                    $product_qty = $item->getQty();
+                    $product_sku = $item->getSku();
+                    $manufacturer = $product->getAttributeText('manufacturer');
+                    $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(80);
+                ?>
+                  <div class="cart-main-box">
+                    <div class="cart-main-box-left">
+                      <img src="<?php echo $product_image; ?>" alt="" />
+                    </div>
+                    <div class="cart-main-box-right">
+                     <div class="cart-product-name">
+                      <h4><?php echo $product_name; ?></h4>
+                       <label><?php echo $manufacturer; ?></label>
+                     </div>
+                        <div class="mobile-close-item">
+                             <img width="18" data-target="#deleteitem" class="delete-item" rel="<?php echo $item_id; ?>" data-toggle="modal" style="cursor:pointer;" src="<?php echo $this->getSkinUrl('images/icon-close-black.svg');?>">
+                        </div>
+                     <div class="cart-quantity-main">
+                       <div class="cart-quantity">
+                       <label>Jumlah</label>
+                       <input type="number"  value="<?php echo $product_qty; ?>">
+                     </div>
+                     <div class="cart-mobile-price">
+                       <label><?php echo $_coreHelper->formatPrice($product_price, false) ?></label>
+                     </div>
+                     </div>
+
+                    </div>
+                  </div>
+                  <div class="cart-delivery-mobile">
+                      <?php
+                            $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);
+                            $delivery_array = array_reverse($delivery_array);
+                            
+                      ?>
+                    <label>Tanggal Pengiriman:</label>
+                    <?php if(count($delivery_array) > 1):?>
+                    <?php 
+                                foreach($delivery_array as $key=>$val):
+                                    if($val['price']!="Free"){
+                                        $radio_name = "express-delivery-option-".$product_id;
+                                    }else{
+                                        $radio_name = "standard-delivery-option-".$product_id;
+                                    }
+                                    $shipping_code = "matrixrate_matrixrate_".$val['pk'];
+                             ?>
+                    
+                    <div class="cart-delivery-option <?php if($selected_option[$product_id]==$val['pk']):?>delevery-option-selected<?php endif; ?>" rel="<?php echo $radio_name;?>">
+                      <?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?>
+                      
+                    </div>
+                    <div style="display:none;"><input class="mobile-shipping-method"  type="radio" <?php if($selected_option[$product_id]==$val['pk']):?>checked="checked"<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/></div>
+                    
+                             
+                            <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
+                            <?php endforeach; ?>
+                    <?php else: ?>
+                    <?php foreach($delivery_array as $key=>$val): ?>
+                            <?php $radio_name_free = "free-std-mob-".$product_id; ?>
+
+                    <div class="cart-delivery-option delevery-option-disabled" for="<?php echo $radio_name_free; ?>">
+                     <?php echo $val['delivery_date']; ?> - Free
+                      
+                    </div>
+                    <div style="display:none;"><input class="mobile-shipping-method" type="radio" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method" id="<?php echo $radio_name_free; ?>"/></div>
+                            <?php endforeach; ?>
+                    
+                   <?php endif; ?>
+                    
+                  </div>
+                        </div>
+                  <?php endforeach; ?>
+                    
+                
+                 </form>
+                
+              </div>
+                  
+                  
+                  
+                <form name="review_form" id="review_form" action="javascript://" method="POST">
+                <div class="checkout-header-table">
+                    <div class="checkout-item">
+                      <div class="cell"></div>
+                      <div class="cell">Item</div>
+                      <div class="cell">Harga Satuan</div>
+                      <div class="cell">Jumlah</div>
+                      <div class="cell">Tanggal Pengiriman </div>
+                      <div class="cell">Subtotal</div>
+                      <div class="cell"></div>
+                    </div>
+                <?php foreach($items as $key=>$item): ?>
+                <?php
+               
+                    $product_id = $item->getProductID();
+                    $item_id = $item->getID();
+                    $product = Mage::getModel('catalog/product')->load($product_id);
+                    $product_name = $item->getName();
+                    $product_price = $item->getBaseRowTotal();
+                    $product_qty = $item->getQty();
+                    $product_sku = $item->getSku();
+                    $manufacturer = $product->getAttributeText('manufacturer');
+                    $product_image = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(150);
+                ?>
+                    <div class="checkout-cart-item">
+                      <div class="cart-cell cell5">
+                      <img src="<?php echo $product_image; ?>" width="155" height="155" />
+                    </div>
+                      <div class="cart-cell cell1">
+                        <h4><?php echo $product_name; ?></h4>
+                        <label><?php echo $manufacturer; ?></label>
+                      </div>
+                      <div class="cart-cell cell2"><span> <?php echo $_coreHelper->formatPrice($product_price, false) ?></span></div>
+                      <div class="cart-cell cell4"><input class="product_qty" rel="<?php echo $item_id; ?>-<?php echo $product_id; ?>" type="number" name="cart[<?php echo $product_id; ?>][qty]"  value="<?php echo $product_qty; ?>" /></div>
+                      <div class="cart-cell cell">
+                        
+                          <?php 
+                                $delivery_array = $matrixrate_helper->get_shipping_method($product_sku);
+                                $delivery_array = array_reverse($delivery_array);
+                           ?>
+                        <?php if(count($delivery_array) > 1):?>
+                          <div class="checkout-quantity">
+                            <?php 
+                                
+                                foreach($delivery_array as $key=>$val): 
+                                   
+                                    if($val['price']!="Free"){
+                                        $radio_name = "express-".$product_id;
+                                    }else{
+                                        $radio_name = "standard-".$product_id;
+                                    }
+                                    $shipping_code = "matrixrate_matrixrate_".$val['pk'];
+                             ?>
+                              <input type="radio" class="desktop-shipping-method" <?php if($selected_option[$product_id]==$val['pk']):?>checked="checked"<?php endif; ?>name="<?php echo $product_id; ?>" id="<?php echo $radio_name; ?>" rel="shipping_method" value="<?php echo $val['pk']; ?>"/><label for="<?php echo $radio_name; ?>"><?php echo $val['delivery_date']; ?> - <?php if($val['price']!="Free"): echo $_coreHelper->formatPrice($val['price'], false); else: echo $val['price']; endif; ?></label>
+                            <?php $shippingCodePrice[] = "'".$shipping_code."':".(float)$val['price']; ?>
+                            <?php endforeach; ?>
+                        
+                        </div>
+                         <?php else: ?>
+                         <?php ?>
+                        <div class="checkout-quantity">
+                            <?php foreach($delivery_array as $key=>$val): ?>
+                            <?php $radio_name_free = "free-std-".$product_id; ?>
+                            <input type="radio" class="desktop-shipping-method" checked="checked" disabled="disabled" name="<?php echo $product_id; ?>" value="0" rel="shipping_method" id="<?php echo $radio_name_free; ?>"/><label for="<?php echo $radio_name_free; ?>"><?php echo $val['delivery_date']; ?> - Free</label>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>              
+<!--                        <div class="checkout-quantity">
+                        <input type="checkbox" id="checkout-qty-one" />
+                        <label for="checkout-qty-one">31 Mei - Gratis</label>
+                      </div>
+                      <div class="checkout-quantity" >
+                      <input type="checkbox" id="checkout-qty-two" />
+                      <label for="checkout-qty-two">24 Mei - Rp 100.000</label>
+                    </div>-->
+                      </div>
+                              <div class="cart-cell cell2">
+                          <span>
+                            <?php
+                                  $total_price = $product_qty * $product_price;
+                                  echo $_coreHelper->formatPrice($total_price, false);
+                            ?>
+                          </span>
+                              </div>
+                      <div class="cart-cell cell"><img class="delete-item" rel="<?php echo $item_id; ?>-<?php echo $product_id; ?>" src="<?php echo $this->getSkinUrl('images/icon-close-black.svg'); ?>" width="20" style="cursor:pointer;"  data-toggle="modal" data-target="#deleteitem" /></div>
+
+                    </div>
+                    <?php endforeach; ?>
+                    
+                </div>
+                
+
+                <!-- Modal delete item -->
+                
+
+                <div class="checkout-total-main">
+                  <div class="checkout-total-left">
+                      <?php if(isset($couponCode) && !empty($couponCode)): ?>
+                      <div class="form-group  has-feedback" id="coupon_div">
+                                    <div class="input-group dis-voucher has-success">
+                    <!--                  email-error-voucher-->
+                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" onkeypress="apply_coupon();" placeholder="Masukkan kode voucher Anda" value="<?php echo $couponCode; ?>" />
+                                      <div class="email-error-show" id="voucher_err_msg" style="display:none;">
+                                          <label>Voucher yand Anda masukkan  salah</label>
+                                      </div>
+                                      <i class="fa fa-check-circle form-control-feedback" id="correct_coupon"></i>
+                                      <i class="fa fa-times-circle form-control-feedback" id="wrong_coupon" style="display:none;" ></i>
+                                      <span class="input-group-addon use-coupon-active" id="use_coupon">Gunakan</span>
+                                    </div>
+
+                                    </div>
+                      <?php elseif(isset($postcouponcode) && !empty($postcouponcode)): ?>
+                      <div class="form-group  has-feedback has-error" id="coupon_div">
+                                    <div class="input-group dis-voucher">
+                    <!--                  email-error-voucher-->
+                    <input type="text" class="form-control" onkeypress="apply_coupon();" name="coupon_code" id="coupon_code" placeholder="Masukkan kode voucher Anda" value="<?php echo $postcouponcode; ?>" />
+                                      <div class="email-error-show" id="voucher_err_msg" style="display:none;">
+                                          <label>Voucher yand Anda masukkan  salah</label>
+                                      </div>
+                                      <i class="fa fa-check-circle form-control-feedback" id="correct_coupon" style="display:none;"></i>
+                                      <i class="fa fa-times-circle form-control-feedback" id="wrong_coupon"></i>
+                                      <span class="input-group-addon" id="use_coupon">Gunakan</span>
+                                    </div>
+
+                                    </div>
+                      <?php else: ?>
+                      
+                      <div class="form-group  has-feedback" id="coupon_div">
+                                    <div class="input-group dis-voucher">
+                    <!--                  email-error-voucher-->
+                    <input type="text" onkeypress="apply_coupon();" class="form-control" name="coupon_code" id="coupon_code" placeholder="Masukkan kode voucher Anda" value="<?php echo $postcouponcode; ?>" />
+                                      <div class="email-error-show" id="voucher_err_msg" style="display:none;">
+                                          <label>Voucher yand Anda masukkan  salah</label>
+                                      </div>
+                                      <i class="fa fa-check-circle form-control-feedback" id="correct_coupon" style="display:none;"></i>
+                                      <i class="fa fa-times-circle form-control-feedback" id="wrong_coupon" style="display:none;"></i>
+                                      <span class="input-group-addon" id="use_coupon">Gunakan</span>
+                                    </div>
+
+                                    </div>
+                      
+                      <?php endif; ?>
+                      
+                  </div>
+                    
+                  <div class="checkout-total-right">
+                      <div class="checkout-total-inner">
+                        <label>Jumlah Belanjaan Anda</label>
+                        <span><?php echo $_coreHelper->formatPrice(Mage::helper('checkout/cart')->getQuote()->getSubtotal(),false); ?></span>
+                      </div>
+
+                      <div class="checkout-total-inner das">
+                        <label>Ongkos Kirim</label>
+                        <span>
+                            <?php
+                                $shipping_amount_array = Mage::getSingleton('core/session')->getShippingAmount();
+                                
+                                //echo "<pre>"; print_r($shipping_amount_array); echo "</pre>";
+                                $shipping_amount = array_sum($shipping_amount_array);
+                                //echo "Shipping Amount : ".$shipping_amount;
+                               // exit;
+                            ?>
+                            <?php echo $_coreHelper->formatPrice($shipping_amount,false); ?>
+                        </span>
+                      </div>
+                      <?php
+                        
+                        if(isset($couponCode) && !empty($couponCode)):
+                      ?>
+                       <div class="checkout-total-inner checkout-discount">
+                        <label>Diskon Voucher</label>
+                        <span><?php echo $_coreHelper->formatPrice($coupon_discount_amount, false); ?></span>
+                      </div>
+                      <?php endif; ?>
+                      
+                      <div class="checkout-total-inner g-total">
+                        <label>Grand Total</label>
+                        <span>
+                            
+                        <?php 
+                               // $totals = Mage::getSingleton('checkout/session')->getQuote()->getTotals(); //Total object
+                               $totals = Mage::getModel('checkout/cart')->getQuote()->getTotals();
+                               // echo "</pre>"; print_r($totals); echo "</pre>";
+                                //var_dump($totals);
+                                $grandtotal = $totals["grand_total"]->getValue(); //Grandtotal value 
+                                //$final_price = $shipping_amount + $grandtotal;
+                               // $final_price =  $grandtotal;
+                                echo $formattedPrice = $_coreHelper->formatPrice($grandtotal , false);
+                        ?>
+                            
+                        </span>
+                      </div>
+                  </div>
+                    
+                    
+<!--<div class="checkout-item-button">
+  <a href="" class="chkbtn btn-checkout" >Lanjutkan</a>
+</div>-->
+
+                </div>
+                    <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+                    <input type="hidden" name="update_cart_action" id="update_cart_action" value="update_qty_ajax" />
+                    <input type="hidden" name="delete_item" id="delete_item" value="" />
+                    <input type="hidden" name="matrix_item" id="matrix_item" value="" />
+                    <input type="hidden" name="item_id" id="item_id" value="" />
+                    <input type="hidden" name="qty" id="pqty" value="" />
+                </form>
+                 
+              
