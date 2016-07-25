@@ -6,7 +6,21 @@
         <div class="qty-prod-li clearfix">
 	<div class="hand-craft">
                 <label><?php
-                if($_product->getStockItem()->getQty()){
+                 $matrixrate_helper = Mage::helper('matrixrate');
+                $shipping_data = $matrixrate_helper->get_sku_data($_product->getSku());
+                //echo "<pre>";
+                //print_r($shipping_data );
+                $deliveryDays=0;
+               if(count($shipping_data)>1){
+                   if($shipping_data[0]['express_fee_enabled'] && $shipping_data[0]['express_number_of_days']>0){
+                       $deliveryDays=$shipping_data[0]['express_number_of_days'];
+                   }else{
+                       $deliveryDays=$shipping_data[1]['standard_number_of_days'];
+                   }
+               }
+               
+               if($deliveryDays >= 11){echo '<label style="color:#f7941d;">Handcrafted Order</label>'; } else{echo '<label style="color:#00a249;">Ready Stock</label>'; }
+               /* if($_product->getStockItem()->getQty()){
                     $DeliveryTime = $_product->getDeliveryTime();
                 }else{
                      $DeliveryTime = $_product->getDeliverytimeBackorder();
@@ -21,7 +35,7 @@
                     }
                 } else {
                     echo $DeliveryTimeArray[0];
-                }
+                }/**/
                
 ?>-</label>
  <?php /*               <span>Barang ini akan diproduksi dan dikirim dalam 
@@ -58,7 +72,8 @@ else
 ?>
                <span>
 <?php
-$deliveryDaysData=$this->getDeliveryDateOptions($DeliveryTimeNumberOnly[0]);
+//echo $deliveryDays;
+$deliveryDaysData=$this->getDeliveryDateOptions($deliveryDays);
 if($deliveryDaysData['deliveryDays'] >0){
 	
 	//echo " Delivery TimeNumber : ".$DeliveryTimeNumberOnly[0]." Delivery DateWas : ".$toDate." totalSaturdays : ".$totalSaturdays." totalSundays : ".$totalSundays." CutOffDay : ".$cutoffDay." Now DeliverDate : ".$deliveryDate;
@@ -66,7 +81,7 @@ if($deliveryDaysData['deliveryDays'] >0){
 	$stringDeliveryDate=strftime('%d %B', strtotime($deliveryDaysData['deliveryDate']));
 	$dataStringForDate=$this->__($stringDeliveryDate);
 		
-	if($_product->getStockItem()->getQty()){
+	if($_product->getStockItem()->getQty() && $deliveryDays>0){
 		if($deliveryDaysData['deliveryDays'] <= 10){
 			echo 'Ingin barang ini sampai pada <b>'.$dataStringForDate.'</b>? Pesan barang ini dalam waktu <span id="countdown" class="timer"></span>!';
 		}else{
@@ -74,15 +89,6 @@ if($deliveryDaysData['deliveryDays'] >0){
 		}
 		// echo "want this stuff up on <b>".$dataStringForDate."</b> ? This item message within 10 hours 22 minutes !";
     
-	}else{
-		$DeliveryTime = $_product->getDeliverytimeBackorder();
-		$DeliveryTimeArray = explode(" ", $DeliveryTime);
-		if($deliveryDaysData['deliveryDays'] <= 10){
-			echo 'Ingin barang ini sampai pada <b>'.$dataStringForDate.'</b>? Pesan barang ini dalam waktu <span id="countdown" class="timer"></span>!';
-		}else{
-			echo "Barang ini akan dikirim pada tanggal <b>".$dataStringForDate."</b>.";
-		}
-		
 	}     
 }
         

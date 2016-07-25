@@ -270,3 +270,178 @@
 2016-07-25T12:36:31+07:00 ERR (3): Notice: Use of undefined constant ‘multiselect’ - assumed '‘multiselect’'  in /var/www/html/fabelio/app/code/core/Mage/Adminhtml/Block/System/Config/Form.php on line 465
 2016-07-25T12:36:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
 2016-07-25T12:39:56+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:23:45+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:01+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:04+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:11+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:24:13+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:24:18+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:19+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:24:31+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:34+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:39+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:44+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:51+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:51+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:24:55+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:24:55+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:24:56+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:25:29+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:25:30+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:26:18+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:26:19+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:27:46+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:27:48+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:28:26+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:28:28+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:28:41+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:28:50+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:28:51+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:29:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T17:29:40+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T17:29:40+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-25T17:29:40+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-25T17:29:40+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-25T17:29:40+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-25T17:29:40+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-25T17:29:40+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-25T17:30:19+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T17:30:21+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T17:30:28+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:30:29+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:30:42+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:30:44+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:32:21+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:32:23+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:32:52+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T17:32:54+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T17:33:14+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:33:16+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:33:54+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:33:56+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:34:52+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:34:54+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:34:54+07:00 ERR (3): Warning: include(Mage/Kellton/Helper/Matrixrate.php): failed to open stream: No such file or directory  in /var/www/html/fabelio/lib/Varien/Autoload.php on line 93
+2016-07-25T17:34:54+07:00 ERR (3): Warning: include(): Failed opening 'Mage/Kellton/Helper/Matrixrate.php' for inclusion (include_path='/var/www/html/fabelio/app/code/local:/var/www/html/fabelio/app/code/community:/var/www/html/fabelio/app/code/core:/var/www/html/fabelio/lib:.:/usr/share/php:/usr/share/pear')  in /var/www/html/fabelio/lib/Varien/Autoload.php on line 93
+2016-07-25T17:36:54+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:36:56+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:38:28+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:38:30+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:39:06+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:39:08+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:39:40+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:39:41+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:45:53+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:45:54+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:55:02+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:55:04+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:55:44+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T17:55:46+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T17:55:56+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T17:55:58+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T17:56:58+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:57:00+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T17:57:31+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T17:57:33+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T18:02:59+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:03:28+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:03:49+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:04:06+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T18:05:19+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:05:40+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:05:43+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ecommerce/search.phtml on line 22
+2016-07-25T18:05:43+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ecommerce/search.phtml on line 22
+2016-07-25T18:05:43+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ecommerce/search.phtml on line 22
+2016-07-25T18:05:43+07:00 ERR (3): Notice: Undefined index: grand_total  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/fbpixel/search.phtml on line 9
+2016-07-25T18:06:20+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:06:21+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T18:06:24+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:06:37+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:06:52+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:06:52+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-25T18:06:52+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-25T18:06:52+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-25T18:06:52+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-25T18:06:52+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-25T18:06:52+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-25T18:07:46+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:00+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:02+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:10+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:17+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:46+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:08:50+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:09:05+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:09:07+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:10:26+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:10:36+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:10:46+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T18:10:48+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:11:19+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:11:20+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T18:12:37+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:12:49+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:12:50+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T18:13:27+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:13:28+07:00 ERR (3): Notice: Trying to get property of non-object  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/attributeswatches/catalog_product_view_type_options_configurable.phtml on line 16
+2016-07-25T18:14:11+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:14:19+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:14:29+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:14:42+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:15:01+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:15:01+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 33
+2016-07-25T18:15:01+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 34
+2016-07-25T18:15:01+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 42
+2016-07-25T18:15:01+07:00 ERR (3): Notice: Undefined offset: 0  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 50
+2016-07-25T18:15:01+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 58
+2016-07-25T18:15:01+07:00 ERR (3): Notice: Undefined offset: 1  in /var/www/html/fabelio/app/design/adminhtml/default/default/template/customtabs/catalog/product/Tab.phtml on line 67
+2016-07-25T18:15:21+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T18:15:23+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:15:44+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:18:10+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:25:35+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:25:39+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:25:49+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T18:25:51+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:25:57+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:34:18+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:34:18+07:00 ERR (3): Notice: Undefined index: fee_enabled  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/ajaxcart/catalog/product/view/addtocart.phtml on line 13
+2016-07-25T18:42:58+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:43:04+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:43:16+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:43:21+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:43:30+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:43:34+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:43:42+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:44:24+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:44:31+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:44:35+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:45:33+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:45:37+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:46:16+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:46:22+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:46:22+07:00 ERR (3): Notice: Undefined index: fee_enabled  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/ajaxcart/catalog/product/view/addtocart.phtml on line 13
+2016-07-25T18:46:40+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:46:43+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:46:48+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T18:46:50+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:51:08+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T18:51:10+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:51:25+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:51:26+07:00 ERR (3): Notice: Undefined index: fee_enabled  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/ajaxcart/catalog/product/view/addtocart.phtml on line 13
+2016-07-25T18:52:17+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:52:18+07:00 ERR (3): Notice: Undefined index: fee_enabled  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/ajaxcart/catalog/product/view/addtocart.phtml on line 13
+2016-07-25T18:53:28+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:53:54+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T18:53:56+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T18:54:07+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:54:08+07:00 ERR (3): Notice: Undefined index: fee_enabled  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/ajaxcart/catalog/product/view/addtocart.phtml on line 13
+2016-07-25T18:55:53+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:55:53+07:00 ERR (3): Notice: Undefined index: fee_enabled  in /var/www/html/fabelio/app/design/frontend/smartwave/porto/template/ajaxcart/catalog/product/view/addtocart.phtml on line 15
+2016-07-25T18:59:19+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T18:59:38+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T19:01:53+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63
+2016-07-25T19:02:31+07:00 ERR (3): Notice: Undefined index: manage_stock  in /var/www/html/fabelio/app/code/local/Magestore/Inventoryplus/Model/Observer.php on line 1005
+2016-07-25T19:02:32+07:00 ERR (3): Warning: chmod(): Operation not permitted  in /var/www/html/fabelio/app/code/community/Raveinfosys/Exporter/Helper/Data.php on line 11
+2016-07-25T19:02:39+07:00 ERR (3): Notice: Undefined variable: email_id  in /var/www/html/fabelio/app/design/frontend/base/default/template/fabmod/ematics/default.phtml on line 63

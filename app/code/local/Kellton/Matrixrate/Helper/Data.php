@@ -171,7 +171,17 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function set_delivery_time($product_id, $days){
         $_product= Mage::getModel('catalog/product')->load($product_id);
-        $_product->setDeliverytime($days." Days");
+        if($days<=5){
+            $_product->setDeliverytime("3-5 Hari");
+            
+        }else if($days>5 && $days<=10){
+            $_product->setDeliverytime("Di bawah 2 Minggu");
+        }else if($days>10 && $days<=15){
+            $_product->setDeliverytime("Di bawah 3 Minggu");
+        }else{
+            $_product->setDeliverytime("4-6 Minggu");
+        }
+        
        // $_product->setDeliverytimeBackorder($days." Days");
         $_product->save();
     }

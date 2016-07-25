@@ -53,7 +53,7 @@ class Kellton_Customtabs_Model_Observer
                 }else{
                     
                     $sku = $_product->getSku();
-                    $query_express = 'insert into '.$table.' set website_id = "1", dest_country_id = "IN",  express_fee_enabled = '.$fee_enabled.' , standard_number_of_days = '.$express_number_of_days.' , price = '.$express_fees.' , sku = "'.$sku.'" , delivery_type = "Express" ';
+                    $query_express = 'insert into '.$table.' set website_id = "1", dest_country_id = "IN",  express_fee_enabled = '.$fee_enabled.' , express_number_of_days = '.$express_number_of_days.' , price = '.$express_fees.' , sku = "'.$sku.'" , delivery_type = "Express" ';
                     $write->query($query_express);
                     
                     
