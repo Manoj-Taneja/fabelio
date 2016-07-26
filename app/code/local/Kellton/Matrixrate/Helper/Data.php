@@ -48,8 +48,9 @@
 */
 
 /**
- * Shipping data helper
+ * Matrixrate Shipping data helper
  */
+
 class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
 {
     
@@ -227,5 +228,6 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         Mage::getSingleton('checkout/cart')->setGrandTotal($grand_total)->save();       
         
     }
+    
 
 }
