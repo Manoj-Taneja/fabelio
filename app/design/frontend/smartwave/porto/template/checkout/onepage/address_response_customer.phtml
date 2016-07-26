@@ -1,0 +1,131 @@
+<?php
+$customer = Mage::getSingleton('customer/session')->getCustomer();
+foreach ($customer->getAddresses() as $address):
+                        $data = $address->toArray();
+?>
+
+
+<div class="checkout-box-inner-address" id="inner_address_<?php echo $data['entity_id']; ?>">
+                    <div class="checkout-address-fill">
+                          <label><?php echo $data['firstname']." ".$data['lastname']; ?></label>
+                          <img width="25" class="cursor-pointer" data-target="#myAddress-<?php echo $data['entity_id']; ?>" data-toggle="modal" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/smartwave/porto/images/card-edit.svg">
+                          <img width="25" class="cursor-pointer" data-target="#deleteaddress" data-toggle="modal" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/smartwave/porto/images/card-delete.svg">
+                        </div>
+
+                        <div class="checkout-address-fill">
+                          <label><?php echo $data['street'].','.$data['region'].', '.$data['city']; ?></label>
+                        </div>
+                        <div class="checkout-address-fill">
+                          <label><?php echo $data['telephone']; ?></label>
+                        </div>
+                   </div>
+                    <div class="modal fade checkout-address-main" id="myAddress-<?php echo $data['entity_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <form name="address_form_<?php echo $data['entity_id']; ?>" id="address_form_<?php echo $data['entity_id']; ?>" method="post" action="javascript://">
+                        <div class="modal-body">
+                          <button type="button" id="close-<?php echo $data['entity_id']; ?>" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h3>Masukkan alamat baru Anda!</h3>
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Name Depan</label>
+                              <input type="text" name="billing[firstname]" id="first_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan Nama Depan" value="<?php echo $data['firstname'] ?>" />
+                          </div>
+                          <div class="checkout-form-popup">
+                              <label>Nama Belakang</label>
+                              <input type="text" name="billing[lastname]" id="first_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan nama Belakang" value="<?php echo $data['lastname'] ?>" />
+                          </div>
+                          </div>
+
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Alamat</label>
+                              <input type="text" name="billing[street]" placeholder="Alamat" value="<?php echo $data['street']; ?>"/>
+                          </div>
+                    <div class="checkout-form-popup">
+                              <label>Negara</label>
+                              <?php
+                              $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false);
+                            if (count($_countries) > 0):
+                                ?>
+                              <select  name="billing[country_id]" id="billing:country_id" class="validate-select">
+                                      <option value="ID">Indonesia</option>
+                                   
+                               </select>
+                              <?php
+                             endif; 
+                             ?>
+                             
+                             
+                             
+                          </div>
+                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Provinsi</label>
+                              <?php
+                              $regionCollection = Mage::getModel('directory/region_api')->items('ID');
+                              ?>
+                             <select name="billing[region_id]" id="region_<?php echo $data['entity_id']; ?>" >
+                                  <option value="">Pilih provinsi</option>
+                                  <?php
+                             foreach($regionCollection as $region):
+                                 $region_obj =  Mage::getModel('directory/region')->load($region['region_id']);
+                                 $region_name = $region_obj->getName();
+                                  if($region['region_id']==$data['region_id']){
+                                      $region_selected = "selected='selected'";
+                                  }else{
+                                      $region_selected = "";
+                                  }
+                                  ?>
+                         <option value="<?php echo $region['region_id']; ?>" <?php echo $region_selected; ?>><?php echo $region_name; ?></option>
+                         <?php
+                             endforeach;
+                          ?>
+                             </select>
+                         </div>
+                          <div class="checkout-form-popup">
+                              <label>Kota</label>
+                              <input type="text" name="billing[city]" id="city_<?php echo $data['entity_id']; ?>" placeholder="Kota" value="<?php echo $data['city'] ?>" />
+                          </div>
+                          </div>
+
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Nomor HP</label>
+                              <input type="text" placeholder="Nomor HP" name="billing[telephone]" id="phone_<?php echo $data['entity_id'];  ?>" value="<?php echo $data['telephone']; ?>"/>
+                          </div>
+
+                          </div>
+
+
+
+                      </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" id="address_no_<?php echo $data['entity_id']; ?>" value="<?php echo $data['entity_id'] ?>" />
+                            <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+                            <input type="hidden" id="billing:address_id" value="<?php echo $data['entity_id']; ?>" name="billing[address_id]">
+                            <input type="hidden" name="billing[use_for_shipping]" value="1" />
+                        <input name="context" type="hidden" value="checkout" />
+                          <button type="button" class="btn btn-default save-address btn-active-fill" rel="<?php echo $data['entity_id']; ?>" >Simpan Alamat Ini</button>
+                        </div>
+                          </form>
+                      </div>
+                    </div>
+                  </div>
+<?php
+                      endforeach;
+                      ?>
+                      <div class="checkout-box-inner" data-toggle="modal" data-target="#myAddress">
+                      <div class="checkout-plus-icon-main">
+                      <div class="checkout-plus-icon checkout-plus-icon-new">
+                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)?>frontend/smartwave/porto/images/icon-add-white.svg" >
+                      </div>
+                    </div>
+                      <label>Tambah Alamat Baru </label>
+
+                    </div>
