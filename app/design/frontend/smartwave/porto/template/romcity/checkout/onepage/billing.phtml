@@ -748,8 +748,9 @@
                             
                            // jQuery('.modal-backdrop').fadeOut();
                             setTimeout(function(){ 
-                                alert(result_data.entity_id);
+                                //alert(result_data.entity_id);
                                jQuery('#address_boxes').html(result_data.block_html);
+                               jQuery('#inner_address_'+result_data.entity_id.entity_id)
                             }, 500);
                          // jQuery('#address_boxes').html(result_data.block_html);
                            
@@ -1005,19 +1006,14 @@
                          success: function(result){
                              var result_data = jQuery.parseJSON(result);
                              if(result_data.success==true){
-                                // jQuery('#address_boxes').html(result_data.block_html);
-                                 //jQuery('#myAddress-'+address_id).hide();
-
-                                 //console.log('#close-'+address_id);
-                                 
+                               
                                  jQuery('#address_form')[0].reset();
                                  jQuery('.close').trigger( "click" );
                                  
                                 // jQuery('.modal-backdrop').fadeOut();
-                                 setTimeout(function(){ 
-                                     
+                                 setTimeout(function(){
                                     jQuery('#address_boxes').html(result_data.block_html);
-                                    alert(result_data.entity_id);
+                                    jQuery('#inner_address_'+result_data.entity_id.entity_id)
                                  }, 500);
                                  jQuery('#loading-mask').hide();
                               // jQuery('#address_boxes').html(result_data.block_html);
