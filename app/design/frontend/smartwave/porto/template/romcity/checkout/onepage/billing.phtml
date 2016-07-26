@@ -757,7 +757,9 @@
                             
                            // jQuery('.modal-backdrop').fadeOut();
                             setTimeout(function(){ 
+                                //alert(result_data.entity_id);
                                jQuery('#address_boxes').html(result_data.block_html);
+                               jQuery('#inner_address_'+result_data.entity_id.entity_id)
                             }, 500);
                          // jQuery('#address_boxes').html(result_data.block_html);
                            
@@ -881,8 +883,11 @@
                                  jQuery('#new_address').removeClass('btn-active-fill');
                                  jQuery('#loading-mask').hide();
                                 // jQuery('.modal-backdrop').fadeOut();
+                                //alert(result_data.entity_id);
+                               //console.log(result_data.entity_id.entity_id);
                                  setTimeout(function(){ 
                                     jQuery('#address_boxes').html(result_data.block_html);
+                                    jQuery('#inner_address_'+result_data.entity_id.entity_id).trigger('click');
                                  }, 500);
                               // jQuery('#address_boxes').html(result_data.block_html);
 
@@ -1010,17 +1015,14 @@
                          success: function(result){
                              var result_data = jQuery.parseJSON(result);
                              if(result_data.success==true){
-                                // jQuery('#address_boxes').html(result_data.block_html);
-                                 //jQuery('#myAddress-'+address_id).hide();
-
-                                 //console.log('#close-'+address_id);
-                                 
+                               
                                  jQuery('#address_form')[0].reset();
                                  jQuery('.close').trigger( "click" );
                                  
                                 // jQuery('.modal-backdrop').fadeOut();
-                                 setTimeout(function(){ 
+                                 setTimeout(function(){
                                     jQuery('#address_boxes').html(result_data.block_html);
+                                    jQuery('#inner_address_'+result_data.entity_id.entity_id)
                                  }, 500);
                                  jQuery('#loading-mask').hide();
                               // jQuery('#address_boxes').html(result_data.block_html);
@@ -1145,9 +1147,11 @@
            
             <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
             <?php if($this->isCustomerLoggedIn()): ?>
-            var element_id_array = elem_id.split("_");
-            var address_id = element_id_array[2];
-            var address_form_data = "id="+address_id;
+            if(elem_id!=""){
+                var element_id_array = elem_id.split("_");
+                var address_id = element_id_array[2];
+                var address_form_data = "id="+address_id;
+            }
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/getAddressAjax";
             <?php else: ?>
                 jQuery(this).addClass('address-selected');

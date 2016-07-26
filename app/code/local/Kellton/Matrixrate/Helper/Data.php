@@ -48,8 +48,9 @@
 */
 
 /**
- * Shipping data helper
+ * Matrixrate Shipping data helper
  */
+
 class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
 {
     
@@ -298,5 +299,6 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
        // $_product->setDeliverytimeBackorder($days." Days");
         
     }
+    
 
 }
