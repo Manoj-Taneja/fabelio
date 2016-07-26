@@ -52,13 +52,13 @@
                   <div class="form-group">
                     <label>Pilih alamat pengiriman Anda</label>
                   </div>
-                  <div class="checkout-box-main" id="address_boxes">
+                  <div class="checkout-box-main" id="address_boxes" >
                       
                 <?php if (!$this->customerHasAddresses()): ?>
-                    <div class="checkout-box-inner">
+                    <div class="checkout-box-inner checkout-box-inner-address">
                       <div class="checkout-plus-icon-main">
-                      <div class="checkout-plus-icon" data-toggle="modal" data-target="#myAddress">
-                          <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
+                      <div class="checkout-plus-icon" >
+                          <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" data-toggle="modal" data-target="#myAddress" />
                       </div>
                     </div>
                       <label>Tambah Alamat Baru </label>
@@ -66,14 +66,23 @@
                     </div>
                       
                     <?php else: ?>
-                      <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+                      <?php 
+                            $customer = Mage::getSingleton('customer/session')->getCustomer();
+                            $address_count = count($customer->getAddresses());
+                            if($address_count==1){
+                                foreach ($customer->getAddresses() as $address):
+                                    $data = $address->toArray();
+                                endforeach;
+                                $address_id = $data['entity_id'];
+                            }
+                      ?>
                       <?php foreach ($customer->getAddresses() as $address): ?>
                       <?php $data = $address->toArray(); //echo "<pre>"; print_r($data); echo "</pre>"; ?>
-                      <div class="checkout-box-inner-address" id="inner_address_<?php echo $data['entity_id']; ?>">
+                      <div class="checkout-box-inner-address" id="inner_address_<?php echo $data['entity_id']; ?>" >
                         <div class="checkout-address-fill">
                           <label><?php echo $address->getFirstname()." ".$address->getLastname();?></label>
-                          <img src="<?php echo $this->getSkinUrl('images/card-edit.svg');?>" width="25" data-toggle="modal" data-target="#myAddress-<?php echo $data['entity_id']; ?>"/>
-                          <img src="<?php echo $this->getSkinUrl('images/card-delete.svg');?>" class="delete_address" rel="<?php echo $data['entity_id']; ?>" width="25" rel="<?php echo $data['entity_id']; ?>"  data-toggle="modal" data-target="#deleteaddress" />
+                          <img rel="<?php echo $data['entity_id']; ?>" class="edit_address cursor-pointer" src="<?php echo $this->getSkinUrl('images/card-edit.svg');?>" width="25" data-toggle="modal" data-target="#myAddress-<?php echo $data['entity_id']; ?>"/>
+                          <img src="<?php echo $this->getSkinUrl('images/card-delete.svg');?>" class="delete_address cursor-pointer" rel="<?php echo $data['entity_id']; ?>" width="25" rel="<?php echo $data['entity_id']; ?>"  data-toggle="modal" data-target="#deleteaddress" />
                         </div>
 
                         <div class="checkout-address-fill">
@@ -92,7 +101,7 @@
                         <div class="modal-body">
                           <button type="button" id="close-<?php echo $data['entity_id']; ?>" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h3>Masukkan alamat baru Anda!</h3>
-                          <div class="checkout-form-popup-main">
+                          <div class="checkout-form-popup-main" id="name-div-<?php echo $data['entity_id']; ?>">
 
 
                           <div class="checkout-form-popup">
@@ -104,6 +113,7 @@
                               <input type="text" name="billing[lastname]" id="last_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan nama Belakang" value="<?php echo $data['lastname'];?>" />
                           </div>
                           </div>
+                          <p id="name-error-msg-<?php echo $data['entity_id']; ?>" class="error-message"></p>
                           
                           
                           
@@ -114,7 +124,7 @@
                                                title="<?php echo $this->__('Email Address') ?>"
                                                class="input-text validate-email required-entry format_method_email"/>
 
-                          <div class="checkout-form-popup-main">
+                          <div class="checkout-form-popup-main" id="address-div-<?php echo $data['entity_id']; ?>">
 
 
                           <div class="checkout-form-popup">
@@ -125,18 +135,13 @@
                               <label>Patokan</label>
                               <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
                           </div>-->
-                          <div class="checkout-form-popup custom-select-icon">
+                          <div class="checkout-form-popup">
                               <label>Negara</label>
 <!--                              <input type="text" placeholder="Indonesia" />-->
                               <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
                             <?php if (count($_countries) > 0): ?>
-                                <select name="billing[country_id]" id="billing:country_id" class="validate-select">
-                                    <option value="">Please choose a country...</option>
-                                    <?php foreach($_countries as $_country): ?>
-                                        <option value="<?php echo $_country['value'] ?>" <?php if($data['country_id']==$_country['value']){ echo "selected='selected'";}?>>
-                                            <?php echo $_country['label'] ?>
-                                        </option>
-                                    <?php endforeach; ?>
+                                <select name="billing[country_id]" id="edit_billing_country_id" class="validate-select">
+                                        <option value="ID">Indonesia</option>
                                 </select>
                             <?php endif; ?> 
                           </div>
@@ -155,13 +160,13 @@
                               </select>
 <!--                              <input type="text" name="billing[region]" id="region_<?php echo $data['entity_id']; ?>" placeholder="Provinsi" value="<?php echo $data['region']; ?>" />-->
                           </div>
-                          <div class="checkout-form-popup custom-select-icon">
+                          <div class="checkout-form-popup">
                               <label>Kota</label>
                               <input type="text" name="billing[city]" id="city_<?php echo $data['entity_id']; ?>" placeholder="Pilih Kota" value="<?php echo $data['city']; ?>" />
                           </div>
                           </div>
-
-                          <div class="checkout-form-popup-main">
+                          <p id="address-error-msg-<?php echo $data['entity_id']; ?>" class="error-message"></p>
+                          <div class="checkout-form-popup-main" id="phone-div-<?php echo $data['entity_id']; ?>">
 
 
                           <div class="checkout-form-popup">
@@ -170,7 +175,7 @@
                           </div>
 
                           </div>
-
+                          <p id="phone-error-msg-<?php echo $data['entity_id']; ?>" class="error-message"></p>
 
 
                       </div>
@@ -179,8 +184,9 @@
                             <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
                             <input type="hidden" id="billing:address_id" value="<?php echo $data['entity_id']; ?>" name="billing[address_id]">
                             <input type="hidden" name="billing[use_for_shipping]" value="1" />
+                            <input type="hidden" name="address_edit_box" id="address_edit_box" value="" />
                         <input name="context" type="hidden" value="checkout" />
-                          <button type="button" class="btn btn-default save-address" rel="<?php echo $data['entity_id']; ?>" >Simpan Alamat Ini</button>
+                          <button type="button" class="btn btn-default save-address btn-active-fill edit-address-btn-<?php echo $data['entity_id']; ?>" rel="<?php echo $data['entity_id']; ?>" >Simpan Alamat Ini</button>
                         </div>
                           </form>
                       </div>
@@ -189,9 +195,9 @@
                       
                       
                       <?php endforeach; ?>
-                    <div class="checkout-box-inner">
+                    <div class="checkout-box-inner checkout-box-inner-address" data-toggle="modal" data-target="#myAddress">
                       <div class="checkout-plus-icon-main">
-                      <div class="checkout-plus-icon checkout-plus-icon-new" data-toggle="modal" data-target="#myAddress">
+                      <div class="checkout-plus-icon checkout-plus-icon-new">
                           <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
                       </div>
                     </div>
@@ -253,20 +259,15 @@
                               <label>Patokan</label>
                               <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
                           </div>-->
-                          <div class="checkout-form-popup custom-select-icon">
+                          <div class="checkout-form-popup">
                               <label>Negara</label>
 <!--                              <input type="text" placeholder="Indonesia" />-->
                             <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
                             <?php if (count($_countries) > 0): ?>
-<!--                                <select name="billing[country_id]" id="country_id" class="validate-select">
-                                    <option value="">Please choose a country...</option>
-                                    <?php foreach($_countries as $_country): ?>
-                                        <option value="<?php echo $_country['value'] ?>" >
-                                            <?php echo $_country['label'] ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>-->
-                              <?php echo $this->getCountryHtmlSelect('billing') ?>
+                                <select name="billing[country_id]" id="country_id" class="validate-select">
+                                        <option value="ID" >Indonesia</option>
+                                </select>
+                              <?php //echo $this->getCountryHtmlSelect('billing') ?>
                             <?php endif; ?> 
                           </div>
                           <div class="checkout-form-popup custom-select-icon">
@@ -353,7 +354,7 @@
                         <img src="<?php echo $this->getSkinUrl('images/icon-arrow-right.svg');?>" width="18" style="margin: 18px 5px 0;" />
                           <img src="<?php echo $this->getSkinUrl('images/icon-delete.svg');?>" />
                           <label>Apakah Anda yakin ingin menghapus alamat Lni?</label>
-                          <h4>Batal</h4>
+                          <h4 data-dismiss="modal" aria-label="Close" class="cursor-pointer">Batal</h4>
                       </div>
                         <div class="modal-footer">
                           <button type="button" id="confirm_delete" rel="" class="btn btn-default " >Hapus</button>
@@ -671,11 +672,62 @@
     }
     //]]>
     jQuery(document).ready(function(){
-        //jQuery(".save-address").click(function(){
+   
+    <?php if($this->isCustomerLoggedIn()):?>
         
-        <?php if($this->isCustomerLoggedIn()):?>
+    
+        
         jQuery(document).on('click', '.save-address', function(){
             var address_id = jQuery(this).attr('rel');
+            var entity_id = jQuery('#address_edit_box').val();
+            
+            var error = 0;
+           if(jQuery('#first_name_'+entity_id).val()==''){
+               jQuery('#name-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#name-error-msg-'+entity_id).html('Enter first name');
+               //return false;
+               error = 1;
+           } 
+           if(jQuery('#last_name_'+entity_id).val()==''){
+               jQuery('#name-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#name-error-msg-'+entity_id).html('Enter last name');
+               error = 1;
+           }
+           if(jQuery('#street_'+entity_id).val()==''){
+               jQuery('#address-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#address-error-msg-'+entity_id).html('Enter street');
+               error = 1;
+           }
+           if(jQuery('#country_id_'+entity_id).val()==''){
+               jQuery('#address-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#address-error-msg-'+entity_id).html('Select country');
+               error = 1;
+           }
+           if(jQuery('#billing_region_id_'+entity_id).val()==''){
+               jQuery('#address-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#address-error-msg-'+entity_id).html('Select region');
+               error = 1;
+           }
+           if(jQuery('#city_'+entity_id).val()==''){
+               jQuery('#address-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#address-error-msg-'+entity_id).html('Enter city');
+               error = 1;
+           }
+           if(jQuery('#phone_'+entity_id).val()==''){
+               jQuery('#phone-div-'+entity_id).addClass('wrong-pass');
+               jQuery('#phone-error-msg-'+entity_id).html('Enter phone number');
+               error = 1;
+           }
+           if(error==1){
+               jQuery('.edit-address-btn-'+entity_id).removeClass('btn-active-fill');
+               return false;
+               
+           }else{
+                                //jQuery('#new_address').addClass('btn-active-fill');
+                    
+           }
+            
+            
             
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
            
@@ -718,9 +770,42 @@
                });
               
           //  alert(jQuery(this).attr('rel'))
-        });
+        
          <?php endif; ?> 
-         
+       
+         jQuery(document).on('blur','#phone, #first_name, #last_name, #street, #billing_region_id, #city ',function(){
+              var error = 0;
+           if(jQuery('#first_name').val()==''){
+              
+               error = 1;
+           } 
+           if(jQuery('#last_name').val()==''){
+              
+               error = 1;
+           }
+           if(jQuery('#street').val()==''){
+               
+               error = 1;
+           }
+           if(jQuery('#country_id').val()==''){
+               
+               error = 1;
+           }
+           if(jQuery('#billing_region_id').val()==''){
+               
+               error = 1;
+           }
+           if(jQuery('#city').val()==''){
+                              error = 1;
+           }
+           if(jQuery('#phone').val()==''){
+               
+               error = 1;
+           }
+           if(error!=1){
+               jQuery('#new_address').addClass('btn-active-fill');
+           }
+         });
         jQuery(document).on('click', '#new_address', function($){
             var error = 0;
            if(jQuery('#first_name').val()==''){
@@ -760,6 +845,8 @@
            }
            if(error==1){
                return false;
+           }else{
+               jQuery('#new_address').addClass('btn-active-fill');
            }
            
            jQuery('#address_form').submit();
@@ -782,6 +869,7 @@
                                  //console.log('#close-'+address_id);
                                   jQuery('#address_form')[0].reset();
                                  jQuery('.close').trigger( "click" );
+                                 jQuery('#new_address').removeClass('btn-active-fill');
                                  jQuery('#loading-mask').hide();
                                 // jQuery('.modal-backdrop').fadeOut();
                                  setTimeout(function(){ 
@@ -1044,11 +1132,13 @@
             var elem_id = jQuery(this).attr('id');
             jQuery(this).toggleClass('address-selected').siblings().removeClass('address-selected');
             //jQuery(this).toggleClass('address-selected');
+            
+           
+            <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+            <?php if($this->isCustomerLoggedIn()): ?>
             var element_id_array = elem_id.split("_");
             var address_id = element_id_array[2];
             var address_form_data = "id="+address_id;
-            <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
-            <?php if($this->isCustomerLoggedIn()): ?>
             var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/getAddressAjax";
             <?php else: ?>
                 jQuery(this).addClass('address-selected');
@@ -1102,7 +1192,7 @@
                     }
                });
            }
-        });
+       // });
         
         jQuery('#address_form').find('.close').click(function(){
             jQuery('#name-div').removeClass('wrong-pass');
@@ -1113,8 +1203,33 @@
             jQuery('#phone-error-msg').html('');
             
         });
-        <?php if (!$this->customerHasAddresses() && $this->isCustomerLoggedIn()): ?>
-        jQuery('#add_new_address').trigger('click');
-        <?php endif;?>
+       
     });
+    
+   // jQuery(document).ready(function(){
+            <?php if (!$this->customerHasAddresses() && !$this->isCustomerLoggedIn()): ?>
+             //   jQuery('#add_new_address').trigger('click');
+                //alert('!! Hi !!');
+            <?php endif;?>       
+   // });
+    
+    jQuery(document).on('click','.edit_address', function(){
+       //alert(jQuery(this).attr('rel'));
+       jQuery('#address_edit_box').val(jQuery(this).attr('rel'));
+    });
+    <?php if($address_count == 1):?>  
+               jQuery(document).ready(function(){
+                jQuery('#inner_address_'+<?php echo $address_id; ?>).trigger("click");
+              });
+          <?php endif; ?> 
+       <?php
+        $customer_address_selected = Mage::getSingleton('core/session')->getCustomerAddressSelected();
+       
+           if(isset($customer_address_selected) && !empty($customer_address_selected)):
+        ?>
+           jQuery(document).ready(function(){
+                jQuery('#inner_address_'+<?php echo $customer_address_selected; ?>).trigger("click");
+              }); 
+        <?php endif; ?>
+     });   
 </script>

@@ -1,4 +1,10 @@
 <?php
+    $controller_name = Mage::app()->getRequest()->getControllerName();; 
+    //echo "Module : ".$module_name;
+    if($controller_name!='onepage'):
+    ?>
+
+<?php
 $showTrustedWidget = 0;
 $mediaUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);
 $store = Mage::app()->getStore();
@@ -269,3 +275,28 @@ jQuery(function($){
   $(".cms-index-index .footer-container.fixed-position .footer-top,.cms-index-index .footer-container.fixed-position .footer-middle").remove();
 });
 </script>
+<?php else: ?>
+<footer>
+      <div class="container">
+        <div class="checkout-footer-right">
+          <table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
+<tbody><tr>
+<td width="135" align="center" valign="top"><script type="text/javascript" src="https://seal.geotrust.com/getgeotrustsslseal?host_name=fabelio.com&amp;size=S&amp;lang=en"></script><a href="https://sealsplash.geotrust.com/splash?&amp;dn=fabelio.com" tabindex="-1" onmousedown="return gts_mDown(event);" target="GEOTRUST_SSL_Splash"><img name="gts_seal" border="true" src="https://seal.geotrust.com/getgeotrustsslseal?at=0&amp;sealid=0&amp;dn=fabelio.com&amp;lang=en&amp;gmtoff=0" oncontextmenu="return false;" alt="Click to Verify - This site has chosen a GeoTrust SSL Certificate to improve Web site security"></a><br>
+<a href="http://www.geotrust.com/ssl/" target="_blank" style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a></td>
+</tr>
+</tbody></table>
+
+        </div>
+
+        <div class="checkout-footer-left">
+            <span class="ft-tp">Hak Cipta 2016 PT Tiga Elora Nusantara</span>
+          <span class="ft-btm">Informasi pembayaran Anda dilindungi oleh GeoTrust®</span>
+        </div>
+
+
+
+        </div>
+
+  </footer>
+<?php endif; ?>
+

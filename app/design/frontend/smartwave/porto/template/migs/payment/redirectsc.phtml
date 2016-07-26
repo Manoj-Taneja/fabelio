@@ -7,7 +7,7 @@
  *
  */
 ?>
-<!--<ul class="form-list" id="payment_form_<?php //echo $this->getMethodCode() ?>" style="display:none;">
+<!--<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
     <li class="form-alt"><?php //echo $this->getRedirectMessage() ?></li>
 </ul>-->
 <?php $_coreHelper = Mage::helper('core'); ?>
@@ -16,13 +16,13 @@
 $threeMonths = sprintf('%0.2f', $total/3);
  $sixMonths = sprintf('%0.2f', $total/6);
  $twelveMonths = sprintf('%0.2f', $total/12);?>
-<div class="bank-cicilan-inner" id="payment_form_<?php echo $_code ?>" >
+<div class="bank-cicilan-inner custom-select-icon-payment" id="sc_bank" >
 <label style="width:35%;">Tenor</label>
- <select id="bca_credit_installment" name="payment[bca_credit_installment]" class="installment_select">
-     <option value="bca3">no installment</option>
-<option value="bca3">3 months x <?php echo $_coreHelper->formatPrice($threeMonths, false); ?></option>
-<option value="bca6">6 months x <?php echo $_coreHelper->formatPrice($sixMonths, false); ?></option>
- <option value="bca12">12 months x <?php echo $_coreHelper->formatPrice($twelveMonths, false); ?></option>
+ <select id="sc_installment" name="payment[sc_installment]" style="width:65%;">
+<option value="sc">no installment</option>
+<option value="sc3">3 months x <?php echo $_coreHelper->formatPrice($threeMonths, false); ?></option>
+<option value="sc6">6 months x <?php echo $_coreHelper->formatPrice($sixMonths, false);?></option>
+ <option value="sc12">12 months x <?php echo $_coreHelper->formatPrice($twelveMonths, false);?></option>
 </select>
 <!--<div>
 <?php //echo $this->getMethod()->getConfigData('message');?>

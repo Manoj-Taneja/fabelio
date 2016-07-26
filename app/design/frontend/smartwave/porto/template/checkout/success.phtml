@@ -104,7 +104,7 @@ echo $lastOrderId;
     <div class="modal-content">
 <form name="register_guest" id="register_guest" action="javascript://" method="POST">
       <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pass-close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="pass-close-success"><span aria-hidden="true">&times;</span></button>
 
         <img src="<?php echo $this->getSkinUrl('images/icon-green-check.svg'); ?>" />
         <h4>Yay!</h4>
@@ -129,51 +129,8 @@ echo $lastOrderId;
 <?php if($checkout_method=='guest' || $checkout_method=='register'):?>
 <script>
 jQuery(document).ready(function(){
-    jQuery('#deleteitem').show();
-    
-    
-    
-jQuery('input[type=password]').keyup(function() {
-    // keyup code here
-    if(jQuery('#userpassword').val().length >= 6){
-        jQuery('#register_guest_btn').removeClass('pass-disabled');
-        jQuery('#userpassword').removeClass('wrong-pass');
-    }
-}).focus(function() {
-    if(jQuery('#userpassword').val().length >= 6){
-       jQuery('#register_guest_btn').addClass('pass-disabled');
-    }
-    //$('#pswd_info').show();
-    
-}).blur(function() {
-    //$('#pswd_info').hide();
-});
-    
-    jQuery('#pass-close').click(function(){
-        jQuery('#deleteitem').hide();
-        jQuery('#register_guest')[0].reset();
-    })
-    
-    jQuery('#register_guest_btn').click(function(){
-        var err = 0;
-        var cerr = 0;
-        if(jQuery('#userpassword').val()==''){
-            jQuery('#userpassword').addClass('wrong-pass');
-            err = 1;
-        }
-        if(jQuery('#userpassword').val().length < 6){
-            jQuery('#userpassword').addClass('wrong-pass');
-            err = 1;
-        }
-      if(err == 1){
-        jQuery('#register_guest_btn').addClass('pass-disabled');  
-        return false;  
-      }else{
-          jQuery('#register_guest_btn').removeClass('pass-disabled');
-      }
-      
-      if(!jQuery('#register_guest_btn').hasClass('register_guest_btn_disabled')){
-          var create_user_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/createUserAjax"
+ 
+          var create_user_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/createUserAjax";
           var data = jQuery('#register_guest').serialize();
           jQuery('#loading-mask').show();
           jQuery.ajax({
@@ -184,32 +141,25 @@ jQuery('input[type=password]').keyup(function() {
                     var result_data = jQuery.parseJSON(result)
                     if(result_data.success==true){
                             
-                            jQuery('#deleteitem').hide();
+                            //jQuery('#deleteitem').hide();
                             jQuery('#loading-mask').hide();
                             jQuery('#confirmed-user').show();
-                            jQuery('#confirmed-user').find('.close').click(function(){
-                            jQuery('#confirmed-user').hide();
-                        })
-                        jQuery('#register_guest')[0].reset();
+                           // jQuery('#confirmed-user').find('.close').click(function(){
+                            //jQuery('#confirmed-user').hide();
+                            jQuery('.close').click(function(){
+                               
+                                jQuery('.modal-body').hide();
+                                jQuery('.modal-content').hide();
+                            });
                     }else{
                         alert('There are some errors');
                         jQuery('#loading-mask').hide();
                         
                         jQuery('#register_guest')[0].reset();
                     }
-                    //console.log(result);
-                    
                 }
-         });
-      }
-      
-      
-      
-      
-      
-      
     });
-})    
+});    
 </script>
 <?php endif; ?>
 <!--<div class="page-title">

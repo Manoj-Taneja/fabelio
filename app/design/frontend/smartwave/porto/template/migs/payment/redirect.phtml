@@ -1,0 +1,23 @@
+<?php
+/**
+ * Magento
+ *
+ * @author    WakaMage http://www.wakamage.com <cs@wakamage.com>
+ * @copyright Copyright (C) 2013 WakaMage. (http://www.wakamage.com)
+ *
+ */
+?>
+<!--<ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
+    <li class="form-alt"><?php echo $this->getRedirectMessage() ?></li>
+</ul>-->
+<?php $_code=$this->getMethodCode() ?>
+
+<div class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+	
+	<p><?php echo $this->__('Setelah klik Place Order, Anda akan diarahkan ke website Speed Order untuk melakukan pembayaran.') ?></p>
+    
+	<div>
+    	<?php echo $this->getMethod()->getConfigData('message');?>
+	</div>
+	
+</div>

@@ -118,7 +118,9 @@
                         Logged in as <strong><?php echo $customer_data['email']; ?></strong>
                     </div>
                      <div id="sign_out" class="sign-out">
-                         <button type="button" class="chkbtn btn-checkout btn-chk-forget" id="logout_button">Logout</button> &nbsp; <a href="javascript://" id="checkout_continue" id="checkout-continue">Continue with checkout</a>
+                         <a href="javascript://" id="logout_button" >Logout</a>&nbsp;&nbsp;<button type="button" class="chkbtn btn-checkout btn-chk-forget" id="checkout_continue">Continue with checkout</button> 
+<!--                         &nbsp; 
+                         <a href="javascript://"  id="checkout-continue">Continue with checkout</a>-->
                        
                     </div>
                 </div>
@@ -290,6 +292,7 @@
            jQuery('#opc-billing').addClass('active');
            jQuery('#checkout-step-login').hide()
            jQuery('#checkout-step-billing').show();
+           jQuery('#user_email_id').show();
            
         });
         <?php if($this->isCustomerLoggedIn()):?>

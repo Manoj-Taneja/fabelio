@@ -167,8 +167,8 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                     $block_html .= '<div class="checkout-box-inner-address" id="inner_address_'.$data['entity_id'].'">';
                     $block_html .= '<div class="checkout-address-fill">
                           <label>'.$data['firstname']. " ". $data['lastname'].'</label>
-                          <img width="25" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-edit.svg">
-                          <img width="25" data-target="#deleteaddress" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-delete.svg">
+                          <img width="25" class="cursor-pointer" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-edit.svg">
+                          <img width="25" class="cursor-pointer" data-target="#deleteaddress" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-delete.svg">
                         </div>
 
                         <div class="checkout-address-fill">
@@ -205,17 +205,17 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                               <label>Alamat</label>
                               <input type="text" name="billing[street]" placeholder="Alamat" value="'.$data['street'].'"/>
                           </div>';
-                    $block_html .= '<div class="checkout-form-popup custom-select-icon">
+                    $block_html .= '<div class="checkout-form-popup">
                               <label>Negara</label>';
 
                               $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false);
                             if (count($_countries) > 0):
-                              $block_html .=  '<select name="billing[country_id]" id="billing:country_id" class="validate-select"><option value="">Please choose a country...</option>';
-                                    foreach($_countries as $_country):
+                              $block_html .=  '<select disabled="disabled" name="billing[country_id]" id="billing:country_id" class="validate-select">';
+                                   
                                         
-                                    if($data['country_id']==$_country['value']){ $selected = "selected='selected'";}
-                                      $block_html .= '  <option value="'.$_country['value'].'" '.$selected.'>'.$_country['label'].'</option>';
-                                    endforeach;
+                                    
+                                      $block_html .= '  <option value="ID">Indonesia</option>';
+                                   
                                $block_html .= ' </select>';
                              endif; 
                              
@@ -238,8 +238,9 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                                   }
                              $block_html .= '<option value="'.$region['region_id'].'" '.$region_selected.'>'.$region_name.'</option>';     
                              endforeach;
+                             $block_html .= '</select>';
                          $block_html .=' </div>
-                          <div class="checkout-form-popup custom-select-icon">
+                          <div class="checkout-form-popup">
                               <label>Kota</label>
                               <input type="text" name="billing[city]" id="city_'.$data['entity_id'].'" placeholder="Kota" value="'.$data['city'].'" />
                           </div>
@@ -264,17 +265,17 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                             <input type="hidden" id="billing:address_id" value="'.$data['entity_id'].'" name="billing[address_id]">
                             <input type="hidden" name="billing[use_for_shipping]" value="1" />
                         <input name="context" type="hidden" value="checkout" />
-                          <button type="button" class="btn btn-default save-address" rel="'.$data['entity_id'].'" >Simpan Alamat Ini</button>
+                          <button type="button" class="btn btn-default save-address btn-active-fill" rel="'.$data['entity_id'].'" >Simpan Alamat Ini</button>
                         </div>
                           </form>
                       </div>
                     </div>
                   </div>';
                       endforeach;
-                      $block_html .= '<div class="checkout-box-inner">
+                      $block_html .= '<div class="checkout-box-inner" data-toggle="modal" data-target="#myAddress">
                       <div class="checkout-plus-icon-main">
                       <div class="checkout-plus-icon checkout-plus-icon-new">
-                          <img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-add-white.svg" data-toggle="modal" data-target="#myAddress">
+                          <img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-add-white.svg" >
                       </div>
                     </div>
                       <label>Tambah Alamat Baru </label>
@@ -422,10 +423,10 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
                     </div>
                   </div>';
                       endforeach;
-                      $block_html .= '<div class="checkout-box-inner">
+                      $block_html .= '<div class="checkout-box-inner" data-toggle="modal" data-target="#myAddress">
                       <div class="checkout-plus-icon-main">
                       <div class="checkout-plus-icon checkout-plus-icon-new">
-                          <img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-add-white.svg" data-toggle="modal" data-target="#myAddress">
+                          <img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-add-white.svg" >
                       </div>
                     </div>
                       <label>Tambah Alamat Baru </label>
@@ -452,7 +453,8 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
              //   var_dump($address);
             $data = $address->toArray();
             //echo "<pre>"; print_r($data); echo "</pre>";
-            $customerAddressId = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling();
+            $customerAddressId = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling($customerAddressId);
+            
             $result['success']=true;
             $result['error']=false;
             $result['address_id'] = $customerAddressId;
@@ -464,7 +466,8 @@ class Kellton_Customer_AddressController extends Mage_Customer_AddressController
             $result['region'] = $data['region'];
             $result['region_id'] = $data['region_id'];
             $result['street'] = $data['street'];
-            $result['entity_id'] = $data['entity_id'];            
+            $result['entity_id'] = $data['entity_id'];  
+            $customer_address_selected = Mage::getSingleton('core/session')->setCustomerAddressSelected($data['entity_id']);
             }catch (Exception $e){
                 $result['success']=false;
                 $result['error']=true;

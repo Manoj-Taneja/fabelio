@@ -53,12 +53,15 @@ Checkout.prototype = {
      * @param event
      */
     _onSectionClick: function(event) {
+        //alert("er")
         var section = $(Event.element(event).up().up());
+        
         if (section.hasClassName('allow')) {
             Event.stop(event);
             this.gotoSection(section.readAttribute('id').replace('opc-', ''), false);
             return false;
         }
+        
     },
 
     ajaxFailure: function(){

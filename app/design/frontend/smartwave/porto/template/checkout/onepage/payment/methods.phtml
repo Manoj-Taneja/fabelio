@@ -149,7 +149,7 @@
                               Pilih program cicilan
                             </p>
                             <div class="bank-cicilan">
-                              <div class="bank-cicilan-inner" style="width:70%;">
+                              <div class="bank-cicilan-inner custom-select-icon-payment" style="width:70%;">
                                 <label>Bank</label>
                                 
                                 
@@ -166,8 +166,18 @@
                                 </select>
 
                               </div>
+                              <div id="bank_logo"> 
+                              
+                              </div>
+<!--                             <div id="permata" >
+                              <img src="<?php echo $this->getSkinUrl('images/bank-bri.png'); ?>" width="100" class="hidden-xs" />
+                             </div>
+                             <div id="bri">
                               <img src="<?php echo $this->getSkinUrl('images/bank-mandiri.png'); ?>" width="100" class="hidden-xs" />
-
+                             </div>
+                             <div id="bcacredit">
+                              <img src="<?php echo $this->getSkinUrl('images/permata-bank.png'); ?>" width="100" class="hidden-xs" />
+                             </div>-->
                               <div id="installment_container">
                                 <div class="bank-cicilan-inner" id="sc_bank" >
                                   <label style="width:35%;">Tenor</label>
@@ -177,7 +187,7 @@
                                   </select>
                                 </div>
                               </div>  
-                              <p>
+                              <p id="instalment_program_text">
                                 Silahkan pilih program cicilan Anda beserta waktu tenor yang tersedia.
                               </p>
 
@@ -263,8 +273,9 @@
                         alert("There is some error !");
                     }else{
                        
-                        jQuery('#installment_container').html(return_data.html)
-                        jQuery('#sc_bank').show();
+                        jQuery('#installment_container').html(return_data.html);
+                        jQuery('#bank_logo').html(return_data.logo);
+                        jQuery('#instalment_program_text').hide();
                     }
                     jQuery('#loading-mask').hide();
                     

@@ -37,8 +37,8 @@
 <?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
 <?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-        <div class="panel panel-default panel-payment">
-        <div class="panel-heading " role="tab" id="headingOne">
+        <div class="panel panel-default panel-payment" >
+        <div class="panel-heading " role="tab"  id="panel-<?php echo $_stepId ?>">
 <!--            <div class="step-title">-->
             <h4 class="panel-title">
              <div class="col-sm-3 col-xs-8 payment-label ">
@@ -131,7 +131,7 @@
 jQuery(document).ready(function(){
     
     
-    jQuery('#review-edit-btn').click(function(){
+    jQuery('#review-edit-btn, #panel-review').click(function(){
            //console.log("Hi There !!");
           jQuery('#opc-review').addClass('active');
           jQuery('#checkout-step-review').show();
@@ -145,10 +145,11 @@ jQuery(document).ready(function(){
           jQuery('#checkout-step-login').hide();
           //jQuerr('#cart_totals').hide();
        });
-    
+       
+       
     
        
-       jQuery('#billing-edit-btn').click(function(){
+       jQuery('#billing-edit-btn, #panel-billing').click(function(){
           jQuery('#opc-billing').addClass('active');
           jQuery('#opc-payment').removeClass('active');
           jQuery('#go_payment').show();
@@ -164,8 +165,8 @@ jQuery(document).ready(function(){
        });
 
        
-       jQuery('#login-edit-btn').click(function(){
-          jQuery('#opc-login').find('.section').addClass('active');
+       jQuery('#login-edit-btn, #panel-login').click(function(){
+          jQuery('#opc-login').addClass('active');
           jQuery('#opc-payment').removeClass('active');
           jQuery('#checkout-step-payment').hide();
           jQuery('#checkout-step-login').show();
@@ -175,8 +176,29 @@ jQuery(document).ready(function(){
           jQuery('#opc-review').removeClass('active');
           jQuery('#opc-billing').removeClass('active');
           jQuery('#checkout-step-billing').hide();
-          jQuery('#opc-login').removeClass('active');
+          jQuery('#user_email_id').hide();
+          //jQuery('#checkout-step-review').hide();
        });
+       
+//       jQuery('#panel-login').click(function(){
+//           alert('Hi');
+//          jQuery('#opc-login').addClass('active');
+//          jQuery('#opc-payment').removeClass('active');
+//          jQuery('#checkout-step-payment').hide();
+//          jQuery('#checkout-step-login').show();
+//          jQuery('#go_payment').show();
+//          jQuery('#completed-billing').hide();
+//          jQuery('#completed-review').hide();
+//          jQuery('#opc-review').removeClass('active');
+//          jQuery('#opc-billing').removeClass('active');
+//          jQuery('#checkout-step-billing').hide();
+//          jQuery('#user_email_id').hide();
+//          //jQuery('#checkout-step-review').hide();
+//       });
+       
+       
+       
+       
        
        
 });
