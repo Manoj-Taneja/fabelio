@@ -247,8 +247,6 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     public function saveBillingAjaxAction()
     {
-        //echo "<pre>"; print_r($_POST); echo "</pre>";
-        //exit;
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
             parent::saveBillingAction();
             return;
@@ -285,131 +283,16 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
               
 
             if (!isset($result['error'])) {
-             //   var_dump($this->getOnepage()->getQuote());
-               // exit;
+                
+                $cart_response_template = Mage::getConfig()->getBlockClassName('core/template');
+                $cart_response_template = new $cart_response_template;
+
+                $cart_response_template->setTemplate('checkout/onepage/address_response.phtml');
+                $cart_response_template->setAddressData($data);
+                $cart_response_template->setCustomerAddressId($data);
+
                 $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
-                                 $region_name = $region_obj->getName();
-                $block_html .= '<div class="checkout-box-inner-address  address-selected" id="inner_address_'.$data['entity_id'].'">';
-                    $block_html .= '<div class="checkout-address-fill">
-                          <label>'.$data['firstname']. " ". $data['lastname'].'</label>
-                          <img width="25" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/card-edit.svg">
-                          
-                        </div>
-
-                        <div class="checkout-address-fill">
-                          <label>'.$data['street'].','.$region_name.', '.$data['city'].'</label>
-                        </div>
-                        <div class="checkout-address-fill">
-                          <label>'.$data['telephone'].'</label>
-                        </div>'; 
-                    $block_html .= '</div>';
-                    $block_html .= '<div class="modal fade checkout-address-main" id="myAddress-'.$data['entity_id'].'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <form name="address_form_'.$data['entity_id'].'" id="address_form_'.$data['entity_id'].'" method="post" action="javascript://">
-                              <input type="hidden" name="method" id="billing_method_1" value="method=guest" />
-                        <div class="modal-body">
-                          <button type="button" id="close-'.$data['entity_id'].'" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h3>Masukkan alamat baru Anda!</h3>
-                          <div class="checkout-form-popup-main">
-
-
-                          <div class="checkout-form-popup">
-                              <label>Name Depan</label>
-                              <input type="text" name="billing[firstname]" id="first_name_'.$data['entity_id'].'" placeholder="Masukkan Nama Depan" value="'.$data['firstname'].'" />
-                          </div>
-                          <div class="checkout-form-popup">
-                              <label>Nama Belakang</label>
-                              <input type="text" name="billing[lastname]" id="first_name_'.$data['entity_id'].'" placeholder="Masukkan nama Belakang" value="'.$data['lastname'].'" />
-                          </div>
-                          </div>
-
-                          <div class="checkout-form-popup-main">
-
-
-                          <div class="checkout-form-popup">
-                              <label>Alamat</label>
-                              <input type="text" name="billing[street]" placeholder="Alamat" value="'.$data['street'].'"/>
-                          </div>';
-                    $block_html .= '<div class="checkout-form-popup">
-                              <label>Negara</label>';
-
-                              $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false);
-                            if (count($_countries) > 0):
-                              $block_html .=  '<select name="billing[country_id]" id="billing:country_id" class="validate-select"><option value="">Please choose a country...</option>';
-                                    foreach($_countries as $_country):
-                                        
-                                    if($data['country_id']==$_country['value']){ $selected = "selected='selected'";}
-                                      $block_html .= '  <option value="'.$_country['value'].'" '.$selected.'>'.$_country['label'].'</option>';
-                                    endforeach;
-                               $block_html .= ' </select>';
-                             endif; 
-                             
-                          $block_html .= '</div>
-                          <div class="checkout-form-popup custom-select-icon">
-                              <label>Provinsi</label>';
-                          
-                            $regionCollection = Mage::getModel('directory/region_api')->items('ID');
-                            $block_html.='<select name="billing[region_id]" id="region_'.$data['entity_id'].'" >
-                                  <option value="">Pilih provinsi</option>';
-                             foreach($regionCollection as $region):
-                                 $region_obj =  Mage::getModel('directory/region')->load($region['region_id']);
-                                 $region_name = $region_obj->getName();
-                                  if($region['region_id']==$data['region_id']){
-                                      $region_selected = "selected='selected'";
-                                  }else{
-                                      $region_selected = "";
-                                  }
-                             $block_html .= '<option value="'.$region['region_id'].'" '.$region_selected.'>'.$region_name.'</option>';     
-                             endforeach;
-                         $block_html .='</select> </div>';
-                          
-                          
-                              
-                         
-                         $block_html .=' <div class="checkout-form-popup ">
-                              <label>Kota</label>
-                              <input type="text" name="billing[city]" id="city_'.$data['entity_id'].'" placeholder="Kota" value="'.$data['city'].'" />
-                          </div>
-                          </div>
-
-                          <div class="checkout-form-popup-main">
-
-
-                          <div class="checkout-form-popup">
-                              <label>Nomor HP</label>
-                              <input type="text" placeholder="Nomor HP" name="billing[telephone]" id="phone_'.$data['entity_id'].'" value="'.$data['telephone'].'"/>
-                          </div>
-
-                          </div>
-
-
-
-                      </div>
-                        <div class="modal-footer">
-                            <input type="hidden" name="billing[entity_id]" id="address_no_'.$data['entity_id'].'" value="'.$data['entity_id'].'" />
-                            <input type="hidden" value="'.Mage::getSingleton('core/session')->getFormKey().'" name="form_key">
-                            <input type="hidden" id="billing:address_id" value="'.$data['entity_id'].'" name="billing[address_id]">
-                                <input type="hidden" name="billing[email]" value="'.$data['email'].'" />
-                            <input type="hidden" name="billing[use_for_shipping]" value="1" />
-                        <input name="context" type="hidden" value="checkout" />
-                          <button type="button" class="btn btn-default save-address" id="new_address_1" rel="'.$data['entity_id'].'" >Simpan Alamat Ini</button>
-                        </div>
-                          </form>
-                      </div>
-                    </div>
-                  </div>';
-                      
-                      /*$block_html .= '<div class="checkout-box-inner">
-                      <div class="checkout-plus-icon-main">
-                      <div class="checkout-plus-icon checkout-plus-icon-new">
-                          <img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/smartwave/porto/images/icon-add-white.svg" data-toggle="modal" data-target="#myAddress">
-                      </div>
-                    </div>
-                      <label>Tambah Alamat Baru </label>
-
-                    </div>';*/
-
+                $region_name = $region_obj->getName();
                 $result['error']=false;
                 $result['success']=true;
                 $result['firstname'] = $data['firstname'];
@@ -422,7 +305,7 @@ class Fabmod_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 $result['region_id'] = $data['region_id'];
                 $result['street'] = $data['street'];
                 $result['entity_id'] = $data['entity_id'];
-                $result['block_html'] = $block_html;
+                $result['block_html'] = $cart_response_template->toHtml();
                 
             }
 
