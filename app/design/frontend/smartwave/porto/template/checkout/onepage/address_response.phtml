@@ -8,7 +8,7 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
 <div class="checkout-box-inner-address  address-selected" id="inner_address_<?php echo $data['entity_id']; ?>">
     <div class="checkout-address-fill">
                           <label><?php echo $data['firstname']." ".$data['lastname']; ?></label>
-                          <img width="25" class="cursor-pointer" data-target="#myAddress-'.$data['entity_id'].'" data-toggle="modal" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/smartwave/porto/images/card-edit.svg">
+                          <img width="25" class="cursor-pointer" data-target="#myAddress-<?php echo $data['entity_id']; ?>" data-toggle="modal" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>frontend/smartwave/porto/images/card-edit.svg">
                           
                         </div>
 
@@ -46,9 +46,9 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
                           <div class="checkout-form-popup">
                               <label>Alamat</label>
                               <input type="text" name="billing[street]" placeholder="Alamat" value="<?php echo $data['street'] ?>"/>
-                          </div>';
+                          </div>
                     <div class="checkout-form-popup">
-                              <label>Negara</label>';
+                              <label>Negara</label>
                               <?php
                               $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false);
                             if (count($_countries) > 0):
@@ -69,7 +69,7 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
                              ?>
                           </div>
                           <div class="checkout-form-popup custom-select-icon">
-                              <label>Provinsi</label>';
+                              <label>Provinsi</label>
                           <?php
                             $regionCollection = Mage::getModel('directory/region_api')->items('ID');
                             ?>
