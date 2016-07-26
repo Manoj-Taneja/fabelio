@@ -166,10 +166,6 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         $select = "SELECT  * from {$table} where sku = '{$sku}'";
         $row = $read->fetchAll($select);
         return $row;
-<<<<<<< HEAD
-
-       }
-=======
     }
     
     public function set_matrix_rate($post_array){
@@ -230,6 +226,5 @@ class Kellton_Matrixrate_Helper_Data extends Mage_Core_Helper_Abstract
         Mage::getSingleton('checkout/cart')->setGrandTotal($grand_total)->save();       
         
     }
->>>>>>> ecebd1261ede2a104fd8977fd9675283f8075dd8
 
 }
