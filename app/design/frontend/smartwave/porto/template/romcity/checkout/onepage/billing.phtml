@@ -770,7 +770,7 @@
                });
               
           //  alert(jQuery(this).attr('rel'))
-        
+      });
          <?php endif; ?> 
        
          jQuery(document).on('blur','#phone, #first_name, #last_name, #street, #billing_region_id, #city ',function(){
@@ -1231,5 +1231,5 @@
                 jQuery('#inner_address_'+<?php echo $customer_address_selected; ?>).trigger("click");
               }); 
         <?php endif; ?>
-     });   
+    // });   
 </script>
