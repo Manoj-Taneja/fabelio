@@ -671,7 +671,7 @@
         billing.save()
     }
     //]]>
-    jQuery(document).ready(function(){
+   // jQuery(document).ready(function(){
    
     <?php if($this->isCustomerLoggedIn()):?>
         
@@ -1206,15 +1206,9 @@
        
     });
     
-   // jQuery(document).ready(function(){
-            <?php if (!$this->customerHasAddresses() && !$this->isCustomerLoggedIn()): ?>
-             //   jQuery('#add_new_address').trigger('click');
-                //alert('!! Hi !!');
-            <?php endif;?>       
-   // });
+   
     
-    jQuery(document).on('click','.edit_address', function(){
-       //alert(jQuery(this).attr('rel'));
+    jQuery(document).on('click','.edit_address', function(){       
        jQuery('#address_edit_box').val(jQuery(this).attr('rel'));
     });
     <?php if($address_count == 1):?>  
@@ -1231,5 +1225,5 @@
                 jQuery('#inner_address_'+<?php echo $customer_address_selected; ?>).trigger("click");
               }); 
         <?php endif; ?>
-    // });   
+     //});   
 </script>
