@@ -673,20 +673,14 @@
         billing.save()
     }
     //]]>
-<<<<<<< HEAD
+
    // jQuery(document).ready(function(){
    
     <?php if($this->isCustomerLoggedIn()):?>
         
     
-        
-=======
-    jQuery(document).ready(function(){
-        //jQuery('div#address_boxes div.checkout-box-inner-address:first-child').trigger('click');
-        //jQuery(".save-address").click(function(){
-        <?php if($this->isCustomerLoggedIn()):?>
->>>>>>> 8fa4d9df4e15e66518eb4b6a7db730b0d3a17b1e
-        jQuery(document).on('click', '.save-address', function(){
+       
+         jQuery(document).on('click', '.save-address', function(){
             var address_id = jQuery(this).attr('rel');
             var entity_id = jQuery('#address_edit_box').val();
             
