@@ -4440,6 +4440,7 @@ header.checkout-header-main{float:left; width:100%;}
     border-color: #d43f3a; font-family:roboto-regular; font-size:16px; font-weight:500;}
 	.btn-checkout:hover{color:#fff; text-decoration:none;}
 	.accordion-inner-content input[type=text]::-webkit-input-placeholder{color:#bababa; font-size:16px;font-weight: 500;}
+        .accordion-inner-content input[type=text]::-moz-placeholder{color:#bababa; font-size:16px;font-weight: 500;}
 	.btn-facebook{    border: 1px solid #3B5998;
     width: 230px;
     color: #3B5998;
@@ -4659,10 +4660,10 @@ button.close {
     padding: 10px;
   border-bottom: 1px solid #ebebeb;}
 .checkout-form-popup label{    float: left;width: 25%; font-size: 16px;}
-.checkout-form-popup input[type=text]{border:none; width: 70%;}
+.checkout-form-popup input[type=text]{border:none; width: 70%; font-size: 16px; color: #464646;}
 .checkout-form-popup-main{    background: #fff;
     border-radius: 5px ; margin-top: 20px;}
-.checkout-form-popup select{padding: 0px; width: 70%; border: none;-webkit-appearance:none; -moz-appearance:none;-ms-appearance:none;}
+.checkout-form-popup select{padding: 0px; width: 70%; border: none;-webkit-appearance:none; -moz-appearance:none;-ms-appearance:none; font-size: 16px; color: #464646;}
 .checkout-form-popup select::-ms-expand{display: none;}
 .checkout-address-main .modal-footer{text-align: center; border: none;}
 .checkout-address-main .modal-footer button{width: 200px; background: #d6d6d6; color: #444;}
@@ -5173,5 +5174,8 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
     top: 3px;
     width: 30px;
 }
-
+#billing-buttons-container button.button > span span{font-size: 16px;}
+#billing-buttons-container button.button > span:hover{opacity:1;}
+#review-buttons-container button.button > span span{font-size: 16px;}
+.dis-voucher.has-success{border:1px solid #3c763d !important;}
  /*FAB 58 css ends here*/ 
