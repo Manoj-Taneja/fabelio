@@ -100,7 +100,7 @@
                           <form name="address_form_<?php echo $data['entity_id']; ?>" id="address_form_<?php echo $data['entity_id']; ?>" method="post" action="javascript://">
                         <div class="modal-body">
                           <button type="button" id="close-<?php echo $data['entity_id']; ?>" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h3>Masukkan alamat baru Anda!</h3>
+                          <h3>Koreksi alamat anda</h3>
                           <div class="checkout-form-popup-main" id="name-div-<?php echo $data['entity_id']; ?>">
 
 
@@ -725,14 +725,9 @@
                jQuery('.edit-address-btn-'+entity_id).removeClass('btn-active-fill');
                return false;
                
-           }else{
-                                //jQuery('#new_address').addClass('btn-active-fill');
-                    
            }
-            
-            
-            
-            var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+        
+        var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
            
             var address_form_data = jQuery('#address_form_'+address_id).serialize();
              jQuery.ajax({
