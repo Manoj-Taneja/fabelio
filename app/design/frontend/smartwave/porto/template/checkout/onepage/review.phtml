@@ -65,7 +65,7 @@
                     <div class="cart-main-box-right">
                      <div class="cart-product-name">
                       <h4><?php echo $product_name; ?></h4>
-                       <label><?php echo $manufacturer; ?></label>
+                       <label>Didesain oleh <?php echo $manufacturer; ?></label>
                      </div>
                         <div class="mobile-close-item">
                              <img width="18" data-target="#deleteitem" class="delete-item" rel="<?php echo $item_id; ?>" data-toggle="modal" style="cursor:pointer;" src="<?php echo $this->getSkinUrl('images/icon-close-black.svg');?>">
@@ -164,7 +164,7 @@
                     </div>
                       <div class="cart-cell cell1">
                         <h4><?php echo $product_name; ?></h4>
-                        <label><?php echo $manufacturer; ?></label>
+                        <label>Didesain oleh <?php echo $manufacturer; ?></label>
                       </div>
                       <div class="cart-cell cell2"><span> <?php echo $_coreHelper->formatPrice($product_price, false) ?></span></div>
                       <div class="cart-cell cell4"><input class="product_qty" rel="<?php echo $item_id; ?>-<?php echo $product_id; ?>" type="number" name="cart[<?php echo $product_id; ?>][qty]" value="<?php echo $product_qty; ?>" /></div>
