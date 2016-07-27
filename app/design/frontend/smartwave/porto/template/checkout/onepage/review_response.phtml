@@ -51,7 +51,8 @@
                     $item_id = $item->getID();
                     $product = Mage::getModel('catalog/product')->load($product_id);
                     $product_name = $item->getName();
-                    $product_price = $item->getBaseRowTotal();
+                    //$product_price = $item->getBaseRowTotal();
+                    $product_price = $item->getPrice();
                     $product_qty = $item->getQty();
                     $product_sku = $item->getSku();
                     $manufacturer = $product->getAttributeText('manufacturer');
@@ -150,7 +151,8 @@
                     $item_id = $item->getID();
                     $product = Mage::getModel('catalog/product')->load($product_id);
                     $product_name = $item->getName();
-                    $product_price = $item->getBaseRowTotal();
+                    //$product_price = $item->getBaseRowTotal();
+                    $product_price = $item->getPrice();
                     $product_qty = $item->getQty();
                     $product_sku = $item->getSku();
                     $manufacturer = $product->getAttributeText('manufacturer');
