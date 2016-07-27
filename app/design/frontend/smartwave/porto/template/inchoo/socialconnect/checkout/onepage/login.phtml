@@ -46,7 +46,7 @@
               <div class="accordion-inner-content">
                 <div class="col-sm-8">
                   <div class="form-group">
-                    <label>Dimulai dengan memasukkan email Anda!</label>
+                    <label id="you_registered">Dimulai dengan memasukkan email Anda!</label>
                   </div>
                     <form name="email_form" id="email_form" action="javascript://" method="POST">
                         <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
@@ -190,6 +190,7 @@
                    }else if(return_data.success==true){
                        $('#login-email').hide();
                        $('#login-password').show();
+                       $('#you_registered').html("Anda telah memiliki akun Fabelio. Masukkan password Anda!");
                        $('#email_check_button').hide();
                        $('#email_login_button').show();
                        jQuery('#loading-mask').hide();
@@ -197,7 +198,7 @@
                        $('#email_login_button').click(function(){
                            if($('#login-password').val()==''){
                                 $('#login-password').addClass('wrong-pass');
-                                $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                $('.email-error-show').html('<label class="cursor-pointer" data-target=".forgotpassord-checkout" data-toggle="modal">Lupa password Anda? Klik disini </label>');
                                 $('.email-error-show').show();
                            }
                        var login_post_url = <?php Mage::getBaseUrl();?>"/customer/account/loginPostAjax";
@@ -214,7 +215,7 @@
                                             
                                             $('#form_group').addClass('email-error');
                                             $('#login-password').addClass('wrong-pass');
-                                            $('.email-error-show').html('<label>Lupa password Anda? Klik disini </label>');
+                                            $('.email-error-show').html('<label class="cursor-pointer" data-target=".forgotpassord-checkout" data-toggle="modal">Lupa password Anda? Klik disini </label>');
                                             $('.email-error-show').show();
                                             jQuery('#loading-mask').hide();
                                         }else if(result_data.error==false){
