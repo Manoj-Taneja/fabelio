@@ -211,8 +211,8 @@
                               <div class="cart-cell cell2">
                           <span>
                             <?php
-                                   $total_price = $product_price;
-                                  //$total_price = $product_qty * $product_price;
+                                   
+                                  $total_price = $product_qty * $product_price;
                                   echo $_coreHelper->formatPrice($product_price, false);
                             ?>
                           </span>
