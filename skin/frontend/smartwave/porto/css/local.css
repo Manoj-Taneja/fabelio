@@ -5004,7 +5004,7 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
   right: 38.3%;
      top: 35px;}
 .email-error-show{position: absolute;
-  right: 11.5%;
+  right: 12.5%;
     top: 25px;}
 .email-error-show label{ color: #fff;
     background: #464646;
@@ -5160,7 +5160,13 @@ input[type=number]::-webkit-outer-spin-button {opacity: 1;}
 .has-success .dis-voucher {border:1px solid #04984c !important;}
 .has-success .dis-voucher .fa.fa-check-circle{color:#04984c !important;}
 .use-coupon-active{color:#464646 !important; background: #ebebeb !important; cursor: pointer;}
-.has-error .dis-voucher {border:1px solid #c31a20 !important;}
+.has-error .dis-voucher {border:1px solid #c31a20 !important; position: relative;}
+.has-error .dis-voucher:before{content: ''; position: absolute; border: 8px solid transparent;border-right: 8px solid #464646;right: -10px;top: 10px;}
+.has-error .dis-voucher .email-error-show {
+    position: absolute;
+    right: -56%;
+    top: 0;
+}
 .has-error .dis-voucher .fa.fa-check-circle{color:#c31a20 !important;}
 .has-error .dis-voucher .input-group-addon{color:#bababa !important; background: #d6d6d6 !important; }
 .installment_select{width: 65% !important;}
