@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Ptech Multi Select Layer Navigation
+*
+* @category     Ptech
+* @package      Ptech_Multilayer 
+* @copyright    Copyright (c) 2014-2015 Ptech
+* @author       Ptech (Brijesh Kumar) 
+* @version      Release: 1.0.0
+*/
+-->
+<config>
+    <modules>
+        <Ptech_Multilayer>
+            <version>1.0.0</version>
+        </Ptech_Multilayer>
+    </modules>
+    <frontend>
+        <routers>
+            <multilayer>
+                <use>standard</use>
+                <args>
+                    <module>Ptech_Multilayer</module>
+                    <frontName>multilayer</frontName>
+                </args>
+            </multilayer>
+        </routers>
+        <layout>
+            <updates>
+                <multilayer>
+                    <file>multilayer.xml</file>
+                </multilayer>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Ptech_Multilayer>
+                    <files>
+                        <default>Ptech_Multilayer.csv</default>
+                    </files>
+                </Ptech_Multilayer>
+            </modules>
+        </translate>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Ptech_Multilayer>
+                    <files>
+                        <default>Ptech_Multilayer.csv</default>
+                    </files>
+                </Ptech_Multilayer>
+            </modules>
+        </translate>
+    </adminhtml>   
+    <global> 
+        <models>
+            <multilayer>
+                <class>Ptech_Multilayer_Model</class>
+            </multilayer>
+        </models>     
+    
+        <blocks>
+            <multilayer>
+                <class>Ptech_Multilayer_Block</class>
+            </multilayer>
+            
+            <catalog>
+                <rewrite>
+                    <category_view>Ptech_Multilayer_Block_Rewrite_RewriteCatalogCategoryView</category_view>
+                </rewrite> 
+            </catalog>  
+            
+            <catalog>
+                <rewrite>
+                    <layer_view>Ptech_Multilayer_Block_Rewrite_RewriteCatalogLayerView</layer_view>
+                </rewrite>
+            </catalog>          
+            <catalogsearch>
+                <rewrite>
+                    <result>Ptech_Multilayer_Block_Rewrite_RewriteCatalogsearchResult</result>
+                </rewrite> 
+            </catalogsearch>            
+        </blocks>
+        <helpers>
+            <multilayer>
+                <class>Ptech_Multilayer_Helper</class>
+            </multilayer>
+        </helpers>
+        <resources>
+            <multilayer_setup>
+                <setup>
+                    <module>Ptech_Multilayer</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </multilayer_setup>
+            <multilayer_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </multilayer_write>
+            <multilayer_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </multilayer_read>
+        </resources>
+    </global> 
+    <default>
+        <multilayer>
+            <multilayer>
+                <cat_style>breadcrumbs</cat_style>
+                <price_style>default</price_style>
+                <remove_links>0</remove_links>
+                <reset_filters>1</reset_filters>
+            </multilayer>  
+        </multilayer>
+    </default>
+</config>

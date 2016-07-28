@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MyCalender_Calender>
+            <!--
+            this is the version number our module is currently at. in order
+            for setup scripts to run, their version number must be less than 
+            or equal to this value.
+            
+            as we add upgrade scripts, we increment this value. The next time
+            your Magento instance is accessed, Magento will compare values in
+            DB table 'core_resource' against this value. If the DB is lower, 
+            it will attempt to run any setup scripts for the module and then 
+            update the database table to match this value.
+            -->
+            <version>0.0.1</version>
+        </MyCalender_Calender>
+    </modules>
+    <global>
+        
+        <!-- 
+        add an adminhtml block definition 
+        -->
+        <blocks>
+            <mycalender_calender_adminhtml>
+               <class>MyCalender_Calender_Block_Adminhtml</class>
+            </mycalender_calender_adminhtml>
+        </blocks>
+        
+        <!-- 
+        add a helper definition for use in adminhtml.xml menu translation 
+        -->
+        <helpers>
+            <mycalender_calender>
+                <class>MyCalender_Calender_Helper</class>
+            </mycalender_calender>
+        </helpers>
+        
+        <models>
+            
+            <!-- 
+            this is the Model alias referred to in install-0.0.1.php 
+            -->
+            <mycalender_calender>
+                <!-- 
+                this tells Magento where to find Models for this module 
+                -->
+                <class>MyCalender_Calender_Model</class>
+                
+                <!-- 
+                this tells Magento where to find Resource 
+                materials for this module 
+                -->
+      <resourceModel>mycalender_calender_resource</resourceModel>
+                
+            </mycalender_calender>
+            
+            <!-- 
+            this alias must match the above <resourceModel/> value 
+            -->
+            <mycalender_calender_resource>
+                <!-- 
+                this tells Magento where to find Resource
+                Models for this module 
+                -->
+                <class>MyCalender_Calender_Model_Resource</class>
+                
+                <entities>
+                    
+                    <!-- 
+                    this is the table alias referred to in install-0.0.1.php 
+                    -->
+                    <holiday>
+                        
+                        <!-- 
+                            this is the actual name of the DB table 
+                        -->
+                        <table>mycalender_calender_holiday</table>
+                        
+                    </holiday>
+                    
+                </entities>
+                
+            </mycalender_calender_resource>
+            
+        </models>
+        
+        <resources>
+            
+            <!-- 
+            this must match our folder name under the module sql folder 
+            -->
+            <mycalender_calender_setup>
+                
+                <setup>
+                    
+                    <!-- 
+                    which module do the setup 
+                    scripts in this location belong to 
+                    -->
+                    <module>MyCalender_Calender</module>
+                    
+                    <!-- 
+                    within each setup script, this 
+                    value determines the class of $this 
+                    -->
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                    
+                </setup>
+                
+                <!--
+                this is only relevant if you have multiple DB connections 
+                -->
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+                
+            </mycalender_calender_setup>
+            <mycalender_calender_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</mycalender_calender_write>
+			<mycalender_calender_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</mycalender_calender_read>
+        </resources>
+        
+    </global>
+    
+    <!-- add a router for access to our admin panel controller -->
+    <admin>
+        <routers>
+            
+            <!-- this is the alias for this router -->
+            <mycalender_calender_admin>
+                
+                <!-- 
+                basically inform Magento to use
+                admin scope for requests to this router 
+                -->
+                <use>admin</use>
+                
+                <args>
+                    <!--
+                    this tells Magento where to find 
+                    adminhtml controllers for this module 
+                    -->
+                   <module>MyCalender_Calender_Adminhtml</module>
+                    
+                    <!-- this is the term used in the actual URL -->
+                    <frontName>calender-admin</frontName>
+                </args>
+                
+            </mycalender_calender_admin>
+            
+        </routers>
+    </admin>
+    
+</config>

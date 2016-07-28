@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config>
+    <!-- We are defining a new menu item for the admin panel. -->
+    <menu>
+
+        <!--
+        First, create a top-level menu item, which will appear alongside CMS
+        -->
+        <mycalender_calender translate="title"
+                module="mycalender_calender">
+            <title>Calender</title>
+            <sort_order>75</sort_order>
+            <depends>
+                <module>MyCalender_Calender</module>
+            </depends>
+
+            <!-- Under this top-level menu, create a child menu item. -->
+            <children>
+                <holiday translate="title"
+                        module="mycalender_calender">
+                    <title>Manage Holidays</title>
+                    <sort_order>10</sort_order>
+
+                    <!--
+                    When the menu is clicked, take the user here.
+                    -->
+                 <action>mycalender_calender_admin/holiday</action>
+
+                </holiday>
+            </children>
+        </mycalender_calender>
+    </menu>
+
+    <!-- Define ACL for access to these menu items. -->
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <mycalender_calender translate="title"
+                            module="mycalender_calender">
+                        <title>Calender</title>
+                        <sort_order>75</sort_order>
+                        <children>
+                            <holiday translate="title"
+                                    module="mycalender_calender">
+                                <title>Manage Holidays</title>
+                            </holiday>
+                        </children>
+                    </mycalender_calender>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

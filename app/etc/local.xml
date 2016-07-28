@@ -61,8 +61,9 @@
                 <connection>
                     <host><![CDATA[localhost]]></host>
                     <username><![CDATA[root]]></username>
-                    <password><![CDATA[root]]></password>
+                    <password><![CDATA[504633]]></password>
                     <dbname><![CDATA[fabelio]]></dbname>
+      
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
                     <type><![CDATA[pdo_mysql]]></type>

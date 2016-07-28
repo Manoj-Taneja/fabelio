@@ -1,0 +1,1127 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+<!--<div class="panel panel-default panel-payment">-->
+<!--          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+<div class="col-sm-3 payment-label col-xs-8 ">
+               <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fa fa-check-circle openaccord"></i>  2. Alamat Pengiriman </a>
+</div>
+               <div class="col-sm-7 col-xs-8 payment-email openaccord">
+                 <label class=" mobile-address visible-xs hidden-lg- hidden-md">John Doe - Ji Mandala Raya AB2 no. 10, Nearby Bintaro Plaza - Tangerang Selatan, Banten - 081210102020</label>
+                 <label class="hidden-xs">John Doe</label>
+                  <label class="hidden-xs">Ji Mandala Raya AB2 no. 10, Nearby Bintaro Plaza - Tangerang Selatan, Banten - 081210102020</label>
+               </div>
+
+               <div class="col-sm-2 col-xs-4 payment-edit openaccord">
+
+               <button class="payment-edit-btn" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><img  src="images/card-edit.svg" Class="visible-xs hidden-lg hidden-md">  Edit</button>
+               </div>
+
+             </h4>
+          </div>-->
+
+          <div id="collapseTwo" class="panel-collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                <div class="accordion-inner-content">
+                  <div class="form-group">
+                    <label>Pilih alamat pengiriman Anda</label>
+                  </div>
+                  <div class="checkout-box-main" id="address_boxes">
+                      
+                <?php if (!$this->customerHasAddresses()): ?>
+                    <div class="checkout-box-inner">
+                      <div class="checkout-plus-icon-main">
+                      <div class="checkout-plus-icon" data-toggle="modal" data-target="#myAddress">
+                          <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
+                      </div>
+                    </div>
+                      <label>Tambah Alamat Baru </label>
+
+                    </div>
+                      
+                    <?php else: ?>
+                      <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+                      <?php foreach ($customer->getAddresses() as $address): ?>
+                      <?php $data = $address->toArray(); //echo "<pre>"; print_r($data); echo "</pre>"; ?>
+                      <div class="checkout-box-inner-address" id="inner_address_<?php echo $data['entity_id']; ?>">
+                        <div class="checkout-address-fill">
+                          <label><?php echo $address->getFirstname()." ".$address->getLastname();?></label>
+                          <img src="<?php echo $this->getSkinUrl('images/card-edit.svg');?>" width="25" data-toggle="modal" data-target="#myAddress-<?php echo $data['entity_id']; ?>"/>
+                          <img src="<?php echo $this->getSkinUrl('images/card-delete.svg');?>" class="delete_address" rel="<?php echo $data['entity_id']; ?>" width="25" rel="<?php echo $data['entity_id']; ?>"  data-toggle="modal" data-target="#deleteaddress" />
+                        </div>
+
+                        <div class="checkout-address-fill">
+                          <label><?php echo $data['street'];?>, <?php echo $data['region']; ?>, <?php echo $data['city']; ?></label>
+                        </div>
+                        <div class="checkout-address-fill">
+                          <label><?php echo $data['telephone'];?></label>
+                        </div>
+
+                    </div>
+                      
+                      <div class="modal fade checkout-address-main" id="myAddress-<?php echo $data['entity_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <form name="address_form_<?php echo $data['entity_id']; ?>" id="address_form_<?php echo $data['entity_id']; ?>" method="post" action="javascript://">
+                        <div class="modal-body">
+                          <button type="button" id="close-<?php echo $data['entity_id']; ?>" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h3>Masukkan alamat baru Anda!</h3>
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Name Depan</label>
+                              <input type="text" name="billing[firstname]" id="first_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan Nama Depan" value="<?php echo $data['firstname'];?>" />
+                          </div>
+                          <div class="checkout-form-popup">
+                              <label>Nama Belakang</label>
+                              <input type="text" name="billing[lastname]" id="last_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan nama Belakang" value="<?php echo $data['lastname'];?>" />
+                          </div>
+                          </div>
+                          
+                          
+                          
+                          
+                          
+                          <input type="hidden" name="billing[email]" id="billing:email"
+                                               value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
+                                               title="<?php echo $this->__('Email Address') ?>"
+                                               class="input-text validate-email required-entry format_method_email"/>
+
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Alamat</label>
+                              <input type="text" name="billing[street]" placeholder="Contoh: JI. Panglima Polim V no.52" value="<?php echo $data['street'];?>"/>
+                          </div>
+<!--                          <div class="checkout-form-popup">
+                              <label>Patokan</label>
+                              <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
+                          </div>-->
+<<<<<<< HEAD
+                          <div class="checkout-form-popup custom-select-icon" >
+=======
+                          <div class="checkout-form-popup custom-select-icon">
+>>>>>>> origin/FAB-144-3
+                              <label>Negara</label>
+<!--                              <input type="text" placeholder="Indonesia" />-->
+                              <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
+                            <?php if (count($_countries) > 0): ?>
+                                <select name="billing[country_id]" id="billing:country_id" class="validate-select">
+                                    <option value="">Please choose a country...</option>
+                                    <?php foreach($_countries as $_country): ?>
+                                        <option value="<?php echo $_country['value'] ?>" <?php if($data['country_id']==$_country['value']){ echo "selected='selected'";}?>>
+                                            <?php echo $_country['label'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php endif; ?> 
+                          </div>
+                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Provinsi</label>
+                              <?php
+                                    $regionCollection = Mage::getModel('directory/region_api')->items('ID');
+                              ?>
+                              <select name="billling[region_id]" id="region_<?php echo $data['entity_id']; ?>" >
+                                  <option value="">Pilih provinsi...</option>
+                                  <?php foreach($regionCollection as $region):?>
+                                  <?php $region_name_obj =  Mage::getModel('directory/region')->load($region['region_id']);?>
+<<<<<<< HEAD
+                                  <?php $region_name = $region_name_obj->getName();?>
+=======
+                                  <?php $region_name = $region_name_obj->getName(); ?>
+>>>>>>> origin/FAB-144-3
+                                  <option value="<?php echo $region['region_id']; ?>"<?php if($region['region_id']==$data['region_id']):?>selected="selected"<?php endif; ?>><?php echo $region_name; ?></option>
+                                  <?php endforeach;?>
+                              </select>
+<!--                              <input type="text" name="billing[region]" id="region_<?php echo $data['entity_id']; ?>" placeholder="Provinsi" value="<?php echo $data['region']; ?>" />-->
+                          </div>
+                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Kota</label>
+                              <input type="text" name="billing[city]" id="city_<?php echo $data['entity_id']; ?>" placeholder="Pilih Kota" value="<?php echo $data['city']; ?>" />
+                          </div>
+                          </div>
+
+                          <div class="checkout-form-popup-main">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Nomor HP</label>
+                              <input type="text" placeholder="Contoh: 081212341234" name="billing[telephone]" id="phone_<?php echo $data['entity_id']; ?>" value="<?php echo $data['telephone']; ?>"/>
+                          </div>
+
+                          </div>
+
+
+
+                      </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" id="address_no_<?php echo $data['entity_id']; ?>" value="<?php echo $data['entity_id']; ?>" />
+                            <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+                            <input type="hidden" id="billing:address_id" value="<?php echo $data['entity_id']; ?>" name="billing[address_id]">
+                            <input type="hidden" name="billing[use_for_shipping]" value="1" />
+                        <input name="context" type="hidden" value="checkout" />
+                          <button type="button" class="btn btn-default save-address" rel="<?php echo $data['entity_id']; ?>" >Simpan Alamat Ini</button>
+                        </div>
+                          </form>
+                      </div>
+                    </div>
+                  </div>
+                      
+                      
+                      <?php endforeach; ?>
+                    <div class="checkout-box-inner">
+                      <div class="checkout-plus-icon-main">
+                      <div class="checkout-plus-icon checkout-plus-icon-new" data-toggle="modal" data-target="#myAddress">
+                          <img id="add_new_address" src="<?php echo $this->getSkinUrl('images/icon-add-white.svg');?>" />
+                      </div>
+                    </div>
+                      <label>Tambah Alamat Baru </label>
+
+                    </div>
+                    <?php endif; ?>
+                  </div>
+
+                  <!-- Modal -->
+                  <div class="modal fade checkout-address-main" id="myAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                           <form name="address_form" id="address_form" method="post" action="javascript://">
+                        <div class="modal-body">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h3>Masukkan alamat baru Anda!</h3>
+                          <div class="checkout-form-popup-main" id="name-div">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Name Depan</label>
+                              <input name = "billing[firstname]" id="first_name" type="text" placeholder="Masukkan Nama Depan" />
+                          </div>
+                          <div class="checkout-form-popup">
+                              <label>Nama Belakang</label>
+                              <input name = "billing[lastname]" id="last_name" type="text" placeholder="Masukkan Nama Belakang" />
+                          </div>
+                          </div>
+                          <p id="name-error-msg" class="error-message"></p>
+                          
+                          
+                          
+                          <div class="checkout-form-popup-main" style="display:none;">
+
+
+                         
+                          <div class="checkout-form-popup">
+                              <label>Email</label>
+                              <input type="text" name="billing[email]" id="billing_email"
+                                               value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
+                                               title="<?php echo $this->__('Email Address') ?>"
+                                               class="input-text validate-email required-entry format_method_email" />
+                          </div>
+                          </div>
+                          
+                          
+                          
+                           
+
+                          <div class="checkout-form-popup-main" id="address-div">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Alamat</label>
+                              <input type="text" placeholder="Contoh: JI. Panglima Polim V no. 52" name="billing[street]" id="street" />
+                          </div>
+<!--                          <div class="checkout-form-popup">
+                              <label>Patokan</label>
+                              <input type="text" placeholder="(Optional) Contoh:Seberang lapangan basket" />
+                          </div>-->
+                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Negara</label>
+                            <?php $_countries = Mage::getResourceModel('directory/country_collection')->loadByStore()->toOptionArray(false) ?>
+                            <?php if (count($_countries) > 0): ?>
+<!--                                <select name="billing[country_id]" id="country_id" class="validate-select">
+                                    <option value="">Please choose a country...</option>
+                                    <?php foreach($_countries as $_country): ?>
+                                        <option value="<?php echo $_country['value'] ?>" >
+                                            <?php echo $_country['label'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>-->
+                              <?php echo $this->getCountryHtmlSelect('billing') ?>
+                            <?php endif; ?> 
+                          </div>
+                          <div class="checkout-form-popup custom-select-icon">
+                              <label>Provinsi</label>
+                              <input type="text" placeholder="Provinsi"  name="billing[region]" id="region" />
+                              <select id="billing_region_id" name="billing[region_id]"
+                                            title="<?php echo $this->__('Province') ?>" class="validate-select"
+                                            style="display:none;">
+                                        <option
+                                            value=""><?php echo $this->__('Pilih provinsi...') ?></option>
+                                    </select>
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        $('billing_region_id').setAttribute('defaultValue', "<?php echo $this->getAddress()->getRegionId() ?>");
+                                        //]]>
+                                    </script>
+                          </div>
+                          <div class="checkout-form-popup">
+                              <label>Kota</label>
+                               <input type="text" name="billing[city]" id="city" placeholder="Phili kota..." />
+                          </div>
+                          </div>
+                          <p id="address-error-msg" class="error-message"></p>
+                          <div class="checkout-form-popup-main" id="phone-div">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Nomor HP</label>
+                             <input type="text" placeholder="Contoh: 081212341234" name="billing[telephone]" id="phone" />
+                          </div>
+
+                          </div>
+                          <p id="phone-error-msg" class="error-message"></p>
+                          
+                          <div class="checkout-form-popup-main" style="display:none;">
+
+
+                          <div class="checkout-form-popup">
+                              <label>Create Password</label>
+                              <input type="password" name="billing[customer_password]"
+                                               id="billing_customer_password"
+                                               title="<?php echo $this->__('Password') ?>"
+                                               class="input-text " value="123456"/>
+                          </div>
+
+                          </div>
+                          
+                          <div class="checkout-form-popup-main" style="display:none;">
+                           <div class="checkout-form-popup">
+                              <label>Confirm Password</label>
+                              <input type="password" name="billing[confirm_password]"
+                                               title="<?php echo $this->__('Confirm Password') ?>"
+                                               id="billing_confirm_password"
+                                               class="input-text " value="123456"/>
+                          </div>
+
+                          </div>
+                          
+                          
+
+
+
+                      </div>
+                        <div class="modal-footer">
+                            <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" name="form_key">
+                            <input type="hidden" name="billing[use_for_shipping]" value="1" />
+                            <input type="hidden" name="billing[entity_id]" value="1" id="billing_entity_id" />
+                          <button type="button" class="btn btn-default pass-disabled" id="new_address">Simpan Alamat Ini</button>
+                        </div>
+                           </form>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- Modal delete address -->
+                  <div class="modal fade checkout-delete-main" id="deleteaddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-sm" role="document">
+                      <div class="modal-content">
+
+                        <div class="modal-body">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <img src="<?php echo $this->getSkinUrl('images/icon-home.svg');?>" />
+                        <img src="<?php echo $this->getSkinUrl('images/icon-arrow-right.svg');?>" width="18" style="margin: 18px 5px 0;" />
+                          <img src="<?php echo $this->getSkinUrl('images/icon-delete.svg');?>" />
+                          <label>Apakah Anda yakin ingin menghapus alamat Lni?</label>
+                          <h4>Batal</h4>
+                      </div>
+                        <div class="modal-footer">
+                          <button type="button" id="confirm_delete" rel="" class="btn btn-default " >Hapus</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+             </div>
+          </div>
+<!--        </div>-->
+
+<form id="co-billing-form" action="">
+    <fieldset>
+        <ul class="form-list">
+            
+            <li id="billing-new-address-form" style="display:none;">
+                <fieldset>
+                    <input type="hidden" name="billing[address_id]" value="<?php echo $this->getAddress()->getId() ?>"
+                           id="billing:address_id"/>
+                    <input type="hidden" name="billing_method" value="" id="billing_method" />
+                      <input type="hidden" name="guest_email" value="" id="guest_email" />
+                    <ul>
+                        <li class="fields">
+                            <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress()->getFirstname() ? $this->getAddress() : $this->getQuote()->getCustomer())->setForceUseCustomerRequiredAttributes(!$this->isCustomerLoggedIn())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+                        </li>
+                        <li class="fields">
+                            <!--<div class="field">
+                                <label for="billing:company"><?php echo $this->__('Company') ?></label>
+
+                                <div class="input-box">
+                                    <input type="text" id="billing:company" name="billing[company]"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>"
+                                           title="<?php echo $this->__('Company') ?>"
+                                           class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>"/>
+                                </div>
+                            </div>-->
+                            <?php if (!$this->isCustomerLoggedIn()): ?>
+                                <div class="field">
+                                    <label for="billing:email"
+                                           class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
+
+                                    <div class="input-box" style="display:none;">
+                                        <input type="text" name="billing[email]" id="billing:email"
+                                               value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>"
+                                               title="<?php echo $this->__('Email Address') ?>"
+                                               class="input-text validate-email required-entry format_method_email"/>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </li>
+                        <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+                        <li class="wide">
+                            <label for="billing:street1" class="required"><em>*</em><?php echo $this->__('Address') ?>
+                            </label>
+
+                            <div class="input-box">
+                                <input type="text" title="<?php echo $this->__('Street Address') ?>"
+                                       name="billing[street][]" id="billing:street1"
+                                       value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>"
+                                       class="input-text <?php echo $_streetValidationClass ?> format_method_street1"/>
+                            </div>
+                        </li>
+                        <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+                            <li class="wide">
+                                <div class="input-box">
+                                    <input type="text" title="<?php echo $this->__('Street Address %s', $_i) ?>"
+                                           name="billing[street][]" id="billing:street<?php echo $_i ?>"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>"
+                                           class="input-text <?php echo $_streetValidationClass ?>"/>
+                                </div>
+                            </li>
+                        <?php endfor; ?>
+                        <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
+                            <li class="wide">
+                                <label for="billing:vat_id"><?php echo $this->__('VAT Number') ?></label>
+
+                                <div class="input-box">
+                                    <input type="text" id="billing:vat_id" name="billing[vat_id]"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>"
+                                           title="<?php echo $this->__('VAT Number') ?>"
+                                           class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>"/>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                        <li class="fields">
+                            <div class="field">
+                                <label for="billing:country_id"
+                                       class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+
+                                <div class="input-box">
+                                    <?php echo $this->getCountryHtmlSelect('billing') ?>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="billing:region_id"
+                                       class="required"><em>*</em><?php echo $this->__('Province') ?></label>
+
+                                <div class="input-box">
+                                    <select id="billing:region_id" name="billing[region_id]"
+                                            title="<?php echo $this->__('Province') ?>" class="validate-select"
+                                            style="display:none;">
+                                        <option
+                                            value=""><?php echo $this->__('Please select province') ?></option>
+                                    </select>
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        $('billing:region_id').setAttribute('defaultValue', "<?php echo $this->getAddress()->getRegionId() ?>");
+                                        //]]>
+                                    </script>
+                                    <input type="text" id="billing:region" name="billing[region]"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"
+                                           title="<?php echo $this->__('Province') ?>"
+                                           class="input-text format_method_region <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>"
+                                           />
+                                </div>
+                            </div>
+                        </li>
+                        <li class="fields">
+                            <div class="field">
+                                <label for="billing:city" class="required"><em>*</em><?php echo $this->__('City') ?>
+                                </label>
+
+                                <div class="input-box">
+                                    <input type="text" title="<?php echo $this->__('City') ?>" name="billing[city]"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"
+                                           class="input-text format_method_city <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>"
+                                           id="billing:city"/>
+                                </div>
+                            </div>
+                            <!--<div class="field">
+                                <label for="billing:postcode"
+                                       class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+
+                                <div class="input-box">
+                                    <input type="text" title="<?php echo $this->__('Zip/Postal Code') ?>"
+                                           name="billing[postcode]" id="billing:postcode"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>"
+                                           class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>"/>
+                                </div>
+                            </div>-->
+                            <div class="field">
+                                <label for="billing:telephone"
+                                       class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+
+                                <div class="input-box">
+                                    <input type="text" name="billing[telephone]"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
+                                           title="<?php echo $this->__('Telephone') ?>"
+                                           class="input-text format_method_telephone <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
+                                           id="billing:telephone"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="fields">
+                            <!--<div class="field">
+                                <label for="billing:fax"><?php echo $this->__('Fax') ?></label>
+
+                                <div class="input-box">
+                                    <input type="text" name="billing[fax]"
+                                           value="<?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>"
+                                           title="<?php echo $this->__('Fax') ?>"
+                                           class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>"
+                                           id="billing:fax"/>
+                                </div>
+                            </div>-->
+                        </li>
+                        <?php if (!$this->isCustomerLoggedIn()): ?>
+
+                            <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
+                            <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
+                            <?php if ($_dob->isEnabled() || $_gender->isEnabled()): ?>
+                                <li class="fields">
+                                    <?php if ($_dob->isEnabled()): ?>
+                                        <div class="field">
+                                            <?php echo $_dob->setDate($this->getQuote()->getCustomerDob())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($_gender->isEnabled()): ?>
+                                        <div class="field">
+                                            <?php echo $_gender->setGender($this->getQuote()->getCustomerGender())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+                                        </div>
+                                    <?php endif ?>
+                                </li>
+                            <?php endif ?>
+
+                            <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+                            <?php if ($_taxvat->isEnabled()): ?>
+                                <li>
+                                    <?php echo $_taxvat->setTaxvat($this->getQuote()->getCustomerTaxvat())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+                                </li>
+                            <?php endif ?>
+
+                            <li class="fields" id="register-customer-password" style="display:none;">
+                                <div class="field">
+                                    <label for="billing:customer_password"
+                                           class="required"><em>*</em><?php echo $this->__('Create Password') ?></label>
+
+                                    <div class="input-box">
+                                        <input type="password" name="billing[customer_password]"
+                                               id="billing:customer_password"
+                                               title="<?php echo $this->__('Password') ?>"
+                                               class="input-text " value="123456"/>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="billing:confirm_password"
+                                           class="required"><em>*</em><?php echo $this->__('Confirm Password') ?>
+                                    </label>
+
+                                    <div class="input-box">
+                                        <input type="password" name="billing[confirm_password]"
+                                               title="<?php echo $this->__('Confirm Password') ?>"
+                                               id="billing:confirm_password"
+                                               class="input-text " value="123456"/>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()): ?>
+                            <li class="control">
+                                <input type="checkbox" name="billing[save_in_address_book]" value="1"
+                                       title="<?php echo $this->__('Save in address book') ?>"
+                                       id="billing:save_in_address_book"
+                                       onchange="if(window.shipping) shipping.setSameAsBilling(false);"<?php if ($this->getAddress()->getSaveInAddressBook()): ?> checked="checked"<?php endif; ?>
+                                       class="checkbox"/><label
+                                    for="billing:save_in_address_book"><?php echo $this->__('Save in address book') ?></label>
+                            </li>
+                        <?php else: ?>
+                            <li class="no-display"><input type="hidden" name="billing[save_in_address_book]" value="1"/>
+                            </li>
+                        <?php endif; ?>
+                        <?php echo $this->getChildHtml('form.additional.info'); ?>
+                    </ul>
+                </fieldset>
+            </li>
+            <?php /* Extensions placeholder */ ?>
+            <?php echo $this->getChildHtml('checkout.onepage.billing.extra') ?>
+            <?php if ($this->canShip()): ?>
+                <li class="control" id="use_for_shipping_yes">
+                    <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_yes"
+                           value="1"<?php if ($this->isUseBillingAddressForShipping()) { ?> checked="checked"<?php } ?>
+                           title="<?php echo $this->__('Ship to this address') ?>"
+                           onclick="$('shipping:same_as_billing').checked = true;" class="radio"/><label
+                        for="billing:use_for_shipping_yes"><?php echo $this->__('Ship to this address') ?></label></li>
+                <li class="control" id="use_for_shipping_no">
+                    <input type="radio" name="billing[use_for_shipping]" id="billing:use_for_shipping_no"
+                           value="0"<?php if (!$this->isUseBillingAddressForShipping()) { ?> checked="checked"<?php } ?>
+                           title="<?php echo $this->__('Ship to different address') ?>"
+                           onclick="$('shipping:same_as_billing').checked = false;" class="radio"/><label
+                        for="billing:use_for_shipping_no"><?php echo $this->__('Ship to different address') ?></label>
+                </li>
+            <?php endif; ?>
+        </ul>
+        <?php if (!$this->canShip()): ?>
+            <input type="hidden" name="billing[use_for_shipping]" value="1"/>
+        <?php endif; ?>
+        <div class="buttons-set address-cont-btn" id="billing-buttons-container">
+<!--            <p class="required"><?php // echo $this->__('* Required Fields') ?></p>-->
+            <button type="button" title="<?php echo $this->__('Continue') ?>" class="button" id="billing_save" onclick="beforeBillSave()">
+                <span><span><?php echo $this->__('Lanjutkan') ?></span></span></button>
+<!--        <span class="please-wait" id="billing-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>"
+                 alt="<?php echo $this->__('Loading next step...') ?>"
+                 title="<?php echo $this->__('Loading next step...') ?>"
+                 class="v-middle"/> <?php echo $this->__('Loading next step...') ?>
+        </span>-->
+        <div id="billing-please-wait" style="display: none;">
+            <div class="background-overlay"></div>
+                <p class="loader" id="loading_mask_loader">
+                    <i class="ajax-loader large animate-spin"></i>
+                </p>
+        </div>
+        </div>
+    </fieldset>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
+    var billingForm = new VarienForm('co-billing-form');
+
+    billingForm.setElementsRelation('billing:country_id', 'billing:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select Province...') ?>');
+    $('billing-address-select') && billing.newAddress(!$('billing-address-select').value);
+
+    var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing:postcode');
+    
+     var billingRegionUpdater = new RegionUpdater('billing:country_id', 'region', 'billing_region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing_postcode');
+    
+    
+    CITIES_ACTION = "<?php echo $this->getUrl('citydropdown/index/cities',array('_secure'=>true)); ?>";
+    //]]>
+</script>
+<script type="text/javascript">
+    //<![CDATA[
+    var normalImput = '<input type="text" class=" input-text required-entry absolute-advice bil1" title="City" value="" id="billing:city" name="billing[city]" autocomplete="off">';
+    var normalImputShip = '<input type="text" class=" input-text required-entry absolute-advice ship1" title="City" value="" id="shipping:city" name="shipping[city]" autocomplete="off">';
+
+   
+
+    function beforeBillSave() {
+        var selectedCity = false;
+        var action = CITIES_ACTION;
+        var selectCountry = $('billing:country_id').value;
+        var stateId = $('billing:region').value;
+        if (document.getElementById('billing:use_for_shipping_yes').checked) {
+            getAjaxReqestShip(action, selectCountry, stateId, normalImputShip,selectedCity)
+        } else {
+            $('shipping:city').replace(normalImputShip);
+        }
+
+        billing.save()
+    }
+    //]]>
+    jQuery(document).ready(function(){
+        //jQuery('div#address_boxes div.checkout-box-inner-address:first-child').trigger('click');
+        //jQuery(".save-address").click(function(){
+        <?php if($this->isCustomerLoggedIn()):?>
+        jQuery(document).on('click', '.save-address', function(){
+            var address_id = jQuery(this).attr('rel');
+            
+            var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+           
+            var address_form_data = jQuery('#address_form_'+address_id).serialize();
+             jQuery.ajax({
+                    url:address_save_url,
+                    type:'POST',
+                    data:address_form_data,
+                    success: function(result){
+                        var result_data = jQuery.parseJSON(result);
+                        if(result_data.success==true){
+                           // jQuery('#address_boxes').html(result_data.block_html);
+                            //jQuery('#myAddress-'+address_id).hide();
+                            
+                            console.log('#close-'+address_id);
+                           
+                            jQuery('#close-'+address_id).trigger( "click" );
+                            
+                           // jQuery('.modal-backdrop').fadeOut();
+                            setTimeout(function(){ 
+                               jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
+                         // jQuery('#address_boxes').html(result_data.block_html);
+                           
+                        }else{
+                            alert(result_data.message)
+                        }
+                      //  console.log(" !! Hi !!");
+//                        var result_data = $.parseJSON(result);
+//                        if(result_data.error==true){
+//                            alert(result_data.message);
+//                        }else{
+//                            alert(result_data.message);
+//                            jQuery('.forgotpassord-checkout').hide();
+//                            jQuery('#password_recover').trigger('reset');
+//                        }
+                        //$('#checkout-step-billing').show();
+                        //$('#checkout-step-login').hide();
+                    }
+               });
+              
+          //  alert(jQuery(this).attr('rel'))
+        });
+         <?php endif; ?> 
+         
+        jQuery(document).on('click', '#new_address', function($){
+            var error = 0;
+           if(jQuery('#first_name').val()==''){
+               jQuery('#name-div').addClass('wrong-pass');
+               jQuery('#name-error-msg').html('Enter first name');
+               //return false;
+               error = 1;
+           } 
+           if(jQuery('#last_name').val()==''){
+               jQuery('#name-div').addClass('wrong-pass');
+               jQuery('#name-error-msg').html('Enter last name');
+               error = 1;
+           }
+           if(jQuery('#street').val()==''){
+               jQuery('#address-div').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Enter street');
+               error = 1;
+           }
+           if(jQuery('#country_id').val()==''){
+               jQuery('#address-div').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Select country');
+               error = 1;
+           }
+           if(jQuery('#billing_region_id').val()==''){
+               jQuery('#address-div').addClass('wrong-pass');
+               jQuery('#address-error-msg').html('Select region');
+               error = 1;
+           }
+           if(jQuery('#city').val()==''){
+               jQuery('#address-error-msg').html('Enter city');
+               error = 1;
+           }
+           if(jQuery('#phone').val()==''){
+               jQuery('#phone-div').addClass('wrong-pass');
+               jQuery('#phone-error-msg').html('Enter phone number');
+               error = 1;
+           }
+           if(error==1){
+               return false;
+           }
+           
+           jQuery('#address_form').submit();
+           var address_form_data = jQuery('#address_form').serialize();
+           //var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+           
+           if(jQuery('#billing_method').val()==""){
+               var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+               jQuery('#loading-mask').show();
+                jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 //console.log('#close-'+address_id);
+                                  jQuery('#address_form')[0].reset();
+                                 jQuery('.close').trigger( "click" );
+                                 jQuery('#loading-mask').hide();
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 setTimeout(function(){ 
+                                    jQuery('#address_boxes').html(result_data.block_html);
+                                 }, 500);
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+           }else{
+               var address_save_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveBillingAjax";
+               jQuery('#loading-mask').show();
+              //document.getElementById('billing:street1').value = jQuery('#street').val();
+            /*  console.log(jQuery('#street').val());
+               $$('billing:firstname').value = jQuery('#first_name').val();               
+               $$('billing:lastname').value = jQuery('#last_name').val();
+               $$('billing:email').value = jQuery('#login-email').val();
+               $$('billing:street1').value = jQuery('#street').val();
+               $$('billing:region').value = jQuery('#region').val();
+               $$('billing:city').value = jQuery('#city').val();
+               $$('billing:telephone').value = jQuery('#phone').val();*/
+               jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                // console.log(result_data);
+                                 jQuery("input[title='First Name']").val(result_data.firstname);
+                                 jQuery("input[title='Last Name']").val(result_data.lastname);
+                                //$$('firstname').value = result_data.firstname;
+                                $$('billing:lastname').value = result_data.lastname;
+                                jQuery('.format_method_street1').val(result_data.street);
+                                jQuery('format_method_email').val(jQuery('#login-email').val());
+                               // $$('.format_method_telephone').value = result_data.telephone;
+                               // $$('billing:address_id').value = result_data.entity_id;
+                                jQuery('.format_method_region').val(result_data.region);
+                                jQuery('.format_method_city').val(result_data.city);
+                                jQuery('.format_method_telephone').val(result_data.telephone);
+                                jQuery('#billing_method').val('method=guest');
+                                 jQuery('.close').trigger( "click" );
+                                 //jQuery('#billing_save').trigger('click');
+                                 var entity_id_incr = result_data.entity_id;
+                                 entity_id_incr = parseInt(entity_id_incr);
+                                 entity_id_incr = entity_id_incr + 1;
+                                 jQuery('#billing_entity_id').val(entity_id_incr);
+                                 jQuery('#address_form')[0].reset();
+                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
+                                jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                                jQuery('#mobile-selected-address-address').html(result_data.firstname+" "+result_data.lastname+" "+result_data.street+", "+result_data.region+","+result_data.city);
+                                
+                               setTimeout(function(){ 
+                               jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
+                                jQuery('#loading-mask').hide();    
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+                                
+               
+           }
+        });
+        
+        
+        
+        
+        jQuery(document).on('click', '#new_address_1', function(){
+        
+            var error = 0;
+           if(jQuery('#first_name_1').val()==''){
+               jQuery('#first_name').addClass('wrong-pass');
+               //return false;
+               error = 1;
+           } 
+           if(jQuery('#last_name_1').val()==''){
+               jQuery('#last_name').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#street_1').val()==''){
+               jQuery('#street').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#country_id_1').val()==''){
+               jQuery('#country_id').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#region_1').val()==''){
+               jQuery('#region').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#city_1').val()==''){
+               jQuery('#city').addClass('wrong-pass');
+               error = 1;
+           }
+           if(jQuery('#phone_1').val()==''){
+               jQuery('#phone').addClass('wrong-pass');
+               error = 1;
+           }
+           
+           if(error==1){
+               return false;
+           }
+           jQuery('#loading-mask').show();
+           jQuery('#address_form_1').submit();
+           var address_form_data = jQuery('#address_form_1').serialize();
+           //var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+           
+           if(jQuery('#billing_method_1').val()==""){
+               var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/addressFormPost";
+                jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 //console.log('#close-'+address_id);
+                                 
+                                 jQuery('#address_form')[0].reset();
+                                 jQuery('.close').trigger( "click" );
+                                 
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 setTimeout(function(){ 
+                                    jQuery('#address_boxes').html(result_data.block_html);
+                                 }, 500);
+                                 jQuery('#loading-mask').hide();
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+           }else{
+               
+               var address_save_url = <?php Mage::getBaseUrl();?>"/checkout/onepage/saveBillingAjax";
+              //document.getElementById('billing:street1').value = jQuery('#street').val();
+            /*  console.log(jQuery('#street').val());
+               $$('billing:firstname').value = jQuery('#first_name').val();               
+               $$('billing:lastname').value = jQuery('#last_name').val();
+               $$('billing:email').value = jQuery('#login-email').val();
+               $$('billing:street1').value = jQuery('#street').val();
+               $$('billing:region').value = jQuery('#region').val();
+               $$('billing:city').value = jQuery('#city').val();
+               $$('billing:telephone').value = jQuery('#phone').val();*/
+               jQuery.ajax({
+                         url:address_save_url,
+                         type:'POST',
+                         data:address_form_data,
+                         success: function(result){
+                             var result_data = jQuery.parseJSON(result);
+                             if(result_data.success==true){
+                                // jQuery('#address_boxes').html(result_data.block_html);
+                                 //jQuery('#myAddress-'+address_id).hide();
+
+                                 console.log(result_data);
+                                 jQuery("input[title='First Name']").val(result_data.firstname);
+                                 jQuery("input[title='Last Name']").val(result_data.lastname);
+                                //$$('firstname').value = result_data.firstname;
+                                $$('billing:lastname').value = result_data.lastname;
+                                jQuery('.format_method_street1').val(result_data.street);
+                                jQuery('format_method_email').val(jQuery('#login-email').val());
+                               // $$('.format_method_telephone').value = result_data.telephone;
+                               // $$('billing:address_id').value = result_data.entity_id;
+                                jQuery('.format_method_region').val(result_data.region);
+                                jQuery('.format_method_city').val(result_data.city);
+                                jQuery('.format_method_telephone').val(result_data.telephone);
+                                jQuery('#billing_method').val('method=guest');
+                                jQuery('#loading-mask').hide();
+                                 jQuery('.close').trigger( "click" );
+                                 //jQuery('#billing_save').trigger('click');
+                                 var entity_id_incr = result_data.entity_id;
+                                 entity_id_incr = parseInt(entity_id_incr);
+                                 entity_id_incr = entity_id_incr + 1;
+                                 jQuery('#billing_entity_id').val(entity_id_incr);
+                                 jQuery('#address_form')[0].reset();
+                                 jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
+                                jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                               setTimeout(function(){ 
+                               jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
+                                    
+                                // jQuery('.modal-backdrop').fadeOut();
+                                 
+                              // jQuery('#address_boxes').html(result_data.block_html);
+
+                             }else{
+                                 alert(result_data.message);
+                             }
+
+                         }
+                    });
+                                
+               
+           }
+        });
+        
+        
+        
+        
+        jQuery(document).on('click', '.delete_address', function(){
+          // jQuery(this).attr('rel');
+          console.log("gcvzxc : "+jQuery(this).attr('rel'));
+           jQuery('#confirm_delete').attr('rel',jQuery(this).attr('rel'));
+          // jQuery('#confirm_delete').click(function(){
+          jQuery(document).on('click', '#confirm_delete', function(){
+             // console.log("Attr :"+jQuery(this).attr('rel')); 
+              var address_form_data = "id="+jQuery(this).attr('rel');
+              jQuery('#loading-mask').show();
+              var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/deleteAjax";
+              jQuery.ajax({
+                    url:address_save_url,
+                    type:'POST',
+                    data:address_form_data,
+                    success: function(result){
+                        var result_data = jQuery.parseJSON(result);
+                        if(result_data.success==true){
+                           // jQuery('#address_boxes').html(result_data.block_html);
+                            //jQuery('#myAddress-'+address_id).hide();
+                            
+                            //console.log('#close-'+address_id);
+                           jQuery('#loading-mask').hide();
+                            jQuery('.close').trigger( "click" );
+                            
+                           // jQuery('.modal-backdrop').fadeOut();
+                            setTimeout(function(){ 
+                               jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
+                         // jQuery('#address_boxes').html(result_data.block_html);
+                           
+                        }else{
+                            alert(result_data.message)
+                        }
+                     
+                    }
+               });
+           });
+        });
+        
+        jQuery(document).on('click', '.checkout-box-inner-address', function(){
+            var elem_id = jQuery(this).attr('id');
+            jQuery(this).toggleClass('address-selected').siblings().removeClass('address-selected');
+            //jQuery(this).toggleClass('address-selected');
+            var element_id_array = elem_id.split("_");
+            var address_id = element_id_array[2];
+            var address_form_data = "id="+address_id;
+            <?php $customer = Mage::getSingleton('customer/session')->getCustomer(); ?>
+            <?php if($this->isCustomerLoggedIn()): ?>
+            var address_save_url = <?php Mage::getBaseUrl();?>"/customer/address/getAddressAjax";
+            <?php else: ?>
+                jQuery(this).addClass('address-selected');
+                return false;
+                
+            <?php endif; ?>
+            //console.log("Address Id : "+address_id);
+            
+            if(jQuery(this).hasClass('address-selected')){
+                jQuery('#loading-mask').show();
+            jQuery.ajax({
+                    url:address_save_url,
+                    type:'POST',
+                    data:address_form_data,
+                    success: function(result){
+                        var result_data = jQuery.parseJSON(result);
+                        if(result_data.success==true){
+//                            jQuery('#billing:firstname').val(result_data.firstname);
+//                            jQuery('#billing:lastname').val(result_data.firstname);
+
+                                $('billing:firstname').value = result_data.firstname;
+                                $('billing:lastname').value = result_data.lastname;
+                                $('billing:street1').value = result_data.street;
+                                $('billing:telephone').value = result_data.telephone;
+                                $('billing:address_id').value = result_data.entity_id;
+                                $('billing:region').value=result_data.region;
+                                $('billing:city').value=result_data.city;
+                                jQuery('#confirm_delete').attr('rel',result_data.entity_id);
+                                jQuery('#loading-mask').hide();
+                                jQuery('#selected-address-name').html(result_data.firstname+" "+result_data.lastname);
+                                jQuery('#selected-address-address').html(result_data.street+", "+result_data.region+","+result_data.city);
+                                jQuery('#mobile-selected-address-address').html(result_data.firstname+" "+result_data.lastname+" "+result_data.street+", "+result_data.region+","+result_data.city);
+                           // jQuery('#address_boxes').html(result_data.block_html);
+                            //jQuery('#myAddress-'+address_id).hide();
+                            
+                            //console.log('#close-'+address_id);
+                           
+                           // jQuery('.close').trigger( "click" );
+                            
+                           // jQuery('.modal-backdrop').fadeOut();
+                            setTimeout(function(){ 
+                             //  jQuery('#address_boxes').html(result_data.block_html);
+                            }, 500);
+                         // jQuery('#address_boxes').html(result_data.block_html);
+                           
+                        }else{
+                            alert(result_data.message);
+                            jQuery('#loading-mask').hide();
+                        }
+                     
+                    }
+               });
+           }
+        });
+        
+        jQuery('#address_form').find('.close').click(function(){
+            jQuery('#name-div').removeClass('wrong-pass');
+            jQuery('#name-error-msg').html('');
+            jQuery('#address-div').removeClass('wrong-pass');
+            jQuery('#address-error-msg').html('');
+            jQuery('#phone-div').removeClass('wrong-pass');
+            jQuery('#phone-error-msg').html('');
+            
+        });
+        <?php if (!$this->customerHasAddresses() && $this->isCustomerLoggedIn()): ?>
+        jQuery('#add_new_address').trigger('click');
+        <?php endif;?>
+    });
+</script>

@@ -333,9 +333,13 @@ $_msrp= $_product->getMsrp();
                 </span>
                   <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                   <p class="old-price rrp-price">
-                  <span class="rrp-price-label price-label"><?php echo $this->__('MSRP:') ?></span>
-                    <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
-                    <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
+                  <span class="rrp-price-label price-label rrp-lat"><?php echo $this->__('MSRP:') ?></span>
+                    <span class="price msrp-price msrp-lat" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php echo number_format(''.intval($_msrp)); ?>
+                    <?php else: ?>
+                <p class="old-price rrp-price">
+                  <span class="rrp-price-label price-label rrp-lat">&nbsp;</span>
+                    <span class="price msrp-price msrp-lat" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="text-decoration: none;">&nbsp;
                   <?php endif; ?>
                 </span>  
                 
@@ -556,7 +560,7 @@ $_msrp= $_product->getMsrp();
                 <?php } ?>
             </p>
                 <!--<p class="special-price">
-                <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:16px !important; font-weight:500 !important; <?php } ?>">
+                <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="color:#D14836 !important; <?php if(Mage::registry('current_category')){?>font-size:15px !important; font-weight:500 !important; <?php } ?>">
                     <?php echo $_coreHelper->formatPrice($_finalPrice, false) ?>
                 </span>
                 </p>-->
@@ -615,24 +619,38 @@ $_msrp= $_product->getMsrp();
                 </p>
             <?php } 
             else{ ?>
-                <p class="old-price">
+                <div class="dis-div">
+                <p class="old-price old-price-lat">
             <span class="price original-price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" <?php if(Mage::getBlockSingleton('page/html_header')->getIsHomePage()){?> style="margin-bottom:-8px !important;"<?php } ?> >
                     <?php echo $_coreHelper->formatPrice($_regularPrice, false) ?>
                 </span>
                 <?php if($_finalPrice<$_price){ ?>
-                <span class="price-label special-price-label"><?php echo $this->__('Special Price:') ?></span>
+                <span class="price-label special-price-label special-price-label-lat"><?php echo $this->__('Special Price:') ?></span>
+                <div class="price-discount-percentage price-discount-percentage-lat">
+                <?php
+                  $_finalPrice=$_product->getFinalPrice();
+                  $_price=$_product->getPrice();
+                  if($_finalPrice < $_price){
+                    $_savePercent = 100 - round(($_finalPrice / $_price)*100);
+                    echo '<span class="perc-text perc-text-lat">'.$_savePercent.'</span>';
+                  }
+                ?>
+                </div>
+                </div>
+    
+                 
                 <?php } ?>
-            </p>
+          
                 <p class="special-price">
-                <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="color:#D70306 !important; <?php if(Mage::registry('current_category')){?>font-size:16px !important; font-weight:500 !important; <?php } ?>">
+                <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="color:#D14836 !important; <?php if(Mage::registry('current_category')){?>font-size:15px !important; font-weight:500 !important; <?php } ?>">
                     <?php echo $_coreHelper->formatPrice($_finalPrice, false) ?>
                 </span>
                 </p>
                   <?php if ($_msrp !== NULL && $_msrp>$_price): ?>
                   <p class="old-price rrp-price">
-                  <span class="rrp-price-label price-label"><?php echo rtrim($this->__('MSRP:'),":") ?></span>
-                    <span class="price msrp-price" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
-                    <?php echo "Rp ".number_format(''.intval($_msrp)); ?>
+                  <span class="rrp-price-label price-label rrp-lat"><?php echo rtrim($this->__('MSRP:')) ?></span>
+                    <span class="price msrp-price msrp-lat" id="msrp-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php echo number_format(''.intval($_msrp)); ?>
                   <?php endif; ?>
             <?php    
             }

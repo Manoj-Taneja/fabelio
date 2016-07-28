@@ -10,7 +10,7 @@
         $_subtotal = $this->helper('checkout')->formatPrice(Mage::getSingleton('checkout/cart')->getQuote()->getGrandTotal())
     ?>
     <?php $_items = $this->getRecentItems() ?>
-    <a href="/checkout/cart" class="mybag-link" onclick="if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){console.log(products);ematics('log', 'product', 'cart', products);}"><i class="fa fa-shopping-cart"></i><span class="cart-info"><span class="cart-qty"><?php echo $_cartQty ?></span><span><?php echo $this->__('item(s)') ?></span></span></a>
+    <a href="/checkout/cart" class="mybag-link"><i class="fa fa-shopping-cart"></i><span class="cart-info"><span class="cart-qty"><?php echo $_cartQty ?></span><span><?php echo $this->__('item(s)') ?></span></span></a>
         <div class="topCartContent block-content theme-border-color">
             <div class="inner-wrapper"><?php /*extra div to smooth slideUp and slideDown*/ ?>
                 <?php $_items = $this->getRecentItems() ?>
@@ -25,7 +25,7 @@
                         <span class="price-total"><?php echo $_subtotal ?></span>
                     </div>
                     <div class="actions">
-<!-- FAB-62 Ematic code starts --> <a class="btn btn-default btn-mini-cart" style="width: 100%;" href="<?php echo $this->getUrl('checkout/cart'); ?>" onclick="if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){console.log(products);ematics('log', 'product', 'cart', products);}"><i class="icon-basket"></i><?php echo $this->__('View Cart') ?></a> <!-- FAB-62 Ematic code ends -->
+<!-- FAB-62 Ematic code starts --> <a class="btn btn-default btn-mini-cart" style="width: 100%;" href="<?php echo $this->getUrl('checkout/cart'); ?>"><i class="icon-basket"></i><?php echo $this->__('View Cart') ?></a> <!-- FAB-62 Ematic code ends -->
                         <?php if($_cartQty && $this->isPossibleOnepageCheckout()): ?>
                         <!--<a class="btn btn-default btn-mini-checkout" href="<?php echo $this->getCheckoutUrl(); ?>"><i class="icon-right-thin"></i><?php echo $this->__('Checkout') ?></a>-->
                         <?php endif; ?>

@@ -282,7 +282,6 @@ Checkout.prototype = {
 
     setStepResponse: function(response){
 
-        
 
         if (response.update_section) {
             $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
