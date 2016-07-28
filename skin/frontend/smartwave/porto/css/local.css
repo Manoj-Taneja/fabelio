@@ -4439,8 +4439,8 @@ header.checkout-header-main{float:left; width:100%;}
     background-color: #d9534f;
     border-color: #d43f3a; font-family:roboto-regular; font-size:16px; font-weight:500;}
 	.btn-checkout:hover{color:#fff; text-decoration:none;}
-	.accordion-inner-content input[type=text]::-webkit-input-placeholder{color:#bababa; font-size:16px;font-weight: 500;}
-        .accordion-inner-content input[type=text]::-moz-placeholder{color:#bababa; font-size:16px;font-weight: 500;}
+	.accordion-inner-content input[type=text]::-webkit-input-placeholder{color:#bababa; font-size:16px;font-weight: 500; font-family:roboto-regular;}
+        .accordion-inner-content input[type=text]::-moz-placeholder{color:#bababa; font-size:16px;font-weight: 500;font-family:roboto-regular;}
 	.btn-facebook{    border: 1px solid #3B5998;
     width: 230px;
     color: #3B5998;
