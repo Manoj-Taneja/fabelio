@@ -168,7 +168,7 @@
                         <label>Didesain oleh <?php echo $manufacturer; ?></label>
                       </div>
                       <div class="cart-cell cell2"><span> <?php echo $_coreHelper->formatPrice($product_price, false) ?></span></div>
-                      <div class="cart-cell cell4"><input class="product_qty" rel="<?php echo $item_id; ?>-<?php echo $product_id; ?>" type="number" name="cart[<?php echo $product_id; ?>][qty]"  value="<?php echo $product_qty; ?>" /></div>
+                      <div class="cart-cell cell4"><input min="1" class="product_qty" rel="<?php echo $item_id; ?>-<?php echo $product_id; ?>" type="number" name="cart[<?php echo $product_id; ?>][qty]"  value="<?php echo $product_qty; ?>" /></div>
                       <div class="cart-cell cell">
                         
                           <?php 
