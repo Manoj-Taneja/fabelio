@@ -61,8 +61,7 @@ class Kellton_Checkout_Block_Onepage extends Mage_Checkout_Block_Onepage_Abstrac
             }
         }
         
-        
-        
+             
         foreach ($new_step_codes as $step) {
             $steps[$step] = $this->getCheckout()->getStepData($step);
         }
