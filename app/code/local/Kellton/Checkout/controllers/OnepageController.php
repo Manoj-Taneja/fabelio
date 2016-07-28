@@ -51,8 +51,6 @@ class Kellton_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     public function saveOrderAction()
     {
-        //echo "<pre>"; print_r($_POST); echo "</pre>";
-        //exit;
        
         if (!$this->_validateFormKey()) {
             $this->_redirect('*/*');
@@ -135,7 +133,7 @@ class Kellton_Checkout_OnepageController extends Mage_Checkout_OnepageController
             $result['error']    = true;
             $result['error_messages'] = $this->__('There was an error processing your order. Please contact us or try again later.');
         }
-        //$this->getOnepage()->getQuote()->save();
+      
         /**
          * when there is redirect to third party, we don't want to save order yet.
          * we will save the order in return action.
@@ -152,31 +150,10 @@ class Kellton_Checkout_OnepageController extends Mage_Checkout_OnepageController
     
     
     
-   /* public function addressFormPostAction(){
-         if ($this->_expireAjax()) {
-            return;
-        }
-        
-        if ($this->getRequest()->isPost()) {
-            $data = $this->getRequest()->getPost('billing', array());
-            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
-
-            if (isset($data['email'])) {
-                $data['email'] = trim($data['email']);
-            }
-            $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
-            
-            echo "<pre>"; print_r($result); echo "</pre>";
-            exit;
-        }
-         
-
-    }*/
     
     public function saveBillingAction()
     {
-        //echo "<pre>"; print_r($_POST); echo "</pre>";
-        //exit;
+     
         if (!Mage::helper('fabmod_checkout')->getHideShipping()){
             parent::saveBillingAction();
             return;
@@ -268,20 +245,9 @@ class Kellton_Checkout_OnepageController extends Mage_Checkout_OnepageController
                $data['street'] = trim($data['street']);
                 
             }
-            //echo "<pre>"; print_r($data); echo "</pre>";
-            //exit;
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
-           // echo "<pre>"; print_r($result); echo "</pre>";
-            //exit;
+           
             $customer = Mage::getSingleton('customer/session')->getCustomer();
-//            var_dump($customer);
-//            foreach ($customer->getAddresses() as $address):
-//                        $data = $address->toArray();
-//                        echo "<pre>"; print_r($data); echo "</pre>";
-//                        
-//            endforeach;
-//            exit;
-              
 
             if (!isset($result['error'])) {
                 
@@ -565,9 +531,6 @@ class Kellton_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 $customerObj->website_id = $websiteId;
                 $customerObj->setStore($store);
                 $pwd = $customerObj->generatePassword();
-                //$prefix = "mag";
-                //$pwd = uniqid($prefix);
-                //$pwd = $data_post['userpassword'];
                 $sendPassToEmail = true;
                 $session = Mage::getSingleton('checkout/session');
                 $fname = $session->getFirstname();
@@ -580,7 +543,6 @@ class Kellton_Checkout_OnepageController extends Mage_Checkout_OnepageController
                 $customerObj->save();
                 $ret = $customerObj->sendNewAccountEmail('confirmed'); //auto confirmed
                 $new_user_data = $ret->getData();
-                //var_dump($ret);
                 if($new_user_data['entity_id']!=''){
                     $result['success'] = true;
                     $result['error'] = false;
