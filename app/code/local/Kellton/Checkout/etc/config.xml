@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <modules>
+      <Kellton_Checkout>
+          <version>0.1.0</version>
+      </Kellton_Checkout>
+  </modules>
+  <global>
+    <blocks>
+          <checkout>
+              <rewrite>
+                  <onepage>Kellton_Checkout_Block_Onepage</onepage>
+              </rewrite>
+          </checkout>
+    </blocks>
+    <models>
+        <checkout>
+            <rewrite>
+                <type_onepage>Kellton_Checkout_Model_Type_Onepage</type_onepage>
+            </rewrite>
+        </checkout>
+    </models>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <Kellton_Checkout before="Fabmod_Checkout">Kellton_Checkout</Kellton_Checkout>
+                    </modules>
+                </args>
+            </checkout>
+        </routers>
+    </frontend>
+  </global>
+</config> 
+
