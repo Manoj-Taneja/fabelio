@@ -1,3 +1,66 @@
+<style> 
+/*FAB-130 css starts here*/
+.selected-attr{    display: inline-block;
+    background: #f8edd9;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px; text-align: center;}
+.selected-attr ul{display: inline-block;
+    width:auto;}
+.selected-attr li{display: inline-block;
+    margin-right: 15px;}
+.selected-attr label{    font-family: roboto-bold;
+    margin-right: 15px;}
+.selected-attr li span{cursor: pointer; font-weight: 700; font-size: 16px;}
+.swatches-hover-box{ position: absolute;
+    right: -95px;
+    top: -90px;
+    display: none;
+}
+.product-swatches-container .has-swatches li:hover .swatches-hover-box{display: block;}
+.swatches-hover-inner{position: relative;
+    float: left;
+    width: 208px;
+    padding: 10px;
+    box-shadow: 0px 0px 5px #ccc;
+    background: #fff;
+    z-index: 99;}
+.swatches-hover-inner:before{position: absolute;
+    content: '';
+    width: 100%;
+    border-bottom: 4px solid #ffd41c;
+    left: 0;
+    bottom: 0;}
+.swatches-hover-inner p{font-size: 14px;
+    line-height: 1.5;
+    color: #464646;
+    text-align: left;
+    font-family: roboto-regular; margin-bottom: 0px;}
+.swatches-hover-inner p a{position: static !important;
+    color: #464646 !important;
+    display: inline-block !important;
+    width: auto !important;
+    padding: 0 !important;
+    margin: 0px !important;
+    background: transparent !important;
+    opacity: 1 !important;
+    height:16px !important;
+    overflow: visible !important;
+    text-decoration: underline !important;
+    line-height: 1.5 !important;
+    cursor: pointer !important;
+}
+.swatches-hover-inner:after{    position: absolute;
+    content: '';
+    border-top: 8px solid #ffd41c;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    bottom: -15px;
+    right: 50%;}
+/*FAB-130 css starts here*/
+</style>
+
 <?php
 /* to override the default configurable options template  */
 
@@ -6,10 +69,61 @@
 include_once 'attributeSwatches.php';
 $_d = $this->getJsonConfig();
 $_json_config = addAttributeSwatches($_d);
+
 $_product = $this->getProduct();
+/** FAB-130 Start /**/
+$is_filter=0;
+$optionIdsAvail=array();
+if(Mage::app()->getRequest()->getParam('deliverytime')){
+$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($_product->getId());
+$ParentID=0;
+if(count($parentIds)>0){
+   $ParentID=$parentIds[0];
+}else{
+   $ParentID=$_product->getId();
+}
+$model = Mage::getModel('catalog/product'); //getting product model
+$_productParent = $model->load($ParentID);
+
+
+
+if($_productParent->getTypeId() == 'configurable') {
+    $is_filter=1;
+    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_productParent);
+    $simpleProds = Mage::getModel('catalog/product')->getCollection()
+                        ->addAttributeToSelect('fabric_color')
+                        ->addAttributeToSelect('leather_color')
+                        ->addAttributeToFilter('entity_id', $conf->getUsedProductCollection()->getAllIds())
+                        ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+                      /** FAB-130 Start /**/
+                      
+                          $deliveryTime=Mage::app()->getRequest()->getParam('deliverytime');
+                          $deliveryTimeIds=explode("-", $deliveryTime);
+                          $simpleProds=$simpleProds->addAttributeToFilter('deliverytime', $deliveryTimeIds);
+                          $productIdsAvailableifFilter=array();
+                          foreach ($simpleProds as $simpleProd){
+                              $productIdsAvailableifFilter[]=$simpleProd->getId();
+                          }
+                          foreach ($_json_config["attributes"] as $_attribute){
+                              if (in_array($_attribute["swatch_type"], array("image", "child", "label"))) {
+                                foreach ($_attribute["options"] as $_option) {
+                                    foreach ($_option['products'] as $productId){
+                                        if(in_array($productId, $productIdsAvailableifFilter)){
+                                            if(!in_array($_option['id'], $optionIdsAvail)){
+                                                $optionIdsAvail[]=$_option['id'];
+                                            }
+                                        }
+                                    }
+                                }
+                              }
+                          }
+}
+}
+/** FAB-130 End /**/
 ?>
 <?php if ($_product->isSaleable() && $_json_config["attributes"] && count($_json_config["attributes"])>0): ?>
     <?php foreach ($_json_config["attributes"] as $_attribute): ?>
+        
         <dl class="clearfix <?php if (in_array($_attribute["swatch_type"], array("image", "child", "label"))) { echo "has-swatch-attrib"; } ?>">
 
             <dt id="label-attribute-<?php echo $_attribute["id"] ?>" class="pull-left"><label class="required"><em>*</em><?php echo $_attribute["label"] ?></label>   </dt>
@@ -32,9 +146,23 @@ $_product = $this->getProduct();
                                         $_gallery_images[$_image->getAttributeValue()] = $_image->getFile();
                                     }
                                 }
+                                
                                 foreach ($_attribute["options"] as $_option) {
+                                    
                                     ?>
-                                <li>
+                            <?php 
+                            /** FAB-130 Start /**/
+                            $classstr='';
+                            if($is_filter==1){
+                                if(!in_array($_option['id'], $optionIdsAvail)){ 
+                                    
+                                    $classstr='opacity:0.5;';
+                                    
+                                }
+                            }
+                            /** FAB-130 End /**/
+                            ?>
+                            <li  >
                                     <?php
                                     switch ($_attribute["swatch_type"]) {
                                         case "child":
@@ -60,9 +188,22 @@ $_product = $this->getProduct();
                                             break;
                                         case 'image':
                                             ?>
-                                            <a class="" style="<?php echo $_option["swatch_value"] ?>" title="<?php echo $_option["label"] ?>" rel="<?php echo $_option["id"] ?>" id="swatches_option_value_<?php echo $_option["id"] ?>" href="#" rev="">
+                                            <a class="" style="<?php echo $_option["swatch_value"] ?> <?php /** FAB-130 Start /**/ echo $classstr; /** FAB-130 End /**/ ?>" title="<?php echo $_option["label"] ?>" rel="<?php echo $_option["id"] ?>" id="swatches_option_value_<?php echo $_option["id"] ?>" href="#" rev="">
                                                 <span><?php echo $_option["label"] ?></span>
                                             </a>
+                                            <?php 
+                                            /** FAB-130 Start /**/
+                                            if( $classstr!=''){ ?>
+                                                <div class="swatches-hover-box">
+                                        <div class="swatches-hover-inner">
+                                            <p>Warna yang Anda pilih tidak tersedia dengan filter pencarian Anda. <a href="#" onclick="window.location=location.href.substring(0, location.href.lastIndexOf('?'))">Hapus filter ?</a></p>
+                                        </div>
+                                    </div>
+                                            <?php 
+                                            
+                                            /** FAB-130 End /**/
+                                            } ?>
+                                            
                                             <span class="tooltip-container"><span class="tooltip"><span><?php echo $_option["label"] ?></span></span></span>
                                             <?php
                                             break;
