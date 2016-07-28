@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Kellton_Checkout>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Kellton_Checkout>
+    </modules>
+</config> 
+
