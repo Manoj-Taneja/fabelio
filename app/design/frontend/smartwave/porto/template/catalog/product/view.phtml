@@ -157,6 +157,20 @@ button.close {
 @media (max-width:767px){
     .breadcrumbs_mobile_view{display: none;}
 }
+/*FAB-130 css starts here*/
+.selected-attr{    display: inline-block;
+    background: #f8edd9;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px; text-align: center;}
+.selected-attr ul{display: inline-block;
+    width:auto;}
+.selected-attr li{display: inline-block;
+    margin-right: 15px;}
+.selected-attr label{    font-family: roboto-bold;
+    margin-right: 15px;}
+.selected-attr li span{cursor: pointer; font-weight: 700; font-size: 16px;}
+/*FAB-130 css starts here*/
 </style>
 <?php
 $_helper = $this->helper('catalog/output');
@@ -227,7 +241,15 @@ $designers = array(
         @session_start();
         setcookie('priceareacashback_id', strip_tags($cbpa), time() + (86400 * 7), "/");
     }
+    /** FAB-130 Start /**/
 ?>
+<div class="selected-attr hide">
+        <label>Filter Aktif :</label>
+        <ul id='deliverytimefiltersselected'>
+           
+        </ul>
+    </div>
+<?php /** FAB-130 End /**/ ?>
 <!-- test -->
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 
@@ -819,4 +841,57 @@ navigation:true,
     }
     ?>
     });
+    
+    /** FAB-130 Start /**/
+    jQuery(document).ready(function(){
+        <?php
+        $deliveryTime=Mage::app()->getRequest()->getParam('deliverytime');
+        $deliveryTimes=explode('-',  $deliveryTime);
+        $str='';
+        foreach($deliveryTimes as $dt){
+            $str.=$dt.',';
+        }
+        $str=  rtrim($str, ',');
+        ?>
+    var resultant=[<?php echo $str; ?>];
+    
+        
+        var html='';
+       
+        <?php
+    $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product', 'deliverytime');
+    $attributeArray=array();
+    foreach ( $attribute->getSource()->getAllOptions(true, true) as $option){
+        $attributeArray[]=$option;
+    }
+   
+?>
+         var atributes= <?php echo json_encode($attributeArray);?>;
+         console.log(atributes);
+        for(var i=0; i<resultant.length; i++){
+            console.log(resultant[i]);
+            for(var j=0; j<atributes.length; j++){
+                if(parseInt(atributes[j].value)===parseInt(resultant[i])){
+                    
+                    html+='<li>'+atributes[j].label+' <span fid="'+atributes[j].value+'" class="removeFilter">x</span></li>';
+                }
+            }
+            
+        }
+        console.log("kmal"+html);
+        jQuery("#deliverytimefiltersselected").html(html);
+        
+        if(html===''){
+            jQuery(".selected-attr").addClass("hide");
+        }else{
+            jQuery(".selected-attr").removeClass("hide");
+        }
+        jQuery(".removeFilter").click(function(){
+            var fid= jQuery(this).attr("fid");
+            var length=jQuery('#deliverytime-'+fid+'').length;
+            
+            jQuery('#deliverytime-'+fid+'').trigger("click");
+        });
+});
+/** FAB-130 End /**/
 </script>

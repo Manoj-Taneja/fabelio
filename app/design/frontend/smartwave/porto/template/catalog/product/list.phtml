@@ -23,7 +23,45 @@
     /* COLORS AND ATTRIBUTES SWATCHES HELPER */
     $_swatches_helper = $this->helper("attributeswatches/product_list")->setDimensions(300,300); /*set the dimensions here...*/
     ?>
-    
+    <?php 
+    /** FAB-130 Start /**/
+    $idsAdded=array();
+    $childProductIds=array();
+    $childCount=array();
+    foreach ($_productCollection as $_product){ 
+       $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($_product->getId());
+        $idTocheck=0;
+                if(count($parentIds)>0){
+                    $idTocheck=$parentIds[0];
+                    $childProductIds[]=$_product->getId();
+                    $childCount[$idTocheck]=$childCount[$idTocheck]+1;
+                    
+                }else{
+                    $idTocheck=$_product->getId();
+                    if($_product->getTypeId() == 'configurable') {
+                        if(array_key_exists($idTocheck, $childCount)){
+                            
+                        }else{
+                             $childCount[$idTocheck]=0;
+                        }
+                    }
+                    
+                }
+                if(in_array($idTocheck, $idsAdded)){
+                    
+                    
+                    continue;
+                }else{
+                    if($idTocheck==$_product->getId()){
+                        $idsAdded[]=$idTocheck;
+                    }else{
+                         continue;
+                    }
+                    
+                }
+    } 
+    /** FAB-130 Start /**/
+    ?>    
     <ol class="products-list product-items" id="products-list">
     <?php foreach ($_productCollection as $_product): ?>
         <?php
@@ -193,7 +231,21 @@ if($del < 7){
     <ul class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
     <?php $i=0; foreach ($_productCollection as $_product): ?>
             <?php
-            /* MANGOEXTENSIONS */
+            /** FAB-130 Start /**/
+            if(!in_array($_product->getId(), $idsAdded)){
+                continue;
+            }
+             if($this->getRequest()->getModuleName()=="amlanding"){
+                 if($_product->getTypeId() == 'configurable') {
+                    if($childCount[$_product->getId()]==0){
+                        continue;
+                    }
+                 
+                }
+             }
+            
+            /** FAB-130 End /**/
+	    /* MANGOEXTENSIONS */
             /* -SWATCHES HTML OUTPUT */
             $_swatches = $_swatches_helper->setProduct($_product)->processSwatches();
             /* EOF -SWATCHES HTML OUTPUT */
@@ -319,6 +371,18 @@ if($del < 7){
                         ->addAttributeToSelect('leather_color')
                         ->addAttributeToFilter('entity_id', $conf->getUsedProductCollection()->getAllIds())
                         ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+			/** FAB-130 Start /**/
+                      $appliedFilters = Mage::helper('multilayer')->getParams();
+                      if(array_key_exists("deliverytime", $appliedFilters)){
+                          $deliveryTime=$appliedFilters['deliverytime'];
+                          $deliveryTimeIds=explode("-", $deliveryTime);
+                          $simpleProds=$simpleProds->addAttributeToFilter('deliverytime', $deliveryTimeIds);
+                      }
+                      if($this->getRequest()->getModuleName()=="amlanding"){
+                        $simpleProds=$simpleProds->addAttributeToFilter('entity_id', $childProductIds);
+                      }
+                      
+                      /** FAB-130 End /**/
 
                       foreach($simpleProds as $simple_product){
                         if($fabricColor = $simple_product->getData('fabric_color')) {
@@ -488,7 +552,56 @@ if($del < 7){
 				}
 			}
    
-        </script>
+		/** FAB-130 Start /**/
+jQuery(document).ready(function(){
+    var str=document.getElementById('ptech_multilayer_params').value;
+    if(str.indexOf("delivery") != -1){
+        jQuery('.product-name a').each(function(i, obj) {
+            this.href=this.href+'?'+str;
+        });
+        
+    }
+    var myarr = str.split("&");
+        
+        var resultant=[];
+        for(var i=0; i<myarr.length; i++){
+            var newStr=myarr[i];
+            var newArr = newStr.split("=");
+            if(newArr[0]==='deliverytime'){
+                var deliverytime=newArr[1];
+                var resultant = deliverytime.split("-");
+            }
+        }
+        var html='';
+       
+        <?php
+    $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product', 'deliverytime');
+    $attributeArray=array();
+    foreach ( $attribute->getSource()->getAllOptions(true, true) as $option){
+        $attributeArray[]=$option;
+    }
+   
+?>
+         var atributes= <?php echo json_encode($attributeArray);?>;
+        for(var i=0; i<resultant.length; i++){
+            for(var j=0; j<atributes.length; j++){
+                if(parseInt(atributes[j].value)===parseInt(resultant[i])){
+                    
+            html+='<li>'+atributes[j].label+' <span fid="'+atributes[j].value+'" class="removeFilter">x</span></li>';
+        }
+        }
+            
+        }
+        jQuery("#deliverytimefiltersselected").html(html);
+        if(html===''){
+            jQuery(".selected-attr").addClass("hide");
+        }else{
+            jQuery(".selected-attr").removeClass("hide");
+        }
+        });
+        /** FAB-130 End /**/    
+   	 </script>
+
     <?php endif; ?>
 
     <div class="toolbar-bottom">
