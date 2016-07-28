@@ -56,7 +56,7 @@
                                         <button type="button" title="<?php echo $this->__('Continue Shopping') ?>" class="button btn-continue" onclick="setLocation('<?php echo $this->getUrl('') ?>')"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
                                     <?php endif; ?>
                                     <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update Shopping Cart'); ?>" class="button btn-update"><span><span><?php echo $this->__('Update Shopping Cart'); ?></span></span></button>
-                                    <!-- FAB-62 Ematic code starts --><button type="submit" name="update_cart_action" value="empty_cart" title="<?php echo $this->__('Clear Shopping Cart'); ?>" class="button btn-empty" id="empty_cart_button" onclick="if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematicEmptyCart();}"><span><span><?php echo $this->__('Clear Shopping Cart'); ?></span></span></button>
+                                    <!-- FAB-62 Ematic code starts --><button type="submit" name="update_cart_action" value="empty_cart" title="<?php echo $this->__('Clear Shopping Cart'); ?>" class="button btn-empty" id="empty_cart_button" ><span><span><?php echo $this->__('Clear Shopping Cart'); ?></span></span></button>
 					<!-- FAB-62 Ematic code ends -->
                                     <!--[if lt IE 8]>
                                     <input type="hidden" id="update_cart_action_container" />
@@ -150,19 +150,19 @@ jQuery(function($){
   }
   $cart.on('change', '.qty-holder .qty', function(){ 
 // FAB-62 code starts
-if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematicUpdateCart(this);}
+//if('<?php //echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematicUpdateCart(this);}
 // FAB-62 code ends
     updateCart()
   });
   $cart.on('click', '.table_qty_dec', function(){
 // FAB-62 code starts
-     if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ ematicDecCart(this);}
+     //if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ ematicDecCart(this);}
 // FAB-62 code ends
     updateCart();
   });
   $cart.on('click', '.table_qty_inc', function(){
 // FAB-62 code starts
-      if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematicIncCart(this);}
+      //if('<?php echo Mage::getStoreConfig("fabmod_mixpanel/ematics/enabled") ?>'){ematicIncCart(this);}
 // FAB-62 code ends
     updateCart();
   });

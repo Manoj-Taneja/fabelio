@@ -1,169 +1,187 @@
 <?php
-if (Mage::getSingleton('customer/session')->isLoggedIn()) { $customer = Mage::getSingleton('customer/session')->getCustomer(); $email_id = $customer->getEmail();}
-?>
+   if (Mage::getSingleton('customer/session')->isLoggedIn()) { $customer = Mage::getSingleton('customer/session')->getCustomer(); $email_id = $customer->getEmail();}
+   ?>
 <?php
-$helper = Mage::helper("fabmod_mixpanel");
-if($helper->isEmaticsEnabled()) { 
-$cartProductArray = array();
-$cart = Mage::getModel('checkout/cart')->getQuote();
-if($cart->getItemsQty())
-{
-foreach ($cart->getAllItems() as $item)
-{
-$productQty = $item->getQty();
-$parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')
-      ->getParentIdsByChild($item->getProductId());
-if($parentIds)
-{
-$productId = $parentIds[0];
-$product = Mage::getModel('catalog/product')->load($productId);
-}
-else
-{
-$productId = $item->getProductId();
-$product = Mage::getModel('catalog/product')->load($productId);
-}
-$productName = $product->getName();
-$formattedPrice = Mage::helper('core')->currency($product->getPrice(), true, false);
-$categoryIds = $product->getCategoryIds();
-$productBrandName = $item->getProduct()->getAttributeText('manufacturer');
-$productDescription = "";
-$productImageUrl = Mage::helper('catalog/image')->init($product, 'thumbnail');
-$productUrl = $product->getProductUrl();
-//echo "CategoryId".$categoryIds[0]."Price:".$formattedPrice."Quantity:".$productQty."Name:".$productName."desc:".$productDescription."brandNa$
-$cartProductArray[] = array("id" => $productId,
-                                        "categoryId" => trim($categoryIds[0]),
-                                        "transactionId" => "",
-                                        "price" => trim($formattedPrice),
-                                        "quantity" => trim($productQty),
-                                        "name" => trim($productName),
-                                        "brandName" => trim($productBrandName),
-                                        "desc" => trim($productDescription),
-                                        "imageUrl" => trim($productImageUrl),
-                                        "link" => trim($productUrl));
-}
-}
-else{ $cartProductArray = NULL;}
-global $jsonEncodedCartData;
-$jsonEncodedCartData = json_encode($cartProductArray);
-//$jsonEncodedCartData = str_replace('"', '', $jsonEncodedCartData);
-$session = Mage::getSingleton("core/session");
-$session->setData("sessionCartDataArray", $cartProductArray);    
-    
-?>
+   $helper = Mage::helper("fabmod_mixpanel");
+   if($helper->isEmaticsEnabled()) { 
+   $cartProductArray = array();
+   $cart = Mage::getModel('checkout/cart')->getQuote();
+   if($cart->getItemsQty())
+   {
+   foreach ($cart->getAllItems() as $item)
+   {
+   $productQty = $item->getQty();
+   $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')
+         ->getParentIdsByChild($item->getProductId());
+   if($parentIds)
+   {
+   $productId = $parentIds[0];
+   $product = Mage::getModel('catalog/product')->load($productId);
+   }
+   else
+   {
+   $productId = $item->getProductId();
+   $product = Mage::getModel('catalog/product')->load($productId);
+   }
+   $productName = $product->getName();
+   $formattedPrice = Mage::helper('core')->currency($product->getPrice(), true, false);
+   $categoryIds = $product->getCategoryIds();
+   $productBrandName = $item->getProduct()->getAttributeText('manufacturer');
+   $productDescription = "";
+   $productImageUrl = Mage::helper('catalog/image')->init($product, 'thumbnail');
+   $productUrl = $product->getProductUrl();
+   $cartProductArray[] = array("id" => $productId,
+                                           "categoryId" => trim($categoryIds[0]),
+                                           "transactionId" => "",
+                                           "price" => trim($formattedPrice),
+                                           "quantity" => trim($productQty),
+                                           "name" => trim($productName),
+                                           "brandName" => trim($productBrandName),
+                                           "desc" => trim($productDescription),
+                                           "imageUrl" => trim($productImageUrl),
+                                           "link" => trim($productUrl));
+   }
+   }
+   else{ $cartProductArray = NULL;}
+   global $jsonEncodedCartData;
+   $jsonEncodedCartData = json_encode($cartProductArray);
+   $session = Mage::getSingleton("core/session");
+   $session->setData("sessionCartDataArray", $cartProductArray);    
+       
+   ?>
 <!-- FAB-62 Ematic JS---- code start -->
 <script>
-    (function(i,s,o,g,r,a,m){i['EmaticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//api.ematicsolutions.com/v1/ematic.min.js','ematics');
- 
-    var ematicApikey = "c31fa675f1ad11e5a40a0242ac110015-sg1";
-    var opt = {
-        email: "<?php echo $email_id ?>",
-        country_iso: "ID",
-        currency_iso: "IDR",
-        language_iso: "IN"
-    };
-  
-    //initialize
-    ematics("create", ematicApikey, opt);
-    var products = jQuery.parseJSON('<?php $session = Mage::getSingleton("core/session"); $cartData = $session->getData("sessionCartDataArray"); echo json_encode($cartData) ?>');
-    function ematic_removed(element)
-    {
-        var removed_product_name = jQuery(element).parent('.product-details').find('.product-name a').text();
-        for(i=0;i<products.length;i++)
-        {
-            if(removed_product_name.indexOf(products[i]['name']) >= 0)
-            {
-                products.splice(i,1);
-                console.log(products);
-                ematics("log", "product", "cart", products);
-                break;
-            }
-        }
-        return true;
-        
-    }
-    function ematicShoppingCartItemRemoved(element){
-        var removed_product_name = jQuery(element).parent('td').parent('tr').find('.product-name-td h2 a').text();
-        for(i=0;i<products.length;i++)
-        {
-            if(removed_product_name.indexOf(products[i]['name']) >= 0)
-            {
-                products.splice(i,1);
-                console.log(products);
-                ematics("log", "product", "cart", products);
-                break;
-            }
-        }
-        return true;
-    }
-    function ematicIncCart(element){
-        var updated_product_name = jQuery(element).parent('.qty-holder').parent('td').parent('tr').find('.product-name-td h2 a').text();
-        for(i=0;i<products.length;i++)
-        {
-            if(updated_product_name.indexOf(products[i]['name']) >= 0)
-            {
-                var updated_qty = parseInt(products[i]['quantity']) + parseInt(1);
-                products[i]['quantity'] = updated_qty.toString();
-                //alert(products[i]['quantity']);
-                ematics("log", "product", "cart", products);
-                break;
-            }
-        }
-    }
-    function ematicDecCart(element){
-        var updated_product_name = jQuery(element).parent('.qty-holder').parent('td').parent('tr').find('.product-name-td h2 a').text();
-        for(i=0;i<products.length;i++)
-        {
-            if(updated_product_name.indexOf(products[i]['name']) >= 0)
-            {
-                var updated_qty = parseInt(products[i]['quantity']) - parseInt(1);
-                products[i]['quantity'] = updated_qty.toString();
-                //alert(products[i]['quantity']);
-                ematics("log", "product", "cart", products);
-                break;
-            }
-        }
-    }
-    function ematicUpdateCart(element){
-        var updated_product_name = jQuery(element).parent('.qty-holder').parent('td').parent('tr').find('.product-name-td h2 a').text();
-        for(i=0;i<products.length;i++)
-        {
-            if(updated_product_name.indexOf(products[i]['name']) >= 0)
-            { //alert(jQuery(element).val());
-                if(jQuery(element).val()<=0)
-		{
-			products.splice(i,1);
-                	console.log(products);
-                	ematics("log", "product", "cart", products);
-		}
-		else{
-			products[i]['quantity'] = jQuery(element).val();
-                	//alert(products[i]['quantity']);
-                	console.log(products);
-                	ematics("log", "product", "cart", products);
-                	break;
-		}
-            }
-        }
-        
-    }
-    function ematicEmptyCart(){
-        //alert('clear shopping cart clicked');
-        products = [];
-        ematics("log", "product", "cart", products);
-    }
-    function ematicCheckoutProceed(){
-        //alert("proceed to checkout clicked");
-        ematics("log", "product", "checkout", products);
-    }
-    function ematicConvert(){
-        //alert("place order clicked");
-        console.log(products);
-	ematics("log", "product", "convert", products);
-    }
-  </script>
+   (function(i,s,o,g,r,a,m){i['EmaticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//api.ematicsolutions.com/v1/ematic.min.js','ematics');
+   
+   var ematicApikey = "c31fa675f1ad11e5a40a0242ac110015-sg1";
+   var opt = {
+       email: "<?php echo $email_id ?>",
+       country_iso: "ID",
+       currency_iso: "IDR",
+       language_iso: "IN"
+   };
+   
+   //initialize
+   ematics("create", ematicApikey, opt);
+   var products = jQuery.parseJSON('<?php $session = Mage::getSingleton("core/session"); $cartData = $session->getData("sessionCartDataArray"); echo json_encode($cartData) ?>');
+   function ematic_removed(element)
+   {
+       var removed_product_name = jQuery(element).parent('.product-details').find('.product-name a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(removed_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               products.splice(i,1);
+               ematics("log", "product", "cart", products);
+               break;
+           }
+       }
+       return true;
+       
+   }
+   function ematicShoppingCartItemRemoved(element){
+       var removed_product_name = jQuery(element).parent('td').parent('tr').find('.product-name-td h2 a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(removed_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               products.splice(i,1);
+               ematics("log", "product", "cart", products);
+               break;
+           }
+       }
+       return true;
+   }
+   function ematicIncCart(element){
+       var updated_product_name = jQuery(element).parent('.qty-holder').parent('td').parent('tr').find('.product-name-td h2 a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(updated_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               var updated_qty = parseInt(products[i]['quantity']) + parseInt(1);
+               products[i]['quantity'] = updated_qty.toString();
+               ematics("log", "product", "cart", products);
+               break;
+           }
+       }
+   }
+   function ematicDecCart(element){
+       var updated_product_name = jQuery(element).parent('.qty-holder').parent('td').parent('tr').find('.product-name-td h2 a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(updated_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               var updated_qty = parseInt(products[i]['quantity']) - parseInt(1);
+               products[i]['quantity'] = updated_qty.toString(); 
+               ematics("log", "product", "cart", products);
+               break;
+           }
+       }
+   }
+   function ematicUpdateCart(element){
+       var updated_product_name = jQuery(element).parent('.qty-holder').parent('td').parent('tr').find('.product-name-td h2 a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(updated_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               if(jQuery(element).val()<=0)
+   {
+   products.splice(i,1);
+                       ematics("log", "product", "cart", products);
+   }
+   else{
+   products[i]['quantity'] = jQuery(element).val();
+                     	ematics("log", "product", "cart", products);
+               	break;
+   }
+           }
+       }
+       
+   }
+   function ematicEmptyCart(){
+       products = [];
+       ematics("log", "product", "cart", products);
+   }
+   jQuery( document ).ready(function()  {
+       jQuery('#finish_and_checkout').click(function(){
+           ematics("log", "product", "cart", products);
+       });
+       jQuery('.btn-mini-cart').click(function(){
+           ematics("log", "product", "cart", products);
+       });
+       jQuery('.mybag-link').click(function(){
+           ematics("log", "product", "cart", products);
+       });
+      jQuery('body').on('click','.product-details .btn-remove', function(){
+       var removed_product_name = jQuery(this).parent('.product-details').find('.product-name a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(removed_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               products.splice(i,1);
+               ematics("log", "product", "cart", products);
+               break;
+           }
+       }
+   });
+   jQuery('.action-td').on('click','.btn-remove2', function(){
+       var removed_product_name = jQuery(this).parents('tr').find('.product-name a').text();
+       for(i=0;i<products.length;i++)
+       {
+           if(removed_product_name.indexOf(products[i]['name']) >= 0)
+           {
+               products.splice(i,1);
+               ematics("log", "product", "cart", products);
+               break;
+           }
+       }
+   });
+   
+   }); 
+   
+</script>
 <!-- FAB-62 Ematic JS---- code end -->
 <?php } ?>

@@ -1,0 +1,43 @@
+<?php
+$helper = Mage::helper("fabmod_mixpanel");
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+if ($orderId) {
+    $order = Mage::getModel('sales/order')->loadByAttribute('increment_id', $orderId);
+?>
+<?php
+
+    if ($helper->isEmaticsEnabled()) {
+    $items = $order->getAllItems();
+    ?>
+    <script>
+	var products = [];
+    </script>
+<?php
+    foreach ($items as $item) { 
+    $productSku = $item->getProduct()->getSku(); 
+    $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+    $categories = $product->getCategoryIds();
+?>
+      <script type="text/javascript">
+    product = {
+      id: "<?php echo $item->getId(); ?>", //required
+      categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
+      transactionId: "",
+      price: "<?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false); ?>", //required
+      quantity: "<?php echo $item->getQtyOrdered() ?>", //required
+      name: "<?php echo $item->getName(); ?>", //required
+      brandName: "<?php echo $product->getAttributeText('manufacturer'); ?>", //required
+      desc: "",
+      imageUrl: "<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>", //required
+      link: "<?php echo $product->getProductUrl() ?>" //required
+  };
+    products.push(product);
+      </script>
+<?php   
+} ?>
+      <script>
+        ematics("log", "product", "convert", products);    
+      </script>
+      
+<?php } }
+?>

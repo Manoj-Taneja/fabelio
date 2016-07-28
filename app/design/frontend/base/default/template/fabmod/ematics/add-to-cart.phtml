@@ -1,62 +1,50 @@
 <?php
-$helper = Mage::helper("fabmod_mixpanel");
-if (!$helper->isEmaticsEnabled()) {
-  return;
-}
-$_product = Mage::registry('current_product');
-$productSku = $_product->getSku(); 
-$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
-$categories = $_product->getCategoryIds();
-?>
+   $helper = Mage::helper("fabmod_mixpanel");
+   if (!$helper->isEmaticsEnabled()) {
+     return;
+   }
+   $_product = Mage::registry('current_product');
+   $productSku = $_product->getSku(); 
+   $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
+   $categories = $_product->getCategoryIds();
+   ?>
 <script>    
-function fabmodEmaticAddToCart(){
-//  fbq('track', 'AddToCart', {
-//    content_name     : '<?php echo $_product->getName(); ?>',
-//    content_category : '<?php echo Mage::getModel('catalog/category')->load($categories[0])->getName(); ?>',
-//    content_ids      : ['<?php echo $_product->getId(); ?>'],
-//    content_type     : 'product',
-//    value            : <?php echo $_product->getFinalPrice(); ?>,
-//    currency         : '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>'
-//  });  
-console.log(products);
-var current_product = [{
-      id: "<?php echo $_product->getId() ?>", //required
-      categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
-      transactionId: "",
-      price: "<?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false); ?>", //required
-      quantity: jQuery('#qty').val(), //required
-      name: "<?php echo $_product->getName(); ?>", //required
-      brandName: "<?php echo $product->getAttributeText('manufacturer'); ?>", //required
-      desc: "",
-      imageUrl: "<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>", //required
-      link: "<?php echo $product->getProductUrl() ?>" //required
-  }]; 
-console.log(current_product);
-var product_already_exist_flag = 0;
-if(products!==null)
-{
-    for(i=0;i<products.length;i++)
-    {
-        if(products[i]['id']==current_product[0]['id'])
-        {
-            var updated_qty = parseInt(products[i]['quantity']) + parseInt(current_product[0]['quantity']);
-            products[i]['quantity'] = updated_qty.toString();
-            product_already_exist_flag = 1;
-            break;
-        }
-    }
-    if(product_already_exist_flag==0){products.push(current_product[0]);product_already_exist_flag=1;}
-}
-//if(product_already_exist_flag==0 && products.length > 0){ alert("new product");products.push(current_product[0]);}
-if(product_already_exist_flag==0){products = current_product;}
-console.log(products); 
-ematics("log", "product", "cart", products);
-}
-jQuery(function($){
-  $('.add-to-cart-btn').on('click', function(e){
-    if(productAddToCartForm.validator.validate()){
-      fabmodEmaticAddToCart();
-    }
-  });
-});
+   function fabmodEmaticAddToCart(){
+   var current_product = [{
+         id: "<?php echo $_product->getId() ?>", //required
+         categoryId: "<?php echo Mage::getModel('catalog/category')->load($categories[0])->getid(); ?>",
+         transactionId: "",
+         price: "<?php echo Mage::helper('core')->currency($product->getFinalPrice(), true, false); ?>", //required
+         quantity: jQuery('#qty').val(), //required
+         name: "<?php echo $_product->getName(); ?>", //required
+         brandName: "<?php echo $product->getAttributeText('manufacturer'); ?>", //required
+         desc: "",
+         imageUrl: "<?php echo Mage::helper('catalog/image')->init($product, 'thumbnail') ?>", //required
+         link: "<?php echo $product->getProductUrl() ?>" //required
+     }]; 
+   var product_already_exist_flag = 0;
+   if(products!==null)
+   {
+       for(i=0;i<products.length;i++)
+       {
+           if(products[i]['id']==current_product[0]['id'])
+           {
+               var updated_qty = parseInt(products[i]['quantity']) + parseInt(current_product[0]['quantity']);
+               products[i]['quantity'] = updated_qty.toString();
+               product_already_exist_flag = 1;
+               break;
+           }
+       }
+       if(product_already_exist_flag==0){products.push(current_product[0]);product_already_exist_flag=1;}
+   }
+   if(product_already_exist_flag==0){products = current_product;}
+   ematics("log", "product", "cart", products);
+   }
+   jQuery(function($){
+     $('.add-to-cart-btn').on('click', function(e){
+       if(productAddToCartForm.validator.validate()){
+         fabmodEmaticAddToCart();
+       }
+     });
+   });
 </script>
