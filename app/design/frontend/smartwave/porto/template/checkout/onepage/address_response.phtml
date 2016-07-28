@@ -27,7 +27,7 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
                         <div class="modal-body">
                           <button type="button" id="close-<?php echo $data['entity_id']; ?>" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h3>Koreksi alamat anda</h3>
-                          <div class="checkout-form-popup-main">
+                          <div class="checkout-form-popup-main name_1">
 
 
                           <div class="checkout-form-popup">
@@ -36,11 +36,11 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
                           </div>
                           <div class="checkout-form-popup">
                               <label>Nama Belakang</label>
-                              <input type="text" name="billing[lastname]" id="first_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan nama Belakang" value="<?php echo $data['lastname'] ?>" />
+                              <input type="text" name="billing[lastname]" id="last_name_<?php echo $data['entity_id']; ?>" placeholder="Masukkan nama Belakang" value="<?php echo $data['lastname'] ?>" />
                           </div>
                           </div>
-
-                          <div class="checkout-form-popup-main">
+                           <p id="name-error-msg-1" class="error-message"></p>
+                          <div class="checkout-form-popup-main address_1">
 
 
                           <div class="checkout-form-popup">
@@ -100,8 +100,8 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
                               <input type="text" name="billing[city]" id="city_<?php echo $data['entity_id']; ?>" placeholder="Kota" value="<?php echo $data['city']; ?>" />
                           </div>
                           </div>
-
-                          <div class="checkout-form-popup-main">
+                           <p id="address-error-msg-1" class="error-message"></p>
+                          <div class="checkout-form-popup-main phone_1">
 
 
                           <div class="checkout-form-popup">
@@ -110,7 +110,7 @@ $region_obj =  Mage::getModel('directory/region')->load($data['region_id']);
                           </div>
 
                           </div>
-
+                           <p id="phone-error-msg-1" class="error-message"></p>
 
 
                       </div>
