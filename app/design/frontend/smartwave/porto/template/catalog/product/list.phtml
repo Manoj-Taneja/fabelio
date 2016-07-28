@@ -1,6 +1,7 @@
+
 <?php
     $_productCollection=$this->getLoadedProductCollection();
-    $_helper = $this->helper('catalog/output');
+	$_helper = $this->helper('catalog/output');
     $store = Mage::app()->getStore();
     $code  = $store->getCode();
     $aspect_ratio = Mage::getStoreConfig("porto_settings/category/aspect_ratio",$code);
@@ -23,45 +24,7 @@
     /* COLORS AND ATTRIBUTES SWATCHES HELPER */
     $_swatches_helper = $this->helper("attributeswatches/product_list")->setDimensions(300,300); /*set the dimensions here...*/
     ?>
-    <?php 
-    /** FAB-130 Start /**/
-    $idsAdded=array();
-    $childProductIds=array();
-    $childCount=array();
-    foreach ($_productCollection as $_product){ 
-       $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($_product->getId());
-        $idTocheck=0;
-                if(count($parentIds)>0){
-                    $idTocheck=$parentIds[0];
-                    $childProductIds[]=$_product->getId();
-                    $childCount[$idTocheck]=$childCount[$idTocheck]+1;
-                    
-                }else{
-                    $idTocheck=$_product->getId();
-                    if($_product->getTypeId() == 'configurable') {
-                        if(array_key_exists($idTocheck, $childCount)){
-                            
-                        }else{
-                             $childCount[$idTocheck]=0;
-                        }
-                    }
-                    
-                }
-                if(in_array($idTocheck, $idsAdded)){
-                    
-                    
-                    continue;
-                }else{
-                    if($idTocheck==$_product->getId()){
-                        $idsAdded[]=$idTocheck;
-                    }else{
-                         continue;
-                    }
-                    
-                }
-    } 
-    /** FAB-130 Start /**/
-    ?>    
+    
     <ol class="products-list product-items" id="products-list">
     <?php foreach ($_productCollection as $_product): ?>
         <?php
@@ -76,7 +39,7 @@
                     <?php // Product Image  
                     /* MANGOEXTENSIONS */
                     /* CHANGE THE SOURCE OF THE PRODUCT IMAGE TO CHANGE ACCORDING TO THE LAYERED NAVIGATION */
-                    ?>              
+                    ?>
                     <a href="<?php echo $_swatches["product_url"] ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <?php
                         if(Mage::getStoreConfig("porto_settings/category/alternative_image", $code)){
@@ -131,17 +94,6 @@
                         }
                     ?>
                 </div>
-<?php
-$delivery = $_product->getDeliverytimeconfig();
-$del = (int) filter_var($delivery, FILTER_SANITIZE_NUMBER_INT);
-if($del < 7){
-?>
-<div class="new-label" style="width: 100%;bottom: 0px;"><span class="sale-product-icon" style="padding: 7px;line-height: 23px;">
-<img src="http://fabelio.com/media/fab/icons/delivery-truck-02.svg" style="height: 24px;padding-right: 6px;margin-bottom: -1px;">
-<span class="delivery-label"><strong><?php echo $del; ?> Hari </strong>Pengiriman Kilat GRATIS</span></span></div>
-<?php
-}
-?>
                 <div class="details-area">
                     <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                     <?php if($_product->getRatingSummary()): ?>
@@ -222,16 +174,54 @@ if($del < 7){
     /* COLORS AND ATTRIBUTES SWATCHES HELPER */
     $_swatches_helper = $this->helper("attributeswatches/product_list")->setDimensions(300, 300); /* set the dimensions here... */
     ?>
-    
+	<?php 
+    /** FAB-130 Start /**/
+    $idsAdded=array();
+    $childProductIds=array();
+    $childCount=array();
+    foreach ($_productCollection as $_product){ 
+       $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($_product->getId());
+        $idTocheck=0;
+                if(count($parentIds)>0){
+                    $idTocheck=$parentIds[0];
+                    $childProductIds[]=$_product->getId();
+                    $childCount[$idTocheck]=$childCount[$idTocheck]+1;
+                    
+                }else{
+                    $idTocheck=$_product->getId();
+                    if($_product->getTypeId() == 'configurable') {
+                        if(array_key_exists($idTocheck, $childCount)){
+                            
+                        }else{
+                             $childCount[$idTocheck]=0;
+                        }
+                    }
+                    
+                }
+                if(in_array($idTocheck, $idsAdded)){
+                    
+                    
+                    continue;
+                }else{
+                    if($idTocheck==$_product->getId()){
+                        $idsAdded[]=$idTocheck;
+                    }else{
+                         continue;
+                    }
+                    
+                }
+    } 
+    /** FAB-130 Start /**/
+    ?>    
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php
     //$_columnCount = Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     $_columnCount = $this->getColumnCount() ? $this->getColumnCount() : Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     ?>
-    <ul class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
-    <?php $i=0; foreach ($_productCollection as $_product): ?>
+    <ul <?php /* FAB-95 Start/**/ ?>id="myProductList" <?php /* FAB-95 End/**/ ?>class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
+    <?php $i=0; /* FAB-95 Start/**/ $mycount=0; /* FAB-95 End/**/ foreach ($_productCollection as $_product): ?>
             <?php
-            /** FAB-130 Start /**/
+      		/** FAB-130 Start /**/
             if(!in_array($_product->getId(), $idsAdded)){
                 continue;
             }
@@ -245,15 +235,26 @@ if($del < 7){
              }
             
             /** FAB-130 End /**/
-	    /* MANGOEXTENSIONS */
+	      /* MANGOEXTENSIONS */
             /* -SWATCHES HTML OUTPUT */
             $_swatches = $_swatches_helper->setProduct($_product)->processSwatches();
             /* EOF -SWATCHES HTML OUTPUT */
             $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+			/* FAB-95 Start/**/ $mycount++; /* FAB-95 End/**/
             ?>
         
-            <li class="item">
+            <li class="item <?php /* FAB-95 Start/**/ ?>myProductLi<?php /* FAB-95 End/**/ ?>" <?php /* FAB-95 Start/**/ ?>product-index="<?php echo $mycount; ?>"<?php /* FAB-95 End/**/ ?>>
               <div class="item-area">
+                <div class="price-discount-percentage">
+                <?php
+                  $_finalPrice=$_product->getFinalPrice();
+                  $_price=$_product->getPrice();
+                  if($_finalPrice < $_price){
+                    $_savePercent = 100 - round(($_finalPrice / $_price)*100);
+                    echo '<span class="perc-text">'.$_savePercent.'</span>';
+                  }
+                ?>
+                </div>
                 <div class="product-image-area">
                     <?php
                     if( Mage::getStoreConfig("quickview/general/enableview", $code) ){
@@ -269,7 +270,7 @@ if($del < 7){
                             $base_url .= "quickview/index/view/";
                         }
                         $quickview_url = $base_url."id/".$_product->getId();
-                        ?>             
+                        ?>
                         <a href="<?php echo $quickview_url; ?>" class="quickview-icon"><i class="icon-export"></i><span><?php echo $this->__("Quick View"); ?></span></a>
                     <?php
                     }
@@ -278,21 +279,6 @@ if($del < 7){
                         /* MANGOEXTENSIONS */
                         /* CHANGE THE SOURCE OF THE PRODUCT IMAGE TO CHANGE ACCORDING TO THE LAYERED NAVIGATION */
                         ?>
-                        <?php 
-      $manufacturerValue=Mage::app()->getRequest()->getParam('manufacturer');
-      $mExist='N';
-      if(is_array($manufacturerValue)){
-       if(in_array(167, $manufacturerValue)){
-        $mExist='Y';
-       }
-      }else{
-       if($manufacturerValue==167){
-        $mExist='Y';
-       }
-      }
-      ?>
-       <div class="logo-over-image <?php if(Mage::getModel('catalog/product')->load($_product->getId())->getManufacturer()!=167 && $mExist=='N'){ echo 'hide'; } ?>" data-click-state="0" manufacturer="<?php echo Mage::getModel('catalog/product')->load($_product->getId())->getAttributeText('manufacturer'); ?>"></div>
-                        <div class="logo-over-content"><label>Produk pilihan Fabelio</label></div>
                     <a href="<?php echo $_swatches["product_url"] ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <?php
                         if(Mage::getStoreConfig("porto_settings/category/alternative_image", $code)){
@@ -349,18 +335,8 @@ if($del < 7){
                         }
                     ?>
                 </div>
-<?php
-$delivery = $_product->getDeliverytimeconfig();
-$del = (int) filter_var($delivery, FILTER_SANITIZE_NUMBER_INT);
-if($del < 7){
-?>
-<div class="new-label" style="width: 100%;bottom: 0px;"><span class="sale-product-icon" style="padding: 7px;line-height: 23px;">
-<img src="http://fabelio.com/media/fab/icons/delivery-truck-02.svg" style="height: 24px;padding-right: 6px;margin-bottom: -1px;">
-<span class="delivery-label"><strong><?php echo $del; ?> Hari </strong>Pengiriman Kilat GRATIS</span></span></div>
-<?php
-}
-?>
-                <div class="details-area item-detail-lat">                    
+                <div class="details-area">
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                     <?php
                     if($_product->getTypeId() == 'configurable') {
                       $_swatches_ids = array();
@@ -383,7 +359,6 @@ if($del < 7){
                       }
                       
                       /** FAB-130 End /**/
-
                       foreach($simpleProds as $simple_product){
                         if($fabricColor = $simple_product->getData('fabric_color')) {
                           $_swatches_ids[] = $fabricColor;
@@ -405,20 +380,16 @@ if($del < 7){
                         // FAB-83 code start
                           echo '<li><a href="'.$_product->getProductUrl().'#'.$attributeId.'='.$ps['option_id'].'"><img class="tooltip" src="/media/attributeswatches/'.$ps['filename'].'" alt="'.$ps['value'].'" title="'.$ps['value'].'"></a></li>';
                         // FAB-83 code end
-                          // FAB-65 swatch limit change to 7
-                          if(++$cnt > 7) break;
+                          if(++$cnt > 5) break;
                       }
-//                      if(count($_options)>7){
-//                        echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
-//                      }
-// FAB-65 swatch limit change to 7
-                      echo '<li class="more-swatches" options="'.count($_options).'"><a href="'.$_product->getProductUrl().'">More</a></li>';
+					  echo '<li class="more-swatches" options="'.count($_options).'"><a href="'.$_product->getProductUrl().'">More</a></li>';
+                      
+					  
                       echo '</ul>';
                     }else{
-			echo '<ul class="fabric-color-swatches clearfix"><li></li></ul>';
-                    }
+						echo '<ul class="fabric-color-swatches clearfix"><li></li></ul>';
+					}
                     ?>
-                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                     <?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                     <?php else: ?>
@@ -489,7 +460,14 @@ if($del < 7){
             </div></li>
         <?php endforeach ?>
         </ul>
-        <script type="text/javascript">
+		<?php /***** FAB - 95 Start *******/  ?>
+		<input type="hidden" id="scrollPageNum" value="<?php $valueOfP=Mage::app()->getRequest()->getParam('p'); if($valueOfP>1){ echo $valueOfP; }else{ echo '1'; }?>">
+		<input type="hidden" id="scrollEndPageNum" value="<?php echo $_productCollection->getLastPageNumber(); ?>">
+		<input type="hidden" id="isRequested" value="0">
+		<input type="hidden" id="currentPageSize" value="<?php echo $_productCollection->getPageSize(); ?>">
+		<input type="hidden" id="TotalProductsInList" value="<?php echo $_productCollection->getPageSize(); ?>">
+		<?php /***** FAB - 95 end *******/  ?>
+		<script type="text/javascript">
             jQuery('.col-main .products-grid li:nth-child(2n)').addClass('nth-child-2n');
             jQuery('.col-main .products-grid li:nth-child(2n+1)').addClass('nth-child-2np1');
             jQuery('.col-main .products-grid li:nth-child(3n)').addClass('nth-child-3n');
@@ -504,8 +482,8 @@ if($del < 7){
             jQuery('.col-main .products-grid li:nth-child(7n+1)').addClass('nth-child-7np1');
             jQuery('.col-main .products-grid li:nth-child(8n)').addClass('nth-child-8n');
             jQuery('.col-main .products-grid li:nth-child(8n+1)').addClass('nth-child-8np1');
-    
-    jQuery(document).ready(function(){
+			
+			jQuery(document).ready(function(){
 				manageSwatches();
 			});
 			jQuery(window).resize(function() {
@@ -525,7 +503,7 @@ if($del < 7){
 					jQuery( ".fabric-color-swatches li:nth-child(6)" ).removeClass('hide');
 					jQuery( ".fabric-color-swatches li:nth-child(7)" ).removeClass('hide');
 					jQuery(".more-swatches").each(function() {
-						if(jQuery( this ).attr("options")>7){
+						if(jQuery( this ).attr("options")>5){
 							jQuery( this ).removeClass("hide");
 						}else{
 							jQuery( this ).addClass("hide");
@@ -551,8 +529,133 @@ if($del < 7){
 					
 				}
 			}
-   
-		/** FAB-130 Start /**/
+/***** FAB - 95 Start *******/		
+
+			jQuery(window).scroll(function(){
+				//alert("hello");
+				var hT = jQuery('#myProductList').offset().top;
+				var hH = jQuery('#myProductList').outerHeight();
+				var wH = jQuery(window).height();
+				var wS = jQuery(this).scrollTop();
+				var wHNew=wH*3;
+				var winWidth=jQuery(window).width();
+				if (wS > (hT+hH-wHNew)){
+					
+					if(winWidth>767){
+					
+					}else{
+						infiniteScrollForMobile();
+					}
+				}
+				
+				if(winWidth<767){
+					var currentLi=2;
+					var currentCount=0;
+					var index=0;
+					jQuery('.myProductLi').each(function(i, obj) {
+						var LiTop=jQuery(this).offset().top;
+						var liheight=jQuery(this).height();
+						//console.log("index : "+index+", top : "+LiTop+", height : "+liheight);
+						if(liheight>0){
+							if(wS>LiTop+liheight-wH){
+								
+								currentLi=index+1;
+							}
+							index++;
+						}
+						
+					});
+					var total=index;
+					jQuery("#TotalProductsInList").val(total);
+					if(jQuery('#currentProductIsBlock').length==0){
+						jQuery('#myProductList').after('<div id="currentProductIsBlock" style="position: fixed;z-index: 100000000;bottom: 10px;height: 50px;opacity: 0.8;margin-left: -75px;width: 150px;left: 50%;text-align: center;background-color: black;border-radius: 5px;color: white;padding-top: 15px;"></div>');
+					}
+					jQuery('#currentProductIsBlock').html(currentLi+" of <?php echo $_productCollection->getSize(); ?>");
+					clearTimeout(jQuery.data(this, 'scrollTimer'));
+					jQuery.data(this, 'scrollTimer', setTimeout(function() {
+						jQuery('#currentProductIsBlock').remove();
+					}, 2000));
+					
+				}
+				
+			});
+			jQuery(document).ready(function(){
+				hideAndShowPaging();
+			});
+			jQuery(window).resize(function() {
+				hideAndShowPaging();
+			});
+			
+			function hideAndShowPaging(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>767){
+					jQuery(".pager").removeClass('hide');
+					jQuery(".limiter").removeClass('hide');
+					if(jQuery('#myProductLoaderImg').length>0){
+						jQuery('#myProductLoaderImg').remove();
+					}
+					if(jQuery('#currentProductIsBlock').length>0){
+						jQuery('#currentProductIsBlock').remove();
+					}
+					
+				}else{
+					jQuery(".pager").addClass('hide');
+					jQuery(".limiter").addClass('hide');
+					
+				}
+			}
+			function infiniteScrollForMobile(){
+					var currentPageNum=jQuery('#scrollPageNum').val();
+					var scrollEndPageNum=jQuery('#scrollEndPageNum').val();
+					if(currentPageNum<scrollEndPageNum){
+						var nextPageNum=parseInt(currentPageNum)+1;
+						var categoryUrlPage=jQuery('#ptech_multilayer_ajax').val();
+						var isRequested=jQuery('#isRequested').val();
+						var url=categoryUrlPage;
+						if(categoryUrlPage.indexOf('?') >= 0){
+							url=url+'&p='+nextPageNum;
+						}else{
+							url=url+'?p='+nextPageNum;
+						}
+						if(isRequested==0){
+							jQuery('#isRequested').val("1");
+							jQuery.ajax({
+								type: "POST",
+								url: url,
+								data: "",
+								beforeSend: function() {
+									jQuery('#myProductList').append('<img id="myProductLoaderImg" src="/media/infinitescroll/loading_spinner.gif" style="margin: auto;height: 50px;">');
+								},
+								success: function(data) {
+									if(jQuery('#myProductLoaderImg').length>0){
+										jQuery('#myProductLoaderImg').remove();
+									}
+									var jsonObj=JSON.parse(data);
+									//console.log(jsonObj);
+									var elements = jQuery(jsonObj.products);
+									var found = jQuery('#myProductList', elements).html();
+									jQuery('#myProductList').append(found);
+									jQuery('#isRequested').val("0");
+									jQuery('#scrollPageNum').val(nextPageNum);
+									jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+									jQuery(".more-swatches").each(function() {
+									if(jQuery( this ).attr("options")>3){
+										jQuery( this ).removeClass('hide');
+									}else{
+										jQuery( this ).addClass('hide');
+									}
+									});
+								}
+							});
+						}
+					}
+			}
+			
+/***** FAB - 95 End *******/
+/** FAB-130 Start /**/
 jQuery(document).ready(function(){
     var str=document.getElementById('ptech_multilayer_params').value;
     if(str.indexOf("delivery") != -1){
@@ -599,9 +702,8 @@ jQuery(document).ready(function(){
             jQuery(".selected-attr").removeClass("hide");
         }
         });
-        /** FAB-130 End /**/    
-   	 </script>
-
+        /** FAB-130 End /**/
+        </script>
     <?php endif; ?>
 
     <div class="toolbar-bottom">
@@ -609,92 +711,3 @@ jQuery(document).ready(function(){
     </div>
 </div>
 <?php endif; ?>
-<script>
-    jQuery(document).ready(function($){
-//       $('.logo-over-image').on('click',function(){
-  //         if($(this).attr('data-click-state') == 0) {
-//		  $(this).attr('data-click-state', 1);
-  //           $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close.svg")'); 
-    //      $(this).next('.logo-over-content').css('display','block');
-         
-      //  }else{
-            
-        //    $(this).attr('data-click-state', 0); 
-          // $(this).removeAttr('style');
-         // $(this).next('.logo-over-content').css('display','none');
-          
-       // }
-          
-     //  }); 
-if(jQuery(window).width() > 767){
-
-        
-
-       $('.logo-over-image').on('click',function(){
-
-           if($(this).attr('data-click-state') == 0) {
-
-    $(this).attr('data-click-state', 1);
-
-             $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close.svg")'); 
-
-          $(this).next('.logo-over-content').css('display','block');
-
-         
-
-        }else{
-
-            
-
-            $(this).attr('data-click-state', 0); 
-
-           $(this).removeAttr('style');
-
-          $(this).next('.logo-over-content').css('display','none');
-
-          
-
-        }
-
-          
-
-       }); 
-
-        }else {
-
-            $('.logo-over-image').on('click',function(){
-
-           if($(this).attr('data-click-state') == 0) {
-
-    $(this).attr('data-click-state', 1);
-
-             $(this).css('background','url("/skin/frontend/smartwave/porto/images/catalogue-icon-close-mobile.png")'); 
-
-          $(this).next('.logo-over-content').css('display','block');
-
-         
-
-        }else{
-
-            
-
-            $(this).attr('data-click-state', 0); 
-
-           $(this).removeAttr('style');
-
-          $(this).next('.logo-over-content').css('display','none');
-
-          
-
-        }
-
-          
-
-       }); 
-
-            
-
-        }
-        
-    });
-</script>
