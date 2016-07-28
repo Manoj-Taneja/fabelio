@@ -12,6 +12,30 @@
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
     }
 ?>
+<style>
+    /*FAB 130 css starts here*/
+.selected-attr{    display: inline-block;
+    background: #f8edd9;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px; text-align: center;}
+.selected-attr ul{display: inline-block;
+    width:auto;}
+.selected-attr li{display: inline-block;
+    margin-right: 15px;}
+.selected-attr label{    font-family: roboto-bold;
+    margin-right: 15px;}
+.selected-attr li span{cursor: pointer; font-weight: 700; font-size: 16px;}
+/*FAB 130 css starts here*/
+</style>
+<?php /** FAB-130 Start /**/ ?>
+<div class="selected-attr hide">
+        <label>Filter Aktif :</label>
+        <ul id='deliverytimefiltersselected'>
+           
+        </ul>
+    </div>
+<?php /** FAB-130 End /**/ ?>
 <?php echo $_imgHtml ?>
 <div class="page-title category-title">
     <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
@@ -32,3 +56,15 @@
 <?php else: ?>
     <?php echo $this->getProductListHtml() ?>
 <?php endif; ?>
+<?php /** FAB-130 Start /**/ ?>
+<script>
+    jQuery(document).ready(function(){
+    jQuery(".removeFilter").click(function(){
+            var fid= jQuery(this).attr("fid");
+            var length=jQuery('#deliverytime-'+fid+'').length;
+            
+            jQuery('#deliverytime-'+fid+'').trigger("click");
+        });
+});
+    </script>
+    <?php /** FAB-130 End /**/ ?>
