@@ -682,6 +682,7 @@
        
          jQuery(document).on('click', '.save-address', function(){
             var address_id = jQuery(this).attr('rel');
+            
             var entity_id = jQuery('#address_edit_box').val();
             
             var error = 0;
@@ -801,9 +802,45 @@
            if(jQuery('#phone').val()==''){
                
                error = 1;
+               jQuery('#new_address').removeClass('btn-active-fill');
            }
            if(error!=1){
                jQuery('#new_address').addClass('btn-active-fill');
+           }
+         });
+         
+          jQuery(document).on('blur','#phone_1, #first_name_1, #last_name_1, #street_1, #billing_region_id_1, #city_1 ',function(){
+              var error = 0;
+           if(jQuery('#first_name_1').val()==''){
+              
+               error = 1;
+           } 
+           if(jQuery('#last_name_1').val()==''){
+              
+               error = 1;
+           }
+           if(jQuery('#street_1').val()==''){
+               
+               error = 1;
+           }
+           if(jQuery('#country_id_1').val()==''){
+               
+               error = 1;
+           }
+           if(jQuery('#billing_region_id_1').val()==''){
+               
+               error = 1;
+           }
+           if(jQuery('#city_1').val()==''){
+                              error = 1;
+           }
+           if(jQuery('#phone_1').val()==''){
+               
+               error = 1;
+               jQuery('#new_address_1').removeClass('btn-active-fill');
+           }
+           if(error!=1){
+               jQuery('#new_address_1').addClass('btn-active-fill');
            }
          });
         jQuery(document).on('click', '#new_address', function($){
@@ -952,43 +989,52 @@
         });
         
         
-        
+       /**/
         
         jQuery(document).on('click', '#new_address_1', function(){
-        
+        console.log("Called");
             var error = 0;
            if(jQuery('#first_name_1').val()==''){
-               jQuery('#first_name').addClass('wrong-pass');
+               jQuery('.name_1').addClass('wrong-pass');
+               jQuery('#name-error-msg-1').html('Enter first name');
                //return false;
                error = 1;
            } 
            if(jQuery('#last_name_1').val()==''){
-               jQuery('#last_name').addClass('wrong-pass');
+               jQuery('.name_1').addClass('wrong-pass');
+               jQuery('#name-error-msg-1').html('Enter last name');
                error = 1;
            }
            if(jQuery('#street_1').val()==''){
-               jQuery('#street').addClass('wrong-pass');
+               jQuery('.address_1').addClass('wrong-pass');
+               jQuery('#address-error-msg-1').html('Enter street');
                error = 1;
            }
            if(jQuery('#country_id_1').val()==''){
-               jQuery('#country_id').addClass('wrong-pass');
+               jQuery('.address_1').addClass('wrong-pass');
+               jQuery('#address-error-msg-1').html('Enter street');
                error = 1;
            }
            if(jQuery('#region_1').val()==''){
-               jQuery('#region').addClass('wrong-pass');
+               jQuery('.address_1').addClass('wrong-pass');
+               jQuery('#address-error-msg-1').html('Enter street');
                error = 1;
            }
            if(jQuery('#city_1').val()==''){
-               jQuery('#city').addClass('wrong-pass');
+               jQuery('.address_1').addClass('wrong-pass');
+               jQuery('#address-error-msg-1').html('Enter street');
                error = 1;
            }
            if(jQuery('#phone_1').val()==''){
-               jQuery('#phone').addClass('wrong-pass');
+               jQuery('.phone_1').addClass('wrong-pass');
+               jQuery('#phone-error-msg-1').html('Enter phone number');
                error = 1;
            }
            
            if(error==1){
                return false;
+           }else{
+              jQuery('#new_address_1').addClass('btn-active-fill');
            }
            jQuery('#loading-mask').show();
            jQuery('#address_form_1').submit();
