@@ -65,7 +65,7 @@
                     </div>
                     
 					<script type="text/javascript">
-						jQuery(function($){
+						jQuery(function(){
 						var winWidht, ajexOn;
 						function filterNavigationForAttribute()
 						{
@@ -79,7 +79,9 @@
                                                 var filterId, loc, keys = [];
                                                 var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
                                                 jQuery('.ptech_multilayer_attribute').attr('href','javascript:void(0);')   
-                                                jQuery('.ptech_multilayer_attribute').click(function(){
+                                                //jQuery('.ptech_multilayer_attribute').click(function(){
+							jQuery('#ptech_multilayer_init_manufacturer ol li').on('click','.ptech_multilayer_attribute',function(){
+
                                                     jQuery(this).toggleClass('ptech_multilayer_attribute_selected');
                                                     filterId = jQuery(this).attr('data-id');
                                                     keys = jQuery.unique(keys); 
@@ -89,6 +91,7 @@
                                                     } else {
                                                         keys.push(filterId); 
                                                     } 
+ev.stopPropagation();
                                                 });   
                                                 jQuery('.clear-links a.clear-all').click(function(){
                                                     var all_params_query_name = "<?php foreach ($_GET as $name => $value) {
@@ -157,74 +160,89 @@
                             
 						}
              						function mobileFilter(){
-							winWidht = $(window).width();
+							winWidht = jQuery(window).width();
 							if(winWidht < 767){
 							filterNavigationForAttribute();
-							$('.mobile-category').click(function(){
-									$('.mobile-links li').removeClass('active-filter');
-									$('.block.block-layered-nav, .shotby-mobile').hide();
-									$('.block.block-category-nav').show();
+							jQuery('.mobile-category').click(function(){
+									jQuery('.mobile-links li').removeClass('active-filter');
+									jQuery('.block.block-layered-nav, .shotby-mobile').hide();
+									jQuery('.block.block-category-nav').show();
 							});
 
-							$('.block.block-category-nav .mobile-in-category').click(function(){
-									$('.block.block-category-nav').hide();
+							jQuery('.block.block-category-nav .mobile-in-category').click(function(){
+									jQuery('.block.block-category-nav').hide();
 							});
 							
-							$('.mobile-links li.mobile-filter').click(function(){
-									$('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+							//jQuery('.mobile-links li.mobile-filter.nav-mob-lat').click(function(e){
 
-									$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
-									$('.shotby-mobile').hide();
-									if($(this).hasClass('active-filter')){
-										$('.block.block-layered-nav').hide();
-										$(this).removeClass('active-filter');	
+								jQuery('.mobile-links').on('click','.nav-mob-lat',function(){
+
+
+									jQuery('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+
+
+									jQuery('.mobile-shotby').removeClass('active-filter');	
+									jQuery('.shotby-mobile').hide();
+									if(jQuery(this).hasClass('active-filter')){
+										jQuery('.block.block-layered-nav').hide();
+										jQuery(this).removeClass('active-filter');	
 									}else{
-										$(this).addClass('active-filter');
-										$('.block.block-layered-nav').show();
+										jQuery(this).addClass('active-filter');
+										jQuery('.block.block-layered-nav').show();
 									}
+
+ev.stopPropagation();
+
 							});
 							
-							$('.mobile-links li.mobile-shotby').click(function(){
-                                    console.log("here shot");
-                                 $('.inner-wrapper').after(ajexOn);
-									$('.mobile-links li.mobile-filter').removeClass('active-filter');	
-									$('.block.block-layered-nav').hide();
-									if($(this).hasClass('active-filter')){
-										$('.shotby-mobile').hide();
-										$(this).removeClass('active-filter');	
+							//jQuery('.mobile-links li.mobile-shotby.nav-mob-lat2').click(function(e){
+							jQuery('.mobile-links').on('click','.nav-mob-lat2',function(){
+
+                               //     console.log("here shot");
+                                // jQuery('.inner-wrapper').after(ajexOn);
+									jQuery('.mobile-filter').removeClass('active-filter');	
+									jQuery('.block.block-layered-nav').hide();
+									if(jQuery(this).hasClass('active-filter')){
+										jQuery('.shotby-mobile').hide();
+										jQuery(this).removeClass('active-filter');	
 									}else{
-										$(this).addClass('active-filter');
-										$('.shotby-mobile').show();
+										jQuery(this).addClass('active-filter');
+										jQuery('.shotby-mobile').show();
 									}
+
+ev.stopPropagation();
+
+							});
+
+
+							
+							jQuery('.shotby-mobile li a').click(function(){
+								jQuery('.mobile-links li.mobile-shotby').removeClass('active-filter');	
+								jQuery('.shotby-mobile').hide();
 							});
 							
-							$('.shotby-mobile li a').click(function(){
-								$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
-								$('.shotby-mobile').hide();
-							});
 							
-							
-							$(document).on('click', function(){
+							jQuery(document).on('click', function(){
 								if(winWidht < 767){
-								$(".block.block-layered-nav, .block.block-category-nav, .shotby-mobile").hide();
-								$(".mobile-links ul li").removeClass("active-filter");
+								jQuery(".block.block-layered-nav, .block.block-category-nav, .shotby-mobile").hide();
+								jQuery(".mobile-links ul li").removeClass("active-filter");
 							}
 							});
 
-							$(".sidebar").click(function(e){
+							jQuery(".sidebar").click(function(e){
 								e.stopPropagation();
 							});
 							
 								
 						}else{
-							$('.shotby-mobile').hide();
-							$('.block.block-layered-nav, .block.block-category-nav, .sidebar').show();
+							jQuery('.shotby-mobile').hide();
+							jQuery('.block.block-layered-nav, .block.block-category-nav, .sidebar').show();
 						}
 					}
 						
 						mobileFilter();
 						
-						$(window).resize(function() {
+						jQuery(window).resize(function() {
 							mobileFilter()
 						})
 						//add jQuery code at the end
@@ -239,6 +257,12 @@
 
 						});
 					});
+
+
+
+
+
+
 					</script>
 					
 					

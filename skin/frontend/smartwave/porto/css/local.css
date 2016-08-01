@@ -4069,6 +4069,15 @@ ul.top-parent-category {
     font-weight: 400;
     color: #464646
 }
+.block.block-category-nav a:hover {
+    color: #464646;
+    text-decoration: underline;
+}
+.block.block-category-nav a:hover:before{visibility:hidden !important;} 
+.menu-active span{color: #ffc000 !important;text-decoration: none !important;}
+.block-category-nav .sub-category-list li a.menu-active:before{visibility:visible;}
+.block-category-nav .sub-category-list li a.menu-active:hover:before{visibility:visible !important;}
+.block-category-nav .sub-category-list li a.menu-active:hover span{text-decoration:none !important;}
 /* FAB-59 css code ends */
 
 

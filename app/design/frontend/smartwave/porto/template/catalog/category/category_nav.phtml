@@ -89,11 +89,13 @@ function show_category_hierarchy($child, $_helper, $rootCat, $top, $_sub_sub_par
 				$_current_class = "";
 				$_current_class_font = "";
 			endif;
+			if($_helper->getCategoryUrl($_top_parent_sub_category) == Mage::helper('core/url')->getCurrentUrl()){ $activeClassname = "menu-active";}
+			else{$activeClassname = "";}                                
 			echo '
         <li class="has-children">';
 			if ($current->getID() == $_top_parent_sub_category->getID())
 				{
-				echo '<a class="sub-categories current ' . $_current_class_font . '" href="javascript://"><span>' . $_top_parent_sub_category->getName() . '</span></a>';
+				echo '<a class="sub-categories current ' . $_current_class_font . ' ' . $activeClassname . '" href="javascript://"><span>' . $_top_parent_sub_category->getName() . '</span></a>';
 				}
 			  else
 				{
@@ -329,11 +331,11 @@ $subcategories = Mage::getModel('catalog/category')->getCategories($current->get
 
 
 
-                <li class="mobile-shotby">Sort By</li>
+                <li class="mobile-shotby nav-mob-lat2">Sort By</li>
 
 
 
-                <li class="mobile-filter">Filter</li>
+                <li class="mobile-filter nav-mob-lat">Filter</li>
 
 
 
