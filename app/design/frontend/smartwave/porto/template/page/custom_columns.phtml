@@ -1,4 +1,5 @@
 
+
 <?php
 /**
  * Magento
@@ -277,3 +278,260 @@ ev.stopPropagation();
 <?php echo $this->getAbsoluteFooter() ?>
 </body>
 </html>
+
+
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ 
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html>
+<html lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+<div class="wrapper">
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <div class="page">
+        <?php echo $this->getChildHtml('header') ?>
+        <?php echo $this->getChildHtml('topContainer') ?>
+        <div class="main-container col2-left-layout">
+            <div class="main container">
+                <div class="row">
+				<div class="col-left sidebar col-sm-3">
+				<div style="position: relative;">
+                        <?php                  
+                            $_helper = Mage::helper("catalog/category"); 
+                            $rootCat = Mage::app()->getStore()->getRootCategoryId();
+                            $current = Mage::registry('current_category');                           
+                            $data = $current->getData();                        
+                        ?>              
+                        <div class="mobile-category"><?php echo $data["name"]; ?></div>                      
+                        <div class="custon-left"> <?php echo $this->getChildHtml('left') ?></div>
+						
+						
+						</div>
+                    </div>
+                    <div class="col-main col-sm-9">
+                        <?php echo $this->getChildHtml('global_messages') ?>
+                        <?php echo $this->getChildHtml('content') ?>
+                    </div>
+                    
+					<script type="text/javascript">
+						jQuery(function($){
+						var winWidht, ajexOn;
+						function filterNavigationForAttribute()
+						{
+						///ajexOn = jQuery('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').clone();
+                            
+                           console.log(ajexOn);
+                            
+                    //        jQuery('.block-content').append(ajexOn);
+                            
+
+                                                var filterId, loc, keys = [];
+                                                var existing_filter_attr = '<?php echo $_GET['manufacturer'] ?>';
+                                                jQuery('.ptech_multilayer_attribute').attr('href','javascript:void(0);')   
+                                                jQuery('.ptech_multilayer_attribute').click(function(){
+                                                    jQuery(this).toggleClass('ptech_multilayer_attribute_selected');
+                                                    filterId = jQuery(this).attr('data-id');
+                                                    keys = jQuery.unique(keys); 
+                                                    var found = jQuery.inArray(filterId, keys);
+                                                    if (found >= 0) {
+                                                        keys.splice(found, 1);
+                                                    } else {
+                                                        keys.push(filterId); 
+                                                    } 
+                                                });   
+                                                jQuery('.clear-links a.clear-all').click(function(){
+                                                    var all_params_query_name = "<?php foreach ($_GET as $name => $value) {
+                                                                                    echo $name.",";
+                                                                                    } ?>";
+                                                   // alert(all_params_query_name);                                            
+                                                    var all_params_query_value = "<?php foreach ($_GET as $name => $value) {
+                                                                                    echo $value.",";
+                                                                                    } ?>";
+                                                   // alert(all_params_query_value);
+                                                    var manufacturer = keys.join("-");
+                                                    //var current_url = window.location.href;
+                                                    var current_url=jQuery("#filterSubmitUrl").val();
+						    var loc = current_url;
+						    if(all_params_query_name)
+                                                    {
+                                                        if(all_params_query_name.indexOf('clearall') > -1)
+                                                        {   var search = "?";
+                                                            current_url = current_url.substring(0, current_url.indexOf(search));
+                                                        }
+                                                        if(current_url.indexOf('manufacturer')> -1)
+                                                        {
+                                                            for(i=0;i<keys.length;i++)
+						 	    {
+							    	if(current_url.indexOf(keys[i])> -1)
+                                                            	{
+                                                                	current_url = current_url.replace(keys[i],'');
+									//alert(current_url);
+                                                            	}
+                                                            	else{
+                                                                	manufacturerValues = current_url.substring(current_url.indexOf("manufacturer="));
+                        if(manufacturerValues.indexOf('&')> -1)
+                        {
+                                manufacturerValues = manufacturerValues.substring(0, manufacturerValues.indexOf('&'));
+                        }
+                        current_url = current_url.replace(manufacturerValues,manufacturerValues+'-'+keys[i]);
+									//current_url = current_url+"-"+keys[i];
+									//alert("else part"+current_url);
+                                                            	}
+							    } var loc =current_url;       
+                                                        }
+                                                        else
+                                                        {    
+                                                            	if(manufacturer)var loc = current_url+'&manufacturer='+manufacturer;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if(existing_filter_attr)
+                                                        {
+                                                            var loc = current_url+"-"+manufacturer;
+                                                        }
+                                                        else
+                                                        {    
+                                                          	if(manufacturer)var loc = current_url+'?manufacturer='+manufacturer;
+                                                        }
+                                                    }    
+                                                        jQuery(this).attr('href', loc);
+                                                         window.refresh();
+
+                                                   //  console.log(loc);
+                                                    //window.location.href = loc;
+                    //alert(loc);
+						
+                                                });
+                            
+						}
+             						function mobileFilter(){
+							winWidht = $(window).width();
+							if(winWidht < 767){
+							filterNavigationForAttribute();
+							$('.mobile-category').click(function(){
+									$('.mobile-links li').removeClass('active-filter');
+									$('.block.block-layered-nav, .shotby-mobile').hide();
+									$('.block.block-category-nav').show();
+							});
+
+							$('.block.block-category-nav .mobile-in-category').click(function(){
+									$('.block.block-category-nav').hide();
+							});
+							
+							$('.mobile-links li.mobile-filter').click(function(){
+									//$('#ptech_multilayer_url, #ptech_multilayer_params, #ptech_multilayer_ajax').remove();
+
+									$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
+									$('.shotby-mobile').hide();
+									if($(this).hasClass('active-filter')){
+										$('.block.block-layered-nav').hide();
+										$(this).removeClass('active-filter');	
+									}else{
+										$(this).addClass('active-filter');
+										$('.block.block-layered-nav').show();
+									}
+							});
+							
+							$('.mobile-links li.mobile-shotby').click(function(){
+                                    console.log("here shot");
+                                 $('.inner-wrapper').after(ajexOn);
+									$('.mobile-links li.mobile-filter').removeClass('active-filter');	
+									$('.block.block-layered-nav').hide();
+									if($(this).hasClass('active-filter')){
+										$('.shotby-mobile').hide();
+										$(this).removeClass('active-filter');	
+									}else{
+										$(this).addClass('active-filter');
+										$('.shotby-mobile').show();
+									}
+							});
+							
+							$('.shotby-mobile li a').click(function(){
+								$('.mobile-links li.mobile-shotby').removeClass('active-filter');	
+								$('.shotby-mobile').hide();
+							});
+							
+							
+							$(document).on('click', function(){
+								if(winWidht < 767){
+								$(".block.block-layered-nav, .block.block-category-nav, .shotby-mobile").hide();
+								$(".mobile-links ul li").removeClass("active-filter");
+							}
+							});
+
+							$(".sidebar").click(function(e){
+								e.stopPropagation();
+							});
+							
+								
+						}else{
+							$('.shotby-mobile').hide();
+							$('.block.block-layered-nav, .block.block-category-nav, .sidebar').show();
+						}
+					}
+						
+						mobileFilter();
+						
+						$(window).resize(function() {
+							mobileFilter()
+						})
+						//add jQuery code at the end
+
+						//shopby add class active
+
+						jQuery('.shotby-mobile ul li a').click(function(){
+
+						jQuery('.shotby-mobile ul li a').removeClass('active');
+
+						jQuery(this).addClass('active');
+
+						});
+					});
+					</script>
+					
+					
+                </div>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+    </div>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>
+<?php */ ?> 
