@@ -1,6 +1,8 @@
+
 <?php
     $_productCollection=$this->getLoadedProductCollection();
-    $_helper = $this->helper('catalog/output');
+   // echo get_class($this);die;
+	$_helper = $this->helper('catalog/output');
     $store = Mage::app()->getStore();
     $code  = $store->getCode();
     $aspect_ratio = Mage::getStoreConfig("porto_settings/category/aspect_ratio",$code);
@@ -27,6 +29,7 @@
     <ol class="products-list product-items" id="products-list">
     <?php foreach ($_productCollection as $_product): ?>
         <?php
+           
         /* MANGOEXTENSIONS */
         /* -SWATCHES HTML OUTPUT */
         $_swatches = $_swatches_helper->setProduct($_product)->processSwatches();
@@ -173,23 +176,76 @@
     /* COLORS AND ATTRIBUTES SWATCHES HELPER */
     $_swatches_helper = $this->helper("attributeswatches/product_list")->setDimensions(300, 300); /* set the dimensions here... */
     ?>
-    
+    <?php 
+    /** FAB-130 Start /**/
+    $idsAdded=array();
+    $childProductIds=array();
+    $childCount=array();
+    foreach ($_productCollection as $_product){ 
+       $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($_product->getId());
+        $idTocheck=0;
+                if(count($parentIds)>0){
+                    $idTocheck=$parentIds[0];
+                    $childProductIds[]=$_product->getId();
+                    $childCount[$idTocheck]=$childCount[$idTocheck]+1;
+                    
+                }else{
+                    $idTocheck=$_product->getId();
+                    if($_product->getTypeId() == 'configurable') {
+                        if(array_key_exists($idTocheck, $childCount)){
+                            
+                        }else{
+                             $childCount[$idTocheck]=0;
+                        }
+                    }
+                    
+                }
+                if(in_array($idTocheck, $idsAdded)){
+                    
+                    
+                    continue;
+                }else{
+                    if($idTocheck==$_product->getId()){
+                        $idsAdded[]=$idTocheck;
+                    }else{
+                         continue;
+                    }
+                    
+                }
+    } 
+    /** FAB-130 Start /**/
+    ?>
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php
     //$_columnCount = Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     $_columnCount = $this->getColumnCount() ? $this->getColumnCount() : Mage::getStoreConfig("porto_settings/category_grid/columns",$code);
     ?>
-    <ul class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
-    <?php $i=0; foreach ($_productCollection as $_product): ?>
+    <ul <?php /* FAB-95 Start/**/ ?>id="myProductList" <?php /* FAB-95 End/**/ ?>class="products-grid product-items columns<?php echo $_columnCount; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtolinks", $code)):?> hide-addtolinks<?php endif; ?><?php if(!Mage::getStoreConfig("porto_settings/category_grid/show_addtocart", $code)):?> hide-addtocart<?php endif; ?><?php if(Mage::getStoreConfig("porto_settings/category_grid/move_actions", $code)):?> move-action<?php endif; ?>">
+    <?php $i=0; /* FAB-95 Start/**/ $mycount=0; /* FAB-95 End/**/ foreach ($_productCollection as $_product): ?>
             <?php
+            /** FAB-130 Start /**/
+            if(!in_array($_product->getId(), $idsAdded)){
+                continue;
+            }
+             if($this->getRequest()->getModuleName()=="amlanding"){
+                 if($_product->getTypeId() == 'configurable') {
+                    if($childCount[$_product->getId()]==0){
+                        continue;
+                    }
+                 
+                }
+             }
+            
+            /** FAB-130 End /**/
             /* MANGOEXTENSIONS */
             /* -SWATCHES HTML OUTPUT */
             $_swatches = $_swatches_helper->setProduct($_product)->processSwatches();
             /* EOF -SWATCHES HTML OUTPUT */
             $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+			/* FAB-95 Start/**/ $mycount++; /* FAB-95 End/**/
             ?>
         
-            <li class="item">
+            <li class="item <?php /* FAB-95 Start/**/ ?>myProductLi<?php /* FAB-95 End/**/ ?>" <?php /* FAB-95 Start/**/ ?>product-index="<?php echo $mycount; ?>"<?php /* FAB-95 End/**/ ?>>
               <div class="item-area">
                 <div class="price-discount-percentage">
                 <?php
@@ -293,7 +349,19 @@
                         ->addAttributeToSelect('leather_color')
                         ->addAttributeToFilter('entity_id', $conf->getUsedProductCollection()->getAllIds())
                         ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
-
+                      /** FAB-130 Start /**/
+                      $appliedFilters = Mage::helper('multilayer')->getParams();
+                      if(array_key_exists("deliverytime", $appliedFilters)){
+                          $deliveryTime=$appliedFilters['deliverytime'];
+                          $deliveryTimeIds=explode("-", $deliveryTime);
+                          $simpleProds=$simpleProds->addAttributeToFilter('deliverytime', $deliveryTimeIds);
+                      }
+                      if($this->getRequest()->getModuleName()=="amlanding"){
+                        $simpleProds=$simpleProds->addAttributeToFilter('entity_id', $childProductIds);
+                      }
+                      
+                      /** FAB-130 End /**/
+                        
                       foreach($simpleProds as $simple_product){
                         if($fabricColor = $simple_product->getData('fabric_color')) {
                           $_swatches_ids[] = $fabricColor;
@@ -306,6 +374,7 @@
                       $_options = Mage::getModel('attributeswatches/attributeswatches')->getCollection()
                         ->setOrder('value', Varien_Data_Collection::SORT_ORDER_ASC)
                         ->addFieldToFilter('main_table.option_id', array('in' => $_swatches_ids));
+                     
                     // FAB-83 code start
                       $attributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('catalog_product', 'fabric_color');
                     // FAB-83 code end
@@ -317,11 +386,13 @@
                         // FAB-83 code end
                           if(++$cnt > 5) break;
                       }
-                      if(count($_options)>5){
-                        echo '<li class="more-swatches"><a href="'.$_product->getProductUrl().'">More</a></li>';
-                      }
+					  echo '<li class="more-swatches" options="'.count($_options).'"><a href="'.$_product->getProductUrl().'">More</a></li>';
+                      
+					  
                       echo '</ul>';
-                    }
+                    }else{
+						echo '<ul class="fabric-color-swatches clearfix"><li></li></ul>';
+					}
                     ?>
                     <?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
@@ -393,7 +464,14 @@
             </div></li>
         <?php endforeach ?>
         </ul>
-        <script type="text/javascript">
+		<?php /***** FAB - 95 Start *******/  ?>
+		<input type="hidden" id="scrollPageNum" value="<?php $valueOfP=Mage::app()->getRequest()->getParam('p'); if($valueOfP>1){ echo $valueOfP; }else{ echo '1'; }?>">
+		<input type="hidden" id="scrollEndPageNum" value="<?php echo $_productCollection->getLastPageNumber(); ?>">
+		<input type="hidden" id="isRequested" value="0">
+		<input type="hidden" id="currentPageSize" value="<?php echo $_productCollection->getPageSize(); ?>">
+		<input type="hidden" id="TotalProductsInList" value="<?php echo $_productCollection->getPageSize(); ?>">
+		<?php /***** FAB - 95 end *******/  ?>
+		<script type="text/javascript">
             jQuery('.col-main .products-grid li:nth-child(2n)').addClass('nth-child-2n');
             jQuery('.col-main .products-grid li:nth-child(2n+1)').addClass('nth-child-2np1');
             jQuery('.col-main .products-grid li:nth-child(3n)').addClass('nth-child-3n');
@@ -408,6 +486,227 @@
             jQuery('.col-main .products-grid li:nth-child(7n+1)').addClass('nth-child-7np1');
             jQuery('.col-main .products-grid li:nth-child(8n)').addClass('nth-child-8n');
             jQuery('.col-main .products-grid li:nth-child(8n+1)').addClass('nth-child-8np1');
+			
+			jQuery(document).ready(function(){
+				manageSwatches();
+			});
+			jQuery(window).resize(function() {
+				manageSwatches();
+			});
+			
+			function manageSwatches(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>767){
+					jQuery(".show-mobile-more-swatches").addClass("hide");
+					jQuery(".nth-child-4n").removeClass("hide");
+					jQuery(".nth-child-5n").removeClass("hide");
+					jQuery(".nth-child-6n").removeClass("hide");
+					jQuery(".nth-child-7n").removeClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).removeClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).removeClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>5){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}else{
+					jQuery(".nth-child-4n").addClass("hide");
+					jQuery(".nth-child-5n").addClass("hide");
+					jQuery(".nth-child-6n").addClass("hide");
+					jQuery(".nth-child-7n").addClass("hide");
+					jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+					jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+					jQuery(".more-swatches").each(function() {
+						if(jQuery( this ).attr("options")>3){
+							jQuery( this ).removeClass("hide");
+						}else{
+							jQuery( this ).addClass("hide");
+						}
+					});
+					
+				}
+			}
+/***** FAB - 95 Start *******/		
+
+			jQuery(window).scroll(function(){
+				//alert("hello");
+				var hT = jQuery('#myProductList').offset().top;
+				var hH = jQuery('#myProductList').outerHeight();
+				var wH = jQuery(window).height();
+				var wS = jQuery(this).scrollTop();
+				var wHNew=wH*3;
+				var winWidth=jQuery(window).width();
+				if (wS > (hT+hH-wHNew)){
+					
+					if(winWidth>767){
+					
+					}else{
+						infiniteScrollForMobile();
+					}
+				}
+				
+				if(winWidth<767){
+					var currentLi=2;
+					var currentCount=0;
+					var index=0;
+					jQuery('.myProductLi').each(function(i, obj) {
+						var LiTop=jQuery(this).offset().top;
+						var liheight=jQuery(this).height();
+						//console.log("index : "+index+", top : "+LiTop+", height : "+liheight);
+						if(liheight>0){
+							if(wS>LiTop+liheight-wH){
+								
+								currentLi=index+1;
+							}
+							index++;
+						}
+						
+					});
+					var total=index;
+					jQuery("#TotalProductsInList").val(total);
+					if(jQuery('#currentProductIsBlock').length==0){
+						jQuery('#myProductList').after('<div id="currentProductIsBlock" style="position: fixed;z-index: 100000000;bottom: 10px;height: 50px;opacity: 0.8;margin-left: -75px;width: 150px;left: 50%;text-align: center;background-color: black;border-radius: 5px;color: white;padding-top: 15px;"></div>');
+					}
+					jQuery('#currentProductIsBlock').html(currentLi+" of <?php echo $_productCollection->getSize(); ?>");
+					clearTimeout(jQuery.data(this, 'scrollTimer'));
+					jQuery.data(this, 'scrollTimer', setTimeout(function() {
+						jQuery('#currentProductIsBlock').remove();
+					}, 2000));
+					
+				}
+				
+			});
+			jQuery(document).ready(function(){
+				hideAndShowPaging();
+			});
+			jQuery(window).resize(function() {
+				hideAndShowPaging();
+			});
+			
+			function hideAndShowPaging(){
+				var winWidth=jQuery(window).width();
+				if(winWidth>767){
+					jQuery(".pager").removeClass('hide');
+					jQuery(".limiter").removeClass('hide');
+					if(jQuery('#myProductLoaderImg').length>0){
+						jQuery('#myProductLoaderImg').remove();
+					}
+					if(jQuery('#currentProductIsBlock').length>0){
+						jQuery('#currentProductIsBlock').remove();
+					}
+					
+				}else{
+					jQuery(".pager").addClass('hide');
+					jQuery(".limiter").addClass('hide');
+					
+				}
+			}
+			function infiniteScrollForMobile(){
+					var currentPageNum=jQuery('#scrollPageNum').val();
+					var scrollEndPageNum=jQuery('#scrollEndPageNum').val();
+					if(currentPageNum<scrollEndPageNum){
+						var nextPageNum=parseInt(currentPageNum)+1;
+						var categoryUrlPage=jQuery('#ptech_multilayer_ajax').val();
+						var isRequested=jQuery('#isRequested').val();
+						var url=categoryUrlPage;
+						if(categoryUrlPage.indexOf('?') >= 0){
+							url=url+'&p='+nextPageNum;
+						}else{
+							url=url+'?p='+nextPageNum;
+						}
+						if(isRequested==0){
+							jQuery('#isRequested').val("1");
+							jQuery.ajax({
+								type: "POST",
+								url: url,
+								data: "",
+								beforeSend: function() {
+									jQuery('#myProductList').append('<img id="myProductLoaderImg" src="/media/infinitescroll/loading_spinner.gif" style="margin: auto;height: 50px;">');
+								},
+								success: function(data) {
+									if(jQuery('#myProductLoaderImg').length>0){
+										jQuery('#myProductLoaderImg').remove();
+									}
+									var jsonObj=JSON.parse(data);
+									//console.log(jsonObj);
+									var elements = jQuery(jsonObj.products);
+									var found = jQuery('#myProductList', elements).html();
+									jQuery('#myProductList').append(found);
+									jQuery('#isRequested').val("0");
+									jQuery('#scrollPageNum').val(nextPageNum);
+									jQuery( ".fabric-color-swatches li:nth-child(4)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(5)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(6)" ).addClass('hide');
+									jQuery( ".fabric-color-swatches li:nth-child(7)" ).addClass('hide');
+									jQuery(".more-swatches").each(function() {
+									if(jQuery( this ).attr("options")>3){
+										jQuery( this ).removeClass('hide');
+									}else{
+										jQuery( this ).addClass('hide');
+									}
+									});
+								}
+							});
+						}
+					}
+			}
+			
+/***** FAB - 95 End *******/
+/** FAB-130 Start /**/
+jQuery(document).ready(function(){
+    var str=document.getElementById('ptech_multilayer_params').value;
+    if(str.indexOf("delivery") != -1){
+        jQuery('.product-name a').each(function(i, obj) {
+            this.href=this.href+'?'+str;
+        });
+        
+    }
+    var myarr = str.split("&");
+        
+        var resultant=[];
+        for(var i=0; i<myarr.length; i++){
+            var newStr=myarr[i];
+            var newArr = newStr.split("=");
+            if(newArr[0]==='deliverytime'){
+                var deliverytime=newArr[1];
+                var resultant = deliverytime.split("-");
+            }
+        }
+        var html='';
+       
+        <?php
+    $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product', 'deliverytime');
+    $attributeArray=array();
+    foreach ( $attribute->getSource()->getAllOptions(true, true) as $option){
+        $attributeArray[]=$option;
+    }
+   
+?>
+         var atributes= <?php echo json_encode($attributeArray);?>;
+        for(var i=0; i<resultant.length; i++){
+            for(var j=0; j<atributes.length; j++){
+                if(parseInt(atributes[j].value)===parseInt(resultant[i])){
+                    
+            html+='<li>'+atributes[j].label+' <span fid="'+atributes[j].value+'" class="removeFilter">x</span></li>';
+        }
+        }
+            
+        }
+        jQuery("#deliverytimefiltersselected").html(html);
+        if(html===''){
+            jQuery(".selected-attr").addClass("hide");
+        }else{
+            jQuery(".selected-attr").removeClass("hide");
+        }
+        });
+        /** FAB-130 End /**/
         </script>
     <?php endif; ?>
 

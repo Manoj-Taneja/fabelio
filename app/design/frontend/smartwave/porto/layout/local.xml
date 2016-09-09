@@ -162,6 +162,7 @@
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="two_column_left"><template>page/2columns-left.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="two_column_right"><template>page/2columns-right.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="three_column"><template>page/3columns.phtml</template></action>
+            <!-- FAB-59 code starts--><action method="setTemplate" ifconfig="porto_settings/category/page_layout" condition="custom_column"><template>page/custom_columns.phtml</template></action><!-- FAB-59 code ends-->
         </reference>
         <reference name="page.header">
             <action method="setTemplate"><template>catalog/category/page_header.phtml</template></action>

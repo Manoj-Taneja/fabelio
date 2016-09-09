@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ptech Multi Select Layer Navigation
+ *  
+ * @category     Ptech
+ * @package      Ptech_Multilayer 
+ * @copyright    Copyright (c) 2014-2015 Ptech
+ * @author       Ptech (Brijesh Kumar)  
+ * @version      Release: 1.0.0
+*/
+-->
+<config>
+    <modules>
+        <Ptech_Multilayer>
+            <active>true</active>
+            <codePool>local</codePool>
+    	</Ptech_Multilayer>
+    </modules>
+</config>

@@ -1,0 +1,124 @@
+
+<?php 
+    //todo: move logic to the block
+    list($min,$max) = $this->_filter->getMinMaxPriceInt(); 
+    list($from,$to) = explode(',', $this->_filter->getActiveState()); 
+    
+    $from = floor(max($from, $min));
+    
+    if ($to) {
+        $to   = ceil(min($to, $max));
+    } else {
+        $to = $max;
+    }
+    
+    if ($to<1 && $from<1) {
+        $to = $max;
+    }
+
+	//Set the slider width
+    $width = 170;
+    
+    if ($max) {
+        if ($max == $min) {
+            $firstOffset = 0;
+            $secondOffset = $width;
+        } else  {
+			$firstOffset  = ($from-$min)*$width/($max-$min);
+			$secondOffset = ($to-$min)*$width/($max-$min);
+        }
+    } else  {
+			$firstOffset  = 0;
+			$secondOffset = 0;
+    }
+?>
+<ol>
+    <li>
+<?php if ($to != $from) :?> 
+<div id="ptech_multilayer_price_slider<?php echo $this->_filter->getRequestVar()?>" class="price_slider">
+    <div class="handle handle-left selected" style="left:<?php echo $firstOffset?>px"></div>
+    <div class="handle handle-right" style="left:<?php echo $secondOffset?>px"></div>
+  </div>
+<?php endif;?> 
+
+<?php if ($to != $from) :?> 
+<?php //echo $this->__('Range:')?> 
+<span id="price_range_from<?php echo $this->_filter->getRequestVar()?>"><?php echo Mage::helper('core')->currency($from, true, false);?></span><span id="price_range_to<?php echo $this->_filter->getRequestVar()?>"><?php echo Mage::helper('core')->currency($to, true, false);?>+</span>
+<script type="text/javascript">
+    var slider = create_price_slider(<?php echo $width.', '.$firstOffset.', '.$secondOffset.', '.$min.', '.$max.',"'.$this->_filter->getRequestVar()?>");
+</script>
+<?php else:?>
+<?php echo $this->__('Value:')?> 
+<?php echo $this->getSymbol()?><span id="price_range_from<?php echo $this->_filter->getRequestVar()?>"><?php echo $from?></span>
+<?php endif;?> 
+    </li>
+</ol>
+<script>
+jQuery(document).ready(function(){
+var winWidth = jQuery(window).width();
+if(winWidth <= 767){
+var MaxPrice, filteredPriceValue;
+jQuery("#ptech_multilayer_price_sliderprice").click(function(e){
+					var parentOffset = jQuery(this).parent().offset(); 
+                                         //or $(this).offset(); if you really just want the current element's offset
+                                        var relX = e.pageX - parentOffset.left;
+                                        var relY = e.pageY - parentOffset.top;
+                                        var MinPrice = '<?php echo $from ?>';
+					MaxPrice = '<?php echo $to ?>';
+					var parentWidth = jQuery(".block-layered-nav").width()-13;
+					var perPixelPrice = (MaxPrice-MinPrice)/parentWidth;
+					filteredPriceValue = (perPixelPrice*relX)+(perPixelPrice/2);
+					filteredPriceValue = 	parseInt(filteredPriceValue);
+					jQuery('.handle-left').css('left',relX+'px');                                       	
+                                    });
+	jQuery('.clear-links a.clear-all').click(function(){
+	var current_url = window.location.href;
+	var all_params_query_name = "<?php foreach ($_GET as $name => $value) {
+                                                                                    echo $name.",";
+                                                                                    } ?>";
+                                                   
+        var all_params_query_value = "<?php foreach ($_GET as $name => $value) {
+                                                                                    echo $value.",";
+                                                                                    } ?>";
+        if(filteredPriceValue == null)
+	{
+		var priceParam = "<?php echo $_GET['price']; ?>";
+		var priceArray = priceParam.split(",");
+		filteredPriceValue = priceArray[0];
+		MaxPrice = priceArray[1];
+	}                                           
+	if(all_params_query_name)
+        {
+        	if(all_params_query_name.indexOf('clearall') > -1)
+                {   	var search = "?";
+                    	current_url = current_url.substring(0, current_url.indexOf(search));
+                }
+		if(current_url.indexOf('price')> -1)
+		{
+			priceValues = current_url.substring(current_url.indexOf("price="));		
+			if(priceValues.indexOf('&')> -1)
+			{
+				priceValues = priceValues.substring(0, priceValues.indexOf('&'));
+			}
+			current_url = current_url.replace(priceValues,'price='+filteredPriceValue+','+MaxPrice);
+		}
+	//	if(current_url.indexOf('manufacturer')> -1)
+	//	{
+			
+	//	}
+		else
+		{
+			if(filteredPriceValue && current_url.indexOf('manufacturer')== -1){current_url = current_url+'?price='+filteredPriceValue+','+MaxPrice;}
+			if(filteredPriceValue && current_url.indexOf('manufacturer')> -1){current_url = current_url+'&price='+filteredPriceValue+','+MaxPrice; }
+		}
+	}
+	else
+	{
+		if(filteredPriceValue!= null && filteredPriceValue!=''){current_url = window.location.href+'?price='+filteredPriceValue+','+MaxPrice;}
+	}
+//	alert(current_url);
+        jQuery("#filterSubmitUrl").val(current_url);
+	});
+}
+});
+</script>
